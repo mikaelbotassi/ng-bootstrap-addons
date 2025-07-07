@@ -39,14 +39,14 @@
                 (bsValueChange)="onDatePickerChange($event)"
             ></bs-daterangepicker-inline>
             @if(control.invalid){
-                <app-form-error-message [control]="control"></app-form-error-message>
+                <nba-form-error-message [control]="control"></nba-form-error-message>
             }@else{
                 @if(textValue.invalid){
-                    <app-form-error-message [control]="textValue"></app-form-error-message>
+                    <nba-form-error-message [control]="textValue"></nba-form-error-message>
                 }
             }
         </div>
     }
 } @placeholder{
-    <app-input-placeholder></app-input-placeholder>
+    <nba-input-placeholder></nba-input-placeholder>
 }

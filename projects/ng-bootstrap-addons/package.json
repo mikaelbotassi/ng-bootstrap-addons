@@ -4,9 +4,11 @@
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/forms": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/cdk": "^19.2.10",
+    "rxjs": "~7.8.0",
     "bootstrap": "^5.3.3",
     "ngx-bootstrap": "^19.0.2",
-    "@angular/core": "^19.2.0",
     "ngx-mask": "^19.0.6"
   },
   "dependencies": {

@@ -11,7 +11,7 @@ import { ControlValueAccessorDirective } from '../../../directives/control-value
 type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
 
 @Component({
-  selector: 'app-input',
+  selector: 'nba-input',
   templateUrl: './input.component.html',
   imports: [ReactiveFormsModule, CommonModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CurrencyDirective, InputPasswordDirective],
   providers: [

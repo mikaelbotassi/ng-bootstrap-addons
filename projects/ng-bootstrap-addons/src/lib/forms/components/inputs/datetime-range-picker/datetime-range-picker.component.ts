@@ -12,7 +12,7 @@ import { ClickOutsideDirective } from '../../../../shared/directives/click-outsi
 import DateUtils from '../../../../../utils/date-utils';
 
 @Component({
-  selector: 'app-datetime-range-input',
+  selector: 'nba-datetime-range-input',
   imports: [CommonModule, BsDatepickerModule, ReactiveFormsModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CollapseModule, ClickOutsideDirective, FormsModule],
   templateUrl: './datetime-range-picker.component.html',
   providers: [

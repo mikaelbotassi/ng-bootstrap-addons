@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-input-placeholder',
+  selector: 'nba-input-placeholder',
   imports: [],
   templateUrl: './input-placeholder.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

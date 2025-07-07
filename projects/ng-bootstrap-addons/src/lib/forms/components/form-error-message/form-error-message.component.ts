@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { CustomValidatorService } from '../../services/custom-validator.service';
 
 @Component({
-  selector: 'app-form-error-message',
+  selector: 'nba-form-error-message',
   imports: [],
   templateUrl: './form-error-message.component.html',
 })
