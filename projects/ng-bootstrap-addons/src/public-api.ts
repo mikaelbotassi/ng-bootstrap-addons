@@ -11,6 +11,7 @@ export * from './lib/forms/components/inputs/ac-search-lov/ac-search-lov.compone
 export * from './lib/forms/components/selects/select/select.component';
 export * from './lib/forms/components/selects/multiselect/multiselect.component';
 export * from './lib/forms/components/textarea/textarea.component';
+export * from './lib/forms/components/drag-drop-upload/drag-drop-upload.component';
 
 // Directives
 export * from './lib/forms/directives/control-value-acessor.directive';
