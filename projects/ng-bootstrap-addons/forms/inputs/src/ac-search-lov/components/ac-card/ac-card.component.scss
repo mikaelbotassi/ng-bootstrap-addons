@@ -1,0 +1,8 @@
+div:has(>a:hover), div:has(>a:focus), div:has(>a:active){
+    transition: all ease-in-out 0.2s;
+    background-color: rgba(var(--sm-primary-rgb), 0.1);
+}
+div:not(:has(>a:hover)):not(:has(>a:focus)):not(:has(>a:active)) {
+    transition: all ease-in-out 0.2s;
+    background-color: transparent;
+}

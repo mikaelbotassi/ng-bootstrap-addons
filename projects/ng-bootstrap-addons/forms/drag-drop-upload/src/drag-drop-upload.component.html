@@ -1,0 +1,45 @@
+<div class="form-group">
+  <label *ngIf="required;else nonRequiredLabel" class="text-bold text-primary ml-1">
+    <span class="text-danger">* </span><ng-content select="[label]"></ng-content>
+  </label>
+  <ng-template #nonRequiredLabel>
+    <label class="text-primary ml-1">
+        <ng-content select="[noRequiredLabel]"></ng-content>
+    </label>
+  </ng-template>
+  <div class="upload-area"
+    (drop)="onDrop($event)"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+  >
+    <button type="button" (click)="fileInput.click()" class="btn text-decoration-none btn-link text-center mx-auto p-0 mb-3 d-block text-primary" [disabled]="disabled()">
+      <i class="ti ti-upload h2 mb-0"></i>
+    </button>
+    <button type="button" (click)="fileInput.click()" class="btn btn-link p-0 fw-bold lh-1" [disabled]="disabled()">Clique para selecionar</button> ou arraste arquivos para cá
+    <input type="file" [attr.multiple]="multiple() ? true : null" [disabled]="disabled()" [accept]="accept()" (change)="onFileSelect($event)" style="display: none;" #fileInput>
+  </div>
+  
+  <div class="preview-area row justify-content-center">
+    @for(file of files(); track $index){
+      <div [ngClass]="{'my-3':true, 'col-sm-4': multiple(), 'col-6 col-sm-6': !multiple()}">
+        <div [ngClass]="{'ratio': true, 'ratio-4x3': multiple(), 'ratio-1x1': !multiple()}">
+          <div class="preview-square">
+            @if(file.isImage){
+              <img [src]="file.safeUrl" [alt]="file.name" class="preview-image">
+              <span class="img-name">{{file.name}}</span>
+              <span class="img-mask"></span>
+            }@else{
+              <i class="ti ti-file h1" aria-hidden="true"></i>
+              <span class="p-1 file-name">{{file.name}}</span>
+            }
+            <a href="javascript:;" class="stretched-link" (click)="downloadFile(file)"></a>
+            @if(!disabled){
+              <button type="button" class="btn-remove lh-1" (click)="removeFile($index)">&times;</button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,75 @@
+@defer (on viewport; prefetch on idle){
+    @if(control){
+      <div class="form-group">
+        <div class="input-group">
+          <ng-content select="[group-prefix]"></ng-content>
+          <div class="form-floating" dropdown [insideClick]="true">
+            <select
+                [name]="inputId()"
+                [id]="inputId()"
+                [formControl]="control"
+                multiple
+                class="form-select d-none"
+                [attr.aria-label]="label()"
+                [attr.aria-describedby]="inputId()"
+                [attr.aria-required]="isRequired"
+                [attr.aria-invalid]="control.invalid && (control.dirty || control.touched)"
+                [attr.aria-labelledby]="inputId()"
+                #input
+            >
+                <option
+                    *ngFor="let option of filteredOptions()"
+                    [value]="option.value"
+                >
+                    {{option.label}}
+                </option>
+            </select>
+            <input
+                type="text"
+                class="form-select"
+                [formControl]="descControl"
+                [placeholder]="label()"
+                readonly
+            >
+            <a href="javascript:;" (click)="this.descControl.markAsTouched()" dropdownToggle class="stretched-link"></a>
+            <ul class="dropdown-menu w-100" *dropdownMenu aria-labelledby="multiSelectDropdown">
+                <li class="mb-2">
+                    <input
+                        type="text"
+                        class="form-control no-validate"
+                        placeholder="Pesquisar..."
+                        [(ngModel)]="searchText"
+                    />
+                </li>
+                @if(!searchText.length){
+                    <nba-multiselect-option 
+                        [id]="selectAllId"
+                        label="Selecionar todos"
+                        [isSelected]="areAllSelected()"
+                        (toggle)="toggleAll()"
+                    />
+                }
+                @for(option of filteredOptions(); track $index){
+                    <nba-multiselect-option
+                        [id]="option.id"
+                        [label]="option.label"
+                        [isSelected]="isSelected(option)"
+                        (toggle)="toggleSelection(option)"
+                    />
+                }
+            </ul>
+            <label [for]="inputId()" [class.required]="isRequired">
+                @if(icon()){
+                        <i [class]="'ti h5 mb-0 ' + icon()"></i>
+                }
+                {{label()}}
+            </label>
+          </div>
+          <ng-content select="[group-sufix]"></ng-content>
+        </div>
+        <nba-form-error-message [control]="descControl"></nba-form-error-message>
+      </div>
+    }
+} @placeholder{
+    <nba-input-placeholder></nba-input-placeholder>
+}

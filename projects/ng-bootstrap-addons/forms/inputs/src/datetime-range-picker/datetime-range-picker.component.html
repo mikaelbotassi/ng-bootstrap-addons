@@ -1,0 +1,52 @@
+@defer (on viewport; prefetch on idle){
+
+    @if(control){
+        <div class="form-group position-relative">
+            <div class="form-floating can-click">
+                <input
+                    class="form-control"
+                    mask="00/00/0000 00:00:00 - 00/00/0000 00:00:00"
+                    [id]="inputId()"
+                    [name]="inputId()"
+                    [placeholder]="label()"
+                    [ngClass]="{
+                        'ng-touched': control.touched,
+                        'ng-dirty': control.dirty,
+                        'ng-pristine': control.pristine,
+                        'ng-untouched': control.untouched,
+                        'ng-valid': (control.valid && control.touched) && textValue.valid,
+                        'ng-invalid': (control.invalid && control.touched) || textValue.invalid,
+                    }"
+                    [attr.aria-expanded]="!isCollapsed"
+                    (click)="toggleCollapse()"
+                    (blur)="markAsTouched()"
+                    [formControl]="textValue"
+                >
+                <label [for]="inputId()" [class.required]="isRequired">
+                    @if(icon()){
+                            <i [class]="'ti h5 mb-0 ' + icon()"></i>
+                    }
+                    {{label()}}
+                </label>
+            </div>
+            <bs-daterangepicker-inline 
+                clickOutside
+                (onClickOutside)="isCollapsed.set(true)"
+                exceptClass="can-click"
+                [collapse]="isCollapsed()" 
+                [bsConfig]="bsConfigs()"
+                [bsValue]="control.value"
+                (bsValueChange)="onDatePickerChange($event)"
+            ></bs-daterangepicker-inline>
+            @if(control.invalid){
+                <nba-form-error-message [control]="control"></nba-form-error-message>
+            }@else{
+                @if(textValue.invalid){
+                    <nba-form-error-message [control]="textValue"></nba-form-error-message>
+                }
+            }
+        </div>
+    }
+} @placeholder{
+    <nba-input-placeholder></nba-input-placeholder>
+}

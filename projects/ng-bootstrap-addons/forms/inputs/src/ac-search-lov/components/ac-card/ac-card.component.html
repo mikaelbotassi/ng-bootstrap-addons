@@ -1,0 +1,24 @@
+<div class="border-bottom position-relative p-3 rounded-2">
+    <h6 class="fw-bold text-primary mb-2">
+        <i [class]="'ti ' + icon()"></i>
+        {{editedTitle()}}
+    </h6>
+    <div class="d-flex flex-wrap gap-3 gap-lg-4">
+
+        <div>
+            <h6 class="fw-bold text-primary mb-0 lh-1">{{map().code.title}}</h6>
+            {{value()[map().code.key]}}
+        </div>
+        <div>
+            <h6 class="fw-bold text-primary mb-0 lh-1">{{map().desc.title}}</h6>
+            {{value()[map().desc.key]}}
+        </div>
+        @for (item of map().addons; track $index) {
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <h6 class="fw-bold text-primary mb-0 lh-1">{{item.title}}</h6>
+                {{value()[item.key]}}
+            </div>
+        }
+    </div>
+    <a href="javascript:;" (click)="onSelect.emit()" class="stretched-link"></a>
+</div>

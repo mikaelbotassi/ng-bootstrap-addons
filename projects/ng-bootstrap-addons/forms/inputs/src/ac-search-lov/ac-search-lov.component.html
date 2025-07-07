@@ -1,0 +1,100 @@
+@defer (on viewport; prefetch on idle){
+  @if(control){
+    <div class="form-group">
+      <div class="form-floating">
+          @if(focus()){
+            <div class="position-fixed top-0 start-0 bottom-0 end-0 bg-black bg-opacity-25 z-2 fade-in"></div>
+            <input
+              type="text"
+              class="form-control position-absolute rounded-bottom-0 top-0 start-0 z-2"
+              [formControl]="descControl"
+              (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+              (keydown.tab)="focus.set(false)"
+              (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+              clickOutside
+              [ngClass]="{
+                'ng-invalid': control.invalid && control.touched,
+                'ng-valid': control.valid && control.touched,
+                'ng-touched': control.touched,
+                'ng-untouched': control.untouched,
+                'ng-dirty': control.dirty,
+                'ng-pristine': control.pristine
+              }"              
+              (onClickOutside)="focus.set(false)"
+              exceptClass="no-collapse"
+              [id]="inputId()"
+              [name]="inputId()"
+              [placeholder]="label()"
+              #input
+            >
+            <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
+              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center z-3 no-collapse"
+                (click)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+                [attr.aria-label]="label()"
+                tabindex="-1"
+                [attr.aria-labelledby]="inputId()"
+                [attr.aria-describedby]="inputId()"
+              ><i class="ti ti-search no-collapse"></i></a>
+            </div>
+            <input
+              type="text"
+              class="form-control opacity-0 no-collapse"
+            >
+            <nba-autocomplete-collapse
+              (onClose)="focus.set(false)"
+              (onSelect)="selectItem($event)"
+              [collapse]="!focus()"
+              [icon]="icon()"
+              [title]="label()"
+              [listOfValues]="listOfValues()"
+              [isLoading]="fetchDescCommand.running()"
+              [map]="map()"
+            ></nba-autocomplete-collapse>
+
+          }@else{
+            <input
+              type="text"
+              [class.placeholder-wave]="fetchDescCommand.running()"
+              [class.placeholder]="fetchDescCommand.running()"
+              class="form-control"
+              [formControl]="descControl"
+              [id]="inputId()"
+              [name]="inputId()"
+              (keydown.f9)="focus.set(true)"
+              (blur)="control.markAllAsTouched(); focus.set(false)"
+              [placeholder]="label()"
+              [ngClass]="{
+                'ng-invalid': control.invalid && control.touched,
+                'ng-valid': control.valid && control.touched,
+                'ng-touched': control.touched,
+                'ng-untouched': control.untouched,
+                'ng-dirty': control.dirty,
+                'ng-pristine': control.pristine
+              }"              
+              #input
+            >
+            <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
+              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center"
+                [class.disabled]="this.control.disabled"
+                (click)="focus.set(true)"
+                [attr.aria-label]="label()"
+                [attr.aria-labelledby]="inputId()"
+                [attr.aria-describedby]="inputId()"
+                [ariaDisabled]="this.control.disabled"
+                tabindex="-1"
+              ><i class="ti ti-search mb-0"></i></a>
+            </div>
+          }
+          <label [for]="inputId()" [class.required]="isRequired">
+              @if(icon()){
+                <i [class]="'ti h5 mb-0 ' + icon()"></i>
+              }
+              {{label()}}
+          </label>
+      </div>
+      <nba-form-error-message [control]="control"></nba-form-error-message>
+  </div>
+  }
+} @placeholder{
+  <nba-input-placeholder></nba-input-placeholder>
+}
