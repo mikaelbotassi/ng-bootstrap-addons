@@ -7,7 +7,7 @@ export * from './lib/forms/components/inputs/input/input.component';
 export * from './lib/forms/components/inputs/datetime-range-picker/datetime-range-picker.component';
 export * from './lib/forms/components/form-error-message/form-error-message.component';
 export * from './lib/forms/components/placeholders/input-placeholder/input-placeholder.component';
-export * from './lib/forms/components/inputs/auto-complete-search-lov/auto-complete-search-lov.component';
+export * from './lib/forms/components/inputs/ac-search-lov/ac-search-lov.component';
 
 // Directives
 export * from './lib/forms/directives/control-value-acessor.directive';
