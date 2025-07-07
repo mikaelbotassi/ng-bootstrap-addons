@@ -58,7 +58,7 @@ export class DatetimeRangePickerComponent extends ControlValueAccessorDirective<
         ]}
       ],
   });
-  bsConfigs = computed(() => {
+  bsConfigs:any = computed(() => {
     return {
       ...this.customConfigs(),
       ...this.baseConfigs(),
