@@ -1,1 +1,0 @@
-export * from './drag-drop-upload.component';

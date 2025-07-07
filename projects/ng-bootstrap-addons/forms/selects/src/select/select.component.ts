@@ -1,8 +1,8 @@
 import { Component, forwardRef} from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { InputPlaceholderComponent } from '../../../inputs/src/input-placeholder/input-placeholder.component';
-import { ControlValueAccessorDirective } from '../../../../directives/src/control-value-acessor.directive';
-import { FormErrorMessageComponent } from '../../../form-error-message/src/form-error-message.component';
+import { InputPlaceholderComponent } from 'ng-bootstrap-addons/forms/inputs';
+import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
+import { FormErrorMessageComponent } from 'ng-bootstrap-addons/forms/form-error-message';
 
 @Component({
   selector: 'nba-select',

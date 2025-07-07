@@ -5,9 +5,10 @@ import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from
 import { MultiselectOptionComponent } from './multiselect-option/multiselect-option.component';
 import { distinctUntilChanged, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormErrorMessageComponent } from '../../../form-error-message/src/form-error-message.component';
-import { InputPlaceholderComponent } from '../../../inputs/src/public_api';
-import { ControlValueAccessorDirective, createRandomString } from '../../../../directives/src/control-value-acessor.directive';
+import { FormErrorMessageComponent } from 'ng-bootstrap-addons/forms/form-error-message';
+import { InputPlaceholderComponent } from 'ng-bootstrap-addons/forms/inputs';
+import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
+import { createRandomString } from 'ng-bootstrap-addons/utils';
 
 @Component({
     selector: 'nba-multiselect',
