@@ -10,6 +10,7 @@ export * from './lib/forms/components/placeholders/input-placeholder/input-place
 export * from './lib/forms/components/inputs/ac-search-lov/ac-search-lov.component';
 export * from './lib/forms/components/selects/select/select.component';
 export * from './lib/forms/components/selects/multiselect/multiselect.component';
+export * from './lib/forms/components/textarea/textarea.component';
 
 // Directives
 export * from './lib/forms/directives/control-value-acessor.directive';
