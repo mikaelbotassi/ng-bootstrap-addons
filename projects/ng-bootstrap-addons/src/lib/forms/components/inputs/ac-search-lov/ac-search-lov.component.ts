@@ -7,10 +7,11 @@ import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
 import { asyncScheduler, observeOn, debounceTime, distinctUntilChanged } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ClickOutsideDirective, ControlValueAccessorDirective } from '../../../../../public-api';
 import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
 import { Command1 } from '../../../../../utils/command';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
+import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
+import { ControlValueAccessorDirective } from '../../../directives/control-value-acessor.directive';
 
 @Component({
   selector: 'nba-ac-lov',
