@@ -3,12 +3,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BsDatepickerModule, BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputPlaceholderComponent } from '../../placeholders/input-placeholder/input-placeholder.component';
+import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { NgxMaskDirective } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { FormErrorMessageComponent } from '../../form-error-message/form-error-message.component';
 import { ControlValueAccessorDirective } from '../../../directives/control-value-acessor.directive';
-import { ClickOutsideDirective } from '../../../../shared/directives/click-outside.directive';
+import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
 import DateUtils from '../../../../../utils/date-utils';
 
 @Component({

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, booleanAttribute, forwardRef, input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { FormErrorMessageComponent } from '../../form-error-message/form-error-message.component';
-import { InputPlaceholderComponent } from '../../placeholders/input-placeholder/input-placeholder.component';
+import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { NgxMaskDirective } from 'ngx-mask';
 import { CurrencyDirective } from '../../../directives/currency.directive';
 import { InputPasswordDirective } from '../../../directives/input-password.directive';

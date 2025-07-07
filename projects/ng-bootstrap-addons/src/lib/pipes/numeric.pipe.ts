@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import Formatter from '../../../utils/formater';
+import Formatter from '../../utils/formater';
 
 @Pipe({
   name: 'numeric',

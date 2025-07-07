@@ -1,14 +1,14 @@
 import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormErrorMessageComponent } from '../../form-error-message/form-error-message.component';
-import { InputPlaceholderComponent } from '../../placeholders/input-placeholder/input-placeholder.component';
+import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
 import { asyncScheduler, observeOn, debounceTime, distinctUntilChanged } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ClickOutsideDirective, ControlValueAccessorDirective } from '../../../../../public-api';
-import { AutoCompleteConfig, AutocompleteService } from '../../../services/auto-complete.service';
+import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
 import { Command1 } from '../../../../../utils/command';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
 

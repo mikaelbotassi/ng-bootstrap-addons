@@ -5,7 +5,7 @@ import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from
 import { MultiselectOptionComponent } from './multiselect-option/multiselect-option.component';
 import { distinctUntilChanged, startWith } from 'rxjs';
 import { FormErrorMessageComponent } from '../../form-error-message/form-error-message.component';
-import { InputPlaceholderComponent } from '../../placeholders/input-placeholder/input-placeholder.component';
+import { InputPlaceholderComponent } from '../../inputs/input-placeholder/input-placeholder.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessorDirective, createRandomString } from '../../../directives/control-value-acessor.directive';
 
