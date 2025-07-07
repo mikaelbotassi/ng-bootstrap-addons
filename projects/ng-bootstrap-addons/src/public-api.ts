@@ -2,5 +2,20 @@
  * Public API Surface of ng-bootstrap-addons
  */
 
-// export * from './lib/ng-bootstrap-addons.service';
-// export * from './lib/ng-bootstrap-addons.component';
+// Components
+export * from './lib/forms/components/inputs/input/input.component';
+export * from './lib/forms/components/inputs/datetime-range-picker/datetime-range-picker.component';
+export * from './lib/forms/components/form-error-message/form-error-message.component';
+export * from './lib/forms/components/placeholders/input-placeholder/input-placeholder.component';
+
+// Directives
+export * from './lib/forms/directives/control-value-acessor.directive';
+export * from './lib/forms/directives/currency.directive';
+export * from './lib/forms/directives/input-password.directive';
+export * from './lib/shared/directives/click-outside.directive';
+
+// Services
+export * from './lib/forms/services/custom-validator.service';
+
+// Pipes
+export * from './lib/shared/pipes/numeric.pipe';
