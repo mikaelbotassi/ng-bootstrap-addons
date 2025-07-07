@@ -8,6 +8,8 @@ export * from './lib/forms/components/inputs/datetime-range-picker/datetime-rang
 export * from './lib/forms/components/form-error-message/form-error-message.component';
 export * from './lib/forms/components/placeholders/input-placeholder/input-placeholder.component';
 export * from './lib/forms/components/inputs/ac-search-lov/ac-search-lov.component';
+export * from './lib/forms/components/selects/select/select.component';
+export * from './lib/forms/components/selects/multiselect/multiselect.component';
 
 // Directives
 export * from './lib/forms/directives/control-value-acessor.directive';

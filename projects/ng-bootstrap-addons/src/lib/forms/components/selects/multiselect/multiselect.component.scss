@@ -1,0 +1,6 @@
+.dropdown-menu{
+    --sm-dropdown-padding-x: .5rem;
+    max-height: clamp(300px, 30vw, 800px);
+    overflow-y: auto;
+    &::-webkit-scrollbar{ display: none }
+}

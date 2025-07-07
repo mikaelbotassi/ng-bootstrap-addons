@@ -1,0 +1,15 @@
+<li>
+    <input
+        class="btn-check"
+        type="checkbox"
+        [checked]="isSelected()"
+        (change)="toggle.emit(!isSelected())"
+        [id]="id()"
+    />
+    <label
+        [ngClass]="{'dropdown-item': true, 'active': isSelected()}"
+        [for]="id()"
+    >
+        {{ label() }}
+    </label>
+</li>
