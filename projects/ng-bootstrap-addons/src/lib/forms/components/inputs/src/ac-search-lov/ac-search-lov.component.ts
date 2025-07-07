@@ -1,17 +1,17 @@
 import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { InputPlaceholderComponent } from '../src/input-placeholder/input-placeholder.component';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
 import { asyncScheduler, observeOn, debounceTime, distinctUntilChanged } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
-import { Command1 } from '../../../../../utils/src/command';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
-import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
-import { ControlValueAccessorDirective } from '../../../directives/src/control-value-acessor.directive';
-import { FormErrorMessageComponent } from '../../form-error-message/src/form-error-message.component';
+import { FormErrorMessageComponent } from '../../../form-error-message/src/form-error-message.component';
+import { InputPlaceholderComponent } from '../public_api';
+import { ClickOutsideDirective } from '../../../../../directives/click-outside.directive';
+import { ControlValueAccessorDirective } from '../../../../directives/src/control-value-acessor.directive';
+import { Command1 } from '../../../../../../utils/src/command';
 
 @Component({
   selector: 'nba-ac-lov',

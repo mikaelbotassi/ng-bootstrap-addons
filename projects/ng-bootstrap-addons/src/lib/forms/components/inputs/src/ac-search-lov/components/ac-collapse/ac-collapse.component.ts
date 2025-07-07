@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal } from '@angular/core';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
-import { EmptyDataComponent } from '../../../../../../components/empty-data/empty-data.component';
 import { AutocompleteCardComponent } from '../ac-card/ac-card.component';
 import { AutocompleteCollapsePlaceholderComponent } from './ac-collapse-placeholder/ac-collapse-placeholder.component';
 import { acMap } from '../../ac-search-lov.component';
+import { EmptyDataComponent } from 'ng-bootstrap-addons';
 
 
 @Component({

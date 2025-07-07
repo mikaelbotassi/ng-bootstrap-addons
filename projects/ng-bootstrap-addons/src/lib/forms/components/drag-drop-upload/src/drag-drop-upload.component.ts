@@ -1,7 +1,7 @@
 import { booleanAttribute, Component, EventEmitter, input, Input, model, OnDestroy, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { stopEvent } from '../../../../utils/functions';
+import { stopEvent } from '../../../../../utils/src/functions';
 
 @Component({
     selector: 'nba-drag-drop-upload',

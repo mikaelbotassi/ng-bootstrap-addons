@@ -4,10 +4,10 @@ import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MultiselectOptionComponent } from './multiselect-option/multiselect-option.component';
 import { distinctUntilChanged, startWith } from 'rxjs';
-import { FormErrorMessageComponent } from '../../form-error-message/form-error-message.component';
-import { InputPlaceholderComponent } from '../../inputs/input-placeholder/input-placeholder.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ControlValueAccessorDirective, createRandomString } from '../../../directives/control-value-acessor.directive';
+import { FormErrorMessageComponent } from '../../../form-error-message/src/form-error-message.component';
+import { InputPlaceholderComponent } from '../../../inputs/src/public_api';
+import { ControlValueAccessorDirective, createRandomString } from '../../../../directives/src/control-value-acessor.directive';
 
 @Component({
     selector: 'nba-multiselect',

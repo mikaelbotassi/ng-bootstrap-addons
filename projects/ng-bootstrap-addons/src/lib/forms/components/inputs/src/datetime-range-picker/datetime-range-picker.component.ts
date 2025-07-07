@@ -6,10 +6,10 @@ import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Valid
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { NgxMaskDirective } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessorDirective } from '../../../directives/src/control-value-acessor.directive';
-import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
-import DateUtils from '../../../../../utils/src/date-utils';
-import { FormErrorMessageComponent } from '../../form-error-message/src/form-error-message.component';
+import { ControlValueAccessorDirective } from '../../../../directives/src/control-value-acessor.directive';
+import { ClickOutsideDirective } from '../../../../../directives/click-outside.directive';
+import DateUtils from '../../../../../../utils/src/date-utils';
+import { FormErrorMessageComponent } from '../../../form-error-message/src/form-error-message.component';
 
 @Component({
   selector: 'nba-datetime-range-input',

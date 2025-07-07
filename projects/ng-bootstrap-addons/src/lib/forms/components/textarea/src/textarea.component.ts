@@ -1,9 +1,9 @@
 import { Component, computed, forwardRef, input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { FormErrorMessageComponent } from '../form-error-message/form-error-message.component';
 import { CommonModule } from '@angular/common';
 import { TextareaPlaceholderComponent } from './placeholder/textarea-placeholder.component';
-import { ControlValueAccessorDirective } from '../../directives/control-value-acessor.directive';
+import { ControlValueAccessorDirective } from '../../../directives/src/control-value-acessor.directive';
+import { FormErrorMessageComponent } from '../../form-error-message/src/form-error-message.component';
 
 @Component({
   selector: 'nba-textarea',

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, booleanAttribute, forwardRef, input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { FormErrorMessageComponent } from '../../form-error-message/form-error-message.component';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { NgxMaskDirective } from 'ngx-mask';
-import { CurrencyDirective } from '../../../directives/currency.directive';
-import { InputPasswordDirective } from '../../../directives/input-password.directive';
-import { ControlValueAccessorDirective } from '../../../directives/control-value-acessor.directive';
+import { CurrencyDirective } from '../../../../directives/src/currency.directive';
+import { InputPasswordDirective } from '../../../../directives/src/input-password.directive';
+import { ControlValueAccessorDirective } from '../../../../directives/src/control-value-acessor.directive';
+import { FormErrorMessageComponent } from '../../../form-error-message/src/form-error-message.component';
 
 type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
 

@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
-import { CustomValidatorService } from '../../services/custom-validator.service';
+import { CustomValidatorService } from '../../../services/src/custom-validator.service';
 
 @Component({
   selector: 'nba-form-error-message',
