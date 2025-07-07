@@ -1,0 +1,15 @@
+@if(control){
+    <div class="form-check form-switch">
+        <input 
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            [id]="inputId()"
+            [name]="inputId()"
+            [formControl]="control"
+            [required]="isRequired"
+            #input
+        >
+        <label class="form-check-label" [for]="inputId()">{{label()}}</label>
+    </div>
+}
