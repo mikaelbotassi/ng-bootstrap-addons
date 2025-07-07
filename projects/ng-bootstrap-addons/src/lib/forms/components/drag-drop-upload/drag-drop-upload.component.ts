@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { booleanAttribute, Component, EventEmitter, input, Input, model, OnDestroy, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { stopEvent } from '../../../../utils/functions';
@@ -11,41 +11,30 @@ import { stopEvent } from '../../../../utils/functions';
 })
 export class DragDropUploadComponent implements OnDestroy{
 
-  @Input() files: FileUpload[] = [];
-  @Output() filesChange = new EventEmitter<FileUpload[]>();
-  @Input() required: boolean = false;
-  @Input() disabled: boolean = false;
-  @Input() accept: string = 'file/*';
-  
-  private _multiple: boolean = false;
-
-  @Input()
-  set multiple(value: boolean) {
-    this._multiple = value !== null && `${value}` !== 'false';
-  }
-
-  get multiple(): boolean {
-    return this._multiple;
-  }
+  readonly files = model<FileUpload[]>([]);
+  required = input(false, {transform: booleanAttribute});
+  disabled = input(false, {transform: booleanAttribute});
+  accept = input<string>('file/*');
+  multiple = input(false, {transform: booleanAttribute});
 
   constructor(private _sanitizer: DomSanitizer) {}
 
   onDragOver(event: Event): void {
     stopEvent(event);
-    if(this.disabled) return;
+    if(this.disabled()) return;
     (event.target as HTMLElement).style.borderColor = 'var(--sm-primary)';
   }
 
   onDragLeave(event: Event): void {
     stopEvent(event);
-    if(this.disabled) return;
+    if(this.disabled()) return;
 
     (event.target as HTMLElement).style.borderColor = 'var(--sm-secondary)';
   }
 
   onDrop(event: DragEvent): void {
     stopEvent(event);
-    if(this.disabled) return;
+    if(this.disabled()) return;
     (event.target as HTMLElement).style.borderColor = 'var(--sm-primary)';
     if (event.dataTransfer) {
       const files = event.dataTransfer.files;
@@ -55,7 +44,7 @@ export class DragDropUploadComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.files.forEach(file => {
+    this.files().forEach(file => {
       URL.revokeObjectURL(file.url);
     });
   }
@@ -64,15 +53,14 @@ export class DragDropUploadComponent implements OnDestroy{
 
   processFiles(files: FileList): void {
     if(!this.multiple){
-      this.files = [];
+      this.files.set([]);
       if(files.item(0)) this.populateData(files.item(0)!);
-    }else{
-      for (let i = 0; i < files.length; i++) {
-        const file = files.item(i);
-        if(file) this.populateData(file!);
-      }
+      return;
     }
-    this.filesChange.emit(this.files);
+    for (let i = 0; i < files.length; i++) {
+      const file = files.item(i);
+      if(file) this.populateData(file!);
+    }
   }
 
   populateData(file:File):void{
@@ -80,13 +68,13 @@ export class DragDropUploadComponent implements OnDestroy{
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const url = e.target.result;
-        this.files.push({ data: file, safeUrl: this.getSafeUrl(url), name: file.name, isImage: true, url: url});
+        this.files.update((files) => [...files, { data: file, safeUrl: this.getSafeUrl(url), name: file.name, isImage: true, url: url}]);
       };
       reader.readAsDataURL(file);
-    } else {
-      const url = window.URL.createObjectURL(file);
-      this.files.push({ data: file, name: file.name, isImage: false, safeUrl:this.getSafeUrl(url), url: url});
+      return;
     }
+    const url = window.URL.createObjectURL(file);
+    this.files.update(files => [...files, { data: file, name: file.name, isImage: false, safeUrl:this.getSafeUrl(url), url: url}]);
   }
 
   getSafeUrl(url:string):SafeUrl{
@@ -94,9 +82,8 @@ export class DragDropUploadComponent implements OnDestroy{
   }
 
   removeFile = (index: number) => {
-    window.URL.revokeObjectURL(this.files[index].url);
-    this.files.splice(index, 1);
-    this.filesChange.emit(this.files);
+    window.URL.revokeObjectURL(this.files()[index].url);
+    this.files.update(files => files.filter((_, i) => i !== index));
   }
 
   downloadFile(file:FileUpload): void {
