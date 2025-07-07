@@ -9,9 +9,13 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
     "paths": {
       "ng-bootstrap-addons": [
         "./dist/ng-bootstrap-addons"
+      ],
+      "ng-bootstrap-addons/*": [
+        "dist/ng-bootstrap-addons/*"
       ]
     },
     "skipLibCheck": true,

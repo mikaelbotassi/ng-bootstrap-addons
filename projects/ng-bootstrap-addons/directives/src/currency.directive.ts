@@ -1,6 +1,6 @@
 import {Directive, ElementRef, HostListener, booleanAttribute, forwardRef, input } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import { NumericPipe } from '../../../pipes/src/numeric.pipe';
+import { NumericPipe } from 'ng-bootstrap-addons/pipes';
 
 @Directive({
     selector: '[currency]',

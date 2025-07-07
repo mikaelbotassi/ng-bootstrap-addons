@@ -9,9 +9,9 @@ import { AutoCompleteConfig, AutocompleteService } from './services/auto-complet
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
 import { FormErrorMessageComponent } from '../../../form-error-message/src/form-error-message.component';
 import { InputPlaceholderComponent } from '../public_api';
-import { ClickOutsideDirective } from '../../../../../directives/click-outside.directive';
+import { ClickOutsideDirective } from '../../../../directives/src/click-outside.directive';
 import { ControlValueAccessorDirective } from '../../../../directives/src/control-value-acessor.directive';
-import { Command1 } from '../../../../../../utils/src/command';
+import { Command1 } from 'ng-bootstrap-addons/utils';
 
 @Component({
   selector: 'nba-ac-lov',

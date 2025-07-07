@@ -1,4 +1,4 @@
-export default class Formatter{
+export class Formatter{
 
     locale: string = 'pt-BR';
 

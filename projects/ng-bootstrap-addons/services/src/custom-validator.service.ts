@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { NumericPipe } from 'ng-bootstrap-addons/';
+import { NumericPipe } from 'ng-bootstrap-addons/pipes';
 
 @Injectable({
   providedIn: 'root',

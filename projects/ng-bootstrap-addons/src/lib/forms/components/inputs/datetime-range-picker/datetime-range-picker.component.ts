@@ -7,7 +7,7 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
 import { NgxMaskDirective } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessorDirective } from '../../../directives/src/control-value-acessor.directive';
-import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
+import { ClickOutsideDirective } from '../../../directives/src/click-outside.directive';
 import DateUtils from '../../../../../utils/src/date-utils';
 import { FormErrorMessageComponent } from '../../form-error-message/src/form-error-message.component';
 

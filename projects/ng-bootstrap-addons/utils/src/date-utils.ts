@@ -1,4 +1,4 @@
-export default abstract class DateUtils {
+export abstract class DateUtils {
   static toDate(date: string): Date {
     let dateFormatted = date.length > 19 ? date.substring(0, 19) : date;
     dateFormatted = dateFormatted.replace(/-/g, '/').replace(/T/, ' ');

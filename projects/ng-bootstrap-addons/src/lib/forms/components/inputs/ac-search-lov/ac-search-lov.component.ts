@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
 import { Command1 } from '../../../../../utils/src/command';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
-import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
+import { ClickOutsideDirective } from '../../../directives/src/click-outside.directive';
 import { ControlValueAccessorDirective } from '../../../directives/src/control-value-acessor.directive';
 import { FormErrorMessageComponent } from '../../form-error-message/src/form-error-message.component';
 
