@@ -3,7 +3,7 @@ import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrollin
 import { AutocompleteCardComponent } from '../ac-card/ac-card.component';
 import { AutocompleteCollapsePlaceholderComponent } from './ac-collapse-placeholder/ac-collapse-placeholder.component';
 import { acMap } from '../../ac-search-lov.component';
-import { EmptyDataComponent } from 'ng-bootstrap-addons';
+import { EmptyDataComponent } from 'ng-bootstrap-addons/components';
 
 
 @Component({
