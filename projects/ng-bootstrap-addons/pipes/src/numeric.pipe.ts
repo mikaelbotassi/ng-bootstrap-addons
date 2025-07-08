@@ -12,6 +12,8 @@ export class NumericPipe implements PipeTransform {
       return value;
     }
 
+    decimalPlaces = decimalPlaces ? decimalPlaces : (currency ? 2 : decimalPlaces);
+
     const formattedValue = (new Formatter).formatDecimalNumber(value, decimalPlaces);
 
     return currency ? `R$ ${formattedValue}` : formattedValue;
