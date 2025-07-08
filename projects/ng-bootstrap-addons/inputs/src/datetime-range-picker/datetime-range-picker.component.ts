@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import {DateUtils} from 'ng-bootstrap-addons/utils';
-import { FormErrorMessageComponent } from 'ng-bootstrap-addons/forms/form-error-message';
+import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 
 @Component({
   selector: 'nba-datetime-range-input',

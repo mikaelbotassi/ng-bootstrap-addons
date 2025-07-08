@@ -5,8 +5,8 @@ import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from
 import { MultiselectOptionComponent } from './multiselect-option/multiselect-option.component';
 import { distinctUntilChanged, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormErrorMessageComponent } from 'ng-bootstrap-addons/forms/form-error-message';
-import { InputPlaceholderComponent } from 'ng-bootstrap-addons/forms/inputs';
+import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
+import { InputPlaceholderComponent } from 'ng-bootstrap-addons/inputs';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { createRandomString } from 'ng-bootstrap-addons/utils';
 

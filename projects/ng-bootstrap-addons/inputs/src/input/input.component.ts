@@ -6,7 +6,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { CurrencyDirective } from 'ng-bootstrap-addons/directives';
 import { InputPasswordDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
-import { FormErrorMessageComponent } from 'ng-bootstrap-addons/forms/form-error-message';
+import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 
 type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
 

@@ -7,7 +7,7 @@ import { asyncScheduler, observeOn, debounceTime, distinctUntilChanged } from 'r
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
-import { FormErrorMessageComponent } from 'ng-bootstrap-addons/forms/form-error-message';
+import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { Command1 } from 'ng-bootstrap-addons/utils';
