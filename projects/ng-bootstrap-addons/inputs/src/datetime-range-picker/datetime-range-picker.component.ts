@@ -92,24 +92,30 @@ export class DatetimeRangePickerComponent extends ControlValueAccessorDirective<
 
       if(value.length !== 28) return;
 
-      // Divide a string em duas partes
-      const startBrDate = value.slice(0, 14); // Primeiros 14 caracteres
-      const endBrDate = value.slice(14);     // Restantes 14 caracteres
-  
-      if (startBrDate && endBrDate) {
-        // Converte as strings para o formato brasileiro
-        const startDate = DateUtils.fromBrazilianDate(
-          `${startBrDate.slice(0, 2)}/${startBrDate.slice(2, 4)}/${startBrDate.slice(4, 8)} ${startBrDate.slice(8, 10)}:${startBrDate.slice(10, 12)}:${startBrDate.slice(12, 14)}`
-        );
-        const endDate = DateUtils.fromBrazilianDate(
-          `${endBrDate.slice(0, 2)}/${endBrDate.slice(2, 4)}/${endBrDate.slice(4, 8)} ${endBrDate.slice(8, 10)}:${endBrDate.slice(10, 12)}:${endBrDate.slice(12, 14)}`
-        );
-  
-        if (startDate && endDate) {
-          // Atualiza o controle com as datas
-          this.control?.setValue([startDate, endDate]);
-          return;
+      try {
+        // Divide a string em duas partes
+        const startBrDate = value.slice(0, 14); // Primeiros 14 caracteres
+        const endBrDate = value.slice(14);     // Restantes 14 caracteres
+    
+        if (startBrDate && endBrDate) {
+          // Converte as strings para o formato brasileiro
+          const startDate = DateUtils.fromBrazilianDate(
+            `${startBrDate.slice(0, 2)}/${startBrDate.slice(2, 4)}/${startBrDate.slice(4, 8)} ${startBrDate.slice(8, 10)}:${startBrDate.slice(10, 12)}:${startBrDate.slice(12, 14)}`
+          );
+          const endDate = DateUtils.fromBrazilianDate(
+            `${endBrDate.slice(0, 2)}/${endBrDate.slice(2, 4)}/${endBrDate.slice(4, 8)} ${endBrDate.slice(8, 10)}:${endBrDate.slice(10, 12)}:${endBrDate.slice(12, 14)}`
+          );
+    
+          if (startDate && endDate) {
+            // Atualiza o controle com as datas
+            this.control?.setValue([startDate, endDate]);
+            return;
+          }
         }
+      } catch (error) {
+        // Se houver erro na conversão de datas, define como undefined
+        this.control?.setValue(undefined);
+        return;
       }
   
       this.control?.setValue(undefined);
