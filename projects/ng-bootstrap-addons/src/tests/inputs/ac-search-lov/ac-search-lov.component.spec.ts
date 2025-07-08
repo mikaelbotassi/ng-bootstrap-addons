@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AutoCompleteLovComponent } from 'ng-bootstrap-addons/inputs';
-import { AutocompleteService } from 'ng-bootstrap-addons/inputs';
+import { AutoCompleteLovComponent } from 'inputs/ac-search-lov/ac-search-lov.component';
+import { AutocompleteService } from 'inputs/ac-search-lov/services/auto-complete.service';
 import { HttpParams } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 @Component({

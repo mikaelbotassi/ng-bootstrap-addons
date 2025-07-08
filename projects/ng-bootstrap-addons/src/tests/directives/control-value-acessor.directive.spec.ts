@@ -2,8 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
-import { H } from 'node_modules/@angular/cdk/activedescendant-key-manager.d-Bjic5obv';
+import { ControlValueAccessorDirective } from 'directives/control-value-acessor.directive';
 
 @Component({
   standalone: true,

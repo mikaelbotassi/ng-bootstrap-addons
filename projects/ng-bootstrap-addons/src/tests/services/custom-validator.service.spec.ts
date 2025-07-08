@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { CustomValidatorService } from 'ng-bootstrap-addons/services';
-import { NumericPipe } from 'ng-bootstrap-addons/pipes';
+import { CustomValidatorService } from 'services/custom-validator.service';
+import { NumericPipe } from 'pipes/numeric.pipe';
 
 describe('CustomValidatorService', () => {
   let service: CustomValidatorService;

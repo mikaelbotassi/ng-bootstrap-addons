@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CurrencyDirective } from 'ng-bootstrap-addons/directives';
-import { NumericPipe } from 'ng-bootstrap-addons/pipes';
+import { CurrencyDirective } from 'directives/currency.directive';
+import { NumericPipe } from 'pipes/numeric.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
@@ -18,7 +18,7 @@ describe('CurrencyDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let inputEl: HTMLInputElement;
   let directive: CurrencyDirective;
-  let numericPipe: jasmine.SpyObj<NumericPipe>;
+  let numericPipe: NumericPipe;
 
   beforeEach(() => {
     
@@ -33,7 +33,7 @@ describe('CurrencyDirective', () => {
     const debugEl = fixture.debugElement.query(By.directive(CurrencyDirective));
     directive = debugEl.injector.get(CurrencyDirective);
     inputEl = debugEl.nativeElement as HTMLInputElement;
-    numericPipe = debugEl.injector.get(NumericPipe) as jasmine.SpyObj<NumericPipe>;
+    numericPipe = directive['numericPipe'];
   });
 
   it('should create an instance', () => {
@@ -43,7 +43,7 @@ describe('CurrencyDirective', () => {
   it('should write value and format with NumericPipe', () => {
     const spy = spyOn(numericPipe, 'transform').and.callThrough();
     directive.writeValue(1.23);
-    expect(numericPipe.transform).toHaveBeenCalledWith(1.23, true, 2);
+    expect(spy).toHaveBeenCalledWith(1.23, true, 2);
     expect(inputEl.value).toBe('R$ 1,23');
   });
 

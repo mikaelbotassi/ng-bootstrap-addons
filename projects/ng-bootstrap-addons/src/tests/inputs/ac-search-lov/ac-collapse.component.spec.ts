@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AutocompleteCollapseComponent } from '../../../inputs/src/ac-search-lov/components/ac-collapse/ac-collapse.component';
-import { acMap } from '../../../inputs/src/ac-search-lov/ac-search-lov.component';
+import { AutocompleteCollapseComponent } from 'inputs/ac-search-lov/components/ac-collapse/ac-collapse.component';
+import { acMap } from 'inputs/ac-search-lov/ac-search-lov.component';
 
 @Component({
   standalone: true,

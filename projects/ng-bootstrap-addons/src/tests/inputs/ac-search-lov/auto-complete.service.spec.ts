@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { HttpParams } from '@angular/common/http';
 import { provideHttpClient } from '@angular/common/http';
-import { AutocompleteService, AutoCompleteConfig } from 'ng-bootstrap-addons/inputs';
+import { AutocompleteService, AutoCompleteConfig } from 'inputs/ac-search-lov/services/auto-complete.service';
 
 describe('AutocompleteService', () => {
   let service: AutocompleteService;

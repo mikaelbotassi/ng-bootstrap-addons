@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { InputPasswordDirective } from 'ng-bootstrap-addons/directives';
+import { InputPasswordDirective } from 'directives/input-password.directive';
 import { By } from '@angular/platform-browser';
 
 @Component({

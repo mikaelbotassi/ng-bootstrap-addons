@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EmptyDataComponent } from 'ng-bootstrap-addons/components';
+import { EmptyDataComponent } from 'components/empty-data/empty-data.component';
 import { By } from '@angular/platform-browser';
 
 describe('EmptyDataComponent', () => {

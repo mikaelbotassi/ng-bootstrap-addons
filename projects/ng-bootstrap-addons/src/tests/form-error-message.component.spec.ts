@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
+import { FormErrorMessageComponent } from 'form-error-message/form-error-message.component';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomValidatorService } from 'ng-bootstrap-addons/services';
-import { of, Subject } from 'rxjs';
+import { CustomValidatorService } from 'services/custom-validator.service';
+import { Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 
@@ -22,17 +22,21 @@ describe('FormErrorMessageComponent', () => {
   let fixture: ComponentFixture<MockComponent>;
   let mockComponent: MockComponent;
   let component: FormErrorMessageComponent;
-  let service: CustomValidatorService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MockComponent],
+      providers: [CustomValidatorService]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MockComponent);
     mockComponent = fixture.componentInstance;
-    component = fixture.debugElement.query(By.directive(FormErrorMessageComponent)).componentInstance;
-    service = TestBed.inject(CustomValidatorService);
   });
 
   it('should create', () => {
+    fixture.detectChanges();
+    component = fixture.debugElement.query(By.directive(FormErrorMessageComponent)).componentInstance;
+    
     expect(component).toBeTruthy();
   });
 
@@ -42,7 +46,10 @@ describe('FormErrorMessageComponent', () => {
 
     mockComponent.control = control;
     fixture.detectChanges();
+    
+    component = fixture.debugElement.query(By.directive(FormErrorMessageComponent)).componentInstance;
 
+    // The real service should return the default required message
     expect(component.message).toBe('Este campo é obrigatório');
 
     const div = fixture.debugElement.query(By.css('.invalid-feedback'));
@@ -53,9 +60,11 @@ describe('FormErrorMessageComponent', () => {
   it('should not show message when control is valid', () => {
     const control = new FormControl('ok');
     control.markAsTouched();
+    
     mockComponent.control = control;
     fixture.detectChanges();
-    spyOn(service, 'getValidatorMessages').and.returnValue(null);
+    
+    component = fixture.debugElement.query(By.directive(FormErrorMessageComponent)).componentInstance;
 
     expect(component.message).toBeNull();
 
@@ -63,41 +72,44 @@ describe('FormErrorMessageComponent', () => {
     expect(div).toBeNull();
   });
 
-  it('should update message when statusChanges emits', () => {
-  const control = new FormControl('', Validators.required);
-  control.markAsTouched();
+  it('should update message when control status changes', () => {
+    const control = new FormControl('', Validators.required);
+    control.markAsTouched();
 
-  const statusChanges$ = new Subject<any>();
-  (control as any).statusChanges = statusChanges$.asObservable(); // Aqui está a correção
+    mockComponent.control = control;
+    fixture.detectChanges();
+    
+    component = fixture.debugElement.query(By.directive(FormErrorMessageComponent)).componentInstance;
 
-  const spy = spyOn(service, 'getValidatorMessages').and.returnValue(['Initial']);
+    // Initially should show required message
+    expect(component.message).toBe('Este campo é obrigatório');
 
-  mockComponent.control = control;
-  fixture.detectChanges();
+    // Make control valid
+    control.setValue('valid value');
+    fixture.detectChanges();
 
-  expect(component.message).toBe('Initial');
+    expect(component.message).toBeNull();
 
-  spy.and.returnValue(['Updated']);
-  statusChanges$.next('INVALID');
-  fixture.detectChanges();
+    // Make control invalid again
+    control.setValue('');
+    fixture.detectChanges();
 
-  expect(component.message).toBe('Updated');
-
-  const div = fixture.debugElement.query(By.css('.invalid-feedback'));
-  expect(div.nativeElement.textContent.trim()).toBe('Updated');
-});
-
+    expect(component.message).toBe('Este campo é obrigatório');
+  });
 
   it('should not render feedback div when control untouched', () => {
     const control = new FormControl('', Validators.required);
     // Not marking as touched
 
-    spyOn(service, 'getValidatorMessages').and.returnValue(['Required']);
-
     mockComponent.control = control;
     fixture.detectChanges();
+    
+    component = fixture.debugElement.query(By.directive(FormErrorMessageComponent)).componentInstance;
 
-    expect(component.message).toBe('Required');
+    // Message should exist but div should not be rendered due to untouched state
+    expect(component.message).toBe('Este campo é obrigatório');
+    
+    // The div should not be rendered because control is untouched
     const div = fixture.debugElement.query(By.css('.invalid-feedback'));
     expect(div).toBeNull();
   });

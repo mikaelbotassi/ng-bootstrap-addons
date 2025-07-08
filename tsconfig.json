@@ -11,12 +11,17 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "ng-bootstrap-addons": [
-        "./dist/ng-bootstrap-addons"
-      ],
-      "ng-bootstrap-addons/*": [
-        "dist/ng-bootstrap-addons/*"
-      ]
+      "ng-bootstrap-addons": ["./dist/ng-bootstrap-addons"],
+      "ng-bootstrap-addons/*": ["dist/ng-bootstrap-addons/*"],
+      "project/*": ["./projects/ng-bootstrap-addons/*"],
+      "directives/*": ["./projects/ng-bootstrap-addons/directives/src/*"],
+      "components/*": ["./projects/ng-bootstrap-addons/components/src/*"],
+      "inputs/*": ["./projects/ng-bootstrap-addons/inputs/src/*"],
+      "selects/*": ["./projects/ng-bootstrap-addons/selects/src/*"],
+      "pipes/*": ["./projects/ng-bootstrap-addons/pipes/src/*"],
+      "drag-drop-upload/*":["./projects/ng-bootstrap-addons/drag-drop-upload/src/*"],
+      "form-error-message/*": ["./projects/ng-bootstrap-addons/form-error-message/src/*"],
+      "services/*": ["./projects/ng-bootstrap-addons/services/src/*"],
     },
     "skipLibCheck": true,
     "isolatedModules": true,

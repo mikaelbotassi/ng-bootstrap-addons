@@ -2,9 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DragDropUploadComponent,
   FileUpload,
-} from 'ng-bootstrap-addons/drag-drop-upload';
+} from 'drag-drop-upload/drag-drop-upload.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { By } from '@angular/platform-browser';
 
 describe('DragDropUploadComponent', () => {
   let fixture: ComponentFixture<DragDropUploadComponent>;

@@ -3,7 +3,7 @@ import { Component, DebugElement } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { InputComponent } from 'ng-bootstrap-addons/inputs';
+import { InputComponent } from 'inputs/input/input.component';
 
 @Component({
   standalone: true,

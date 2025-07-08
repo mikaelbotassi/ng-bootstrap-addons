@@ -1,4 +1,4 @@
-import { NumericPipe } from 'ng-bootstrap-addons/pipes';
+import { NumericPipe } from 'pipes/numeric.pipe';
 
 describe('NumericPipe', () => {
   let pipe: NumericPipe;
