@@ -1,0 +1,205 @@
+/* You can add global styles to this file, and also import other style files */
+@use "./styles/index.scss" as *;
+@import './styles/ngx-bootstrap/ngx-bootstrap.scss';
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar { 
+  padding: 1px;
+  background: #fff;
+  height: .5rem;
+  width: .5rem }
+  
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb { 
+  padding: 3px }
+  
+::-webkit-scrollbar-thumb { background: $primary }
+::-webkit-scrollbar-thumb:hover { background: $primary }
+
+html, body { height: 100% }
+
+body { overflow-x: hidden }
+
+main, 
+section,
+.wrapper { padding: calc(5rem + 4vw) 0 }
+
+.wrapper-sm { padding: calc(4rem + 3vw) 0 }
+
+//GRADIENTS
+
+.cursor-grabbing {
+  cursor: grabbing;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+/* Ocultar o ícone de olho nativo do campo de entrada de senha */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-clear-button,
+input[type="password"]::-webkit-inner-spin-button,
+input[type="password"]::-webkit-outer-spin-button,
+input[type="password"]::-webkit-search-cancel-button,
+input[type="password"]::-webkit-search-decoration,
+input[type="password"]::-webkit-search-results-button,
+input[type="password"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+input[type="password"]{
+  position: relative;
+}
+
+.ti{
+  display: inline-flex;
+  align-items: center;
+}
+
+.password-eye-icon{
+  position: absolute;
+  background-color: #fff;
+  right: 10px;
+  top: 50%;
+  font-size: 1.5em;
+  color: tint-color($dark, 30%);
+  transform: translateY(-50%) !important;
+  cursor: pointer;
+  display: none;
+}
+
+.rotate-hover{
+  i{
+    transform: rotate(0);
+    transition: all 0.3s ease-in-out;
+  }
+  &:hover i{
+    transition: all 0.3s ease-in-out;
+    transform: rotate(360deg);
+  }
+}
+
+label.required{
+  display: inline-flex;
+  gap: .25rem;
+  font-weight: bold;
+  align-items: center;
+  color: $primary !important;
+  &::after{
+    content: '*' !important;
+    position: initial !important;
+    color: $danger;
+  }
+}
+.min-h-100vh{
+  min-height: 100vh;
+}
+
+.max-h-100vh{
+  max-height: 100vh;
+}
+
+.max-h-100dvh{
+  max-height: 100dvh;
+}
+
+.h-100vh{
+  height: 100vh;
+}
+
+.form-control.input-dark {
+  background-color: transparent;
+  color: var(--sm-light);
+  border-color: var(--sm-light);
+  &::placeholder{
+      color: rgba(var(--sm-light-rgb), .5);
+  }
+}
+
+[type="search"]::-webkit-search-cancel-button {
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+  -webkit-appearance: none;
+  background-color: var(--sm-light);
+  height: 10px;
+  width: 10px;
+}
+
+.min-w-100{
+  min-width: 100%;
+}
+
+.loading{
+  cursor: wait;
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  opacity: .75;
+  animation: placeholder 1s linear infinite;
+  .ti{
+    &::before{
+      content: "";
+      background-size: cover;
+      width: 1em;
+      height: 1em;
+      animation: pop 1s linear infinite;
+    }
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes placeholder {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out both;
+}
+.fade-out {
+  animation: fadeOut 0.3s ease-in-out both;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

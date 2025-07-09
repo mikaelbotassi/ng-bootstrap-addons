@@ -1,19 +1,16 @@
 <div class="form-group">
-  <label *ngIf="required;else nonRequiredLabel" class="text-bold text-primary ml-1">
-    <span class="text-danger">* </span><ng-content select="[label]"></ng-content>
-  </label>
-  <ng-template #nonRequiredLabel>
-    <label class="text-primary ml-1">
-        <ng-content select="[noRequiredLabel]"></ng-content>
-    </label>
-  </ng-template>
-  <div class="upload-area"
+  @if(label()){
+    <nba-label [required]="required()"></nba-label>
+  }
+  <div class="upload-area border border-secondary"
     (drop)="onDrop($event)"
     (dragover)="onDragOver($event)"
     (dragleave)="onDragLeave($event)"
   >
     <button type="button" (click)="fileInput.click()" class="btn text-decoration-none btn-link text-center mx-auto p-0 mb-3 d-block text-primary" [disabled]="disabled()">
-      <i class="ti ti-upload h2 mb-0"></i>
+      <i class="h2 mb-0">
+        <svg  xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
+      </i>
     </button>
     <button type="button" (click)="fileInput.click()" class="btn btn-link p-0 fw-bold lh-1" [disabled]="disabled()">Clique para selecionar</button> ou arraste arquivos para cá
     <input type="file" [attr.multiple]="multiple() ? true : null" [disabled]="disabled()" [accept]="accept()" (change)="onFileSelect($event)" style="display: none;" #fileInput>

@@ -1,0 +1,91 @@
+[class~="ratio"]{
+    position: relative;
+    overflow: hidden;
+    display: block }
+    
+[class~="ratio"] img {
+position: absolute;
+top: 50%;
+left: 50%;
+height: 100%;
+width: 100%;
+transform: translate(-50%, -50%);
+object-fit: cover }
+
+@mixin responsive-widths {
+    @each $breakpoint, $width in $grid-breakpoints {
+        @media (min-width: $width) {
+        &-#{$breakpoint}-100 { width: 100% !important; }
+        &-#{$breakpoint}-75  { width: 75% !important; }
+        &-#{$breakpoint}-50  { width: 50% !important; }
+        &-#{$breakpoint}-25  { width: 25% !important; }
+        }
+    }
+}
+
+.w { @include responsive-widths }
+
+.w-fit-content{ width: fit-content }
+.min-w-fit-content{ min-width: fit-content }
+
+@media(max-width:1320px){
+    [class*="container"] { padding: 0 1.5rem !important }
+}
+  
+@media(max-width:767.98px){
+    [class*="container"] { padding: 0 2rem !important }
+}
+
+@each $name, $color in $theme-colors {
+    .bg-gradient-#{$name} {
+      background: $color !important;
+      background: linear-gradient(
+        135deg,
+        rgba(lighten($color,10), var(--#{$prefix}bg-opacity, 1)) 0%,
+        rgba(to-rgb($color), var(--#{$prefix}bg-opacity, 1)) 50%,
+        rgba(darken($color,10), var(--#{$prefix}bg-opacity, 1)) 100%
+      ) !important;
+    }
+}
+
+.bg-gradient-warning-primary {
+    background: $primary !important;
+    background: linear-gradient(
+      135deg,
+      rgba(darken($primary,10), var(--#{$prefix}bg-opacity, 1)) 0%,
+      rgba(to-rgb($primary), var(--#{$prefix}bg-opacity, 1)) 25%,
+      rgba(darken($warning,10), var(--#{$prefix}bg-opacity, 1)) 50%,
+      rgba(to-rgb($warning), var(--#{$prefix}bg-opacity, 1)) 100%
+    ) !important;
+}
+  
+@for $i from 6 through 20 {
+    .border-#{$i} {
+        border-width: #{$i}px !important;
+    }
+}
+
+.needs-validation{
+    .ng-touched.ng-invalid:not(.no-validate) {
+      @extend .is-invalid;
+    }
+    
+    .ng-touched.ng-valid:not(.no-validate) {
+      @extend .is-valid;
+    }
+}
+
+@for $i from 1 through 12 {
+  .border-start-#{$i} {
+    border-left: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+  .border-end-#{$i} {
+    border-right-width: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+  .border-top-#{$i} {
+    border-top-width: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+  .border-bottom-#{$i} {
+    border-bottom-width: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+}

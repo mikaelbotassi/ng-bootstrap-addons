@@ -1,0 +1,65 @@
+@media print {
+    body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        margin: 0;
+        font-size: 9px !important;
+    }
+
+    @page {
+        margin: 10mm 5mm;
+        size: auto;
+    }
+
+    /* Remover o cabeçalho da tabela, garantindo a repetição do cabeçalho em todas as páginas */
+    .no-print {
+        display: none;
+    }
+
+    .print-header {
+        width: 100%;
+        background-color: #fff;
+        padding: 5px 0;  /* Reduzir o padding do cabeçalho */
+        font-size: 10px;
+        text-align: center;
+        border-bottom: none !important;
+        page-break-before: always; /* Garantir que o cabeçalho só apareça na primeira página */
+    }
+
+    .content {
+        margin-top: 10px; /* Ajustado para diminuir a distância entre o cabeçalho e a tabela */
+        padding: 5mm;
+        page-break-before: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: auto;
+    }
+
+    /* Forçar o thead a repetir em todas as páginas */
+    thead {
+        display: table-header-group !important; /* Esse comando força a repetição do cabeçalho da tabela */
+    }
+
+    th, td {
+        word-wrap: break-word;
+        text-align: left;
+        padding: 4px 8px;
+        font-size: 9px;
+    }
+
+    th, td {
+        page-break-inside: avoid !important;
+    }
+
+    .totals-table th, .totals-table td {
+        font-size: 9px;
+        padding: 5px 8px;
+    }
+
+    .table {
+        page-break-inside: auto;
+    }
+}

@@ -2,20 +2,22 @@ import { booleanAttribute, Component, EventEmitter, input, Input, model, OnDestr
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { stopEvent } from 'ng-bootstrap-addons/utils';
+import { LabelComponent } from 'ng-bootstrap-addons/label';
 
 @Component({
     selector: 'nba-drag-drop-upload',
-    imports: [CommonModule],
+    imports: [CommonModule, LabelComponent],
     templateUrl: './drag-drop-upload.component.html',
     styleUrls: ['./drag-drop-upload.component.scss']
 })
 export class DragDropUploadComponent implements OnDestroy{
 
   readonly files = model<FileUpload[]>([]);
-  required = input(false, {transform: booleanAttribute});
-  disabled = input(false, {transform: booleanAttribute});
-  accept = input<string>('file/*');
-  multiple = input(false, {transform: booleanAttribute});
+  readonly label = input<string>();
+  readonly required = input(false, {transform: booleanAttribute});
+  readonly disabled = input(false, {transform: booleanAttribute});
+  readonly accept = input<string>('file/*');
+  readonly multiple = input(false, {transform: booleanAttribute});
 
   constructor(private _sanitizer: DomSanitizer) {}
 
