@@ -33,7 +33,7 @@ export class DatetimeRangePickerComponent extends ControlValueAccessorDirective<
   timeOutHandle: ReturnType<typeof setTimeout> | null = null;
   isCollapsed = signal<boolean>(true);
   cdr = inject(ChangeDetectorRef);
-  customConfigs = input<Partial<BsDaterangepickerConfig>>();
+  customConfigs = input<Partial<BsDaterangepickerConfig>>({});
   baseConfigs = signal<Partial<BsDaterangepickerConfig>>({
       dateInputFormat: 'DD/MM/YYYY HH:mm:ss',
       showWeekNumbers: false,
@@ -60,8 +60,8 @@ export class DatetimeRangePickerComponent extends ControlValueAccessorDirective<
   });
   bsConfigs:any = computed(() => {
     return {
-      ...this.customConfigs(),
       ...this.baseConfigs(),
+      ...this.customConfigs(),
     };
   });
 
