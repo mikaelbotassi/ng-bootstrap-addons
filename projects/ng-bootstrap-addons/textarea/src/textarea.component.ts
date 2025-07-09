@@ -16,6 +16,9 @@ import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-messag
       multi: true,
     },
   ],
+  host: {
+    'data-component': 'textarea'
+  }
 })
 export class TextAreaComponent<T> extends ControlValueAccessorDirective<T> {
   rows = input<number>(5);

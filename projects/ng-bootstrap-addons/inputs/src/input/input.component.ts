@@ -21,6 +21,9 @@ type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
       multi: true,
     },
   ],
+  host: {
+    'data-component': 'input',
+  },
 })
 export class InputComponent<T> extends ControlValueAccessorDirective<T> {
   password = input(false, {transform: booleanAttribute});

@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './input-sample.component.html',
 })
 export class InputSampleComponent {
-  defaultInput = signal<string>('');
+  defaultInput = signal<string>('fggfg');
   currencyInput = signal<number>(135545);
   
   // Valores para teste

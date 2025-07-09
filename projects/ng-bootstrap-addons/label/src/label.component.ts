@@ -6,6 +6,9 @@ import { booleanAttribute, Component, input } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
+  host: {
+    'data-component': 'label'
+  }
 })
 export class LabelComponent {
   required = input(false, {transform: booleanAttribute});

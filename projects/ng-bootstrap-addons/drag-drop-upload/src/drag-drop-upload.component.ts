@@ -8,7 +8,10 @@ import { LabelComponent } from 'ng-bootstrap-addons/label';
     selector: 'nba-drag-drop-upload',
     imports: [CommonModule, LabelComponent],
     templateUrl: './drag-drop-upload.component.html',
-    styleUrls: ['./drag-drop-upload.component.scss']
+    styleUrls: ['./drag-drop-upload.component.scss'],
+    host: {
+        'data-component': 'drag-drop-upload'
+    }
 })
 export class DragDropUploadComponent implements OnDestroy{
 

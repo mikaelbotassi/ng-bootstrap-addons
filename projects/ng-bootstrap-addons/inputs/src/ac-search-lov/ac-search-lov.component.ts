@@ -25,6 +25,9 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
       multi: true,
     },
   ],
+  host: {
+    'data-component': 'ac-search-lov'
+  }
 })
 export class AutoCompleteLovComponent extends ControlValueAccessorDirective<string|number|null> {
 
