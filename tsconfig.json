@@ -23,6 +23,7 @@
       "drag-drop-upload/*":["./projects/ng-bootstrap-addons/drag-drop-upload/src/*"],
       "form-error-message/*": ["./projects/ng-bootstrap-addons/form-error-message/src/*"],
       "services/*": ["./projects/ng-bootstrap-addons/services/src/*"],
+      "textarea/*": ["./projects/ng-bootstrap-addons/textarea/src/*"],
     },
     "skipLibCheck": true,
     "isolatedModules": true,

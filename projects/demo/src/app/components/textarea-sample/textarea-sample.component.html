@@ -1,1 +1,8 @@
-<p>textarea-sample works!</p>
+<app-sample-container tagName="nba-textarea">
+    <nba-textarea
+        label="Default Textarea"
+        [formControl]="control"
+    ></nba-textarea>
+    <hr>
+    Value: {{ control.value }}
+</app-sample-container>

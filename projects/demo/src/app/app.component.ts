@@ -9,6 +9,8 @@ import { InputSampleComponent } from './components/input-sample/input-sample.com
 import { SwitchSampleComponent } from './components/switch-sample/switch-sample.component';
 import { SelectSampleComponent } from './components/select-sample/select-sample.component';
 import { MultiselectSampleComponent } from './components/multiselect-sample/multiselect-sample.component';
+import { TextareaSampleComponent } from './components/textarea-sample/textarea-sample.component';
+import { LabelSampleComponent } from './components/label-sample/label-sample.component';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +24,9 @@ import { MultiselectSampleComponent } from './components/multiselect-sample/mult
     InputSampleComponent,
     SwitchSampleComponent,
     SelectSampleComponent,
-    MultiselectSampleComponent
+    MultiselectSampleComponent,
+    TextareaSampleComponent,
+    LabelSampleComponent
   ],
   templateUrl: './app.component.html',
 })
