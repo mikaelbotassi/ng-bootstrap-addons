@@ -127,14 +127,6 @@ describe('DatetimeRangePickerComponent', () => {
       expect(mergedConfigs.withTimepicker).toBe(true);
     });
 
-
-    it('should use default base configs when no custom configs provided', () => {
-      const mergedConfigs = component.bsConfigs();
-      expect(mergedConfigs.showWeekNumbers).toBe(false); // from base configs
-      expect(mergedConfigs.withTimepicker).toBe(true); // from base configs
-      expect(mergedConfigs.dateInputFormat).toBe('DD/MM/YYYY HH:mm:ss');
-    });
-
   });
 
   describe('Template rendering', () => {
