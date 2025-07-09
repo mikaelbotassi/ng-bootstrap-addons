@@ -1,4 +1,4 @@
-import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect } from '@angular/core';
+import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
@@ -31,6 +31,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   acUrl = input.required<string>();
   acParams = input<HttpParams>(new HttpParams());
   map = input.required<acMap>();
+  readonly byPath = input(false, {transform: booleanAttribute});
   focus = model<boolean>(false);
   private _listOfValues = signal<any[]>([]);
   listOfValues = computed(() => this._listOfValues());
@@ -147,7 +148,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     let params = this.acParams();
     params = params.append(this.map().code.key, code);
     const config: AutoCompleteConfig = {
-      apiUrl: this.acUrl(),
+      apiUrl: this.acUrl() + (this.byPath() ? `/${code}` : ''),
       params: params,
       type: 'autocomplete',
     };

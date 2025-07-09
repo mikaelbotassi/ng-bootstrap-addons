@@ -2,10 +2,18 @@ import { Component } from '@angular/core';
 import { DragDropSampleComponent } from './components/drag-drop-sample/drag-drop-sample.component';
 import { ErrorMessageSampleComponent } from './components/error-message-sample/error-message-sample.component';
 import { EmptyDataSampleComponent } from './components/empty-data-sample/empty-data-sample.component';
+import { AcSearchSampleComponent } from './components/ac-search-sample/ac-search-sample.component';
+import { AutocompleteService } from 'ng-bootstrap-addons/inputs';
 
 @Component({
   selector: 'app-root',
-  imports: [DragDropSampleComponent, ErrorMessageSampleComponent, EmptyDataSampleComponent],
+  providers: [AutocompleteService],
+  imports: [
+    DragDropSampleComponent, 
+    ErrorMessageSampleComponent, 
+    EmptyDataSampleComponent, 
+    AcSearchSampleComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

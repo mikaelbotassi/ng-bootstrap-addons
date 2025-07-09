@@ -1,0 +1,10 @@
+<app-sample-container tagName="">
+    <nba-ac-lov
+        label="Search User"
+        byPath
+        acUrl="https://pokeapi.co/api/v2/pokemon"
+        [map]="mapConfig"
+        [(ngModel)]="selectedPokemon"
+        [required]="true">
+    </nba-ac-lov>
+</app-sample-container>
