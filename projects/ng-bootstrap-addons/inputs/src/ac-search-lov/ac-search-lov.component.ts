@@ -160,7 +160,13 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.fetchDescCommand.result()
       ?.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: any[]) => {
+        next: (res: any) => {
+          if(!Array.isArray(res)) {
+            this.values = res;
+            this.updateListOfValues([res]);
+            this.onPerformed.emit(configs.type);
+            return;
+          }
           if (res.length === 0) {
             this.values = null;
             this.updateListOfValues([]);

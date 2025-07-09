@@ -22,6 +22,9 @@ import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-messag
       multi: true,
     },
   ],
+  host: {
+    'data-component': 'datetime-range-picker',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatetimeRangePickerComponent extends ControlValueAccessorDirective<(Date|undefined)[]|undefined> {

@@ -4,6 +4,8 @@ import { ErrorMessageSampleComponent } from './components/error-message-sample/e
 import { EmptyDataSampleComponent } from './components/empty-data-sample/empty-data-sample.component';
 import { AcSearchSampleComponent } from './components/ac-search-sample/ac-search-sample.component';
 import { AutocompleteService } from 'ng-bootstrap-addons/inputs';
+import { DateRangePickerSampleComponent } from './components/date-range-picker-sample/date-range-picker-sample.component';
+import { InputSampleComponent } from './components/input-sample/input-sample.component';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,9 @@ import { AutocompleteService } from 'ng-bootstrap-addons/inputs';
     DragDropSampleComponent, 
     ErrorMessageSampleComponent, 
     EmptyDataSampleComponent, 
-    AcSearchSampleComponent
+    AcSearchSampleComponent,
+    DateRangePickerSampleComponent,
+    InputSampleComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

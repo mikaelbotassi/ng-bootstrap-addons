@@ -5,6 +5,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   imports: [],
   templateUrl: './input-placeholder.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'data-component': 'input-placeholder'
+  }
 })
 export class InputPlaceholderComponent {
 

@@ -7,6 +7,9 @@ import { CustomValidatorService } from 'ng-bootstrap-addons/services';
   selector: 'nba-form-error-message',
   imports: [],
   templateUrl: './form-error-message.component.html',
+  host: {
+    'data-component': 'form-error-message'
+  }
 })
 export class FormErrorMessageComponent implements OnInit {
 
