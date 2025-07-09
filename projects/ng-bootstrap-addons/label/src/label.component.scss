@@ -3,10 +3,8 @@ label.required{
   gap: .25rem;
   font-weight: bold;
   align-items: center;
-  color: var(--sm-primary) !important;
   &::after{
     content: '*' !important;
     position: initial !important;
-    color: var(--sm-primary);
   }
 }

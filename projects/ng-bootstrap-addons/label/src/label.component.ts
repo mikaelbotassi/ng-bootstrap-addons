@@ -9,4 +9,5 @@ import { booleanAttribute, Component, input } from '@angular/core';
 })
 export class LabelComponent {
   required = input(false, {transform: booleanAttribute});
+  class = input<string>();
 }

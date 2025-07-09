@@ -86,18 +86,6 @@ input[type="password"]{
   }
 }
 
-label.required{
-  display: inline-flex;
-  gap: .25rem;
-  font-weight: bold;
-  align-items: center;
-  color: $primary !important;
-  &::after{
-    content: '*' !important;
-    position: initial !important;
-    color: $danger;
-  }
-}
 .min-h-100vh{
   min-height: 100vh;
 }
