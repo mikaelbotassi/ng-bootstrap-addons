@@ -26,10 +26,12 @@ describe('EmptyDataComponent', () => {
   });
 
   it('should display the correct main text', () => {
-    const h2 = fixture.debugElement.query(By.css('h2')).nativeElement as HTMLElement;
-    expect(h2.textContent?.trim()).toBe('NENHUM REGISTRO');
+    const h2 = fixture.debugElement.query(By.css('h2'));
+    expect(h2).toBeTruthy();
+    expect(h2.nativeElement.textContent?.trim()).toBe('NENHUM REGISTRO');
 
-    const h3 = fixture.debugElement.query(By.css('h3')).nativeElement as HTMLElement;
-    expect(h3.textContent?.trim()).toBe('ENCONTRADO');
+    const h6 = fixture.debugElement.query(By.css('h6'));
+    expect(h6).toBeTruthy();
+    expect(h6.nativeElement.textContent?.trim()).toBe('ENCONTRADO');
   });
 });

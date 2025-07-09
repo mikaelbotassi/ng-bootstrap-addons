@@ -40,7 +40,7 @@ describe('InputPasswordDirective', () => {
     const eyeIcon = directive['eyeIcon'];
     expect(eyeIcon).toBeTruthy();
     expect(eyeIcon.classList).toContain('password-eye-icon');
-    expect(eyeIcon.classList).toContain('ti-eye');
+    expect(eyeIcon.classList).toContain('eye');
     expect(eyeIcon.parentNode).toBe(inputEl.parentNode);
   });
 
@@ -78,15 +78,15 @@ describe('InputPasswordDirective', () => {
     // expect(event.defaultPrevented).toBeTrue();
     expect(directive['showPassword']).toBeTrue();
     expect(setAttributeSpy).toHaveBeenCalledWith(inputEl, 'type', 'text');
-    expect(removeClassSpy).toHaveBeenCalledWith(eyeIcon, 'ti-eye');
-    expect(addClassSpy).toHaveBeenCalledWith(eyeIcon, 'ti-eye-off');
+    expect(removeClassSpy).toHaveBeenCalledWith(eyeIcon, 'eye');
+    expect(addClassSpy).toHaveBeenCalledWith(eyeIcon, 'eye-off');
 
     // Toggle again
     directive['togglePasswordVisibility'](event);
 
     expect(directive['showPassword']).toBeFalse();
     expect(setAttributeSpy).toHaveBeenCalledWith(inputEl, 'type', 'password');
-    expect(removeClassSpy).toHaveBeenCalledWith(eyeIcon, 'ti-eye-off');
-    expect(addClassSpy).toHaveBeenCalledWith(eyeIcon, 'ti-eye');
+    expect(removeClassSpy).toHaveBeenCalledWith(eyeIcon, 'eye-off');
+    expect(addClassSpy).toHaveBeenCalledWith(eyeIcon, 'eye');
   });
 });
