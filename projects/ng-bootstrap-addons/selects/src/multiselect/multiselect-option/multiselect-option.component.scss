@@ -1,32 +1,46 @@
 li{
     overflow: hidden;
-    border-radius: .35rem;
     margin-bottom: .15rem;
 
     label{
         display: inline-flex;
+        font-size: .875rem;
         justify-content: flex-start;
+        align-items: center;
         gap: .5rem;
+        line-height: 1;
         padding: .5rem;
         transition: all .3s ease-in-out;
 
         &:hover{ cursor: pointer }
 
         &::before {
-            content: '\ea6b';
-            font-family: "tabler-icons" !important;
-            transform: rotate(180deg);
+            content: '';
+            display: inline-flex;
+            width: 1em;
+            height: 1em;
+            background-color: currentColor;
+            mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/></svg>');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
             transition: all .2s ease-in-out;
         }
 
         &.dropdown-item.active, &.dropdown-item:active{
             transition: all .3s ease-in-out;
-            --sm-dropdown-link-active-color: var(--sm-primary);
-            --sm-dropdown-link-active-bg: rgba(var(--sm-primary-rgb),.15);
+            color: #585858;
+            background-color: #ebebeb;
             &::before {
-                content: '\ea67';
-                font-family: "tabler-icons" !important;
-                transform: rotate(360deg);
+                content: '';
+                display: block;
+                width: 1em;
+                height: 1em;
+                background-color: currentColor;
+                mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>');
+                mask-size: contain;
+                mask-repeat: no-repeat;
+                mask-position: center;
                 transition: all .2s ease-in-out;
             }
         }

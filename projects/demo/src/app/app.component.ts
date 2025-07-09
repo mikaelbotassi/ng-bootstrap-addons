@@ -8,6 +8,7 @@ import { DateRangePickerSampleComponent } from './components/date-range-picker-s
 import { InputSampleComponent } from './components/input-sample/input-sample.component';
 import { SwitchSampleComponent } from './components/switch-sample/switch-sample.component';
 import { SelectSampleComponent } from './components/select-sample/select-sample.component';
+import { MultiselectSampleComponent } from './components/multiselect-sample/multiselect-sample.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ import { SelectSampleComponent } from './components/select-sample/select-sample.
     DateRangePickerSampleComponent,
     InputSampleComponent,
     SwitchSampleComponent,
-    SelectSampleComponent
+    SelectSampleComponent,
+    MultiselectSampleComponent
   ],
   templateUrl: './app.component.html',
 })

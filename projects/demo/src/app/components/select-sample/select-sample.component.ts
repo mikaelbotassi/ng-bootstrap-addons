@@ -10,5 +10,5 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectSampleComponent {
-  control = new FormControl<string>('option1',{validators:[Validators.required]});
+  control = new FormControl<string>('', {validators:[Validators.required]});
 }
