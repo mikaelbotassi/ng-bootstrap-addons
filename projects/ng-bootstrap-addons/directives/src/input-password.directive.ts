@@ -13,8 +13,7 @@ export class InputPasswordDirective {
   ngOnInit(): void {
     this.eyeIcon = this.renderer.createElement('i');
     this.renderer.addClass(this.eyeIcon, 'password-eye-icon');
-    this.renderer.addClass(this.eyeIcon, 'ti');
-    this.renderer.addClass(this.eyeIcon, 'ti-eye');
+    this.renderer.addClass(this.eyeIcon, 'eye');
     this.renderer.listen(this.eyeIcon, 'mousedown', (event) => this.togglePasswordVisibility(event));
     this.renderer.appendChild(this.el.nativeElement.parentNode, this.eyeIcon);
   }
@@ -36,7 +35,7 @@ export class InputPasswordDirective {
     this.showPassword = !this.showPassword;
     const inputType = this.showPassword ? 'text' : 'password';
     this.renderer.setAttribute(this.el.nativeElement, 'type', inputType);
-    this.renderer.removeClass(this.eyeIcon, this.showPassword ? 'ti-eye' : 'ti-eye-off');
-    this.renderer.addClass(this.eyeIcon, this.showPassword ? 'ti-eye-off' : 'ti-eye');
+    this.renderer.removeClass(this.eyeIcon, this.showPassword ? 'eye' : 'eye-off');
+    this.renderer.addClass(this.eyeIcon, this.showPassword ? 'eye-off' : 'eye');
   }
 }

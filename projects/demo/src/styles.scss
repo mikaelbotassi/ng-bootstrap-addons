@@ -63,18 +63,6 @@ input[type="password"]{
   align-items: center;
 }
 
-.password-eye-icon{
-  position: absolute;
-  background-color: #fff;
-  right: 10px;
-  top: 50%;
-  font-size: 1.5em;
-  color: tint-color($dark, 30%);
-  transform: translateY(-50%) !important;
-  cursor: pointer;
-  display: none;
-}
-
 .rotate-hover{
   i{
     transform: rotate(0);

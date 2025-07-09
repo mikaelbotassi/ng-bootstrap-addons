@@ -14,6 +14,7 @@ type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
   selector: 'nba-input',
   templateUrl: './input.component.html',
   imports: [ReactiveFormsModule, CommonModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CurrencyDirective, InputPasswordDirective],
+  styleUrl: './input.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

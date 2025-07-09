@@ -3,9 +3,22 @@
         label="Default Input"
         [(ngModel)]="defaultInput"
     />
+    <hr>
     <nba-input
         label="Currency Input"
         currency
-        [(ngModel)]="testCurrency"
+        hasCurrency
+        [(ngModel)]="currencyInput"
+    />
+    <hr>
+    <nba-input
+        label="Password Input"
+        password
+    />
+    <hr>
+    <nba-input
+        label="Disabled Input"
+        disabled
+        [(ngModel)]="defaultInput"
     />
 </app-sample-container>
