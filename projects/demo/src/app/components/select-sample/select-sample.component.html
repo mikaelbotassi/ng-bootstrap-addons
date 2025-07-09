@@ -1,0 +1,13 @@
+<app-sample-container tagName="nba-select">
+    <nba-select
+        label="Default Select"
+        [formControl]="control"
+    >
+        <option [value]="null">Selecione</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+    </nba-select>
+    <hr>
+    Value: {{ control.value }}
+</app-sample-container>

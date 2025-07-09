@@ -4,7 +4,8 @@ label.required{
   font-weight: bold;
   align-items: center;
   &::after{
-    content: '*' !important;
-    position: initial !important;
+    content: "*";
+    color: #dc3545;
+    position: initial;
   }
 }

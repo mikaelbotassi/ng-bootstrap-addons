@@ -6,6 +6,8 @@ import { AcSearchSampleComponent } from './components/ac-search-sample/ac-search
 import { AutocompleteService } from 'ng-bootstrap-addons/inputs';
 import { DateRangePickerSampleComponent } from './components/date-range-picker-sample/date-range-picker-sample.component';
 import { InputSampleComponent } from './components/input-sample/input-sample.component';
+import { SwitchSampleComponent } from './components/switch-sample/switch-sample.component';
+import { SelectSampleComponent } from './components/select-sample/select-sample.component';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +18,11 @@ import { InputSampleComponent } from './components/input-sample/input-sample.com
     EmptyDataSampleComponent, 
     AcSearchSampleComponent,
     DateRangePickerSampleComponent,
-    InputSampleComponent
+    InputSampleComponent,
+    SwitchSampleComponent,
+    SelectSampleComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'demo';
