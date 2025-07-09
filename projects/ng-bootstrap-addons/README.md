@@ -8,7 +8,9 @@ A modern and comprehensive Angular library that provides components, directives,
 
 ## 🚀 Version
 
-**v2.0.0** - Compatible with Angular 18+ | **We recommend version 2.0+**
+**v19.0.0** - Compatible with Angular 19+ | **Version aligned with Angular releases**
+
+> **📌 Versioning Strategy**: Our library follows Angular's major version releases. Version 19.x is compatible with Angular 19+, version 20.x will be compatible with Angular 20+, and so on.
 
 ## 📋 Table of Contents
 
@@ -55,12 +57,12 @@ This library was specially created for:
 npm install ng-bootstrap-addons
 ```
 
-> **📌 Note**: For the best experience, we recommend using version 2.0+ of the library.
+> **📌 Note**: Use the version that matches your Angular version. For Angular 19+, use ng-bootstrap-addons 19.x.
 
 ### Required Dependencies
 
 ```bash
-npm install @angular/cdk@>=18.0.0 ngx-bootstrap@>=18.0.0 ngx-mask@>=18.0.0 bootstrap@^5.2.0
+npm install @angular/cdk@^19.2.10 ngx-bootstrap@^19.0.2 ngx-mask@^19.0.6 bootstrap@^5.3.3
 ```
 
 ### AppModule Configuration
@@ -77,11 +79,21 @@ import { NgBootstrapAddonsModule } from 'ng-bootstrap-addons';
 export class AppModule { }
 ```
 
+### 📋 Version Compatibility Matrix
+
+| ng-bootstrap-addons | Angular | ngx-bootstrap | ngx-mask | Bootstrap | Status |
+|:-------------------:|:-------:|:-------------:|:--------:|:---------:|:------:|
+| **19.x** | 19.x | 19.x | 19.x | 5.3+ | ✅ **Current** |
+| **20.x** | 20.x | 20.x | 20.x | 5.3+ | 🔄 **Planned** |
+| **21.x** | 21.x | 21.x | 21.x | 5.3+ | 🔄 **Future** |
+
+> **💡 Strategy**: We maintain major version alignment with Angular. When Angular releases version X, we release ng-bootstrap-addons version X to ensure compatibility and leverage the latest features.
+
 ## 🎨 Configuration and Customization
 
 ### Theme Customization
 
-This library uses **Bootstrap 5.2** as a base. To customize your application theme, simply customize Bootstrap CSS variables:
+This library uses **Bootstrap 5.3+** as a base. To customize your application theme, simply customize Bootstrap CSS variables:
 
 ```scss
 // styles.scss or in your main styles file
@@ -447,13 +459,26 @@ Contributions are welcome! To contribute:
 
 ## 📋 Roadmap
 
-- [ ] 🌐 i18n support
+### Version 19.x (Current)
+- [ ] 🌐 Enhanced i18n support  
 - [ ] 🎨 Advanced customizable themes
-- [ ] 📱 Mobile-specific components
-- [ ] 🔍 Better accessibility
-- [ ] ⚡ Performance optimizations
-- [ ] 📊 Chart components
-- [ ] 🚀 Version 2.0 with breaking changes and improvements
+- [ ] 📱 Mobile-specific components optimization
+- [ ] 🔍 Better accessibility features
+- [ ] ⚡ Performance optimizations for Angular 19
+
+### Version 20.x (Next Major - Q2 2025)
+- [ ] � Angular 20 compatibility
+- [ ] �📊 New chart components
+- [ ] 🎯 Standalone components support
+- [ ] � Enhanced TypeScript strict mode
+
+### Version 21.x (Future - Q4 2025)
+- [ ] 🌟 Angular 21 latest features
+- [ ] 🔮 AI-powered component suggestions
+- [ ] 📈 Advanced analytics components
+- [ ] 🎨 Design system integration
+
+> **💡 Note**: We follow Angular's release schedule. Major versions are released every 6 months to ensure compatibility with the latest Angular features.
 
 ## 🔗 Useful Links
 
