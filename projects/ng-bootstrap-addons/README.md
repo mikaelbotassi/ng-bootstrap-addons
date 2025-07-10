@@ -8,8 +8,6 @@ A modern and comprehensive Angular library that provides components, directives,
 
 ## 🚀 Version
 
-**v19.0.1** - Compatible with Angular 19+ | **Version aligned with Angular releases**
-
 > **📌 Versioning Strategy**: Our library follows Angular's major version releases. Version 19.x is compatible with Angular 19+, version 20.x will be compatible with Angular 20+, and so on.
 
 ## 🎯 Demo Application
