@@ -11,7 +11,6 @@
               (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
               (keydown.tab)="focus.set(false)"
               (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
-              autofocus
               clickOutside
               [ngClass]="{
                 'ng-invalid': control.invalid && control.touched,
@@ -26,7 +25,6 @@
               [id]="inputId()"
               [name]="inputId()"
               [placeholder]="label()"
-              #input
             >
             <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
               <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center z-3 no-collapse"
@@ -64,6 +62,7 @@
               (keydown.f9)="focus.set(true)"
               (blur)="control.markAllAsTouched(); focus.set(false)"
               [placeholder]="label()"
+              [autofocus]="autofocus()"
               [ngClass]="{
                 'ng-invalid': control.invalid && control.touched,
                 'ng-valid': control.valid && control.touched,

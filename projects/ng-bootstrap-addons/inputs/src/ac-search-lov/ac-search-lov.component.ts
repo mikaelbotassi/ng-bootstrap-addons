@@ -1,4 +1,4 @@
-import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
@@ -8,7 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
-import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
+import { AutofocusDirective, ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { Command1 } from 'ng-bootstrap-addons/utils';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
@@ -17,7 +17,7 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
   selector: 'nba-ac-lov',
   templateUrl: './ac-search-lov.component.html',
   styleUrls: ['./ac-search-lov.component.scss'],
-  imports: [FormErrorMessageComponent, InputPlaceholderComponent, ReactiveFormsModule, ClickOutsideDirective, CollapseDirective, AutocompleteCollapseComponent, CommonModule, FormsModule],
+  imports: [FormErrorMessageComponent, InputPlaceholderComponent, ReactiveFormsModule, ClickOutsideDirective, CollapseDirective, AutocompleteCollapseComponent, CommonModule, FormsModule, AutofocusDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -31,6 +31,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   acUrl = input.required<string>();
   acParams = input<HttpParams>(new HttpParams());
+  autofocus = input(false, {transform: booleanAttribute});
   map = input.required<acMap>();
   readonly byPath = input(false, {transform: booleanAttribute});
   focus = model<boolean>(false);
@@ -91,7 +92,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.control?.valueChanges
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(value => {
-      console.log("🚀 ~ AutoCompleteLovComponent ~ ngOnInit ~ value:", value)
       if (value && !this.descControl.value) {
         this.fetchDesc(value);
       }
@@ -127,7 +127,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   override writeValue(value: any): void {
-    console.log('🔁 writeValue chamado com:', value);
     if (this.control && JSON.stringify(this.control.value) !== JSON.stringify(value)) {
       this.control.patchValue(value, { emitEvent: false });
       if (value) {
