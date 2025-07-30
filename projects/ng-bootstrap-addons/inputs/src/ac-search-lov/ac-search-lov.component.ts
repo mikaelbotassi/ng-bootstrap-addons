@@ -1,4 +1,4 @@
-import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute } from '@angular/core';
+import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
@@ -18,6 +18,7 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
   templateUrl: './ac-search-lov.component.html',
   styleUrls: ['./ac-search-lov.component.scss'],
   imports: [FormErrorMessageComponent, InputPlaceholderComponent, ReactiveFormsModule, ClickOutsideDirective, CollapseDirective, AutocompleteCollapseComponent, CommonModule, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -133,6 +134,11 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   updateListOfValues(val: any[]) {
+    if(!val[0] || !val[0][this.map().code.key] && !val[0][this.map().desc.key]){
+      console.warn('Invalid value structure for autocomplete LOV');
+      this._listOfValues.set([]);
+      return;
+    }
     this._listOfValues.set([...val]);
   }
 
@@ -199,6 +205,11 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       this.map().addons?.forEach((addon) => {
         if (addon.setValue) addon.setValue(null);
       });
+      return;
+    }
+    if(!value[this.map().code.key] && !value[this.map().desc.key]){
+      this.descControl.setValue('');
+      this.controlValue = null;
       return;
     }
     this.completeDescFromResponse = value;
