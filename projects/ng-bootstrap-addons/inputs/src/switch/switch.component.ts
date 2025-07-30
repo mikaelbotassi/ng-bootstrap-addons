@@ -13,9 +13,6 @@ import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
       multi: true,
     },
   ],
-  host: {
-    'data-component': 'switch'
-  }
 })
 export class SwitchComponent<T> extends ControlValueAccessorDirective<T> {
 }

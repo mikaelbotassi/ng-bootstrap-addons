@@ -26,9 +26,6 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
       multi: true,
     },
   ],
-  host: {
-    'data-component': 'ac-search-lov'
-  }
 })
 export class AutoCompleteLovComponent extends ControlValueAccessorDirective<string|number|null> {
 
@@ -91,6 +88,15 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
     });
 
+    this.control?.valueChanges
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(value => {
+      console.log("🚀 ~ AutoCompleteLovComponent ~ ngOnInit ~ value:", value)
+      if (value && !this.descControl.value) {
+        this.fetchDesc(value);
+      }
+    });
+
     this.control?.statusChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
@@ -121,8 +127,12 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   override writeValue(value: any): void {
+    console.log('🔁 writeValue chamado com:', value);
     if (this.control && JSON.stringify(this.control.value) !== JSON.stringify(value)) {
       this.control.patchValue(value, { emitEvent: false });
+      if (value) {
+        this.fetchDesc(value);
+      }
     }
   }
 

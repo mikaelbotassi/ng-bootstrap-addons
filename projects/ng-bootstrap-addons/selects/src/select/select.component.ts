@@ -15,9 +15,6 @@ import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-messag
       multi: true,
     },
   ],
-  host: {
-    'data-component': 'select'
-  }
 })
 export class SelectComponent<T> extends ControlValueAccessorDirective<T> {
 

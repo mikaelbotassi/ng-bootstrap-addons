@@ -7,9 +7,6 @@ import { booleanAttribute, Component, input, ViewEncapsulation } from '@angular/
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  host: {
-    'data-component': 'label'
-  },
 })
 export class LabelComponent {
   required = input(false, {transform: booleanAttribute});

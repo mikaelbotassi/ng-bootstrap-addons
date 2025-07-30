@@ -5,9 +5,6 @@ import { Component, computed, input } from '@angular/core';
   selector: 'nba-textarea-placeholder',
   imports: [CommonModule],
   templateUrl: './textarea-placeholder.component.html',
-  host: {
-    'data-component': 'textarea-placeholder'
-  }
 })
 export class TextareaPlaceholderComponent {
 

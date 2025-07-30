@@ -72,15 +72,17 @@ export class ControlValueAccessorDirective<T> implements ControlValueAccessor, O
         }
     }      
 
-    registerOnChange(fn: (val: T | null) => T): void {
+    registerOnChange(fn: (val: T | null) => void): void {
         this.control?.valueChanges
         .pipe(
             takeUntil(this._destroy$),
             startWith(this.control.value),
-            distinctUntilChanged(),
-            tap((val) => fn(val))
+            distinctUntilChanged()
         )
-        .subscribe(() => this.control?.markAsUntouched());
+        .subscribe((val) => {
+            fn(val);
+            this.control?.markAsUntouched();
+        });
     }
 
     registerOnTouched(fn: () => T): void {

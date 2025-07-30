@@ -11,6 +11,7 @@
               (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
               (keydown.tab)="focus.set(false)"
               (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+              autofocus
               clickOutside
               [ngClass]="{
                 'ng-invalid': control.invalid && control.touched,
