@@ -17,7 +17,7 @@
                         'ng-valid': (control.valid && control.touched) && textValue.valid,
                         'ng-invalid': (control.invalid && control.touched) || textValue.invalid,
                     }"
-                    [attr.aria-expanded]="!isCollapsed"
+                    [attr.aria-expanded]="!isCollapsed()"
                     (click)="toggleCollapse()"
                     (blur)="markAsTouched()"
                     [formControl]="textValue"
