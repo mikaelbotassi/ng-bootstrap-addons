@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
 import { CustomerService } from '../../services/customer.service';
 import { NumericIntervalInputComponent } from 'inputs/numeric-interval-input/numeric-interval-input.component';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CustomValidatorService } from 'services/custom-validator.service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-numeric-interval-input-sample',
@@ -13,11 +12,6 @@ import { CustomValidatorService } from 'services/custom-validator.service';
 })
 export class NumericIntervalInputSampleComponent {
 
-  constructor(private formMessage: CustomValidatorService){}
-
-  value = new FormControl<(number | null)[] | null>(null, {validators: [Validators.required
-  ]});
-
-
+  value = new FormControl<(number | null)[] | null>(null);
 
 }

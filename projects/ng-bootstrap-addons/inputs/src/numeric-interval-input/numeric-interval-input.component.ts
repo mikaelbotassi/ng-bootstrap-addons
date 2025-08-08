@@ -92,7 +92,7 @@ export class NumericIntervalInputComponent
             this.control.updateValueAndValidity();
           }
           this.control.setValue([this.initialValue.value, this.endValue.value], { emitEvent: false });
-          this.onValidatorChange(); // <- isso força revalidação
+          this.onValidatorChange();
         }
       });
 
@@ -105,7 +105,7 @@ export class NumericIntervalInputComponent
             this.control.updateValueAndValidity();
           }
           this.control.setValue([this.initialValue.value, this.endValue.value], { emitEvent: false });
-          this.onValidatorChange(); // <- isso também
+          this.onValidatorChange();
         }
     });
 
