@@ -1,8 +1,8 @@
-<app-sample-container tagName="nba-switch">
+<app-sample-container tagName="nba-table">
   <nba-table #dt [value]="loadCommand.finalResult()">
     <ng-template #header>
       <tr>
-        <th nbaColumnHeader field="id" type="text">ID</th>
+        <th nbaColumnHeader field="id" type="numeric">ID</th>
         <th nbaColumnHeader field="name" type="text">Nome</th>
         <th nbaColumnHeader field="country.name" type="text">País</th>
       </tr>

@@ -1,7 +1,7 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, HostListener } from '@angular/core';
-import { TableComponent } from '../table.component';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, HostListener, contentChild, TemplateRef } from '@angular/core';
 import { ColumnFilterComponent } from '../column-filter/column-filter.component';
-import { ColumnFilterType, SortDirection } from '../models/table-models';
+import { TableComponent } from '../../table.component';
+import { ColumnFilterType, SortDirection } from '../../models/table-models';
 
 @Component({
   selector: 'th[nbaColumnHeader]',
@@ -14,6 +14,8 @@ export class ColumnHeaderComponent {
   field = input.required<string>();
   type = input.required<ColumnFilterType>();
   sortable = input(true, {transform: booleanAttribute});
+
+  filter = contentChild<TemplateRef<any>>('filter');
     
   private table = inject(TableComponent, { skipSelf: true });
   

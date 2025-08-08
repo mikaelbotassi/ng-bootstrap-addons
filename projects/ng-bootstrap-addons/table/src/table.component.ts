@@ -14,6 +14,8 @@ export class TableComponent<T = any> {
   // Signals para ordenação (públicos para acesso das diretivas)
   sortField = signal<string | null>(null);
   sortDirection = signal<SortDirection>(null);
+
+  filters = signal<Record<string, any>>({});
   
   // Dados processados (filtrados e ordenados)
   processedData = computed(() => {
@@ -45,13 +47,14 @@ export class TableComponent<T = any> {
       const aValue = this.getFieldValue(a, field);
       const bValue = this.getFieldValue(b, field);
       
-      let result = 0;
-      
-      if (aValue < bValue) result = -1;
-      else if (aValue > bValue) result = 1;
+      const result = (aValue < bValue) ? -1 : (aValue > bValue) ? 1 : 0;
       
       return direction === 'desc' ? -result : result;
     });
+  }
+
+  private filterData(data: T[], field: string, value: any): T[] {
+    return data.filter(item => this.getFieldValue(item, field) === value);
   }
 
   private getFieldValue(obj: any, field: string): any {

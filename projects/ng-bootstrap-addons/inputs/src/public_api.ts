@@ -4,3 +4,4 @@ export * from './switch/switch.component';
 export * from './datetime-range-picker/datetime-range-picker.component';
 export * from './ac-search-lov/ac-search-lov.component';
 export * from './ac-search-lov/services/auto-complete.service';
+export * from './numeric-interval-input/numeric-interval-input.component';

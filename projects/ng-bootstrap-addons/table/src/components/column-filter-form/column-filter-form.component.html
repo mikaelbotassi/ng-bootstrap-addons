@@ -1,0 +1,66 @@
+<!-- column-filter-form.component.html -->
+<form (ngSubmit)="applyFilter()">
+  <div>
+    @if (template()) {
+      <ng-container 
+        [ngTemplateOutlet]="template()!" 
+        [ngTemplateOutletContext]="{ $implicit: this.value() }">
+      </ng-container>
+    } 
+    @else if (dynamicFilter()) {
+      <ng-container [ngTemplateOutlet]="dynamicFilter()!"></ng-container>
+    } 
+    @else {
+      @switch (type()) {
+        @case('text') {
+          <nba-input 
+            label="Filtro" 
+            [(ngModel)]="value"
+          />
+        }
+        
+        @case('date') {
+          <nba-datetime-range-input 
+            label="Intervalo de Data"
+            [(ngModel)]="value"
+          />
+        }
+        
+        @case('numeric') {
+          <nba-numeric-interval-input
+            label="Filtro Numérico" 
+            [(ngModel)]="value"
+          />
+        }
+        
+        @case('boolean') {
+          <nba-switch 
+            label="Filtro"
+            [(ngModel)]="value"
+          />
+        }
+        
+        @default {
+          <nba-input 
+            label="Filtro" 
+            [(ngModel)]="value"
+          />
+        }
+      }
+    }
+  </div>
+  
+  <div class="mt-3 d-flex align-items-center justify-content-between">
+    <button 
+      type="button" 
+      class="btn btn-sm btn-outline-secondary"
+      (click)="clearFilter()">
+      Limpar
+    </button>
+    <button 
+      type="submit" 
+      class="btn btn-sm btn-primary">
+      Aplicar
+    </button>
+  </div>
+</form>

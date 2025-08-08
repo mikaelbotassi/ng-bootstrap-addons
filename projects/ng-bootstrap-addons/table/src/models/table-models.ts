@@ -1,4 +1,4 @@
-export type ColumnFilterType = 'text' | 'date' | 'numeric' | 'boolean' | 'dynamic';
+export type ColumnFilterType = 'text' | 'date' | 'numeric' | 'boolean';
 
 export type SortDirection = 'asc' | 'desc' | null;
 

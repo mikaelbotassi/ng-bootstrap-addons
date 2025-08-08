@@ -12,14 +12,15 @@ import { MultiselectSampleComponent } from './components/multiselect-sample/mult
 import { TextareaSampleComponent } from './components/textarea-sample/textarea-sample.component';
 import { LabelSampleComponent } from './components/label-sample/label-sample.component';
 import { TableSampleComponent } from './components/table-sample/table-sample.component';
+import { NumericIntervalInputSampleComponent } from "./components/numeric-interval-input-sample/numeric-interval-input-sample.component";
 
 @Component({
   selector: 'app-root',
   providers: [AutocompleteService],
   imports: [
-    DragDropSampleComponent, 
-    ErrorMessageSampleComponent, 
-    EmptyDataSampleComponent, 
+    DragDropSampleComponent,
+    ErrorMessageSampleComponent,
+    EmptyDataSampleComponent,
     AcSearchSampleComponent,
     DateRangePickerSampleComponent,
     InputSampleComponent,
@@ -28,8 +29,9 @@ import { TableSampleComponent } from './components/table-sample/table-sample.com
     MultiselectSampleComponent,
     TextareaSampleComponent,
     LabelSampleComponent,
-    TableSampleComponent
-  ],
+    TableSampleComponent,
+    NumericIntervalInputSampleComponent
+],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

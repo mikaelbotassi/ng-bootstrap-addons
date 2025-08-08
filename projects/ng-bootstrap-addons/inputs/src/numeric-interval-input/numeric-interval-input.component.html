@@ -1,0 +1,64 @@
+@defer (on viewport; prefetch on idle){
+
+    @if(control){
+        <div class="form-group d-flex align-items-center gap-1 position-relative">
+            <div class="form-floating can-click">
+                <input
+                    class="form-control"
+                    type="number"
+                    [id]="inputId() + '-start'"
+                    [name]="inputId() + '-start'"
+                    placeholder="Min"
+                    [ngClass]="{
+                        'ng-touched': control.touched,
+                        'ng-dirty': control.dirty,
+                        'ng-pristine': control.pristine,
+                        'ng-untouched': control.untouched,
+                        'ng-valid': control.valid,
+                        'ng-invalid': control.invalid,
+                    }"
+                    [formControl]="initialValue"
+                    (blur)="handleBlur()"
+
+                >
+                <label [for]="inputId()" [class.required]="isRequired">
+                    @if(icon()){
+                            <i [class]="'ti h5 mb-0 ' + icon()"></i>
+                    }
+                    Min
+                </label>
+            </div>
+            <div class="form-floating can-click">
+                <input
+                    type="number"
+                    class="form-control"
+                    [id]="inputId() + '-end'"
+                    [name]="inputId() + '-end'"
+                    placeholder="Max"
+                    [ngClass]="{
+                        'ng-touched': control.touched,
+                        'ng-dirty': control.dirty,
+                        'ng-pristine': control.pristine,
+                        'ng-untouched': control.untouched,
+                        'ng-valid': control.valid,
+                        'ng-invalid': control.invalid,
+                    }"
+                    (blur)="handleBlur()"
+
+                    [formControl]="endValue"
+                >
+                <label [for]="inputId()" [class.required]="isRequired">
+                    @if(icon()){
+                            <i [class]="'ti h5 mb-0 ' + icon()"></i>
+                    }
+                    Max
+                </label>
+            </div>
+        </div>
+        @if(control.invalid){
+            <nba-form-error-message [control]="control"></nba-form-error-message>
+        }
+    }
+} @placeholder{
+    <nba-input-placeholder></nba-input-placeholder>
+}
