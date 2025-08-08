@@ -11,6 +11,7 @@ import { SelectSampleComponent } from './components/select-sample/select-sample.
 import { MultiselectSampleComponent } from './components/multiselect-sample/multiselect-sample.component';
 import { TextareaSampleComponent } from './components/textarea-sample/textarea-sample.component';
 import { LabelSampleComponent } from './components/label-sample/label-sample.component';
+import { TableSampleComponent } from './components/table-sample/table-sample.component';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ import { LabelSampleComponent } from './components/label-sample/label-sample.com
     SelectSampleComponent,
     MultiselectSampleComponent,
     TextareaSampleComponent,
-    LabelSampleComponent
+    LabelSampleComponent,
+    TableSampleComponent
   ],
   templateUrl: './app.component.html',
 })

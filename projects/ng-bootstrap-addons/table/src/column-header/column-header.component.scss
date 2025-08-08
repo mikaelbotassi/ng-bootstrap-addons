@@ -1,0 +1,10 @@
+.sort-icon {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.sortable:hover .sort-icon,
+.sort-icon i.bi-caret-up-fill,
+.sort-icon i.bi-caret-down-fill {
+  opacity: 1;
+}

@@ -1,0 +1,24 @@
+<div class="table-responsive">
+    @if(caption()){
+        <div><ng-container *ngTemplateOutlet="caption()!"></ng-container></div>
+    }
+    <table class="table table-hover rounded-1 overflow-hidden">
+        @if(header()){
+            <thead>
+                <ng-container *ngTemplateOutlet="header()!; context: { 
+                    $implicit: this,
+                    sortField: sortField(),
+                    sortDirection: sortDirection(),
+                    onSort: onSort.bind(this)
+                }"></ng-container>
+            </thead>
+        }
+        <tbody>
+            @if(processedData().length){
+                <ng-container *ngTemplateOutlet="body()!; context: { $implicit: processedData()! }"></ng-container>
+            }@else{
+                <tr><td colspan="100%">Nenhum registro encontrado</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,21 @@
+<app-sample-container tagName="nba-switch">
+  <nba-table #dt [value]="loadCommand.finalResult()">
+    <ng-template #header>
+      <tr>
+        <th nbaColumnHeader field="id" type="text">ID</th>
+        <th nbaColumnHeader field="name" type="text">Nome</th>
+        <th nbaColumnHeader field="country.name" type="text">País</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-customers>
+      @for(customer of cast(customers); track $index){
+      <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.country?.name ?? "" }}</td>
+      </tr>
+      }
+    </ng-template>
+  </nba-table>
+</app-sample-container>

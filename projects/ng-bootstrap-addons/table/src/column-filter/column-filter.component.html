@@ -1,0 +1,12 @@
+<div dropdown [autoClose]="false" [class]="class()">
+    <button class="btn btn-sm btn-primary" type="button" dropdownToggle #dropdown aria-controls="dropdown-filter">Filter</button>
+    <div id="dropdown-filter" *dropdownMenu class="dropdown-menu shadow-sm w-100 p-3 mt-1">
+        <div class="w-100 d-flex align-items-center justify-content-between mb-2">
+            Filtro
+            <a href="javascript:;" (click)="dropdown.click()">
+                <i class="ti ti-x"></i>
+            </a>
+        </div>
+        <nba-column-filter-form [type]="type()"/>
+    </div>
+</div>
