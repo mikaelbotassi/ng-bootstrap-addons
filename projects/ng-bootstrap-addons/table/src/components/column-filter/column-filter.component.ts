@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, output, TemplateRef } from '@angular/core';
 import { ColumnFilterFormComponent } from '../column-filter-form/column-filter-form.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ColumnFilterType, FilterEvent } from '../../models/table-models';
+import { ColumnFilterType, FilterFunction } from '../../models/table-models';
 
 @Component({
   selector: 'nba-column-filter',
@@ -13,13 +13,13 @@ import { ColumnFilterType, FilterEvent } from '../../models/table-models';
 })
 export class ColumnFilterComponent {
 
-  type = input.required<ColumnFilterType>();
+  type = input<ColumnFilterType|null>(null);
   field = input.required<string>();
   class = input<string | null>(null);
   isFiltered = input<boolean>(false);
-  dynamicFilter = input<TemplateRef<any>|null>(null);
+  dynamicFilter = input<TemplateRef<any>>();
 
-  filter = output<FilterEvent>();
+  filter = output<FilterFunction|void>();
   onClearFilter = output<void>();
 
 }

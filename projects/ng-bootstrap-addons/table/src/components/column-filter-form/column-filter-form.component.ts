@@ -3,7 +3,7 @@ import { Component, contentChild, input, output, signal, TemplateRef } from '@an
 import { DatetimeRangePickerComponent, InputComponent, NumericIntervalInputComponent, SwitchComponent } from 'ng-bootstrap-addons/inputs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ColumnFilterType, FilterEvent } from '../../models/table-models';
+import { ColumnFilterType, FilterFunction } from '../../models/table-models';
 
 @Component({
   selector: 'nba-column-filter-form',
@@ -12,27 +12,25 @@ import { ColumnFilterType, FilterEvent } from '../../models/table-models';
 })
 export class ColumnFilterFormComponent {
   template = contentChild<TemplateRef<any>>('filter');
-  type = input.required<ColumnFilterType>();
+  type = input<ColumnFilterType|null>(null);
   
   value = signal<any>(null);
   
-  customFilterFn = input<(item: any, value: any) => boolean>();
-  
-  filter = output<FilterEvent>();
+  filter = output<FilterFunction|void>();
   onClearFilter = output<void>();
-  dynamicFilter = input<TemplateRef<any> | null>(null);
+  dynamicFilter = input<TemplateRef<any>>();
 
   applyFilter() {
+    if(this.dynamicFilter()) return this.filter.emit()
     if(!this.value()){
       this.clearFilter();
       return;
     }
-    const filterFunction = this.customFilterFn() || this.getDefaultFilterFunction();
+    const filterFunction = this.getDefaultFilterFunction();
+
+    const v = this.value();
     
-    this.filter.emit({
-      value: this.value(),
-      filterFn: (item: any) => filterFunction(item, this.value())
-    });
+    this.filter.emit((item: any) => filterFunction(item, v));
   }
 
   clearFilter() {

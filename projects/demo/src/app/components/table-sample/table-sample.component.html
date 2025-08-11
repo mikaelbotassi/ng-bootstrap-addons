@@ -5,6 +5,21 @@
         <th nbaColumnHeader field="id" type="numeric">ID</th>
         <th nbaColumnHeader field="name" type="text">Nome</th>
         <th nbaColumnHeader field="country.name" type="text">País</th>
+        <th
+          nbaColumnHeader
+          field="representative.name"
+          (onApplyFilter)="dt.setFilter($event, filterByRepresentative)"
+        >
+          Representante
+          <ng-template #filter>
+              <nba-multiselect
+                inputClass="no-validate"
+                label="Representante"
+                [options]="representativeOptions"
+                [(ngModel)]="selectedRepresentative"
+              ></nba-multiselect>
+          </ng-template>
+        </th>
       </tr>
     </ng-template>
 
@@ -14,6 +29,12 @@
         <td>{{ customer.id }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.country?.name ?? "" }}</td>
+        <td>
+            <div class="flex items-center gap-2">
+                <img [alt]="customer.representative?.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative?.image }}" width="32" style="vertical-align: middle" />
+                <span class="ml-1 align-middle">{{ customer.representative?.name }}</span>
+            </div>
+        </td>
       </tr>
       }
     </ng-template>

@@ -150,6 +150,7 @@ export class TableComponent<T = any> implements OnInit {
   }
 
   setFilter(field: string, fn: FilterFunction) {
+    console.log(`Setting filter for field: ${field} with function:`, fn);
     this.filters.update(curr => ({ ...curr, [field]: fn }));
     this.goToPage(1);
   }

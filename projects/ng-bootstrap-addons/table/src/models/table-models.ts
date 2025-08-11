@@ -7,9 +7,4 @@ export type SortEvent = {
   direction: SortDirection;
 }
 
-export type FilterEvent = {
-  value: any,
-  filterFn: FilterFunction
-}
-
-export type FilterFunction = (item: any) => boolean;
+export type FilterFunction<T = any> = (item: T) => boolean;
