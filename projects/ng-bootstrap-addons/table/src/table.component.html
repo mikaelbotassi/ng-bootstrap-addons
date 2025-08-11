@@ -1,8 +1,8 @@
+@if(caption()){
+    <div><ng-container *ngTemplateOutlet="caption()!"></ng-container></div>
+}
 <div class="table-responsive">
-    @if(caption()){
-        <div><ng-container *ngTemplateOutlet="caption()!"></ng-container></div>
-    }
-    <table class="table table-hover rounded-1 overflow-hidden">
+    <table class="table table-hover rounded-1">
         @if(header()){
             <thead>
                 <ng-container *ngTemplateOutlet="header()!; context: { 
@@ -14,11 +14,34 @@
             </thead>
         }
         <tbody>
-            @if(processedData().length){
-                <ng-container *ngTemplateOutlet="body()!; context: { $implicit: processedData()! }"></ng-container>
+            @if(paginatedData().length){
+                <ng-container *ngTemplateOutlet="body()!; context: { $implicit: paginatedData()! }"></ng-container>
             }@else{
                 <tr><td colspan="100%">Nenhum registro encontrado</td></tr>
             }
         </tbody>
     </table>
 </div>
+@if(paginated()){
+    <div class="d-flex align-items-center gap-3 justify-content-end flex-wrap">
+        <small class="text-muted me-2">Página <b>{{ page() }}</b> de <b>{{ smallNumPages() }}</b></small>
+        <pagination
+            [(ngModel)]="page"
+            [itemsPerPage]="itemsPerPage()"
+            [totalItems]="processedData().length"
+            [boundaryLinks]="true"
+            [maxSize]="maxSize()"
+            (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;"
+            nextText="&rsaquo;"
+            firstText="&laquo;"
+            lastText="&raquo;"
+            (numPages)="smallNumPages.set($event)"
+        />
+        <select [(ngModel)]="itemsPerPage" class="form-select rounded-1 w-auto no-validate">
+            <option [value]="10">10</option>
+            <option [value]="25">25</option>
+            <option [value]="50">50</option>
+        </select>
+    </div>
+}

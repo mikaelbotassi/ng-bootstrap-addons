@@ -1,7 +1,7 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, HostListener, contentChild, TemplateRef } from '@angular/core';
 import { ColumnFilterComponent } from '../column-filter/column-filter.component';
 import { TableComponent } from '../../table.component';
-import { ColumnFilterType, SortDirection } from '../../models/table-models';
+import { ColumnFilterType, FilterEvent, SortDirection } from '../../models/table-models';
 
 @Component({
   selector: 'th[nbaColumnHeader]',
@@ -18,6 +18,11 @@ export class ColumnHeaderComponent {
   filter = contentChild<TemplateRef<any>>('filter');
     
   private table = inject(TableComponent, { skipSelf: true });
+
+  isFiltered = computed(() => {
+    const filters = this.table.filters();
+    return filters && this.field() in filters;
+  });
   
   sortDirection = computed(() => 
     this.table.sortField() === this.field() ? this.table.sortDirection() : null
@@ -42,4 +47,27 @@ export class ColumnHeaderComponent {
 
     this.table.onSort({ field, direction: newDirection });
   }
+
+  addFilter(event: FilterEvent) {
+    if (!this.filter) return;
+
+    const field = this.field();
+
+    // ✅ Adicionar/atualizar filtro mantendo os existentes
+    this.table.filters.update(currentFilters => ({
+      ...currentFilters,           // Mantém filtros existentes
+      [field]: event.filterFn      // Adiciona/atualiza o novo filtro
+    }));
+  }
+
+  // ✅ Método para remover filtro
+  removeFilter() {
+    const field = this.field();
+    
+    this.table.filters.update(currentFilters => {
+      const { [field]: removed, ...rest } = currentFilters;
+      return rest;
+    });
+  }
+
 }

@@ -17,7 +17,7 @@
       }
     </span>
     <a (click)="sort()" class="top-0 bottom-0 end-0 start-0 position-absolute" href="javascript:void(0);"></a>
-    <nba-column-filter [type]="type()" [field]="field()" class="ms-auto z-3" />
+    <nba-column-filter [type]="type()" (onClearFilter)="removeFilter()" [isFiltered]="isFiltered()" [field]="field()" (filter)="addFilter($event)" class="ms-auto z-3" />
   }
 
 </div>

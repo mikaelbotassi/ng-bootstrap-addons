@@ -3,7 +3,7 @@ import { Component, contentChild, input, output, signal, TemplateRef } from '@an
 import { DatetimeRangePickerComponent, InputComponent, NumericIntervalInputComponent, SwitchComponent } from 'ng-bootstrap-addons/inputs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ColumnFilterType } from '../../models/table-models';
+import { ColumnFilterType, FilterEvent } from '../../models/table-models';
 
 @Component({
   selector: 'nba-column-filter-form',
@@ -14,17 +14,15 @@ export class ColumnFilterFormComponent {
   template = contentChild<TemplateRef<any>>('filter');
   type = input.required<ColumnFilterType>();
   
-  // ✅ Value que pode ser usado no ngModel do template
   value = signal<any>(null);
   
-  // ✅ Função de filtro customizada que pode ser passada como input
   customFilterFn = input<(item: any, value: any) => boolean>();
   
-  filter = output<{value: any, filterFn: (item: any) => boolean}>();
+  filter = output<FilterEvent>();
+  onClearFilter = output<void>();
   dynamicFilter = input<TemplateRef<any> | null>(null);
 
   applyFilter() {
-    // Usa função customizada se fornecida, senão usa a padrão
     const filterFunction = this.customFilterFn() || this.getDefaultFilterFunction();
     
     this.filter.emit({
@@ -35,10 +33,10 @@ export class ColumnFilterFormComponent {
 
   clearFilter() {
     this.value.set(null);
-    this.applyFilter();
+    this.onClearFilter.emit();
   }
 
-  private getDefaultFilterFunction() {
+  private getDefaultFilterFunction() : ((item: any, value: any) => boolean) {
     switch(this.type()) {
       case 'text':
         return (item: any, value: string) => {
@@ -55,13 +53,18 @@ export class ColumnFilterFormComponent {
           return item >= start && item <= end;
         };
       case 'numeric':
-        return (item: any, value: any) => {
-          if (value === null || value === undefined) return true;
-          return item === value;
+        return (item: any, value: (number|null)[] | null) => {
+          if (!value || !Array.isArray(value)) return true;
+          const initialValue = value[0];
+          const finalValue = value[1];
+          if (!initialValue && !finalValue) return true;
+          if(item >= initialValue! && !finalValue) return true;
+          if(!initialValue && item <= finalValue!) return true;
+          return item >= initialValue! && item <= finalValue!;
         };
       case 'boolean':
-        return (item: any, value: any) => {
-          if (value === null || value === undefined) return true;
+        return (item: any, value: boolean) => {
+          if (!value) return true;
           return item === value;
         };
       default:

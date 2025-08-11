@@ -16,6 +16,7 @@
           <nba-input 
             label="Filtro" 
             [(ngModel)]="value"
+            name="filterText"
           />
         }
         
@@ -23,6 +24,7 @@
           <nba-datetime-range-input 
             label="Intervalo de Data"
             [(ngModel)]="value"
+            name="filterDate"
           />
         }
         
@@ -30,6 +32,7 @@
           <nba-numeric-interval-input
             label="Filtro Numérico" 
             [(ngModel)]="value"
+            name="filterNumeric"
           />
         }
         
@@ -37,6 +40,7 @@
           <nba-switch 
             label="Filtro"
             [(ngModel)]="value"
+            name="filterBoolean"
           />
         }
         
@@ -44,6 +48,7 @@
           <nba-input 
             label="Filtro" 
             [(ngModel)]="value"
+            name="filterDefault"
           />
         }
       }
@@ -53,7 +58,7 @@
   <div class="mt-3 d-flex align-items-center justify-content-between">
     <button 
       type="button" 
-      class="btn btn-sm btn-outline-secondary"
+      class="btn btn-sm btn-default"
       (click)="clearFilter()">
       Limpar
     </button>

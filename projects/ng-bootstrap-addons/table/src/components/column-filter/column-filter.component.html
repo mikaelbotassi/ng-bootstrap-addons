@@ -2,8 +2,9 @@
     <a href="javascript:;" dropdownToggle #dropdownToggle aria-controls="dropdown-filter">
         @if(isFiltered()){
             <i class="ti ti-filter-filled"></i>
+        }@else{
+            <i class="ti ti-filter"></i>
         }
-        <i class="ti ti-filter"></i>
     </a>
     <div id="dropdown-filter" *dropdownMenu class="dropdown-menu shadow-sm w-100 p-3 mt-1">
         <div class="w-100 d-flex align-items-center justify-content-between mb-2">
@@ -12,6 +13,6 @@
                 <i class="ti ti-x"></i>
             </a>
         </div>
-        <nba-column-filter-form [type]="type()" />
+        <nba-column-filter-form [type]="type()" (onClearFilter)="onClearFilter.emit()" (filter)="filter.emit($event)" />
     </div>
 </div>
