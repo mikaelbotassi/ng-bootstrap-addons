@@ -1,25 +1,50 @@
 // table.component.ts
 import { CommonModule } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, contentChild, input, model, signal, TemplateRef, ViewEncapsulation, OnInit, inject, DestroyRef } from '@angular/core';
-import { FilterFunction, SortDirection, SortEvent } from './models/table-models';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  contentChild,
+  input,
+  model,
+  signal,
+  TemplateRef,
+  ViewEncapsulation,
+  OnInit,
+  inject,
+  DestroyRef,
+} from '@angular/core';
+import {
+  FilterFunction,
+  SortDirection,
+  SortEvent,
+} from './models/table-models';
 import { PageChangedEvent, PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SelectComponent } from 'ng-bootstrap-addons/selects';
 
 @Component({
   selector: 'nba-table',
   imports: [CommonModule, PaginationModule, FormsModule],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [`nba-table .pagination { margin: 0; }`],
+  styles: [
+    `
+      nba-table .pagination {
+        margin: 0;
+      }
+      nba-table .pagination {
+        --bs-pagination-border-radius: 0.25rem;
+      }
+    `,
+  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class TableComponent<T = any> implements OnInit {
-
   value = input.required<T[] | undefined | null>();
-  
+
   // Signals para ordenação (públicos para acesso das diretivas)
   sortField = signal<string | null>(null);
   sortDirection = signal<SortDirection>(null);
@@ -39,11 +64,11 @@ export class TableComponent<T = any> implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
-  
+
   // Dados processados (filtrados e ordenados)
   processedData = computed(() => {
     let data = this.value() || [];
-    
+
     // Aplicar ordenação
     if (this.sortField() && this.sortDirection()) {
       data = this.sortData(data, this.sortField()!, this.sortDirection()!);
@@ -51,14 +76,14 @@ export class TableComponent<T = any> implements OnInit {
 
     const filters = this.filters();
 
-    if(Object.keys(filters).length > 0){
+    if (Object.keys(filters).length > 0) {
       Object.entries(filters).forEach(([field, value]) => {
         if (value && field.length > 0) {
           data = this.filterData(data, field, value);
         }
       });
     }
-    
+
     return data;
   });
 
@@ -91,9 +116,9 @@ export class TableComponent<T = any> implements OnInit {
     // Escutar mudanças nos query params
     this.route.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(params => {
+      .subscribe((params) => {
         const urlPage = parseInt(params[this.urlParam()]) || 1;
-        
+
         // Só atualiza se for diferente da página atual
         if (urlPage !== this.page()) {
           this.page.set(urlPage);
@@ -103,21 +128,35 @@ export class TableComponent<T = any> implements OnInit {
 
   private sortData(data: T[], field: string, direction: SortDirection): T[] {
     if (!direction) return data;
-    
+
     return [...data].sort((a, b) => {
       const aValue = this.getFieldValue(a, field);
       const bValue = this.getFieldValue(b, field);
-      
-      const result = (aValue < bValue) ? -1 : (aValue > bValue) ? 1 : 0;
-      
+
+      const result = aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+
       return direction === 'desc' ? -result : result;
     });
   }
 
-  private filterData(data: T[], field: string, filterFunc: FilterFunction): T[] {
-    return data.filter(entity => {
+  private filterData(
+    data: T[],
+    field: string,
+    filterFunc: FilterFunction
+  ): T[] {
+    return data.filter((entity) => {
       return filterFunc(this.getFieldValue(entity, field));
     });
+  }
+
+  setFilter(field: string, fn: FilterFunction) {
+    this.filters.update(curr => ({ ...curr, [field]: fn }));
+    this.goToPage(1);
+  }
+
+  clearFilter(field: string) {
+    this.filters.update(({ [field]: _removed, ...rest }) => rest);
+    this.goToPage(1);
   }
 
   private getFieldValue(obj: any, field: string): any {
@@ -128,7 +167,7 @@ export class TableComponent<T = any> implements OnInit {
   private initializePageFromUrl() {
     const currentParams = this.route.snapshot.queryParams;
     const urlPage = parseInt(currentParams[this.urlParam()]) || 1;
-    
+
     // Validar se a página é válida
     const validPage = Math.max(1, urlPage);
     this.page.set(validPage);
@@ -138,7 +177,7 @@ export class TableComponent<T = any> implements OnInit {
   onSort(event: SortEvent) {
     this.sortField.set(event.field);
     this.sortDirection.set(event.direction);
-    
+
     // ✅ Resetar para página 1 quando ordenar
     this.goToPage(1);
   }
@@ -147,7 +186,7 @@ export class TableComponent<T = any> implements OnInit {
   goToPage(pageNumber: number) {
     const totalPages = this.totalPages();
     const validPage = Math.max(1, Math.min(pageNumber, totalPages));
-    
+
     this.page.set(validPage);
     this.updateUrl(validPage);
   }
@@ -162,7 +201,7 @@ export class TableComponent<T = any> implements OnInit {
     if (!this.syncWithUrl()) return;
 
     const currentParams = { ...this.route.snapshot.queryParams };
-    
+
     if (pageNumber === 1) {
       // Remove o parâmetro se for página 1 (mais limpo)
       delete currentParams[this.urlParam()];
@@ -175,8 +214,7 @@ export class TableComponent<T = any> implements OnInit {
       relativeTo: this.route,
       queryParams: currentParams,
       queryParamsHandling: 'replace', // Substitui os query params
-      replaceUrl: false // Mantém no histórico
+      replaceUrl: false, // Mantém no histórico
     });
   }
-
 }

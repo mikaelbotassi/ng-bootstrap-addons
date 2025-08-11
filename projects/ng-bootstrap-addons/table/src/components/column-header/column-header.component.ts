@@ -53,21 +53,13 @@ export class ColumnHeaderComponent {
 
     const field = this.field();
 
-    // ✅ Adicionar/atualizar filtro mantendo os existentes
-    this.table.filters.update(currentFilters => ({
-      ...currentFilters,           // Mantém filtros existentes
-      [field]: event.filterFn      // Adiciona/atualiza o novo filtro
-    }));
+    this.table.setFilter(field, event.filterFn);
   }
 
   // ✅ Método para remover filtro
   removeFilter() {
     const field = this.field();
-    
-    this.table.filters.update(currentFilters => {
-      const { [field]: removed, ...rest } = currentFilters;
-      return rest;
-    });
+    this.table.clearFilter(field);
   }
 
 }
