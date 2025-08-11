@@ -31,7 +31,6 @@ export class ColumnHeaderComponent {
   );
 
   sort() {
-    console.log('Sorting column:', this.field());
     if (!this.sortable()) return;
     
     const field = this.field();

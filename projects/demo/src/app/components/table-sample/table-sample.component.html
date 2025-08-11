@@ -9,6 +9,7 @@
           nbaColumnHeader
           field="representative.name"
           (onApplyFilter)="dt.setFilter($event, filterByRepresentative)"
+          (onClearFilter)="selectedRepresentative = []"
         >
           Representante
           <ng-template #filter>

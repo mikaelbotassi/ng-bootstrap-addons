@@ -14,6 +14,8 @@ import {
   OnInit,
   inject,
   DestroyRef,
+  afterNextRender,
+  effect,
 } from '@angular/core';
 import {
   FilterFunction,
@@ -106,6 +108,18 @@ export class TableComponent<T = any> implements OnInit {
   header = contentChild<TemplateRef<any>>('header');
   body = contentChild<TemplateRef<any>>('body');
 
+  constructor() {
+    effect(() => {
+      // reagir quando itens por página ou total de itens mudar
+      this.itemsPerPage();
+      const max = Math.max(1, this.totalPages());
+      if (this.page() > max) {
+        this.page.set(1);
+        this.updateUrl(1);
+      }
+    }, { allowSignalWrites: true });
+  }
+
   // ✅ Inicialização para sincronizar com URL
   ngOnInit() {
     if (!this.syncWithUrl()) return;
@@ -150,7 +164,6 @@ export class TableComponent<T = any> implements OnInit {
   }
 
   setFilter(field: string, fn: FilterFunction) {
-    console.log(`Setting filter for field: ${field} with function:`, fn);
     this.filters.update(curr => ({ ...curr, [field]: fn }));
     this.goToPage(1);
   }
@@ -218,4 +231,12 @@ export class TableComponent<T = any> implements OnInit {
       replaceUrl: false, // Mantém no histórico
     });
   }
+
+  onItemsPerPage(val: number | string) {
+    const n = typeof val === 'string' ? parseInt(val, 10) : val;
+    this.itemsPerPage.set(Number.isFinite(n) && n > 0 ? n : 10);
+    afterNextRender(() => this.goToPage(1));
+  }
+
+
 }
