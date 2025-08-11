@@ -23,6 +23,10 @@ export class ColumnFilterFormComponent {
   dynamicFilter = input<TemplateRef<any> | null>(null);
 
   applyFilter() {
+    if(!this.value()){
+      this.clearFilter();
+      return;
+    }
     const filterFunction = this.customFilterFn() || this.getDefaultFilterFunction();
     
     this.filter.emit({

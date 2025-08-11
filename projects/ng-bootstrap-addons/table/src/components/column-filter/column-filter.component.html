@@ -13,6 +13,6 @@
                 <i class="ti ti-x"></i>
             </a>
         </div>
-        <nba-column-filter-form [type]="type()" (onClearFilter)="onClearFilter.emit()" (filter)="filter.emit($event)" />
+        <nba-column-filter-form [type]="type()" (onClearFilter)="dropdownToggle.click(); onClearFilter.emit()" (filter)="dropdownToggle.click(); filter.emit($event)" />
     </div>
 </div>

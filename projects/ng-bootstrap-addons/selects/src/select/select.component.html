@@ -1,10 +1,11 @@
 @defer (on viewport; prefetch on idle) {
     @if(control){
-        <div class="form-group">
+        <div class="form-group" [class]="class()">
             <div class="form-floating">
                 <select 
                     [name]="inputId()" 
                     [id]="inputId()"
+                    [class]="inputClass()"
                     [formControl]="control"
                     class="form-select"
                     #input

@@ -117,10 +117,12 @@ export class NumericIntervalInputComponent
         if (Array.isArray(value) && value.length === 2) {
           this.initialValue.setValue(value[0], { emitEvent: false });
           this.endValue.setValue(value[1], { emitEvent: false });
-
-          this.syncStatus(this.control!, this.initialValue);
-          this.syncStatus(this.control!, this.endValue);
+        }else{
+          this.initialValue.setValue(null, { emitEvent: false });
+          this.endValue.setValue(null, { emitEvent: false });
         }
+        this.syncStatus(this.control!, this.initialValue);
+        this.syncStatus(this.control!, this.endValue);
       });
 
     // Externo → Interno (status)

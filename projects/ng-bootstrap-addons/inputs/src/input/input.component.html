@@ -1,6 +1,6 @@
 @defer (on viewport; prefetch on idle){
   @if(control){
-    <div class="form-group">
+    <div class="form-group" [class]="class()">
       <div class="input-group">
         <ng-content select="[group-prefix]"></ng-content>
         <div class="form-floating">
@@ -8,6 +8,7 @@
               <input
                 type="password"
                 input-password
+                [class]="inputClass()"
                 class="form-control"
                 [formControl]="control"
                 [id]="inputId()"
@@ -22,6 +23,7 @@
                   type="text"
                   class="form-control"
                   [formControl]="control"
+                  [class]="inputClass()"
                   [id]="inputId()"
                   [name]="inputId()"
                   [placeholder]="label()"
@@ -35,6 +37,7 @@
                 <input
                   [type]="type()"
                   class="form-control"
+                  [class]="inputClass()"
                   [formControl]="control"
                   [id]="inputId()"
                   [name]="inputId()"

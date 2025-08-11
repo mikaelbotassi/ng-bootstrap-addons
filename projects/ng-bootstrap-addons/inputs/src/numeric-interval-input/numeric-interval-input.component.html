@@ -1,13 +1,14 @@
 @defer (on viewport; prefetch on idle){
 
     @if(control){
-        <div class="form-group d-flex flex-column align-items-center gap-1 position-relative flex-wrap">
+        <div class="form-group d-flex flex-column align-items-center gap-1 position-relative flex-wrap" [class]="class()">
             <div class="form-floating">
                 <input
                     class="form-control"
                     type="number"
                     [id]="inputId() + '-start'"
                     [name]="inputId() + '-start'"
+                    [class]="inputClass()"
                     placeholder="Min"
                     [ngClass]="{
                         'ng-touched': control.touched,
@@ -21,7 +22,7 @@
                     (blur)="handleBlur()"
 
                 >
-                <label [for]="inputId()" [class.required]="isRequired">
+                <label [for]="inputId() + '-start'" [class.required]="isRequired">
                     @if(icon()){
                             <i [class]="'ti h5 mb-0 ' + icon()"></i>
                     }
@@ -35,6 +36,7 @@
                     [id]="inputId() + '-end'"
                     [name]="inputId() + '-end'"
                     placeholder="Max"
+                    [class]="inputClass()"
                     [ngClass]="{
                         'ng-touched': control.touched,
                         'ng-dirty': control.dirty,
@@ -47,7 +49,7 @@
 
                     [formControl]="endValue"
                 >
-                <label [for]="inputId()" [class.required]="isRequired">
+                <label [for]="inputId() + '-end'" [class.required]="isRequired">
                     @if(icon()){
                             <i [class]="'ti h5 mb-0 ' + icon()"></i>
                     }

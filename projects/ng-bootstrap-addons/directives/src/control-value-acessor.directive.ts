@@ -9,6 +9,7 @@ import {
   FormControlDirective,
   NgModel,
 } from '@angular/forms';
+import { createRandomString } from 'ng-bootstrap-addons/utils';
 import { Subject, takeUntil, startWith, distinctUntilChanged, tap } from 'rxjs';
 
 @Directive({
@@ -17,6 +18,8 @@ import { Subject, takeUntil, startWith, distinctUntilChanged, tap } from 'rxjs';
 export class ControlValueAccessorDirective<T> implements ControlValueAccessor, OnInit{
 
     inputRef = viewChild<ElementRef<T>>('input');
+    inputClass = input<string>('');
+    class = input<string>('');
     inputId = model<string>(createRandomString(6));
     label = input.required<string>();
     icon = input<string>();
@@ -92,13 +95,4 @@ export class ControlValueAccessorDirective<T> implements ControlValueAccessor, O
     setDisabledState?(isDisabled: boolean): void {
         this._isDisabled = isDisabled;
     }
-}
-
-export const createRandomString = (length:number):string => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
 }

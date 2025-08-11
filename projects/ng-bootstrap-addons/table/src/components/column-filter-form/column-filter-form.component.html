@@ -1,5 +1,5 @@
 <!-- column-filter-form.component.html -->
-<form (ngSubmit)="applyFilter()">
+<form novalidate (ngSubmit)="applyFilter()">
   <div>
     @if (template()) {
       <ng-container 
@@ -13,8 +13,10 @@
     @else {
       @switch (type()) {
         @case('text') {
-          <nba-input 
-            label="Filtro" 
+          <nba-input
+            class="no-validate"
+            label="Filtro"
+            inputClass="no-validate"
             [(ngModel)]="value"
             name="filterText"
           />
@@ -23,6 +25,7 @@
         @case('date') {
           <nba-datetime-range-input 
             label="Intervalo de Data"
+            inputClass="no-validate"
             [(ngModel)]="value"
             name="filterDate"
           />
@@ -30,7 +33,8 @@
         
         @case('numeric') {
           <nba-numeric-interval-input
-            label="Filtro Numérico" 
+            label="Filtro Numérico"
+            inputClass="no-validate"
             [(ngModel)]="value"
             name="filterNumeric"
           />
@@ -39,6 +43,7 @@
         @case('boolean') {
           <nba-switch 
             label="Filtro"
+            inputClass="no-validate"
             [(ngModel)]="value"
             name="filterBoolean"
           />
@@ -46,7 +51,8 @@
         
         @default {
           <nba-input 
-            label="Filtro" 
+            label="Filtro"
+            inputClass="no-validate"
             [(ngModel)]="value"
             name="filterDefault"
           />

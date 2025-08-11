@@ -1,12 +1,13 @@
 @defer (on viewport; prefetch on idle){
   @if(control){
-    <div class="form-group">
+    <div class="form-group" [class]="class()">
       <div class="form-floating">
           @if(focus()){
             <div class="position-fixed top-0 start-0 bottom-0 end-0 bg-black bg-opacity-25 z-2 fade-in"></div>
             <input
               type="text"
               class="form-control position-absolute rounded-bottom-0 top-0 start-0 z-2"
+              [class]="inputClass()"
               [formControl]="descControl"
               (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
               (keydown.tab)="focus.set(false)"
@@ -56,6 +57,7 @@
               [class.placeholder-wave]="fetchDescCommand.running()"
               [class.placeholder]="fetchDescCommand.running()"
               class="form-control"
+              [class]="inputClass()"
               [formControl]="descControl"
               [id]="inputId()"
               [name]="inputId()"
