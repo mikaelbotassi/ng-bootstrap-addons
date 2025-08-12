@@ -2,10 +2,11 @@
   <nba-table #dt [value]="loadCommand.finalResult()">
     <ng-template #header>
       <tr>
-        <th nbaColumnHeader field="id" type="numeric">ID</th>
-        <th nbaColumnHeader field="name" type="text">Nome</th>
-        <th nbaColumnHeader field="country.name" type="text">País</th>
+        <th class="bg-light text-primary" nbaColumnHeader field="id" type="numeric">ID</th>
+        <th class="bg-light text-primary" nbaColumnHeader field="name" type="text">Nome</th>
+        <th class="bg-light text-primary" nbaColumnHeader field="country.name" type="text">País</th>
         <th
+          class="bg-light text-primary"
           nbaColumnHeader
           field="representative.name"
           (onApplyFilter)="dt.setFilter($event, filterByRepresentative)"
@@ -31,7 +32,7 @@
         <td>{{ customer.name }}</td>
         <td>{{ customer.country?.name ?? "" }}</td>
         <td>
-            <div class="flex items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
                 <img [alt]="customer.representative?.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative?.image }}" width="32" style="vertical-align: middle" />
                 <span class="ml-1 align-middle">{{ customer.representative?.name }}</span>
             </div>

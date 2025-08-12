@@ -23,9 +23,7 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
       },
       BsDropdownDirective
     ],
-    host: {
-      'data-component': 'multiselect'
-    },
+    host: { 'collision-id': `multiselect-${createRandomString(20)} ` },
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiselectComponent<T extends Object> extends ControlValueAccessorDirective<T[]|null> {

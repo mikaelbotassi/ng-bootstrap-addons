@@ -3,8 +3,7 @@
   transition: opacity 0.2s;
 }
 
-.sortable:hover .sort-icon,
-.sort-icon i.bi-caret-up-fill,
-.sort-icon i.bi-caret-down-fill {
+.sort-icon:has(+a:hover), .sort-icon:has(>.sorted) {
   opacity: 1;
+  transition: opacity 0.2s;
 }

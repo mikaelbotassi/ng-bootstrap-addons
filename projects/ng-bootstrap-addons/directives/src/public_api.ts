@@ -3,3 +3,4 @@ export * from './currency.directive';
 export * from './input-password.directive';
 export * from './click-outside.directive';
 export * from './autofocus.directive';
+export * from './drag-scroll.directive';

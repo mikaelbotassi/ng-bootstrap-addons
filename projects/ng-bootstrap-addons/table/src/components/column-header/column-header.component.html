@@ -3,13 +3,13 @@
   <ng-content></ng-content>
   
   @if(sortable()) {
-    <span class="sort-icon fw-bold">
+    <span class="sort-icon fw-bold lh-1">
       @switch(sortDirection()) {
         @case('asc') {
-          <i class="ti ti-chevron-up"></i>
+          <i class="sorted ti ti-chevron-up"></i>
         }
         @case('desc') {
-          <i class="ti ti-chevron-down"></i>
+          <i class="sorted ti ti-chevron-down"></i>
         }
         @default {
           <i class="ti ti-selector"></i>

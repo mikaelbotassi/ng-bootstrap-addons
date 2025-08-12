@@ -16,6 +16,8 @@ import {
   DestroyRef,
   afterNextRender,
   effect,
+  Injector,
+  runInInjectionContext,
 } from '@angular/core';
 import {
   FilterFunction,
@@ -26,25 +28,18 @@ import { PageChangedEvent, PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
 
 @Component({
   selector: 'nba-table',
-  imports: [CommonModule, PaginationModule, FormsModule],
+  imports: [CommonModule, PaginationModule, FormsModule, DragScrollDirective],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `
-      nba-table .pagination {
-        margin: 0;
-      }
-      nba-table .pagination {
-        --bs-pagination-border-radius: 0.25rem;
-      }
-    `,
-  ],
+  styleUrls: ['./table.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class TableComponent<T = any> implements OnInit {
+
   value = input.required<T[] | undefined | null>();
 
   // Signals para ordenação (públicos para acesso das diretivas)
@@ -55,17 +50,18 @@ export class TableComponent<T = any> implements OnInit {
   itemsPerPage = model<number>(10);
   page = model<number>(1);
 
-  // ✅ Configuração para URL
+  // Configuração para URL
   urlParam = input<string>('page'); // Nome do parâmetro na URL
   syncWithUrl = input(true, { transform: booleanAttribute }); // Se deve sincronizar com URL
 
   smallNumPages = signal<number>(0);
   filters = signal<Record<string, FilterFunction>>({});
 
-  // ✅ Injetar dependências para roteamento
+  // Injetar dependências para roteamento
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
+  private injector = inject(Injector);
 
   // Dados processados (filtrados e ordenados)
   processedData = computed(() => {
@@ -96,7 +92,7 @@ export class TableComponent<T = any> implements OnInit {
     return this.processedData().slice(startIndex, endIndex);
   });
 
-  // ✅ Computed para total de páginas
+  // Computed para total de páginas
   totalPages = computed(() => {
     const total = this.processedData().length;
     const perPage = this.itemsPerPage();
@@ -117,10 +113,10 @@ export class TableComponent<T = any> implements OnInit {
         this.page.set(1);
         this.updateUrl(1);
       }
-    }, { allowSignalWrites: true });
+    });
   }
 
-  // ✅ Inicialização para sincronizar com URL
+  // Inicialização para sincronizar com URL
   ngOnInit() {
     if (!this.syncWithUrl()) return;
 
@@ -177,7 +173,7 @@ export class TableComponent<T = any> implements OnInit {
     return field.split('.').reduce((o, f) => o?.[f], obj);
   }
 
-  // ✅ Inicializar página da URL
+  // Inicializar página da URL
   private initializePageFromUrl() {
     const currentParams = this.route.snapshot.queryParams;
     const urlPage = parseInt(currentParams[this.urlParam()]) || 1;
@@ -192,11 +188,11 @@ export class TableComponent<T = any> implements OnInit {
     this.sortField.set(event.field);
     this.sortDirection.set(event.direction);
 
-    // ✅ Resetar para página 1 quando ordenar
+    // Resetar para página 1 quando ordenar
     this.goToPage(1);
   }
 
-  // ✅ Método para ir para uma página específica
+  // Método para ir para uma página específica
   goToPage(pageNumber: number) {
     const totalPages = this.totalPages();
     const validPage = Math.max(1, Math.min(pageNumber, totalPages));
@@ -205,12 +201,12 @@ export class TableComponent<T = any> implements OnInit {
     this.updateUrl(validPage);
   }
 
-  // ✅ Event handler da paginação
+  // Event handler da paginação
   pageChanged(event: PageChangedEvent) {
     this.goToPage(event.page);
   }
 
-  // ✅ Atualizar URL sem recarregar
+  // Atualizar URL sem recarregar
   private updateUrl(pageNumber: number) {
     if (!this.syncWithUrl()) return;
 
@@ -235,8 +231,9 @@ export class TableComponent<T = any> implements OnInit {
   onItemsPerPage(val: number | string) {
     const n = typeof val === 'string' ? parseInt(val, 10) : val;
     this.itemsPerPage.set(Number.isFinite(n) && n > 0 ? n : 10);
-    afterNextRender(() => this.goToPage(1));
+    runInInjectionContext(this.injector, () => {
+      afterNextRender({ write: () => this.goToPage(1) });
+    });
   }
-
 
 }
