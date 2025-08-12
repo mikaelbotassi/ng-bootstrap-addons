@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TableComponent } from 'project/table/src/table.component';
 import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
 import { CustomerService } from '../../services/customer.service';
@@ -8,16 +8,19 @@ import { FormsModule } from '@angular/forms';
 import { ColumnHeaderComponent } from 'table/components/column-header/column-header.component';
 import { MultiselectComponent, MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { FilterFunction } from 'project/table/src/models/table-models';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-table-sample',
-  imports: [TableComponent, ColumnHeaderComponent, SampleContainerComponent, FormsModule, MultiselectComponent],
+  imports: [TableComponent, ColumnHeaderComponent, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe],
   providers: [CustomerService],
   templateUrl: './table-sample.component.html',
 })
 export class TableSampleComponent {
 
   selectedRepresentative: string[] = [];
+
+  globalFilter = '';
 
   loadCommand: Command0<Customer[]>;
   representative: Representative[] = [

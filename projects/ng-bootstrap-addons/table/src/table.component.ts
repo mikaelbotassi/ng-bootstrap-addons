@@ -18,7 +18,7 @@ import {
   Injector,
   runInInjectionContext,
 } from '@angular/core';
-import { FilterFunction, SortDirection, SortEvent } from './models/table-models';
+import { FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -60,6 +60,60 @@ export class TableComponent<T = any> implements OnInit {
   // #endregion
 
   // =========================
+  // #region FILTROS GLOBAIS
+  // =========================
+
+  globalFilterFields = input<string[]>([]);
+  globalFilterFunction = input<GlobalFilterFunction | null>(null);
+  globalFilter = model<any>(null);
+
+  // quanto tempo esperar após a última tecla (ms)
+  globalFilterDebounceMs = input<number>(300);
+
+  // handle interno do debounce
+  private _gfTimer: any = null;
+
+  onGlobalFilterChange(value: any) {
+    // reinicia o timer a cada digitação
+    clearTimeout(this._gfTimer);
+    const delay = this.globalFilterDebounceMs();
+
+    this._gfTimer = setTimeout(() => {
+      this.globalFilter.set(value);
+      this._resetToFirstPageNextRender();
+    }, delay);
+  }
+
+  globalFilterData(data: T[]): T[] {
+    const fields = this.globalFilterFields();
+    if (!fields?.length) return data;
+
+    const term = (typeof this.globalFilter() === 'string') ? String(this.globalFilter()).trim().toLowerCase() : this.globalFilter();
+    if (!term) return data;
+
+    const custom = this.globalFilterFunction();
+
+    if (custom) {
+      // Se o dev passou (entity, term), usamos; se passou só (entity), ele pode fechar sobre o termo externamente
+      return data.filter((entity) =>
+        fields.some((field) => {
+          const v = this.getFieldValue(entity, field);
+          return custom(v, term)
+        })
+      );
+    }
+
+    // default: busca em múltiplos campos
+    return data.filter((entity) =>
+      fields.some((field) => {
+        const v = this.getFieldValue(entity, field);
+        return v != null && String(v).trim().toLowerCase().includes(term);
+      })
+    );
+  }
+
+
+  // =========================
   // #region FILTROS
   // =========================
   filters = signal<Record<string, FilterFunction>>({});
@@ -78,6 +132,7 @@ export class TableComponent<T = any> implements OnInit {
     this.filters.set({});
     this.sortField.set(null);
     this.sortDirection.set(null);
+    this.globalFilter.set(null);
     this._resetToFirstPageNextRender();
   }
 
@@ -177,6 +232,7 @@ export class TableComponent<T = any> implements OnInit {
         if (fn && field.length > 0) data = this.filterData(data, field, fn);
       }
     }
+    if(this.globalFilter()) data = this.globalFilterData(data);
     return data;
   });
 

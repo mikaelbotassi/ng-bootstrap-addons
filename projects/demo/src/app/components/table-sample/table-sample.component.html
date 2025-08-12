@@ -1,5 +1,22 @@
 <app-sample-container tagName="nba-table">
-  <nba-table #dt [value]="loadCommand.finalResult()">
+  <nba-table #dt
+    [value]="loadCommand.finalResult()"
+    [globalFilterFields]="['name', 'country.name', 'representative.name']"
+  >
+    <ng-template #caption>
+      <div class="d-flex align-items-center justify-content-between gap-2 w-100">
+          <a href="javascript:;" class="btn btn-sm btn-outline-dark no-validate" (click)="dt.clearFilters()">
+              <i class="ti ti-filter-off"></i>
+              Limpar
+          </a>
+          <input
+          class="form-control form-control-sm w-auto no-validate"
+          placeholder="Buscar..."
+          [ngModel]="globalFilter"
+          (ngModelChange)="dt.onGlobalFilterChange($event)"
+        />
+      </div>
+    </ng-template>
     <ng-template #header>
       <tr>
         <th class="bg-light text-primary" nbaColumnHeader field="id" type="numeric">ID</th>
@@ -22,6 +39,7 @@
               ></nba-multiselect>
           </ng-template>
         </th>
+        <th class="bg-light text-primary" nbaColumnHeader field="date" type="date">Data</th>
       </tr>
     </ng-template>
 
@@ -37,6 +55,7 @@
                 <span class="ml-1 align-middle">{{ customer.representative?.name }}</span>
             </div>
         </td>
+        <td>{{customer.date | date: 'dd/MM/yyyy'}}</td>
       </tr>
       }
     </ng-template>

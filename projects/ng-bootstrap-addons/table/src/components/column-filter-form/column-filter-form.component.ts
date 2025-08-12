@@ -4,6 +4,7 @@ import { DatetimeRangePickerComponent, InputComponent, NumericIntervalInputCompo
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ColumnFilterType, FilterFunction } from '../../models/table-models';
+import { DateUtils } from 'ng-bootstrap-addons/utils';
 
 @Component({
   selector: 'nba-column-filter-form',
@@ -50,10 +51,11 @@ export class ColumnFilterFormComponent {
         return (item: any, value: (Date | undefined)[] | undefined) => {
           if (!value) return true;
           if (!Array.isArray(value) || value.length !== 2) return true;
-          // Verifica se o item está dentro do intervalo de datas
           const [start, end] = value;
           if (!start || !end) return true;
-          return item >= start && item <= end;
+          if (!DateUtils.isDate(item)) return true;
+          const dateItem = DateUtils.toDate(item);
+          return dateItem >= start && dateItem <= end;
         };
       case 'numeric':
         return (item: any, value: (number|null)[] | null) => {
