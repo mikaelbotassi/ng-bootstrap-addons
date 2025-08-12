@@ -1,6 +1,12 @@
-@if(caption()){
-    <div><ng-container *ngTemplateOutlet="caption()!"></ng-container></div>
-}
+<div class="d-flex flex-column align-items-start pb-2 border-bottom mb-3">
+    @if(caption()){
+        <ng-container *ngTemplateOutlet="caption()!"></ng-container>
+    }
+    <a href="javascript:;" class="btn btn-sm btn-outline-dark" (click)="clearFilters()">
+        <i class="ti ti-filter-off"></i>
+        Limpar
+    </a>
+</div>
 <div class="table-responsive" dragScroll>
     <table class="table table-hover rounded-1">
         @if(header()){
@@ -23,29 +29,41 @@
     </table>
 </div>
 @if(paginated()){
-    <div class="d-flex align-items-center gap-3 justify-content-end flex-wrap">
-        <small class="text-muted me-2">Página <b>{{ page() }}</b> de <b>{{ smallNumPages() }}</b></small>
-        <pagination
-            [(ngModel)]="page"
-            [itemsPerPage]="itemsPerPage()"
-            [totalItems]="processedData().length"
-            [boundaryLinks]="true"
-            [maxSize]="maxSize()"
-            (pageChanged)="pageChanged($event)"
-            previousText="&lsaquo;"
-            nextText="&rsaquo;"
-            firstText="&laquo;"
-            lastText="&raquo;"
-            (numPages)="smallNumPages.set($event)"
-        />
-        <select
-            [ngModel]="itemsPerPage()"
-            (ngModelChange)="onItemsPerPage($event)"
-            class="form-select rounded-1 w-auto no-validate"
-        >
-            <option [ngValue]="10">10</option>
-            <option [ngValue]="25">25</option>
-            <option [ngValue]="50">50</option>
-        </select>
+  <div class="d-flex align-items-center gap-2 justify-content-end flex-wrap pt-">
+    <div class="btn-group">
+        <button type="button" class="btn btn-sm btn-outline-primary"
+                (click)="firstPage()" [disabled]="isFirstPage()">«</button>
+        <button type="button" class="btn btn-sm btn-outline-primary"
+                (click)="prevPage()" [disabled]="isFirstPage()">‹</button>
     </div>
+
+    <small>Página</small>
+
+    <input type="number" min="1" [max]="totalPages()"
+           class="form-control form-control-sm w-auto no-validate"
+           [ngModel]="pageInput()"
+           (ngModelChange)="onPageInputChange($event)"
+           (keyup.enter)="applyPageInput()">
+
+    <small>/ {{ totalPages() }}</small>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-sm btn-outline-primary"
+                (click)="nextPage()" [disabled]="isLastPage()">›</button>
+        <button type="button" class="btn btn-sm btn-outline-primary"
+                (click)="lastPage()" [disabled]="isLastPage()">»</button>
+    </div>
+
+    <small>Mostrando <b>{{ pageInfo().from }}</b>–<b>{{ pageInfo().to }}</b> de <b>{{ formatNumber(pageInfo().total) }}</b></small>
+
+    <small>por pág:</small>
+
+    <select class="form-select form-select-sm w-auto no-validate"
+    [ngModel]="itemsPerPage()"
+    (ngModelChange)="onItemsPerPage($event)">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="25">25</option>
+      <option [ngValue]="50">50</option>
+    </select>
+  </div>
 }
