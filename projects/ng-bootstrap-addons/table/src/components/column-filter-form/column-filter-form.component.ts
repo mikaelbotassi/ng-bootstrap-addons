@@ -44,21 +44,25 @@ export class ColumnFilterFormComponent {
     switch(this.type()) {
       case 'text':
         return (item: any, value: string) => {
+          if (typeof item !== 'string') return false;
+          if (!item) return false;
           if (!value) return true;
           return item?.toString().toLowerCase()?.includes(value?.toLowerCase());
         };
       case 'date':
         return (item: any, value: (Date | undefined)[] | undefined) => {
+          if (!item) return false;
           if (!value) return true;
           if (!Array.isArray(value) || value.length !== 2) return true;
           const [start, end] = value;
           if (!start || !end) return true;
-          if (!DateUtils.isDate(item)) return true;
+          if (!DateUtils.isDate(item)) return false;
           const dateItem = DateUtils.toDate(item);
           return dateItem >= start && dateItem <= end;
         };
       case 'numeric':
         return (item: any, value: (number|null)[] | null) => {
+          if (typeof item !== 'number' || isNaN(item)) return false;
           if (!value || !Array.isArray(value)) return true;
           const initialValue = value[0];
           const finalValue = value[1];
@@ -69,7 +73,8 @@ export class ColumnFilterFormComponent {
         };
       case 'boolean':
         return (item: any, value: boolean) => {
-          if (!value) return true;
+          if(typeof item !== 'boolean') return false;
+          if (value == undefined || value == null) return true;
           return item === value;
         };
       default:

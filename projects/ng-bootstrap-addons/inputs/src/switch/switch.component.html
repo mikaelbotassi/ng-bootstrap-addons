@@ -11,6 +11,11 @@
             [required]="isRequired"
             #input
         >
-        <label class="form-check-label" [for]="inputId()">{{label()}}</label>
+        @if(label() || icon()){
+            <label class="form-check-label" [class]="labelClass()" [for]="inputId()">
+                @if(icon()){<i [class]="'ti mb-0 ' + icon()"></i>}
+                {{label()}}
+            </label>
+        }
     </div>
 }

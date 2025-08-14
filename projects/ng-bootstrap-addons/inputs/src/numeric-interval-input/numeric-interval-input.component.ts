@@ -24,7 +24,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'nba-numeric-interval-input',
-  standalone: true,
   imports: [
     CommonModule,
     InputPlaceholderComponent,
@@ -32,6 +31,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ReactiveFormsModule,
   ],
   templateUrl: './numeric-interval-input.component.html',
+  styleUrl: './numeric-interval-input.component.scss',
   host: { 'collision-id': `numeric-interval-input-${createRandomString(20)}` },
   providers: [
     {

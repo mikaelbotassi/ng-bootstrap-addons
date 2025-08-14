@@ -15,9 +15,9 @@
         @case('text') {
           <nba-input
             class="no-validate"
-            label="Filtro"
             inputClass="no-validate"
             [(ngModel)]="value"
+            size="sm"
             name="filterText"
           />
         }
@@ -26,6 +26,7 @@
           <nba-datetime-range-input 
             label="Intervalo de Data"
             inputClass="no-validate"
+            size="sm"
             [(ngModel)]="value"
             name="filterDate"
           />
@@ -33,8 +34,8 @@
         
         @case('numeric') {
           <nba-numeric-interval-input
-            label="Filtro Numérico"
             inputClass="no-validate"
+            size="sm"
             [(ngModel)]="value"
             name="filterNumeric"
           />
@@ -43,6 +44,7 @@
         @case('boolean') {
           <nba-switch 
             label="Filtro"
+            class="fw-normal"
             inputClass="no-validate"
             [(ngModel)]="value"
             name="filterBoolean"
@@ -50,8 +52,7 @@
         }
         
         @default {
-          <nba-input 
-            label="Filtro"
+          <nba-input
             inputClass="no-validate"
             [(ngModel)]="value"
             name="filterDefault"

@@ -7,12 +7,6 @@
         }
     </a>
     <div id="dropdown-filter" *dropdownMenu class="dropdown-menu shadow-sm w-100 p-3 mt-1">
-        <div class="w-100 d-flex align-items-center justify-content-between mb-2">
-            Filtro
-            <a href="javascript:;" (click)="dropdownToggle.click()">
-                <i class="ti ti-x"></i>
-            </a>
-        </div>
         <nba-column-filter-form [type]="type()" (onClearFilter)="dropdownToggle.click(); onClearFilter.emit()" (filter)="dropdownToggle.click();filter.emit($event)" [dynamicFilter]="dynamicFilter()" />
     </div>
 </div>

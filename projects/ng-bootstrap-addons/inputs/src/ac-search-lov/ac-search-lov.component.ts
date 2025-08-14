@@ -121,9 +121,15 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
         if (this.control?.valid && this.descControl.invalid) {
           this.descControl?.setErrors(null);
         }
-        if(this.control?.disabled) {
+
+        if(this.control?.disabled && !this.descControl.disabled) {
           this.descControl.disable({ emitEvent: false });
         }
+        
+        if(this.control?.enabled && this.descControl.disabled) {
+          this.descControl.enable({ emitEvent: false });
+        }
+
       });
   }
 

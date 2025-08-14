@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './ac-search-sample.component.html',
 })
 export class AcSearchSampleComponent implements OnInit {
+
   mapConfig: acMap = {
     code: { key: 'id', title: 'ID' },
     desc: { key: 'name', title: 'Name' }
@@ -18,5 +19,7 @@ export class AcSearchSampleComponent implements OnInit {
   ngOnInit(): void {
     this.selectedPokemon.set(5);
   }
+
+  isActive = true;
 
 }

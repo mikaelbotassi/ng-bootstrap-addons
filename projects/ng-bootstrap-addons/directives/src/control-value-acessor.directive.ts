@@ -19,6 +19,7 @@ export class ControlValueAccessorDirective<T> implements ControlValueAccessor, O
 
     inputRef = viewChild<ElementRef<T>>('input');
     inputClass = input<string>('');
+    labelClass = input<string>('');
     class = input<string>('');
     inputId = model<string>(createRandomString(6));
     label = input<string>();

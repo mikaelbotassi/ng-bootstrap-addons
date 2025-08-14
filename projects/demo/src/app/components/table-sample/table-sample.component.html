@@ -40,6 +40,7 @@
           </ng-template>
         </th>
         <th class="bg-light text-primary" nbaColumnHeader field="date" type="date">Data</th>
+        <th class="bg-light text-primary" nbaColumnHeader field="verified" type="boolean">Verificado</th>
       </tr>
     </ng-template>
 
@@ -56,6 +57,7 @@
             </div>
         </td>
         <td>{{customer.date | date: 'dd/MM/yyyy'}}</td>
+        <td>{{customer.verified ? 'Sim' : 'Não'}}</td>
       </tr>
       }
     </ng-template>
