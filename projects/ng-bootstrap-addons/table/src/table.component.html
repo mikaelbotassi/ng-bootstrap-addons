@@ -20,7 +20,7 @@
                 @if(paginatedData().length){
                     <ng-container *ngTemplateOutlet="body()!; context: { $implicit: paginatedData()! }"></ng-container>
                 }@else{
-                    <tr><td colspan="100%">Nenhum registro encontrado</td></tr>
+                    <tr><td colspan="100%" class="text-center text-muted">Nenhum registro encontrado</td></tr>
                 }
             </tbody>
         </table>
