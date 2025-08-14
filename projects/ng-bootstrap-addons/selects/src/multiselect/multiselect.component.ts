@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, forwardRef, inject, input, signal } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, DestroyRef, forwardRef, inject, input, signal } from '@angular/core';
 import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MultiselectOptionComponent } from './multiselect-option/multiselect-option.component';
@@ -41,6 +41,7 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
   private destroyRef = inject(DestroyRef);
   searchText = signal<string>('');
   areAllSelected = signal<boolean>(false)
+  multiple = input(true, { transform: booleanAttribute });
 
   override ngOnInit(): void {
 
@@ -97,6 +98,11 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
   toggleSelection(option: MultiselectOption<T>) {
     const isSelected = this.control?.value?.includes(option.value) ?? false;
     
+    if(!this.multiple()){
+      this.control?.setValue([option.value]);
+      return;
+    }
+
     this.control?.setValue(isSelected
       ? this.control?.value?.filter((value:T) => value !== option.value) ?? null
       : [...this.control?.value ?? [], option.value]);

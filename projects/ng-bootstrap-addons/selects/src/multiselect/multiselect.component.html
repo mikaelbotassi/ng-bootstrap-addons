@@ -9,7 +9,7 @@
                 [id]="inputId()"
                 [class]="inputClass()"
                 [formControl]="control"
-                multiple
+                [multiple]="multiple()"
                 class="form-select d-none"
                 [attr.aria-label]="label()"
                 [attr.aria-describedby]="inputId()"
@@ -18,12 +18,13 @@
                 [attr.aria-labelledby]="inputId()"
                 #input
             >
-                <option
-                    *ngFor="let option of filteredOptions()"
-                    [value]="option.value"
-                >
-                    {{option.label}}
-                </option>
+                @for(option of filteredOptions(); track option.id){
+                    <option
+                        [value]="option.value"
+                    >
+                        {{option.label}}
+                    </option>
+                }
             </select>
             <input
                 type="text"
@@ -43,7 +44,7 @@
                         [(ngModel)]="searchText"
                     />
                 </li>
-                @if(!searchText.length){
+                @if(!searchText().length && multiple()){
                     <nba-multiselect-option 
                         [id]="selectAllId"
                         label="Selecionar todos"
@@ -60,12 +61,12 @@
                     />
                 }
             </ul>
-            <label [for]="inputId()" [class.required]="isRequired">
-                @if(icon()){
-                        <i [class]="'ti mb-0 ' + icon()"></i>
-                }
-                {{label()}}
-            </label>
+            @if(label() || icon()){
+                <label [for]="inputId()" [class.required]="isRequired">
+                    @if(icon()){<i [class]="'ti mb-0 ' + icon()"></i>}
+                    {{label()}}
+                </label>
+            }
           </div>
           <ng-content select="[group-sufix]"></ng-content>
         </div>

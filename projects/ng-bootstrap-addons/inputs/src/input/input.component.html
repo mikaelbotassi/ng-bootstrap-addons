@@ -50,12 +50,14 @@
                 >
               }
             }
-            <label [for]="inputId()" [class.required]="isRequired">
-                @if(icon()){
-                        <i [class]="'ti mb-0 ' + icon()"></i>
-                }
-                {{label()}}
-            </label>
+            @if(label() || icon()){
+              <label [for]="inputId()" [class.required]="isRequired">
+                  @if(icon()){
+                          <i [class]="'ti mb-0 ' + icon()"></i>
+                  }
+                  {{label()}}
+              </label>
+            }
         </div>
         <ng-content select="[group-sufix]"></ng-content>
       </div>

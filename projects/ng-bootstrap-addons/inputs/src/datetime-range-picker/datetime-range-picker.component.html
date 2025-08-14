@@ -2,7 +2,7 @@
 
     @if(control){
         <div class="form-group position-relative" [class]="class()">
-            <div class="form-floating can-click">
+            <div class="form-floating can-click" [class]="'form-floating-' + size()">
                 <input
                     class="form-control"
                     mask="00/00/0000 00:00:00 - 00/00/0000 00:00:00"
@@ -23,12 +23,12 @@
                     (blur)="markAsTouched()"
                     [formControl]="textValue"
                 >
-                <label [for]="inputId()" [class.required]="isRequired">
-                    @if(icon()){
-                            <i [class]="'ti mb-0 ' + icon()"></i>
-                    }
-                    {{label()}}
-                </label>
+                @if(label() || icon()){
+                    <label [for]="inputId()" [class.required]="isRequired">
+                        @if(icon()){<i [class]="'ti mb-0 ' + icon()"></i>}
+                        {{label()}}
+                    </label>
+                }
             </div>
             <bs-daterangepicker-inline 
                 clickOutside

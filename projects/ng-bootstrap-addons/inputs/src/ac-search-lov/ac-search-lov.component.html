@@ -87,12 +87,14 @@
               ><i class="ti ti-search mb-0"></i></a>
             </div>
           }
-          <label [for]="inputId()" [class.required]="isRequired">
-              @if(icon()){
-                <i [class]="'ti mb-0 ' + icon()"></i>
-              }
-              {{label()}}
-          </label>
+          @if(label() || icon()){
+            <label [for]="inputId()" [class.required]="isRequired">
+                @if(icon()){
+                  <i [class]="'ti mb-0 ' + icon()"></i>
+                }
+                {{label()}}
+            </label>
+          }
       </div>
       <nba-form-error-message [control]="control"></nba-form-error-message>
   </div>

@@ -100,7 +100,6 @@ object-fit: cover }
 /// - $py       : padding-y do input (se null, usa calc(.45em + $border-w))
 @mixin nb-form-floating-size(
   $text-fs: 1em,
-  $label-fs: .75em,
   $gap: 0em,
   $border-w: null,
   $px: 1em,
@@ -111,6 +110,7 @@ object-fit: cover }
     if(global-variable-exists(border-width), $border-width, 1px),
     $border-w
   );
+  $label-fs: $text-fs * 0.75;
   @if $py == null { $py: calc(.45em + #{$border-w}); }
   @else { $py: calc(#{$py} + #{$border-w}); }
 
@@ -131,9 +131,12 @@ object-fit: cover }
   > .form-control-plaintext,
   > .form-select{
     font-size: $text-fs;
-    padding: $label-size $px $py $px; // topo ampliado
+    padding: $py calc($px - 3px) $py calc($px - 3px); // topo ampliado
     height: auto;
     min-height: auto;
+    &:has(~label){
+      padding-top: $label-size;
+    }
   }
 
   // estados de flutuação (foco/valor)
@@ -143,10 +146,8 @@ object-fit: cover }
   > .form-select ~ label {
     padding-bottom: $gap;
     padding-top: $py !important;
-    font-size: $label-fs;
-    line-height: 1;
     top: 0;
-    transform: translateY(0);
+    transform: translateY(0) scale(0.75);
   }
 }
 
@@ -154,7 +155,6 @@ object-fit: cover }
 .form-floating.form-floating-xs {
   @include nb-form-floating-size(
     $text-fs: .75em,
-    $label-fs: .65em,
     $gap: .1em,
     $py: .25em,
     $border-w: $border-width,
@@ -166,7 +166,6 @@ object-fit: cover }
 .form-floating.form-floating-sm {
   @include nb-form-floating-size(
     $text-fs: .875em,
-    $label-fs: .75em,
     $border-w: $border-width, // se estiver usando Bootstrap
     $px: 1em,
     $py: .5em
@@ -177,7 +176,6 @@ object-fit: cover }
 .form-floating.form-floating-lg {
   @include nb-form-floating-size(
     $text-fs: 1.25em,
-    $label-fs: 1em,
     $gap: 0em,
     $border-w: $border-width,
     $px: 1.125em,
@@ -188,10 +186,9 @@ object-fit: cover }
 .form-floating.form-floating-md {
   @include nb-form-floating-size(
     $text-fs: 1em,
-    $label-fs: .85em,
     $gap: 0em,
     $border-w: $border-width,
     $px: 1.125em,
-    $py: .6em,
+    $py: .45em,
   );
 }

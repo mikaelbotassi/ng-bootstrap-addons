@@ -21,7 +21,7 @@ export class ControlValueAccessorDirective<T> implements ControlValueAccessor, O
     inputClass = input<string>('');
     class = input<string>('');
     inputId = model<string>(createRandomString(6));
-    label = input.required<string>();
+    label = input<string>();
     icon = input<string>();
     size = input<'xs' | 'sm' | 'md' | 'lg'>('md');
 
