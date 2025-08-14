@@ -167,7 +167,6 @@ object-fit: cover }
   @include nb-form-floating-size(
     $text-fs: .875em,
     $label-fs: .75em,
-    $gap: .15em,
     $border-w: $border-width, // se estiver usando Bootstrap
     $px: 1em,
     $py: .5em
@@ -183,5 +182,16 @@ object-fit: cover }
     $border-w: $border-width,
     $px: 1.125em,
     $py: .75em,
+  );
+}
+
+.form-floating.form-floating-md {
+  @include nb-form-floating-size(
+    $text-fs: 1em,
+    $label-fs: .85em,
+    $gap: 0em,
+    $border-w: $border-width,
+    $px: 1.125em,
+    $py: .6em,
   );
 }

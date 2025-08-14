@@ -10,7 +10,7 @@ import {
   NgModel,
 } from '@angular/forms';
 import { createRandomString } from 'ng-bootstrap-addons/utils';
-import { Subject, takeUntil, startWith, distinctUntilChanged, tap } from 'rxjs';
+import { Subject, takeUntil, startWith, distinctUntilChanged } from 'rxjs';
 
 @Directive({
   selector: '[appControlValueAccessor]',
@@ -23,6 +23,7 @@ export class ControlValueAccessorDirective<T> implements ControlValueAccessor, O
     inputId = model<string>(createRandomString(6));
     label = input.required<string>();
     icon = input<string>();
+    size = input<'xs' | 'sm' | 'md' | 'lg'>('md');
 
     control: FormControl | undefined;
     isRequired = false;
