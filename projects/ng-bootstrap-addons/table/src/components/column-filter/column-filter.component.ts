@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, TemplateRef, viewChild } from '@angular/core';
 import { ColumnFilterFormComponent } from '../column-filter-form/column-filter-form.component';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ColumnFilterType, FilterFunction } from '../../models/table-models';
+import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 
 @Component({
   selector: 'nba-column-filter',
   templateUrl: './column-filter.component.html',
   styles: [`:host {display: contents}`],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ColumnFilterFormComponent, BsDropdownModule],
+  imports: [CommonModule, ColumnFilterFormComponent, BsDropdownModule, ClickOutsideDirective],
 })
 export class ColumnFilterComponent {
 
@@ -21,5 +22,9 @@ export class ColumnFilterComponent {
 
   filter = output<FilterFunction|void>();
   onClearFilter = output<void>();
+
+  onClickOutside(dropdown: BsDropdownDirective) {
+    if(dropdown.isOpen) dropdown.hide();
+  }
 
 }

@@ -1,4 +1,4 @@
-<div dropdown [autoClose]="false" [class]="class()">
+<div dropdown #dropdown="bs-dropdown" [autoClose]="false" [class]="class()" clickOutside (onClickOutside)="onClickOutside(dropdown)">
     <a href="javascript:;" dropdownToggle #dropdownToggle aria-controls="dropdown-filter">
         @if(isFiltered()){
             <i class="ti ti-filter-filled"></i>

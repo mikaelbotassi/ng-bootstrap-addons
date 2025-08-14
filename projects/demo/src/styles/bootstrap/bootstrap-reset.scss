@@ -62,12 +62,14 @@
         color: $dark;
     }
     >.form-control, >.form-control-plaintext, >.form-select{
-        height: calc(3.25rem + calc(var(--sm-border-width)* 2));
-        min-height: calc(3.25rem + calc(var(--sm-border-width)* 2));
+        $height: calc(3.25rem + calc($border-width* 2));
+        height: $height;
+        min-height: $height;
         line-height: normal;
 
     }
     > .form-control:focus ~ label, > .form-control:not(:placeholder-shown) ~ label, > .form-control-plaintext ~ label, > .form-select ~ label{
         color: $primary;
     }
+
 }

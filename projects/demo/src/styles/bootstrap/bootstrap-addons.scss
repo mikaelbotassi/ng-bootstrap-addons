@@ -89,3 +89,99 @@ object-fit: cover }
     border-bottom-width: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
   }
 }
+
+/// Variante compacta de form-floating com label acima ao focar/preencher
+/// Parâmetros:
+/// - $text-fs  : font-size do texto do input
+/// - $label-fs : font-size da label quando flutuada
+/// - $gap      : espaço entre label e input
+/// - $border-w : largura da borda (se usar Bootstrap, pode passar $border-width)
+/// - $px       : padding-x do input
+/// - $py       : padding-y do input (se null, usa calc(.45em + $border-w))
+@mixin nb-form-floating-size(
+  $text-fs: 1em,
+  $label-fs: .75em,
+  $gap: 0em,
+  $border-w: null,
+  $px: 1em,
+  $py: null,
+) {
+  // fallback de borda e padding-y
+  $border-w: if($border-w == null,
+    if(global-variable-exists(border-width), $border-width, 1px),
+    $border-w
+  );
+  @if $py == null { $py: calc(.45em + #{$border-w}); }
+  @else { $py: calc(#{$py} + #{$border-w}); }
+
+  // derivações (iguais às suas)
+  $label-size: calc(calc(#{$label-fs}) + #{$gap} + #{$py});
+  $text-size : calc(calc(#{$text-fs})  + #{$py});
+
+  // === estilos ===
+  > label{
+    padding: 0 $px;
+    font-size: $text-fs;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all .15s ease-in-out; // ✅ transição suave
+  }
+
+  > .form-control,
+  > .form-control-plaintext,
+  > .form-select{
+    font-size: $text-fs;
+    padding: $label-size $px $py $px; // topo ampliado
+    height: auto;
+    min-height: auto;
+  }
+
+  // estados de flutuação (foco/valor)
+  > .form-control:focus ~ label,
+  > .form-control:not(:placeholder-shown) ~ label,
+  > .form-control-plaintext ~ label,
+  > .form-select ~ label {
+    padding-bottom: $gap;
+    padding-top: $py !important;
+    font-size: $label-fs;
+    line-height: 1;
+    top: 0;
+    transform: translateY(0);
+  }
+}
+
+/* XS */
+.form-floating.form-floating-xs {
+  @include nb-form-floating-size(
+    $text-fs: .75em,
+    $label-fs: .65em,
+    $gap: .1em,
+    $py: .25em,
+    $border-w: $border-width,
+    $px: .875em,
+  );
+}
+
+/* SM (a sua atual) */
+.form-floating.form-floating-sm {
+  @include nb-form-floating-size(
+    $text-fs: .875em,
+    $label-fs: .75em,
+    $gap: .15em,
+    $border-w: $border-width, // se estiver usando Bootstrap
+    $px: 1em,
+    $py: .5em
+  );
+}
+
+/* LG */
+.form-floating.form-floating-lg {
+  @include nb-form-floating-size(
+    $text-fs: 1.25em,
+    $label-fs: 1em,
+    $gap: 0em,
+    $border-w: $border-width,
+    $px: 1.125em,
+    $py: .75em,
+  );
+}
