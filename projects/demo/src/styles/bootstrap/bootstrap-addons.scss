@@ -110,7 +110,8 @@ object-fit: cover }
     if(global-variable-exists(border-width), $border-width, 1px),
     $border-w
   );
-  $label-fs: $text-fs * 0.75;
+  $lf-perc: 0.75; // escala da label ao focar
+  $label-fs: $text-fs * $lf-perc;
   @if $py == null { $py: calc(.45em + #{$border-w}); }
   @else { $py: calc(#{$py} + #{$border-w}); }
 
@@ -122,6 +123,8 @@ object-fit: cover }
   > label{
     padding: 0 $px;
     font-size: $text-fs;
+    height: auto;
+    color: $dark;
     top: 50%;
     transform: translateY(-50%);
     transition: all .15s ease-in-out; // ✅ transição suave
@@ -146,8 +149,9 @@ object-fit: cover }
   > .form-select ~ label {
     padding-bottom: $gap;
     padding-top: $py !important;
+    color: $primary;
     top: 0;
-    transform: translateY(0) scale(0.75);
+    transform: translateY(0) scale($lf-perc);
   }
 }
 
@@ -158,7 +162,7 @@ object-fit: cover }
     $gap: .1em,
     $py: .25em,
     $border-w: $border-width,
-    $px: .875em,
+    $px: 1em,
   );
 }
 
@@ -168,7 +172,17 @@ object-fit: cover }
     $text-fs: .875em,
     $border-w: $border-width, // se estiver usando Bootstrap
     $px: 1em,
-    $py: .5em
+    $py: .35em
+  );
+}
+
+.form-floating.form-floating-md {
+  @include nb-form-floating-size(
+    $text-fs: 1em,
+    $gap: 0em,
+    $border-w: $border-width,
+    $px: 1em,
+    $py: .5em,
   );
 }
 
@@ -178,17 +192,7 @@ object-fit: cover }
     $text-fs: 1.25em,
     $gap: 0em,
     $border-w: $border-width,
-    $px: 1.125em,
+    $px: 1em,
     $py: .75em,
-  );
-}
-
-.form-floating.form-floating-md {
-  @include nb-form-floating-size(
-    $text-fs: 1em,
-    $gap: 0em,
-    $border-w: $border-width,
-    $px: 1.125em,
-    $py: .45em,
   );
 }

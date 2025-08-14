@@ -24,7 +24,7 @@ export class ColumnFilterFormComponent {
 
   applyFilter() {
     if(this.dynamicFilter()) return this.filter.emit()
-    if(!this.value()){
+    if(this.value() == null || this.value() == undefined){
       this.clearFilter();
       return;
     }
@@ -74,7 +74,7 @@ export class ColumnFilterFormComponent {
       case 'boolean':
         return (item: any, value: boolean) => {
           if(typeof item !== 'boolean') return false;
-          if (value == undefined || value == null) return true;
+          console.log("🚀 ~ ColumnFilterFormComponent ~ getDefaultFilterFunction ~ item:", item)
           return item === value;
         };
       default:

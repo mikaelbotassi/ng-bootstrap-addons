@@ -5,8 +5,6 @@
         acUrl="https://pokeapi.co/api/v2/pokemon"
         [map]="mapConfig"
         [(ngModel)]="selectedPokemon"
-        [disabled]="!isActive"
         [required]="true">
     </nba-ac-lov>
-    <button type="button" (click)="isActive = !isActive">Mudar</button>
 </app-sample-container>
