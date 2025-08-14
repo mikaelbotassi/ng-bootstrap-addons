@@ -7,6 +7,7 @@ import { CurrencyDirective } from 'ng-bootstrap-addons/directives';
 import { InputPasswordDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
+import { createRandomString } from 'ng-bootstrap-addons/utils';
 
 type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
 
@@ -14,6 +15,7 @@ type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
   selector: 'nba-input',
   templateUrl: './input.component.html',
   imports: [ReactiveFormsModule, CommonModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CurrencyDirective, InputPasswordDirective],
+  host: { 'collision-id': `input-sample-${createRandomString(20)} ` },
   styleUrl: './input.component.scss',
   providers: [
     {

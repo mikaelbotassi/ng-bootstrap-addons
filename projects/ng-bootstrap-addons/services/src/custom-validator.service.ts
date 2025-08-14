@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NumericPipe } from 'ng-bootstrap-addons/pipes';
 
 @Injectable({
@@ -43,6 +43,7 @@ export class CustomValidatorService {
       validator: (max: number) => Validators.max(max),
       message: (obj: {max:number, actual:number}) => `O valor máximo permitido é ${this.numericPipe.transform(obj.max, false, undefined)}`
     },
+
   };
 
   new(key:string, validation: CustomValidation):CustomValidation{

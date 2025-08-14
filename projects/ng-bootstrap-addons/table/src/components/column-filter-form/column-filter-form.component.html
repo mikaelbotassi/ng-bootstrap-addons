@@ -1,0 +1,72 @@
+<!-- column-filter-form.component.html -->
+<form novalidate (ngSubmit)="applyFilter()">
+  <div>
+    @if (template()) {
+      <ng-container 
+        [ngTemplateOutlet]="template()!" 
+        [ngTemplateOutletContext]="{ $implicit: this.value() }">
+      </ng-container>
+    } 
+    @else if (dynamicFilter()) {
+      <ng-container [ngTemplateOutlet]="dynamicFilter()!"></ng-container>
+    } 
+    @else {
+      @switch (type()) {
+        @case('text') {
+          <nba-input
+            class="no-validate"
+            inputClass="no-validate"
+            [(ngModel)]="value"
+            size="sm"
+            name="filterText"
+          />
+        }
+        
+        @case('date') {
+          <nba-datetime-range-input 
+            label="Intervalo de Data"
+            inputClass="no-validate"
+            size="sm"
+            [(ngModel)]="value"
+            name="filterDate"
+          />
+        }
+        
+        @case('numeric') {
+          <nba-numeric-interval-input
+            inputClass="no-validate"
+            size="sm"
+            [(ngModel)]="value"
+            name="filterNumeric"
+          />
+        }
+        
+        @case('boolean') {
+          <nba-switch
+            class="fw-normal"
+            inputClass="no-validate"
+            [(ngModel)]="value"
+            name="filterBoolean"
+          />
+        }
+        
+        @default {
+          <nba-input
+            inputClass="no-validate"
+            [(ngModel)]="value"
+            name="filterDefault"
+          />
+        }
+      }
+    }
+  </div>
+  
+  <div class="mt-3 d-flex align-items-center justify-content-between">
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFilter()">
+      Limpar
+    </button>
+    <button type="submit" class="btn btn-sm btn-primary">
+      Aplicar
+    </button>
+  </div>
+</form>

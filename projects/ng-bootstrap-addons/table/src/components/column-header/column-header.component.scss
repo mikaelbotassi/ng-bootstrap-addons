@@ -1,0 +1,46 @@
+.sort-icon {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+
+  &:has(+a:hover), &:has(>.sorted) {
+    opacity: 1;
+    transition: opacity 0.2s;
+  }
+
+  i{
+    $arrow-down: url('data:image/svg+xml;charset=utf-8,<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M18 13l-6 6" /><path d="M6 13l6 6" /></svg>');
+
+    $arrow-up: url('data:image/svg+xml;charset=utf-8,<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M18 11l-6 -6" /><path d="M6 11l6 -6" /></svg>');
+
+    $arrows-down-up: url('data:image/svg+xml;charset=utf-8,<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-down-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3l0 18" /><path d="M10 18l-3 3l-3 -3" /><path d="M7 21l0 -18" /><path d="M20 6l-3 -3l-3 3" /></svg>');
+
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+
+    &.nba-arrow-down::before{
+      mask: $arrow-down;
+    }
+
+    &.nba-arrow-up::before{
+      mask: $arrow-up;
+    }
+
+    &.nba-arrows-down-up::before{
+      mask: $arrows-down-up;
+    }
+
+    &::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: currentColor;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+    }
+  }
+
+}

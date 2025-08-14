@@ -10,7 +10,7 @@ import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-colla
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { AutofocusDirective, ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
-import { Command1 } from 'ng-bootstrap-addons/utils';
+import { Command1, createRandomString } from 'ng-bootstrap-addons/utils';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 
 @Component({
@@ -19,6 +19,7 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
   styleUrls: ['./ac-search-lov.component.scss'],
   imports: [FormErrorMessageComponent, InputPlaceholderComponent, ReactiveFormsModule, ClickOutsideDirective, CollapseDirective, AutocompleteCollapseComponent, CommonModule, FormsModule, AutofocusDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { 'collision-id': `ac-search-lov-${createRandomString(20)} ` },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -91,7 +92,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
     this.control?.valueChanges
     .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe(value => {
+    .subscribe((value:any) => {
       if (value && !this.descControl.value) {
         this.fetchDesc(value);
       }
@@ -120,9 +121,15 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
         if (this.control?.valid && this.descControl.invalid) {
           this.descControl?.setErrors(null);
         }
-        if(this.control?.disabled) {
+
+        if(this.control?.disabled && !this.descControl.disabled) {
           this.descControl.disable({ emitEvent: false });
         }
+        
+        if(this.control?.enabled && this.descControl.disabled) {
+          this.descControl.enable({ emitEvent: false });
+        }
+
       });
   }
 

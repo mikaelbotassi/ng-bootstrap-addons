@@ -1,13 +1,14 @@
 @defer (on viewport; prefetch on idle){
   @if(control){
-    <div class="form-group">
+    <div class="form-group" [class]="class()">
       <div class="input-group">
         <ng-content select="[group-prefix]"></ng-content>
-        <div class="form-floating">
+        <div class="form-floating" [class]="'form-floating-' + size()">
             @if(password()){
               <input
                 type="password"
                 input-password
+                [class]="inputClass()"
                 class="form-control"
                 [formControl]="control"
                 [id]="inputId()"
@@ -22,6 +23,7 @@
                   type="text"
                   class="form-control"
                   [formControl]="control"
+                  [class]="inputClass()"
                   [id]="inputId()"
                   [name]="inputId()"
                   [placeholder]="label()"
@@ -35,6 +37,7 @@
                 <input
                   [type]="type()"
                   class="form-control"
+                  [class]="inputClass()"
                   [formControl]="control"
                   [id]="inputId()"
                   [name]="inputId()"
@@ -47,12 +50,14 @@
                 >
               }
             }
-            <label [for]="inputId()" [class.required]="isRequired">
-                @if(icon()){
-                        <i [class]="'ti h5 mb-0 ' + icon()"></i>
-                }
-                {{label()}}
-            </label>
+            @if(label() || icon()){
+              <label [for]="inputId()" [class.required]="isRequired">
+                  @if(icon()){
+                          <i [class]="'ti mb-0 ' + icon()"></i>
+                  }
+                  {{label()}}
+              </label>
+            }
         </div>
         <ng-content select="[group-sufix]"></ng-content>
       </div>

@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center gap-1 w-100 position-relative">
+  
+  <ng-content></ng-content>
+  
+  @if(sortable()) {
+    <span class="sort-icon fw-bold lh-1">
+      @switch(sortDirection()) {
+        @case('asc') {
+          <i class="sorted nba-arrow-up"></i>
+        }
+        @case('desc') {
+          <i class="sorted nba-arrow-down"></i>
+        }
+        @default {
+          <i class="nba-arrows-down-up"></i>
+        }
+      }
+    </span>
+    <a (click)="sort()" class="top-0 bottom-0 end-0 start-0 position-absolute" href="javascript:void(0);"></a>
+    @if(type() || filter()){
+      <nba-column-filter [type]="type()" (onClearFilter)="removeFilter()" [isFiltered]="isFiltered()" [field]="field()" (filter)="addFilter($event)" [dynamicFilter]="filter()" class="ms-auto z-3" />
+    }
+  }
+
+</div>

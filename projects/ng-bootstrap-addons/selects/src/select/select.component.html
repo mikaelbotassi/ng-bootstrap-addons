@@ -1,20 +1,24 @@
 @defer (on viewport; prefetch on idle) {
     @if(control){
-        <div class="form-group">
-            <div class="form-floating">
+        <div class="form-group" [class]="class()">
+            <div class="form-floating" [class]="'form-floating-' + size()">
                 <select 
                     [name]="inputId()" 
                     [id]="inputId()"
+                    [class]="inputClass()"
                     [formControl]="control"
+                    [compareWith]="compareWith()"
                     class="form-select"
                     #input
                 >
                     <ng-content></ng-content>
                 </select>
-                <label [for]="inputId()" [class.required]="isRequired">
-                    @if(icon()){<i [class]="'ti h5 mb-0 ' + icon()"></i>}
-                    {{label()}}
-                </label>
+                @if(label() || icon()){
+                    <label [for]="inputId()" [class.required]="isRequired">
+                        @if(icon()){<i [class]="'ti mb-0 ' + icon()"></i>}
+                        {{label()}}
+                    </label>
+                }
             </div>
             <nba-form-error-message [control]="control"></nba-form-error-message>
         </div>

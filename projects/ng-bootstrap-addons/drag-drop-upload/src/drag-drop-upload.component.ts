@@ -1,7 +1,7 @@
 import { booleanAttribute, Component, EventEmitter, input, Input, model, OnDestroy, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { stopEvent } from 'ng-bootstrap-addons/utils';
+import { createRandomString, stopEvent } from 'ng-bootstrap-addons/utils';
 import { LabelComponent } from 'ng-bootstrap-addons/label';
 
 @Component({
@@ -9,9 +9,7 @@ import { LabelComponent } from 'ng-bootstrap-addons/label';
     imports: [CommonModule, LabelComponent],
     templateUrl: './drag-drop-upload.component.html',
     styleUrls: ['./drag-drop-upload.component.scss'],
-    host: {
-        'data-component': 'drag-drop-upload'
-    }
+    host: { 'collision-id': `drag-drop-upload-${createRandomString(20)} ` },
 })
 export class DragDropUploadComponent implements OnDestroy{
 

@@ -4,17 +4,18 @@ import { BsDatepickerModule, BsDaterangepickerConfig } from 'ngx-bootstrap/datep
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
-import { NgxMaskDirective } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
-import {DateUtils} from 'ng-bootstrap-addons/utils';
+import {createRandomString, DateUtils} from 'ng-bootstrap-addons/utils';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'nba-datetime-range-input',
   imports: [CommonModule, BsDatepickerModule, ReactiveFormsModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CollapseModule, ClickOutsideDirective, FormsModule],
   templateUrl: './datetime-range-picker.component.html',
+  host: { 'collision-id': `datetime-range-picker-${createRandomString(20)} ` },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

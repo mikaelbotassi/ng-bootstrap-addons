@@ -1,14 +1,15 @@
 @defer (on viewport; prefetch on idle){
     @if(control){
-      <div class="form-group">
+      <div class="form-group" [class]="class()">
         <div class="input-group">
           <ng-content select="[group-prefix]"></ng-content>
-          <div class="form-floating" dropdown [insideClick]="true">
+          <div class="form-floating" [class]="'form-floating-' + size()" dropdown [insideClick]="true">
             <select
                 [name]="inputId()"
                 [id]="inputId()"
+                [class]="inputClass()"
                 [formControl]="control"
-                multiple
+                [multiple]="multiple()"
                 class="form-select d-none"
                 [attr.aria-label]="label()"
                 [attr.aria-describedby]="inputId()"
@@ -17,17 +18,19 @@
                 [attr.aria-labelledby]="inputId()"
                 #input
             >
-                <option
-                    *ngFor="let option of filteredOptions()"
-                    [value]="option.value"
-                >
-                    {{option.label}}
-                </option>
+                @for(option of filteredOptions(); track option.id){
+                    <option
+                        [value]="option.value"
+                    >
+                        {{option.label}}
+                    </option>
+                }
             </select>
             <input
                 type="text"
                 class="form-select"
                 [formControl]="descControl"
+                [class]="inputClass()"
                 [placeholder]="label()"
                 readonly
             >
@@ -41,7 +44,7 @@
                         [(ngModel)]="searchText"
                     />
                 </li>
-                @if(!searchText.length){
+                @if(!searchText().length && multiple()){
                     <nba-multiselect-option 
                         [id]="selectAllId"
                         label="Selecionar todos"
@@ -58,12 +61,12 @@
                     />
                 }
             </ul>
-            <label [for]="inputId()" [class.required]="isRequired">
-                @if(icon()){
-                        <i [class]="'ti h5 mb-0 ' + icon()"></i>
-                }
-                {{label()}}
-            </label>
+            @if(label() || icon()){
+                <label [for]="inputId()" [class.required]="isRequired">
+                    @if(icon()){<i [class]="'ti mb-0 ' + icon()"></i>}
+                    {{label()}}
+                </label>
+            }
           </div>
           <ng-content select="[group-sufix]"></ng-content>
         </div>

@@ -1,0 +1,67 @@
+<div class="card">
+    @if(caption()){
+        <div class="p-3">
+            <ng-container *ngTemplateOutlet="caption()!"></ng-container>
+        </div>
+    }
+    <div class="table-responsive px-3" dragScroll>
+        <table class="table align-middle mb-0">
+            @if(header()){
+                <thead class="table-white">
+                    <ng-container *ngTemplateOutlet="header()!; context: {
+                        $implicit: this,
+                        sortField: sortField(),
+                        sortDirection: sortDirection(),
+                        onSort: onSort.bind(this)
+                    }"></ng-container>
+                </thead>
+            }
+            <tbody>
+                @if(paginatedData().length){
+                    <ng-container *ngTemplateOutlet="body()!; context: { $implicit: paginatedData()! }"></ng-container>
+                }@else{
+                    <tr><td colspan="100%" class="text-center text-muted">Nenhum registro encontrado</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @if(paginated()){
+      <div class="d-flex align-items-center gap-2 justify-content-end flex-wrap p-3">
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-primary"
+                    (click)="firstPage()" [disabled]="isFirstPage()">«</button>
+            <button type="button" class="btn btn-sm btn-outline-primary"
+                    (click)="prevPage()" [disabled]="isFirstPage()">‹</button>
+        </div>
+    
+        <small>Página</small>
+    
+        <input type="number" min="1" [max]="totalPages()"
+               class="form-control form-control-sm w-auto no-validate"
+               [ngModel]="pageInput()"
+               (ngModelChange)="onPageInputChange($event)"
+               (keyup.enter)="applyPageInput()">
+    
+        <small>/ {{ totalPages() }}</small>
+    
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-primary"
+                    (click)="nextPage()" [disabled]="isLastPage()">›</button>
+            <button type="button" class="btn btn-sm btn-outline-primary"
+                    (click)="lastPage()" [disabled]="isLastPage()">»</button>
+        </div>
+    
+        <small>Mostrando <b>{{ pageInfo().from }}</b>–<b>{{ pageInfo().to }}</b> de <b>{{ formatNumber(pageInfo().total) }}</b></small>
+    
+        <small>por pág:</small>
+    
+        <select class="form-select form-select-sm w-auto no-validate"
+        [ngModel]="itemsPerPage()"
+        (ngModelChange)="onItemsPerPage($event)">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="25">25</option>
+          <option [ngValue]="50">50</option>
+        </select>
+      </div>
+    }
+</div>

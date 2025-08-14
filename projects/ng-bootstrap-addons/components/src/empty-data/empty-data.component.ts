@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
+import { createRandomString } from 'ng-bootstrap-addons/utils';
 
 @Component({
     selector: 'nba-empty-data',
     imports: [],
     templateUrl: './empty-data.component.html',
     styleUrl: './empty-data.component.scss',
-    host: {
-        'data-component': 'empty-data'
-    }
+    host: { 'collision-id': `empty-data-${createRandomString(20)} ` },
 })
 export class EmptyDataComponent {
 

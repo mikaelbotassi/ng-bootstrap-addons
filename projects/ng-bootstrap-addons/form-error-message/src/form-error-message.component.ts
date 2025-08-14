@@ -2,14 +2,13 @@ import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { CustomValidatorService } from 'ng-bootstrap-addons/services';
+import { createRandomString } from 'ng-bootstrap-addons/utils';
 
 @Component({
   selector: 'nba-form-error-message',
   imports: [],
   templateUrl: './form-error-message.component.html',
-  host: {
-    'data-component': 'form-error-message'
-  }
+  host: { 'collision-id': `form-error-message-${createRandomString(20)} ` },
 })
 export class FormErrorMessageComponent implements OnInit {
 
