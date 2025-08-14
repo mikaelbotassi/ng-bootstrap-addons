@@ -6,7 +6,7 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
     imports: [],
     templateUrl: './empty-data.component.html',
     styleUrl: './empty-data.component.scss',
-    host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+    host: { 'collision-id': `empty-data-${createRandomString(20)} ` },
 })
 export class EmptyDataComponent {
 

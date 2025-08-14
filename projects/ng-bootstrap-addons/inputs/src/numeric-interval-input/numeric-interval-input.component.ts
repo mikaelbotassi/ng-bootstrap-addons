@@ -32,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ReactiveFormsModule,
   ],
   templateUrl: './numeric-interval-input.component.html',
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)}` },
+  host: { 'collision-id': `numeric-interval-input-${createRandomString(20)}` },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

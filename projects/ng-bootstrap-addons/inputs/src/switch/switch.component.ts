@@ -14,7 +14,7 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
       multi: true,
     },
   ],
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+  host: { 'collision-id': `switch-${createRandomString(20)} ` },
 })
 export class SwitchComponent<T> extends ControlValueAccessorDirective<T> {
 }

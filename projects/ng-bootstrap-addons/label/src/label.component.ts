@@ -8,7 +8,7 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+  host: { 'collision-id': `label-${createRandomString(20)} ` },
 })
 export class LabelComponent {
   required = input(false, {transform: booleanAttribute});

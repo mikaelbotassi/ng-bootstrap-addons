@@ -19,7 +19,7 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
   styleUrls: ['./ac-search-lov.component.scss'],
   imports: [FormErrorMessageComponent, InputPlaceholderComponent, ReactiveFormsModule, ClickOutsideDirective, CollapseDirective, AutocompleteCollapseComponent, CommonModule, FormsModule, AutofocusDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+  host: { 'collision-id': `ac-search-lov-${createRandomString(20)} ` },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

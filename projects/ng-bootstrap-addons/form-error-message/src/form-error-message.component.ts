@@ -8,7 +8,7 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
   selector: 'nba-form-error-message',
   imports: [],
   templateUrl: './form-error-message.component.html',
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+  host: { 'collision-id': `form-error-message-${createRandomString(20)} ` },
 })
 export class FormErrorMessageComponent implements OnInit {
 

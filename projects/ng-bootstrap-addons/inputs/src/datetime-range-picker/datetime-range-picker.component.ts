@@ -15,7 +15,7 @@ import { NgxMaskDirective } from 'ngx-mask';
   selector: 'nba-datetime-range-input',
   imports: [CommonModule, BsDatepickerModule, ReactiveFormsModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CollapseModule, ClickOutsideDirective, FormsModule],
   templateUrl: './datetime-range-picker.component.html',
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+  host: { 'collision-id': `datetime-range-picker-${createRandomString(20)} ` },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

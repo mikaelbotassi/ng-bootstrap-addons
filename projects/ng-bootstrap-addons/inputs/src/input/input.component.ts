@@ -15,7 +15,7 @@ type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
   selector: 'nba-input',
   templateUrl: './input.component.html',
   imports: [ReactiveFormsModule, CommonModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CurrencyDirective, InputPasswordDirective],
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+  host: { 'collision-id': `input-sample-${createRandomString(20)} ` },
   styleUrl: './input.component.scss',
   providers: [
     {

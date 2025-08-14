@@ -6,7 +6,7 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
   imports: [],
   templateUrl: './input-placeholder.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+  host: { 'collision-id': `input-placeholder-${createRandomString(20)} ` },
 })
 export class InputPlaceholderComponent {
 

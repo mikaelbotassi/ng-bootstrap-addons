@@ -9,7 +9,7 @@ import { LabelComponent } from 'ng-bootstrap-addons/label';
     imports: [CommonModule, LabelComponent],
     templateUrl: './drag-drop-upload.component.html',
     styleUrls: ['./drag-drop-upload.component.scss'],
-    host: { 'collision-id': `ac-search-sample-${createRandomString(20)} ` },
+    host: { 'collision-id': `drag-drop-upload-${createRandomString(20)} ` },
 })
 export class DragDropUploadComponent implements OnDestroy{
 
