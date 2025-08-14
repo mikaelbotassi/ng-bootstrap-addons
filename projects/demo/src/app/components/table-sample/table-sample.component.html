@@ -19,11 +19,11 @@
     </ng-template>
     <ng-template #header>
       <tr>
-        <th class="bg-light text-primary" nbaColumnHeader field="id" type="numeric">ID</th>
-        <th class="bg-light text-primary" nbaColumnHeader field="name" type="text">Nome</th>
-        <th class="bg-light text-primary" nbaColumnHeader field="country.name" type="text">País</th>
+        <th class="text-dark" nbaColumnHeader field="id" type="numeric">ID</th>
+        <th class="text-dark" nbaColumnHeader field="name" type="text">Nome</th>
+        <th class="text-dark" nbaColumnHeader field="country.name" type="text">País</th>
         <th
-          class="bg-light text-primary"
+          class="text-dark"
           nbaColumnHeader
           field="representative.name"
           (onApplyFilter)="dt.setFilter($event, filterByRepresentative)"
@@ -39,8 +39,8 @@
               ></nba-multiselect>
           </ng-template>
         </th>
-        <th class="bg-light text-primary" nbaColumnHeader field="date" type="date">Data</th>
-        <th class="bg-light text-primary" nbaColumnHeader field="verified" type="boolean">Verificado</th>
+        <th class="text-dark" nbaColumnHeader field="date" type="date">Data</th>
+        <th class="text-dark" nbaColumnHeader field="verified" type="boolean">Verificado</th>
       </tr>
     </ng-template>
 

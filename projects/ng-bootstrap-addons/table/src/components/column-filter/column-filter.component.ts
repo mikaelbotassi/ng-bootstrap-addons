@@ -8,7 +8,7 @@ import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 @Component({
   selector: 'nba-column-filter',
   templateUrl: './column-filter.component.html',
-  styles: [`:host {display: contents}`],
+  styleUrl: './column-filter.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ColumnFilterFormComponent, BsDropdownModule, ClickOutsideDirective],
 })

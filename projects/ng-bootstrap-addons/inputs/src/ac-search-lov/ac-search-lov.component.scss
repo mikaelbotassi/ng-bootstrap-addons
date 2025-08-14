@@ -1,3 +1,26 @@
 .form-control{
   background-position: right 2.5rem center, center right 2.25rem !important;
 }
+
+.nba-search{
+  $search-icon: url('data:image/svg+xml;charset=utf-8,<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>');
+
+  display: inline-flex;
+  align-items: center;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+
+  &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      line-height: 1;
+      background-color: currentColor;
+      mask: $search-icon;
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+  }
+}

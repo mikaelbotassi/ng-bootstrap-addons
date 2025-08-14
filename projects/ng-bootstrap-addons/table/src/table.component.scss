@@ -1,4 +1,12 @@
-nba-table .pagination {
-  margin: 0;
-  --bs-pagination-border-radius: 0.25rem;
+nba-table{
+
+  --nba-table-radius: .25rem;
+
+  .table{
+    .pagination {
+      margin: 0;
+      --bs-pagination-border-radius: var(--nba-table-radius);
+    }
+  }
+
 }

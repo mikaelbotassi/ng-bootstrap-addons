@@ -28,13 +28,13 @@
               [placeholder]="label()"
             >
             <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
-              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center z-3 no-collapse"
+              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center z-3 no-collapse"
                 (click)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
                 [attr.aria-label]="label()"
                 tabindex="-1"
                 [attr.aria-labelledby]="inputId()"
                 [attr.aria-describedby]="inputId()"
-              ><i class="ti ti-search no-collapse"></i></a>
+              ><i class="nba-search no-collapse"></i></a>
             </div>
             <input
               type="text"
@@ -77,7 +77,7 @@
               #input
             >
             <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
-              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center"
+              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center"
                 [class.disabled]="this.control.disabled"
                 (click)="focus.set(true)"
                 [attr.aria-label]="label()"
@@ -85,7 +85,7 @@
                 [attr.aria-describedby]="inputId()"
                 [ariaDisabled]="this.control.disabled"
                 tabindex="-1"
-              ><i class="ti ti-search mb-0"></i></a>
+              ><i class="nba-search mb-0"></i></a>
             </div>
           }
           @if(label() || icon()){
