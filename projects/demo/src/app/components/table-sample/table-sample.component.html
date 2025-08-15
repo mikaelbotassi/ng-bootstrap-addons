@@ -1,5 +1,6 @@
 <app-sample-container tagName="nba-table">
   <nba-table #dt
+    [multiple]="true"
     [value]="loadCommand.finalResult()"
     [globalFilterFields]="['name', 'country.name', 'representative.name']"
   >
@@ -19,6 +20,7 @@
     </ng-template>
     <ng-template #header>
       <tr>
+        <th checkbox></th>
         <th class="text-dark" nbaColumnHeader field="id" type="numeric">ID</th>
         <th class="text-dark" nbaColumnHeader field="name" type="text">Nome</th>
         <th class="text-dark" nbaColumnHeader field="country.name" type="text">País</th>
@@ -46,7 +48,7 @@
 
     <ng-template #body let-customers>
       @for(customer of cast(customers); track $index){
-      <tr>
+      <tr nbaControl [value]="customer">
         <td>{{ customer.id }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.country?.name ?? "" }}</td>

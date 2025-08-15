@@ -9,10 +9,12 @@ import { ColumnHeaderComponent } from 'table/components/column-header/column-hea
 import { MultiselectComponent, MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { FilterFunction } from 'project/table/src/models/table-models';
 import { DatePipe } from '@angular/common';
+import { TableRowControlComponent } from 'project/table/src/components/table-row-control/table-row-control.component';
+import { TableHeaderCheckboxComponent } from 'project/table/src/components/table-header-checkbox/table-header-checkbox.component';
 
 @Component({
   selector: 'app-table-sample',
-  imports: [TableComponent, ColumnHeaderComponent, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe],
+  imports: [TableComponent, ColumnHeaderComponent, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe, TableRowControlComponent, TableHeaderCheckboxComponent],
   providers: [CustomerService],
   templateUrl: './table-sample.component.html',
 })

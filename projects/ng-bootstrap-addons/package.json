@@ -1,7 +1,7 @@
 {
   "name": "ng-bootstrap-addons",
   "license": "MIT",
-  "version": "19.1.1",
+  "version": "19.1.2",
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/forms": "^19.2.0",

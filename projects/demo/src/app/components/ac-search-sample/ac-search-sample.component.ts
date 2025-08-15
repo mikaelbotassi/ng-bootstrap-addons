@@ -20,4 +20,9 @@ export class AcSearchSampleComponent implements OnInit {
     this.selectedPokemon.set(5);
   }
 
+  count = 0;
+  incrementCount() {
+    this.count++;
+  }
+
 }

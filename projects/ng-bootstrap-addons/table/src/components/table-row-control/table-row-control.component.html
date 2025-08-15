@@ -1,0 +1,5 @@
+@if(multiple()){
+    <td style="width: 2rem;"><input type="checkbox" class="form-check-input" [ngModel]="isSelected()" (ngModelChange)="onCheckboxChange($event)"></td>
+}
+<ng-content></ng-content>
+<a href="javascript:void(0);" [class.active]="isSelected()" (click)="onClick()" class="position-absolute top-0 bottom-0 start-0 end-0"></a>

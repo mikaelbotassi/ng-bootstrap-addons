@@ -23,11 +23,10 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
-import { EmptyDataComponent } from 'ng-bootstrap-addons/components';
 
 @Component({
   selector: 'nba-table',
-  imports: [CommonModule, FormsModule, DragScrollDirective, EmptyDataComponent],
+  imports: [CommonModule, FormsModule, DragScrollDirective],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./table.component.scss'],
@@ -311,6 +310,40 @@ export class TableComponent<T = any> implements OnInit {
       });
     });
   }
+  // #endregion
+
+  // =========================
+  // #region SELECT ROWS
+  // =========================
+  multiple = input(false, { transform: booleanAttribute });
+  selectedRows = model<T[]>([]);
+  selectRow(row: T) {
+    const index = this.selectedRows().indexOf(row);
+    if(index > -1){
+      this.selectedRows.update((current) => {
+        return current.filter((r) => r !== row);
+      });
+      return;
+    }
+    if (!this.multiple()) {
+      this.selectedRows.set([row]);
+      return;
+    }
+    this.selectedRows.update((current) => [...current, row]);
+  }
+  unselectAllRows = () => this.selectedRows.set([]);
+  selectAllRows = () => this.selectedRows.set(this.value() ?? []);
+  toggleSelectAllRows = () => {
+    if (this.areAllRowsSelected()) {
+      this.unselectAllRows();
+    } else {
+      this.selectAllRows();
+    }
+  };
+  areAllRowsSelected = computed(() => {
+    if (!this.value()) return false;
+    return this.selectedRows().length === this.value()?.length;
+  });
   // #endregion
 
   // =========================
