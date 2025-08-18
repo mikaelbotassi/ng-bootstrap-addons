@@ -38,7 +38,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   focus = model<boolean>(false);
   private _listOfValues = signal<any[]>([]);
   listOfValues = computed(() => this._listOfValues());
-  onPerformed = output<'autocomplete' | 'lov'>();
+  onPerformed = output<ActionPerformed>();
   descControl: FormControl<string | null> = new FormControl<string | null>(null);
   desc = model<string | null>(null);
   private destroyRef = inject(DestroyRef);
@@ -190,27 +190,43 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
           if(!Array.isArray(res)) {
             this.values = res;
             this.updateListOfValues([res]);
-            this.onPerformed.emit(configs.type);
+            this.onPerformed.emit({
+              type: configs.type,
+              data: res,
+              status: Status.SUCCESS
+            });
             return;
           }
           if (res.length === 0) {
             this.values = null;
             this.updateListOfValues([]);
+            this.onPerformed.emit({
+              type: configs.type,
+              data: null,
+              status: Status.EMPTY
+            });
             return;
           }
           if (res.length > 1) {
             this.updateListOfValues(res);
             this.focus.set(true);
-            this.onPerformed.emit(configs.type);
             return;
           }
           this.values = res[0];
           this.updateListOfValues(res);
-          this.onPerformed.emit(configs.type);
+          this.onPerformed.emit({
+            type: configs.type,
+            data: res[0],
+            status: Status.SUCCESS
+          });
         },
         error: () => {
           this.values = null;
-          this.onPerformed.emit(configs.type);
+          this.onPerformed.emit({
+            type: configs.type,
+            data: null,
+            status: Status.FAIL
+          });
         }
       });
   }
@@ -250,6 +266,11 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   selectItem(item: any) {
+    this.onPerformed.emit({
+      type: 'lov',
+      data: item,
+      status: Status.SUCCESS
+    });
     this.values = item;
     this.focus.set(false);
   }
@@ -266,4 +287,16 @@ export type acControl = {
   setValue?: (value: any | null) => void;
   getValue?: () => any | null;
   title: string;
+}
+
+export type ActionPerformed = {
+  type: 'autocomplete' | 'lov';
+  data: any;
+  status: Status.EMPTY | Status.FAIL | Status.SUCCESS;
+}
+
+export enum Status {
+  FAIL = -1,
+  EMPTY = 0,
+  SUCCESS = 1
 }
