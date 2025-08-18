@@ -84,4 +84,8 @@ export class TableSampleComponent {
     );
   }
 
+  onDoubleClick(){
+    console.log('Estive aqui')
+  }
+
 }

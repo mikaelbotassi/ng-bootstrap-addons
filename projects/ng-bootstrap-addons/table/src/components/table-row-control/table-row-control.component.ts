@@ -44,6 +44,7 @@ export class TableRowControlComponent<T = any> {
   onClick(){
     if(this.clickTimer){
       clearTimeout(this.clickTimer);
+      this.clickTimer = null;
       this.rowDoubleClick.emit();
       return;
     }

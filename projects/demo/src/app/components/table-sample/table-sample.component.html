@@ -54,7 +54,7 @@
 
     <ng-template #body let-customers>
       @for(customer of cast(customers); track $index){
-      <tr nbaControl [value]="customer">
+      <tr nbaControl (rowDoubleClick)="onDoubleClick()" [value]="customer">
         <td>{{ customer.id }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.country?.name ?? "" }}</td>
