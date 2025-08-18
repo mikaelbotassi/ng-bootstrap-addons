@@ -21,6 +21,8 @@
     "bootstrap": "^5.3.3",
     "ngx-bootstrap": "^20.0.0",
     "@angular/router": "^20.1.6",
+    "@sweetalert2/ngx-sweetalert2": "^14.0.0",
+    "sweetalert2": "^11.22.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

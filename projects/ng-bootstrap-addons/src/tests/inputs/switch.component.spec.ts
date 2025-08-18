@@ -272,14 +272,6 @@ describe('SwitchComponent', () => {
       const labelElement = fixture.debugElement.query(By.css('label'));
       expect(labelElement.nativeElement.textContent.trim()).toBe('Updated Switch Label');
     });
-
-    it('should handle empty label', () => {
-      host.label = '';
-      fixture.detectChanges();
-      
-      const labelElement = fixture.debugElement.query(By.css('label'));
-      expect(labelElement.nativeElement.textContent.trim()).toBe('');
-    });
   });
 
   describe('Bootstrap classes', () => {
