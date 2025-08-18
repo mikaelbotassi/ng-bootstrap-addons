@@ -1,8 +1,9 @@
 <app-sample-container tagName="nba-table">
   <nba-table #dt
     [multiple]="true"
-    [value]="loadCommand.finalResult()"
+    [value]="list()"
     [globalFilterFields]="['name', 'country.name', 'representative.name']"
+    [(selectedRows)]="selectedRows"
   >
     <ng-template #caption>
       <div class="d-flex align-items-center justify-content-between gap-2 w-100">
@@ -17,6 +18,11 @@
           (ngModelChange)="dt.onGlobalFilterChange($event)"
         />
       </div>
+      @if(selectedRows().length > 0){
+        <div class="d-flex align-items-center justify-content-end mt-3">
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeCustomer(selectedRows())">Excluir({{ selectedRows().length }})</button>
+        </div>
+      }
     </ng-template>
     <ng-template #header>
       <tr>
@@ -60,6 +66,18 @@
         </td>
         <td>{{customer.date | date: 'dd/MM/yyyy'}}</td>
         <td>{{customer.verified ? 'Sim' : 'Não'}}</td>
+        <ng-container menu>
+          <li role="menuitem">
+            <a href="javascript:;" class="dropdown-item text-center">
+            <i class="ti ti-printer"></i> Imprimir Relatório
+          </a>
+          </li>
+          <li role="menuitem">
+            <a href="javascript:;" class="dropdown-item text-center" (click)="removeCustomer(customer)">
+              <i class="ti ti-trash"></i> Remover
+            </a>
+          </li>
+        </ng-container>
       </tr>
       }
     </ng-template>

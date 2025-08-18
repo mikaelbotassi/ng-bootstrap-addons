@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { TableComponent } from 'project/table/src/table.component';
 import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
 import { CustomerService } from '../../services/customer.service';
@@ -21,6 +21,7 @@ import { TableHeaderCheckboxComponent } from 'project/table/src/components/table
 export class TableSampleComponent {
 
   selectedRepresentative: string[] = [];
+  selectedRows = signal<Customer[]>([]);
 
   globalFilter = '';
 
@@ -40,9 +41,14 @@ export class TableSampleComponent {
 
   representativeOptions!: MultiselectOption<string>[];
 
+  list = signal<Customer[]>([]);
+
   constructor(private customerService: CustomerService){
       this.loadCommand = new Command0<Customer[]>(() => this.customerService.getCustomers());
       this.loadCommand.execute();
+      effect(() => {
+        this.list.set(this.loadCommand.finalResult() ?? []);
+      });
       this.representativeOptions = this.representative.map(rep => {
         return new MultiselectOption<string>({
           value: rep.name!,
@@ -59,5 +65,23 @@ export class TableSampleComponent {
   };
 
   cast = (value: unknown): Customer[] => value as Customer[];
+
+  removeCustomer(customer: Customer | Customer[]) {
+    if (Array.isArray(customer)) {
+      this.list.update(currentValue => 
+        currentValue.filter(item => !customer.some(c => c.id === item.id))
+      );
+      this.selectedRows.update(selected => 
+        selected.filter(item => !customer.some(c => c.id === item.id))
+      );
+      return;
+    }
+    this.list.update(currentValue => 
+      currentValue.filter(item => item.id !== customer.id)
+    );
+    this.selectedRows.update(selected => 
+      selected.filter(item => item.id !== customer.id)
+    );
+  }
 
 }
