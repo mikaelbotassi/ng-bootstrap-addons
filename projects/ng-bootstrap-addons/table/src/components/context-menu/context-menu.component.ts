@@ -1,5 +1,5 @@
 // context-menu.component.ts
-import { Component, ElementRef, HostListener, inject, input, output, Renderer2, signal, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, input, output, Renderer2, signal, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -7,7 +7,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './context-menu.component.html',
-  styleUrl: './context-menu.component.scss'
+  styleUrl: './context-menu.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContextMenuComponent {
 

@@ -1,4 +1,4 @@
-import { Component, computed, inject, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, output } from '@angular/core';
 import { TableComponent } from '../../table.component';
 import { FormsModule } from '@angular/forms';
 
@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   templateUrl: './table-header-checkbox.component.html',
   styles: `:host{ width: 2rem; }`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeaderCheckboxComponent {
   
