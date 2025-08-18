@@ -1,7 +1,7 @@
 <app-sample-container tagName="nba-select">
     <nba-select
         label="Default Select"
-        [formControl]="control"
+        [(ngModel)]="control"
     >
         <option value="">Selecione</option>
         <option value="option1">Option 1</option>
@@ -9,5 +9,5 @@
         <option value="option3">Option 3</option>
     </nba-select>
     <hr>
-    Value: {{ control.value }}
+    Value: {{ control }}
 </app-sample-container>

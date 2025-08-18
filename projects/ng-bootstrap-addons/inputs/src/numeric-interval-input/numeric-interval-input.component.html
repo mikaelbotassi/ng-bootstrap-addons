@@ -1,7 +1,7 @@
 @defer (on viewport; prefetch on idle){
 
     @if(control){
-        <div class="form-group d-flex align-items-center gap-1 position-relative flex-wrap" [class]="class()">
+        <div class="form-group d-flex align-items-center gap-1 position-relative flex-wrap" [class]="formGroupClass()">
             <div class="form-floating" [class]="'form-floating-' + size()">
                 <input
                     class="form-control"

@@ -44,6 +44,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   private destroyRef = inject(DestroyRef);
   fetchDescCommand!: Command1<any[], AutoCompleteConfig>;
   private acService = inject(AutocompleteService);
+  readonly debounceTime = input<number>(1000);
 
   constructor() {
     super(inject(Injector));
@@ -73,7 +74,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
     this.descControl.valueChanges
     .pipe(
-      debounceTime(1000),
+      debounceTime(this.debounceTime()),
       distinctUntilChanged(),
       takeUntilDestroyed(this.destroyRef),
     )

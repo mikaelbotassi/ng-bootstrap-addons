@@ -1,0 +1,10 @@
+@if (isVisible()) {
+  <div class="context-menu-overlay" (click)="hide()">
+    <ul class="dropdown-menu show" 
+        [style.top.px]="position().y" 
+        [style.left.px]="position().x"
+        (click)="onMenuClick($event)">
+      <ng-container [ngTemplateOutlet]="menuTemplate()"></ng-container>
+    </ul>
+  </div>
+}
