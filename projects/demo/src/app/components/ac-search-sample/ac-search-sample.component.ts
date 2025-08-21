@@ -15,7 +15,6 @@ export class AcSearchSampleComponent implements OnInit {
     desc: { key: 'name', title: 'Name' }
   }
   selectedPokemon = signal<number|null>(null);
-
   ngOnInit(): void {
     this.selectedPokemon.set(5);
   }

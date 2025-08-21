@@ -1,4 +1,4 @@
-import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
@@ -21,6 +21,7 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { 'collision-id': `ac-search-lov-${createRandomString(20)} ` },
   providers: [
+    AutocompleteService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AutoCompleteLovComponent),
@@ -30,11 +31,16 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
 })
 export class AutoCompleteLovComponent extends ControlValueAccessorDirective<string|number|null> {
 
+  /**
+   * The URL to use for the autocomplete requests.
+   * You can put the ac input data customized like:
+   * https://your-api-endpoint.com/autocomplete?id=:id
+   */
   acUrl = input.required<string>();
-  acParams = input<HttpParams>(new HttpParams());
+
   autofocus = input(false, {transform: booleanAttribute});
+  searchName = input<string>('filtro');
   map = input.required<acMap>();
-  readonly byPath = input(false, {transform: booleanAttribute});
   focus = model<boolean>(false);
   private _listOfValues = signal<any[]>([]);
   listOfValues = computed(() => this._listOfValues());
@@ -159,11 +165,37 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this._listOfValues.set([...val]);
   }
 
+  private buildApiCall(code?: string | number): { apiUrl: string, params: HttpParams } {
+    const codeKey = this.map().code.key;
+    let url = this.acUrl();
+    let params = new HttpParams();
+
+    const hasCode = !!code && code.toString().length;
+    
+    if (hasCode) url = url.replace(`:${codeKey}`, code.toString());
+    
+    const [baseUrl, queryString] = url.split('?');
+    
+    if (queryString) {
+      const searchParams = new URLSearchParams(queryString);
+      searchParams.forEach((value, key) =>
+        params = params.append(key, value === `:${codeKey}` && hasCode ? code.toString() : value)
+      );
+    }
+    
+    if (hasCode && !url.includes(code.toString()) && !queryString?.includes(codeKey)) {
+      params = params.append(codeKey, code.toString());
+    }
+    
+    return { apiUrl: baseUrl, params };
+  }
+
   fetchLov(desc?: string | null) {
+    let { apiUrl, params } = this.buildApiCall();
+    if (desc) params = params.append(this.searchName(), desc);
     const config: AutoCompleteConfig = {
-      apiUrl: this.acUrl(),
-      searchProperty: desc ?? undefined,
-      params: this.acParams(),
+      apiUrl: apiUrl,
+      params: params,
       type: 'lov'
     };
     this.focus.set(true);
@@ -171,10 +203,10 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   fetchDesc(code: string|number) {
-    let params = this.acParams();
+    let { apiUrl, params } = this.buildApiCall();
     params = params.append(this.map().code.key, code);
     const config: AutoCompleteConfig = {
-      apiUrl: this.acUrl() + (this.byPath() ? `/${code}` : ''),
+      apiUrl: apiUrl,
       params: params,
       type: 'autocomplete',
     };
