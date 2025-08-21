@@ -1,7 +1,9 @@
-import { AfterContentChecked, AfterViewInit, Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
-import { AutoCompleteLovComponent, acMap } from 'inputs/ac-search-lov/ac-search-lov.component';
+import { AutoCompleteLovComponent } from 'inputs/ac-search-lov/ac-search-lov.component';
+import { AcMap } from 'inputs//ac-search-lov/models/ac-models';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-ac-search-sample',
@@ -9,14 +11,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './ac-search-sample.component.html',
 })
 export class AcSearchSampleComponent implements OnInit {
-  
-  mapConfig: acMap = {
-    code: { key: 'id', title: 'ID' },
-    desc: { key: 'name', title: 'Name' }
+
+  environment = environment;
+
+  mapConfig: AcMap = {
+    code: { key: 'imdbID', title: 'IMDB ID' },
+    desc: { key: 'Title', title: 'Title' }
   }
-  selectedPokemon = signal<number|null>(null);
+  selectedMovie = signal<number|null>(null);
   ngOnInit(): void {
-    this.selectedPokemon.set(5);
+    this.selectedMovie.set(5);
   }
 
   count = 0;

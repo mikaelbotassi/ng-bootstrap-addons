@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { acMap } from '../../ac-search-lov.component';
+import { AcMap } from '../../models/ac-models';
 
 @Component({
   selector: 'nba-autocomplete-card',
@@ -12,7 +12,7 @@ import { acMap } from '../../ac-search-lov.component';
 export class AutocompleteCardComponent {
   title = input<string>('Item');
   icon = input<string>();
-  map = input.required<acMap>();
+  map = input.required<AcMap>();
   value = input.required<any>();
   mapItems = computed(() => Object.entries(this.map()));
   id = input.required<number>();

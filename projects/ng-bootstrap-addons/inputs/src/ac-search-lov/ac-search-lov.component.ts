@@ -1,17 +1,17 @@
 import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
 import { asyncScheduler, observeOn, debounceTime, distinctUntilChanged } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
+import { AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { AutofocusDirective, ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { Command1, createRandomString } from 'ng-bootstrap-addons/utils';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
+import { AcMap, ActionPerformed, AutoCompleteConfig, Status } from './models/ac-models';
 
 @Component({
   selector: 'nba-ac-lov',
@@ -38,19 +38,35 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
    */
   acUrl = input.required<string>();
 
+  //INPUTS
   autofocus = input(false, {transform: booleanAttribute});
   searchName = input<string>('filtro');
-  map = input.required<acMap>();
-  focus = model<boolean>(false);
-  private _listOfValues = signal<any[]>([]);
-  listOfValues = computed(() => this._listOfValues());
-  onPerformed = output<ActionPerformed>();
-  descControl: FormControl<string | null> = new FormControl<string | null>(null);
-  desc = model<string | null>(null);
-  private destroyRef = inject(DestroyRef);
-  fetchDescCommand!: Command1<any[], AutoCompleteConfig>;
-  private acService = inject(AutocompleteService);
+  resultPath = input<{autocomplete?: string, lov?: string}>({autocomplete: '', lov: ''});
   readonly debounceTime = input<number>(1000);
+  map = input.required<AcMap>();
+
+  //MODELS
+  focus = model<boolean>(false);
+  desc = model<string | null>(null);
+
+  //SIGNALS
+  private _listOfValues = signal<any[]>([]);
+
+  // COMPUTED PROPERTIES
+  listOfValues = computed(() => this._listOfValues());
+
+  //OUTPUTS
+  onPerformed = output<ActionPerformed>();
+
+  // CONTROLS
+  descControl: FormControl<string | null> = new FormControl<string | null>(null);
+
+  // INJECTORS
+  private destroyRef = inject(DestroyRef);
+  private acService = inject(AutocompleteService);
+
+  // COMMANDS
+  fetchDescCommand!: Command1<any[], AutoCompleteConfig>;
 
   constructor() {
     super(inject(Injector));
@@ -165,52 +181,42 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this._listOfValues.set([...val]);
   }
 
-  private buildApiCall(code?: string | number): { apiUrl: string, params: HttpParams } {
-    const codeKey = this.map().code.key;
-    let url = this.acUrl();
-    let params = new HttpParams();
-
-    const hasCode = !!code && code.toString().length;
-    
-    if (hasCode) url = url.replace(`:${codeKey}`, code.toString());
-    
-    const [baseUrl, queryString] = url.split('?');
-    
-    if (queryString) {
-      const searchParams = new URLSearchParams(queryString);
-      searchParams.forEach((value, key) =>
-        params = params.append(key, value === `:${codeKey}` && hasCode ? code.toString() : value)
-      );
-    }
-    
-    if (hasCode && !url.includes(code.toString()) && !queryString?.includes(codeKey)) {
-      params = params.append(codeKey, code.toString());
-    }
-    
-    return { apiUrl: baseUrl, params };
-  }
-
   fetchLov(desc?: string | null) {
-    let { apiUrl, params } = this.buildApiCall();
-    if (desc) params = params.append(this.searchName(), desc);
     const config: AutoCompleteConfig = {
-      apiUrl: apiUrl,
-      params: params,
-      type: 'lov'
+      url: this.acUrl(),
+      map: this.map(),
+      searchName: this.searchName(),
+      desc: desc,
+      type: 'lov',
     };
     this.focus.set(true);
     this.executeCommand(config);
   }
 
   fetchDesc(code: string|number) {
-    let { apiUrl, params } = this.buildApiCall();
-    params = params.append(this.map().code.key, code);
     const config: AutoCompleteConfig = {
-      apiUrl: apiUrl,
-      params: params,
+      url: this.acUrl(),
+      code: code,
+      map: this.map(),
       type: 'autocomplete',
     };
     this.executeCommand(config);
+  }
+
+  getPath(value: any, type: 'autocomplete'|'lov'): any {
+    const path = this.resultPath()[type];
+    
+    if (!path || !value || !path.length) {
+      return value;
+    }
+
+    const pathParts = path.split('.');
+    
+    let result = value;
+    
+    result = pathParts.reduce((acc, part) => (acc && typeof acc === 'object' && part in acc) ? acc[part] : null, result);
+    
+    return result;
   }
 
   executeCommand(configs: AutoCompleteConfig) {
@@ -219,17 +225,30 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       ?.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-          if(!Array.isArray(res)) {
-            this.values = res;
-            this.updateListOfValues([res]);
-            this.onPerformed.emit({
-              type: configs.type,
-              data: res,
-              status: Status.SUCCESS
-            });
+
+          const processedRes = this.getPath(res, configs.type);
+          
+          if (!Array.isArray(processedRes)) {
+            if (processedRes) {
+              this.values = processedRes;
+              this.updateListOfValues([processedRes]);
+              this.onPerformed.emit({
+                type: configs.type,
+                data: processedRes,
+                status: Status.SUCCESS
+              });
+            } else {
+              this.values = null;
+              this.onPerformed.emit({
+                type: configs.type,
+                data: null,
+                status: Status.EMPTY
+              });
+            }
             return;
           }
-          if (res.length === 0) {
+          
+          if (processedRes.length === 0) {
             this.values = null;
             this.updateListOfValues([]);
             this.onPerformed.emit({
@@ -239,16 +258,23 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
             });
             return;
           }
-          if (res.length > 1) {
-            this.updateListOfValues(res);
+          
+          if (processedRes.length > 1) {
+            this.updateListOfValues(processedRes);
             this.focus.set(true);
+            this.onPerformed.emit({
+              type: configs.type,
+              data: processedRes,
+              status: Status.SUCCESS
+            });
             return;
           }
-          this.values = res[0];
-          this.updateListOfValues(res);
+          
+          this.values = processedRes[0];
+          this.updateListOfValues(processedRes);
           this.onPerformed.emit({
             type: configs.type,
-            data: res[0],
+            data: processedRes[0],
             status: Status.SUCCESS
           });
         },
@@ -306,29 +332,4 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.values = item;
     this.focus.set(false);
   }
-}
-
-export type acMap = {
-  code: acControl;
-  desc: acControl;
-  addons?: acControl[];
-}
-
-export type acControl = {
-  key: string;
-  setValue?: (value: any | null) => void;
-  getValue?: () => any | null;
-  title: string;
-}
-
-export type ActionPerformed = {
-  type: 'autocomplete' | 'lov';
-  data: any;
-  status: Status.EMPTY | Status.FAIL | Status.SUCCESS;
-}
-
-export enum Status {
-  FAIL = -1,
-  EMPTY = 0,
-  SUCCESS = 1
 }

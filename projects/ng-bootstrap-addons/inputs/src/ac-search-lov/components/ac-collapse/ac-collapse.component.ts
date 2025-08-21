@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, effect, input, output, si
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { AutocompleteCardComponent } from '../ac-card/ac-card.component';
 import { AutocompleteCollapsePlaceholderComponent } from './ac-collapse-placeholder/ac-collapse-placeholder.component';
-import { acMap } from '../../ac-search-lov.component';
 import { EmptyDataComponent } from 'ng-bootstrap-addons/components';
+import { AcMap } from '../../models/ac-models';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class AutocompleteCollapseComponent {
   onClose = output<void>();
   listOfValues = input<any[]>([]);
   onSelect = output<any>();
-  map = input.required<acMap>()
+  map = input.required<AcMap>()
   isLoading = input<boolean>(false);
   itemsLoaded = signal<boolean>(true);
   constructor(){
