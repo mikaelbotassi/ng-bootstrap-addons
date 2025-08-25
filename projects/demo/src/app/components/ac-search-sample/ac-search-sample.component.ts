@@ -10,7 +10,7 @@ import { environment } from 'environments/environment.development';
   imports: [SampleContainerComponent, AutoCompleteLovComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './ac-search-sample.component.html',
 })
-export class AcSearchSampleComponent implements OnInit {
+export class AcSearchSampleComponent {
 
   environment = environment;
 
@@ -18,10 +18,7 @@ export class AcSearchSampleComponent implements OnInit {
     code: { key: 'imdbID', title: 'IMDB ID' },
     desc: { key: 'Title', title: 'Title' }
   }
-  selectedMovie = signal<number|null>(null);
-  ngOnInit(): void {
-    this.selectedMovie.set(5);
-  }
+  selectedMovie = 'tt2015381';
 
   count = 0;
   incrementCount() {

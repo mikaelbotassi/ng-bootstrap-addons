@@ -2,7 +2,7 @@
   @if(control){
     <div class="form-group" [class]="formGroupClass()">
       <div class="form-floating" [class]="'form-floating-' + size()">
-          @if(focus()){
+          @if(focus() && !control.disabled){
             <div class="position-fixed top-0 start-0 bottom-0 end-0 bg-black bg-opacity-25 z-2 fade-in"></div>
             <input
               type="text"

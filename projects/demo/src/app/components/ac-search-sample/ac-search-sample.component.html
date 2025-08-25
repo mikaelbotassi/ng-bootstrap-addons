@@ -1,7 +1,7 @@
 <app-sample-container tagName="nba-ac-lov">
     <nba-ac-lov
         label="Search Movie"
-        [acUrl]="`${environment.OMDb_API.apiUrl}/:imdbID?apikey=${environment.OMDb_API.key}`"
+        [acUrl]="`${environment.OMDb_API.apiUrl}?apikey=${environment.OMDb_API.key}`"
         [map]="mapConfig"
         searchName="s"
         [(ngModel)]="selectedMovie"
