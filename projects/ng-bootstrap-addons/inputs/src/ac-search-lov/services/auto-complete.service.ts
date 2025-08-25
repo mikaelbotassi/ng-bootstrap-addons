@@ -32,11 +32,7 @@ export class AutocompleteService {
       });
     }
 
-    if (
-      hasCode &&
-      !url.includes(data.code!.toString()) &&
-      !queryString?.includes(codeKey)
-    ) {
+    if (hasCode && !data.url.includes(`:${codeKey}`)) {
       params = params.append(codeKey, data.code!.toString());
     }
 
