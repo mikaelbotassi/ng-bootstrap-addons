@@ -23,10 +23,7 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
 import {
   Subject,
   takeUntil,
-  startWith,
   distinctUntilChanged,
-  observeOn,
-  asyncScheduler,
 } from 'rxjs';
 
 @Directive({
@@ -90,7 +87,6 @@ export class ControlValueAccessorDirective<T>
     }
   }
 
-  // control-value-acessor.directive.ts
   writeValue(value: T): void {
     if (this.control) {
       if (this.control.value !== value) {
@@ -101,13 +97,11 @@ export class ControlValueAccessorDirective<T>
     }
   }
 
-  // control-value-acessor.directive.ts
   registerOnChange(fn: (val: T | null) => void): void {
     this.control?.valueChanges
       .pipe(
         takeUntil(this._destroy$),
         distinctUntilChanged()
-        // ✅ Remover startWith e asyncScheduler que causam loop
       )
       .subscribe((val) => {
         fn(val);

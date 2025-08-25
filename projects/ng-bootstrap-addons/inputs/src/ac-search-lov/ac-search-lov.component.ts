@@ -168,13 +168,9 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   set controlValue(value: any) {
     if (this.control?.value !== value) {
       this.control?.setValue(value, { emitEvent: false });
-      
-      // ✅ Usar setTimeout para evitar mudanças durante detecção
-      setTimeout(() => {
-        this.control?.markAsTouched();
-        this.control?.markAsDirty();
-        this.control?.updateValueAndValidity();
-      }, 0);
+      this.control?.markAsTouched();
+      this.control?.markAsDirty();
+      this.control?.updateValueAndValidity();
     }
   }
 
@@ -298,7 +294,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   set values(value: any | null) {
     if (!value) {
       this.descControl.patchValue(null, { emitEvent: false });
-      // ✅ Usar patchValue em vez do setter controlValue
       this.control?.patchValue(null, { emitEvent: false });
       this.map().addons?.forEach((addon) => {
         if (addon.setValue) addon.setValue(null);
@@ -313,7 +308,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     }
     
     this.completeDescFromResponse = value;
-    // ✅ Usar patchValue em vez do setter
     this.control?.patchValue(value[this.map().code.key], { emitEvent: false });
     
     this.map().addons?.forEach((addon) => {
