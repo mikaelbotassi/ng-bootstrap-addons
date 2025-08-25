@@ -97,11 +97,9 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.descControl.valueChanges
     .pipe(
       debounceTime(this.debounceTime()),
-      distinctUntilChanged(),
       takeUntilDestroyed(this.destroyRef),
     )
     .subscribe((value) => {
-      
       this.desc.set(value);
       if (!value || value.trim() === '') {
         this.controlValue = null;
@@ -176,7 +174,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   updateListOfValues(val: any[]) {
     if(!val[0] || !val[0][this.map().code.key] && !val[0][this.map().desc.key]){
-      console.warn('Invalid value structure for autocomplete LOV');
       this._listOfValues.set([]);
       return;
     }
