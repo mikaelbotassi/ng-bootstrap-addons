@@ -165,11 +165,17 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     }
   }
 
-  set controlValue(value:any){
-    this.control?.setValue(value, { emitEvent: false });
-    this.control?.markAsTouched();
-    this.control?.markAsDirty();
-    this.control?.updateValueAndValidity();
+  set controlValue(value: any) {
+    if (this.control?.value !== value) {
+      this.control?.setValue(value, { emitEvent: false });
+      
+      // ✅ Usar setTimeout para evitar mudanças durante detecção
+      setTimeout(() => {
+        this.control?.markAsTouched();
+        this.control?.markAsDirty();
+        this.control?.updateValueAndValidity();
+      }, 0);
+    }
   }
 
   updateListOfValues(val: any[]) {
@@ -292,19 +298,24 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   set values(value: any | null) {
     if (!value) {
       this.descControl.patchValue(null, { emitEvent: false });
-      this.controlValue = null;
+      // ✅ Usar patchValue em vez do setter controlValue
+      this.control?.patchValue(null, { emitEvent: false });
       this.map().addons?.forEach((addon) => {
         if (addon.setValue) addon.setValue(null);
       });
       return;
     }
-    if(!value[this.map().code.key] && !value[this.map().desc.key]){
-      this.descControl.setValue('');
-      this.controlValue = null;
+    
+    if (!value[this.map().code.key] && !value[this.map().desc.key]) {
+      this.descControl.setValue('', { emitEvent: false });
+      this.control?.patchValue(null, { emitEvent: false });
       return;
     }
+    
     this.completeDescFromResponse = value;
-    this.controlValue = value[this.map().code.key];
+    // ✅ Usar patchValue em vez do setter
+    this.control?.patchValue(value[this.map().code.key], { emitEvent: false });
+    
     this.map().addons?.forEach((addon) => {
       const newValue = value[addon.key];
       if (newValue && addon.setValue) addon.setValue(value);
