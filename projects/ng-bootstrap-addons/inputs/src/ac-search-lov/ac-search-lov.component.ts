@@ -90,7 +90,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       this.setCompleteDesc();
       return;
     }
-    if (this.control?.value && this.control.value !== '') {
+    if (this.control?.value && this.control.value.trim().length) {
       this.fetchDesc(this.control.value);
     }
 
@@ -220,12 +220,12 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   executeCommand(configs: AutoCompleteConfig) {
+    if(this.fetchDescCommand.running()) return;
     this.fetchDescCommand.execute(configs);
     this.fetchDescCommand.result()
       ?.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-
           const processedRes = this.getPath(res, configs.type);
           
           if (!Array.isArray(processedRes)) {

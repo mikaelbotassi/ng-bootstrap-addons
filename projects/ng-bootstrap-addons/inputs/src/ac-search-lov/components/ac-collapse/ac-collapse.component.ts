@@ -4,6 +4,7 @@ import { AutocompleteCardComponent } from '../ac-card/ac-card.component';
 import { AutocompleteCollapsePlaceholderComponent } from './ac-collapse-placeholder/ac-collapse-placeholder.component';
 import { EmptyDataComponent } from 'ng-bootstrap-addons/components';
 import { AcMap } from '../../models/ac-models';
+import { createRandomString } from 'ng-bootstrap-addons/utils';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { AcMap } from '../../models/ac-models';
   imports: [AutocompleteCardComponent, EmptyDataComponent, AutocompleteCollapsePlaceholderComponent, ScrollingModule, CdkVirtualScrollViewport],
   templateUrl: './ac-collapse.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { 'collision-id': `ac-search-lov--collapse${createRandomString(20)} ` },
 })
 export class AutocompleteCollapseComponent {
   icon = input<string>();
