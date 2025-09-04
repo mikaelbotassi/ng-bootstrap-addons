@@ -1,0 +1,16 @@
+<main class="p-md-5 p-3">
+    
+    <h1 class="fw-bold pb-2 mb-0 border-bottom">Form Example</h1>
+
+    <div class="d-flex flex-wrap gap-3 pt-3">
+        <app-customer-card-list
+            [customers]="loadCommand.finalResult()!"
+            (editCustomer)="customer = $event"
+        />
+        <div class="flex-fill">
+            <app-form-customer [customer]="customer"></app-form-customer>
+        </div>
+    </div>
+
+
+</main>

@@ -9,7 +9,7 @@ import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { createRandomString } from 'ng-bootstrap-addons/utils';
 
-type InputType = 'text' | 'number' | 'email' | 'password' | 'date';
+type InputType = "button"|"checkbox"|"color"|"date"|"datetime-local"|"email"|"file"|"hidden"|"image"|"month"|"number"|"password"|"radio"|"range"|"reset"|"search"|"submit"|"tel"|"text"|"time"|"url"|"week";
 
 @Component({
   selector: 'nba-input',

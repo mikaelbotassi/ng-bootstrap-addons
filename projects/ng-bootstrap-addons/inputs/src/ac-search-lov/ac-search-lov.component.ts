@@ -73,10 +73,10 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
     effect(() => {
       const desc = this.desc();
-      if (this.descControl.value !== desc) {
+      if (this.descControl.value !== desc && !this.descControl.dirty) {
         this.descControl.setValue(desc, { emitEvent: false });
       }
-    });    
+    });  
 
     this.fetchDescCommand = new Command1<any[], AutoCompleteConfig>((configs) =>
       this.acService.performAutocomplete(configs).pipe(observeOn(asyncScheduler))
@@ -86,11 +86,11 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   override ngOnInit(): void {
     super.ngOnInit();
 
-    if (this.control?.value && this.control.value !== '' && this.descControl.value && this.descControl.value !== '') {
-      this.setCompleteDesc();
-      return;
-    }
-    if (this.control?.value && this.control.value.trim().length) {
+    if (this.control?.value && this.control.value !== '') {
+      if (this.descControl.value && this.descControl.value !== '') {
+        this.setCompleteDesc();
+        return;
+      }
       this.fetchDesc(this.control.value);
     }
 
@@ -159,7 +159,10 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       this.control.patchValue(value, { emitEvent: false });
       if (value) {
         this.fetchDesc(value);
+        return;
       }
+      this.descControl.patchValue(null, { emitEvent: false });
+      this.desc.set(null);
     }
   }
 
@@ -288,10 +291,18 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       });
   }
 
+  private updateControlValue(value: any) {
+    if (this.control?.value !== value) {
+      this.control?.patchValue(value, { emitEvent: true }); // ✅ Permitir eventos
+      this.control?.registerOnChange(value);
+      this.control?.markAsTouched();
+    }
+  }
+
   set values(value: any | null) {
     if (!value) {
       this.descControl.patchValue(null, { emitEvent: false });
-      this.control?.patchValue(null, { emitEvent: false });
+      this.updateControlValue(null);
       this.map().addons?.forEach((addon) => {
         if (addon.setValue) addon.setValue(null);
       });
@@ -300,12 +311,12 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     
     if (!value[this.map().code.key] && !value[this.map().desc.key]) {
       this.descControl.setValue('', { emitEvent: false });
-      this.control?.patchValue(null, { emitEvent: false });
+      this.updateControlValue(null);
       return;
     }
     
     this.completeDescFromResponse = value;
-    this.control?.patchValue(value[this.map().code.key], { emitEvent: false });
+    this.updateControlValue(value[this.map().code.key]);
     
     this.map().addons?.forEach((addon) => {
       const newValue = value[addon.key];
