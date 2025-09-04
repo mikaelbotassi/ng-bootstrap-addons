@@ -1,22 +1,20 @@
-import { Component, input, model } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from 'ng-bootstrap-addons/inputs';
 import { AutoCompleteLovComponent } from 'project/inputs/src/ac-search-lov';
-import { SelectComponent } from 'project/selects/src/public_api';
 import { Customer, Representative } from 'projects/demo/src/app/models/customer';
+import { CustomerService } from 'projects/demo/src/app/services/customer.service';
 
 @Component({
   selector: 'app-form-customer',
-  imports: [AutoCompleteLovComponent, InputComponent, SelectComponent, FormsModule],
+  providers: [CustomerService],
+  imports: [AutoCompleteLovComponent, InputComponent, FormsModule],
   templateUrl: './form-customer.component.html',
 })
 export class FormCustomerComponent {
 
-  customer = model<Customer>({
-    id: undefined,
-    name: undefined,
-    representative: undefined
-  });
+  private customerService = inject(CustomerService);
+  customer:Customer = {};
 
   representatives: Representative[] = [
     { name: 'Amy Elsner', image: 'amyelsner.png' },
@@ -31,4 +29,11 @@ export class FormCustomerComponent {
     { name: 'Xuxue Feng', image: 'xuxuefeng.png' }
   ];
   
+  getCustomerById(id: number){
+    console.log("🚀 ~ FormCustomerComponent ~ getCustomerById ~ id:", id)
+    this.customerService.getCustomer(id).subscribe(customer => {
+      this.customer = customer;
+    });
+  }
+
 }

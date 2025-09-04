@@ -92,9 +92,9 @@ export class ControlValueAccessorDirective<T>
       if (this.control.value !== value) {
         this.control.setValue(value, { emitEvent: false });
       }
-    } else {
-      this.control = new FormControl(value);
+      return;
     }
+    this.control = new FormControl(value);
   }
 
   registerOnChange(fn: (val: T | null) => void): void {

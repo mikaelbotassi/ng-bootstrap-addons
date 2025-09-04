@@ -5,10 +5,10 @@
     <div class="d-flex flex-wrap gap-3 pt-3">
         <app-customer-card-list
             [customers]="loadCommand.finalResult()!"
-            (editCustomer)="customer = $event"
+            (editCustomer)="customer = $event; changeCustomer()"
         />
         <div class="flex-fill">
-            <app-form-customer [customer]="customer"></app-form-customer>
+            <app-form-customer></app-form-customer>
         </div>
     </div>
 

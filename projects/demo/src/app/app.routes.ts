@@ -10,5 +10,9 @@ export const routes: Routes = [
     {
         path: 'form-sample',
         component: FormPageComponent
+    },
+    {
+        path: '**',
+        redirectTo: ''
     }
 ];

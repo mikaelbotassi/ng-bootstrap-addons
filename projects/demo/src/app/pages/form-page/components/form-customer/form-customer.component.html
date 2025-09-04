@@ -3,18 +3,11 @@
         class="col-sm-12"
         acUrl="https://api.example.com/representatives"
         [map]="{ code: {key:'id', title: 'ID'}, desc: {key: 'desc', title: 'Description'} }"
-        [(ngModel)]="customer().id"
+        [(ngModel)]="customer.id"
         name="ID"
         label="ID"
     />
 
-    <nba-input [(ngModel)]="customer().name" name="name" label="Name" class="col-sm-6"/>
-
-    <nba-select [(ngModel)]="customer().representative!.name" name="representativeName" class="col-sm-6" label="Representative" class="col-sm-6">
-        <option [value]="null">Selecione</option>
-        @for (item of representatives; track $index) {
-          <option [value]="item.name">{{ item.name }}</option>
-        }
-    </nba-select>
+    <nba-input [(ngModel)]="customer.name" name="name" label="Name" class="col-sm-6"/>
 
 </form>
