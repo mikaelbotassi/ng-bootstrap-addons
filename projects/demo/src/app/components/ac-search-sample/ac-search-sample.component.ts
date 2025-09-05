@@ -1,24 +1,24 @@
-import { AfterContentChecked, AfterViewInit, Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
-import { AutoCompleteLovComponent, acMap } from 'inputs/ac-search-lov/ac-search-lov.component';
+import { AutoCompleteLovComponent } from 'inputs/ac-search-lov/ac-search-lov.component';
+import { AcMap } from 'inputs//ac-search-lov/models/ac-models';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-ac-search-sample',
   imports: [SampleContainerComponent, AutoCompleteLovComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './ac-search-sample.component.html',
 })
-export class AcSearchSampleComponent implements OnInit {
-  
-  mapConfig: acMap = {
-    code: { key: 'id', title: 'ID' },
-    desc: { key: 'name', title: 'Name' }
-  }
-  selectedPokemon = signal<number|null>(null);
+export class AcSearchSampleComponent {
 
-  ngOnInit(): void {
-    this.selectedPokemon.set(5);
+  environment = environment;
+
+  mapConfig: AcMap = {
+    code: { key: 'imdbID', title: 'IMDB ID' },
+    desc: { key: 'Title', title: 'Title' }
   }
+  selectedMovie = 'tt2015381';
 
   count = 0;
   incrementCount() {

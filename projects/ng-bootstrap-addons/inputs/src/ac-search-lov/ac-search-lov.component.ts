@@ -1,17 +1,17 @@
-import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
-import { asyncScheduler, observeOn, debounceTime, distinctUntilChanged } from 'rxjs';
+import { asyncScheduler, observeOn, debounceTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AutoCompleteConfig, AutocompleteService } from './services/auto-complete.service';
+import { AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { AutofocusDirective, ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { Command1, createRandomString } from 'ng-bootstrap-addons/utils';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
+import { AcMap, ActionPerformed, AutoCompleteConfig, Status } from './models/ac-models';
 
 @Component({
   selector: 'nba-ac-lov',
@@ -21,6 +21,7 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { 'collision-id': `ac-search-lov-${createRandomString(20)} ` },
   providers: [
+    AutocompleteService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AutoCompleteLovComponent),
@@ -30,31 +31,52 @@ import { InputPlaceholderComponent } from '../input-placeholder/input-placeholde
 })
 export class AutoCompleteLovComponent extends ControlValueAccessorDirective<string|number|null> {
 
+  /**
+   * The URL to use for the autocomplete requests.
+   * You can put the ac input data customized like:
+   * https://your-api-endpoint.com/autocomplete?id=:id
+   */
   acUrl = input.required<string>();
-  acParams = input<HttpParams>(new HttpParams());
+
+  //INPUTS
   autofocus = input(false, {transform: booleanAttribute});
-  map = input.required<acMap>();
-  readonly byPath = input(false, {transform: booleanAttribute});
-  focus = model<boolean>(false);
-  private _listOfValues = signal<any[]>([]);
-  listOfValues = computed(() => this._listOfValues());
-  onPerformed = output<ActionPerformed>();
-  descControl: FormControl<string | null> = new FormControl<string | null>(null);
-  desc = model<string | null>(null);
-  private destroyRef = inject(DestroyRef);
-  fetchDescCommand!: Command1<any[], AutoCompleteConfig>;
-  private acService = inject(AutocompleteService);
+  searchName = input<string>('filtro');
+  resultPath = input<{autocomplete?: string, lov?: string}>({autocomplete: '', lov: ''});
   readonly debounceTime = input<number>(1000);
+  map = input.required<AcMap>();
+
+  //MODELS
+  focus = model<boolean>(false);
+  desc = model<string | null>(null);
+
+  //SIGNALS
+  private _listOfValues = signal<any[]>([]);
+
+  // COMPUTED PROPERTIES
+  listOfValues = computed(() => this._listOfValues());
+
+  //OUTPUTS
+  onPerformed = output<ActionPerformed>();
+
+  // CONTROLS
+  descControl: FormControl<string | null> = new FormControl<string | null>(null);
+
+  // INJECTORS
+  private destroyRef = inject(DestroyRef);
+  private acService = inject(AutocompleteService);
+
+  // COMMANDS
+  fetchDescCommand!: Command1<any[], AutoCompleteConfig>;
 
   constructor() {
     super(inject(Injector));
 
     effect(() => {
       const desc = this.desc();
-      if (this.descControl.value !== desc) {
+      if (this.descControl.value !== desc && !this.descControl.dirty) {
         this.descControl.setValue(desc, { emitEvent: false });
       }
-    });    
+    });  
 
     this.fetchDescCommand = new Command1<any[], AutoCompleteConfig>((configs) =>
       this.acService.performAutocomplete(configs).pipe(observeOn(asyncScheduler))
@@ -64,22 +86,20 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   override ngOnInit(): void {
     super.ngOnInit();
 
-    if (this.control?.value && this.control.value !== '' && this.descControl.value && this.descControl.value !== '') {
-      this.setCompleteDesc();
-      return;
-    }
     if (this.control?.value && this.control.value !== '') {
+      if (this.descControl.value && this.descControl.value !== '') {
+        this.setCompleteDesc();
+        return;
+      }
       this.fetchDesc(this.control.value);
     }
 
     this.descControl.valueChanges
     .pipe(
       debounceTime(this.debounceTime()),
-      distinctUntilChanged(),
       takeUntilDestroyed(this.destroyRef),
     )
     .subscribe((value) => {
-      
       this.desc.set(value);
       if (!value || value.trim() === '') {
         this.controlValue = null;
@@ -135,24 +155,28 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   override writeValue(value: any): void {
-    if (this.control && JSON.stringify(this.control.value) !== JSON.stringify(value)) {
-      this.control.patchValue(value, { emitEvent: false });
+    if (this.control) {
+      // this.control.patchValue(value, { emitEvent: false });
       if (value) {
         this.fetchDesc(value);
+        return;
       }
+      this.descControl.patchValue(null, { emitEvent: false });
+      this.desc.set(null);
     }
   }
 
-  set controlValue(value:any){
-    this.control?.setValue(value, { emitEvent: false });
-    this.control?.markAsTouched();
-    this.control?.markAsDirty();
-    this.control?.updateValueAndValidity();
+  set controlValue(value: any) {
+    if (this.control?.value !== value) {
+      this.control?.setValue(value, { emitEvent: false });
+      this.control?.markAsTouched();
+      this.control?.markAsDirty();
+      this.control?.updateValueAndValidity();
+    }
   }
 
   updateListOfValues(val: any[]) {
     if(!val[0] || !val[0][this.map().code.key] && !val[0][this.map().desc.key]){
-      console.warn('Invalid value structure for autocomplete LOV');
       this._listOfValues.set([]);
       return;
     }
@@ -161,43 +185,72 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   fetchLov(desc?: string | null) {
     const config: AutoCompleteConfig = {
-      apiUrl: this.acUrl(),
-      searchProperty: desc ?? undefined,
-      params: this.acParams(),
-      type: 'lov'
+      url: this.acUrl(),
+      map: this.map(),
+      searchName: this.searchName(),
+      desc: desc,
+      type: 'lov',
     };
     this.focus.set(true);
     this.executeCommand(config);
   }
 
   fetchDesc(code: string|number) {
-    let params = this.acParams();
-    params = params.append(this.map().code.key, code);
     const config: AutoCompleteConfig = {
-      apiUrl: this.acUrl() + (this.byPath() ? `/${code}` : ''),
-      params: params,
+      url: this.acUrl(),
+      code: code,
+      map: this.map(),
       type: 'autocomplete',
     };
     this.executeCommand(config);
   }
 
+  getPath(value: any, type: 'autocomplete'|'lov'): any {
+    const path = this.resultPath()[type];
+    
+    if (!path || !value || !path.length) {
+      return value;
+    }
+
+    const pathParts = path.split('.');
+    
+    let result = value;
+    
+    result = pathParts.reduce((acc, part) => (acc && typeof acc === 'object' && part in acc) ? acc[part] : null, result);
+    
+    return result;
+  }
+
   executeCommand(configs: AutoCompleteConfig) {
+    if(this.fetchDescCommand.running()) return;
     this.fetchDescCommand.execute(configs);
     this.fetchDescCommand.result()
       ?.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-          if(!Array.isArray(res)) {
-            this.values = res;
-            this.updateListOfValues([res]);
-            this.onPerformed.emit({
-              type: configs.type,
-              data: res,
-              status: Status.SUCCESS
-            });
+          const processedRes = this.getPath(res, configs.type);
+          
+          if (!Array.isArray(processedRes)) {
+            if (processedRes) {
+              this.values = processedRes;
+              this.updateListOfValues([processedRes]);
+              this.onPerformed.emit({
+                type: configs.type,
+                data: processedRes,
+                status: Status.SUCCESS
+              });
+            } else {
+              this.values = null;
+              this.onPerformed.emit({
+                type: configs.type,
+                data: null,
+                status: Status.EMPTY
+              });
+            }
             return;
           }
-          if (res.length === 0) {
+          
+          if (processedRes.length === 0) {
             this.values = null;
             this.updateListOfValues([]);
             this.onPerformed.emit({
@@ -207,16 +260,23 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
             });
             return;
           }
-          if (res.length > 1) {
-            this.updateListOfValues(res);
+          
+          if (processedRes.length > 1) {
+            this.updateListOfValues(processedRes);
             this.focus.set(true);
+            this.onPerformed.emit({
+              type: configs.type,
+              data: processedRes,
+              status: Status.SUCCESS
+            });
             return;
           }
-          this.values = res[0];
-          this.updateListOfValues(res);
+          
+          this.values = processedRes[0];
+          this.updateListOfValues(processedRes);
           this.onPerformed.emit({
             type: configs.type,
-            data: res[0],
+            data: processedRes[0],
             status: Status.SUCCESS
           });
         },
@@ -234,19 +294,22 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   set values(value: any | null) {
     if (!value) {
       this.descControl.patchValue(null, { emitEvent: false });
-      this.controlValue = null;
+      this.control?.patchValue(null, { emitEvent: false });
       this.map().addons?.forEach((addon) => {
         if (addon.setValue) addon.setValue(null);
       });
       return;
     }
-    if(!value[this.map().code.key] && !value[this.map().desc.key]){
-      this.descControl.setValue('');
-      this.controlValue = null;
+    
+    if (!value[this.map().code.key] && !value[this.map().desc.key]) {
+      this.descControl.setValue('', { emitEvent: false });
+      this.control?.patchValue(null, { emitEvent: false });
       return;
     }
+    
     this.completeDescFromResponse = value;
-    this.controlValue = value[this.map().code.key];
+    this.control?.patchValue(value[this.map().code.key], { emitEvent: false });
+    
     this.map().addons?.forEach((addon) => {
       const newValue = value[addon.key];
       if (newValue && addon.setValue) addon.setValue(value);
@@ -258,10 +321,10 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   setCompleteDesc() {
-    this.descControl.setValue(`${this.control?.value} - ${this.descControl.value}`, { emitEvent: false });
+    this.descControl.setValue(this.getCompleteDesc(), { emitEvent: false });
   }
 
-  get completeDesc(): string {
+  getCompleteDesc(): string {
     return `${this.control?.value} - ${this.descControl.value?.trimStart().trimEnd()}`;
   }
 
@@ -274,29 +337,4 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.values = item;
     this.focus.set(false);
   }
-}
-
-export type acMap = {
-  code: acControl;
-  desc: acControl;
-  addons?: acControl[];
-}
-
-export type acControl = {
-  key: string;
-  setValue?: (value: any | null) => void;
-  getValue?: () => any | null;
-  title: string;
-}
-
-export type ActionPerformed = {
-  type: 'autocomplete' | 'lov';
-  data: any;
-  status: Status.EMPTY | Status.FAIL | Status.SUCCESS;
-}
-
-export enum Status {
-  FAIL = -1,
-  EMPTY = 0,
-  SUCCESS = 1
 }

@@ -9038,4 +9038,14 @@ export class CustomerService {
             observer.complete();
         });
     }
+
+    getCustomer(id:number) : Observable<Customer>{
+        return new Observable<Customer>(observer => {
+            const customer = this.getData().find(c => c.id === id);
+            if(!customer) observer.error('Customer not found');
+            observer.next(customer!);
+            observer.complete();
+        });
+    }
+
 };

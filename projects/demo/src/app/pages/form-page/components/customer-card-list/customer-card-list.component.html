@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0">Customers</h2>
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            @for (customer of customers(); track $index) {
+                <li class="list-group-item position-relative">
+                    <img [alt]="customer.representative?.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative?.image }}" width="32" style="vertical-align: middle" />
+                    {{customer.name}}
+                    <a href="javascript:;" class="stretched-link" (click)="editCustomer.emit(customer)"></a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, effect, input, output, si
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { AutocompleteCardComponent } from '../ac-card/ac-card.component';
 import { AutocompleteCollapsePlaceholderComponent } from './ac-collapse-placeholder/ac-collapse-placeholder.component';
-import { acMap } from '../../ac-search-lov.component';
 import { EmptyDataComponent } from 'ng-bootstrap-addons/components';
+import { AcMap } from '../../models/ac-models';
+import { createRandomString } from 'ng-bootstrap-addons/utils';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { EmptyDataComponent } from 'ng-bootstrap-addons/components';
   imports: [AutocompleteCardComponent, EmptyDataComponent, AutocompleteCollapsePlaceholderComponent, ScrollingModule, CdkVirtualScrollViewport],
   templateUrl: './ac-collapse.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { 'collision-id': `ac-search-lov--collapse${createRandomString(20)} ` },
 })
 export class AutocompleteCollapseComponent {
   icon = input<string>();
@@ -18,7 +20,7 @@ export class AutocompleteCollapseComponent {
   onClose = output<void>();
   listOfValues = input<any[]>([]);
   onSelect = output<any>();
-  map = input.required<acMap>()
+  map = input.required<AcMap>()
   isLoading = input<boolean>(false);
   itemsLoaded = signal<boolean>(true);
   constructor(){

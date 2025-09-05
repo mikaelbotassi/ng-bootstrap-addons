@@ -1,27 +1,47 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AutoCompleteConfig } from '../models/ac-models';
 
-@Injectable({
-  providedIn:'root'
-})
+@Injectable()
 export class AutocompleteService {
+  constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) {}
-  
-    performAutocomplete<T = any>(config: AutoCompleteConfig): Observable<T> {
-      let { apiUrl, searchProperty, params } = config;
-      if (!params) params = new HttpParams();
-      if (searchProperty) {
-        params = params.append('filtro', searchProperty.toString());
-      }
-      return this.http.get<T>(`${apiUrl}`, {params: params});
-    }
-}
-
-export interface AutoCompleteConfig {
+  private buildApiCall(data: AutoCompleteConfig): {
     apiUrl: string;
-    searchProperty?: string|number;
-    params?: HttpParams;
-    type: 'autocomplete' | 'lov';
+    params: HttpParams;
+  } {
+    const codeKey = data.map.code.key;
+    let url = data.url;
+    let params = new HttpParams();
+
+    const hasCode = !!data.code && data.code.toString().length;
+
+    if (hasCode) url = url.replace(`:${codeKey}`, data.code!.toString());
+
+    const [baseUrl, queryString] = url.split('?');
+
+    if (queryString) {
+      const searchParams = new URLSearchParams(queryString);
+      searchParams.forEach((value, key) => {
+        if (value === `:${codeKey}` && hasCode) {
+          params = params.append(key, data.code!.toString());
+          return;
+        }
+        if (value !== `:${codeKey}`) params = params.append(key, value);
+      });
+    }
+
+    if (hasCode && !data.url.includes(`:${codeKey}`)) {
+      params = params.append(codeKey, data.code!.toString());
+    }
+
+    return { apiUrl: baseUrl, params };
+  }
+
+  performAutocomplete<T = any>(config: AutoCompleteConfig): Observable<T> {
+    let { apiUrl, params } = this.buildApiCall(config);
+    if (config.desc && config.searchName) params = params.append(config.searchName, config.desc);
+    return this.http.get<T>(`${apiUrl}`, { params: params });
+  }
 }
