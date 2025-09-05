@@ -15,7 +15,6 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
   template: `
     <nba-ac-lov 
       [acUrl]="url"
-      [acParams]="params"
       [map]="map"
       [focus]="focus">
     </nba-ac-lov>
@@ -23,7 +22,6 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 })
 class HostComponent {
   url = '/api/test';
-  params = new HttpParams();
   focus = false;
   map = {
     code: { key: 'id', title: 'ID' },
