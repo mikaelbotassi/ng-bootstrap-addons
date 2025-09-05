@@ -219,7 +219,7 @@ export class TableComponent<T = any> implements OnInit {
   // =========================
   processedData = computed(() => {
     let data = this.value() ?? [];
-
+    
     // ordenação
     if (this.sortField() && this.sortDirection()) {
       data = this.sortData(data, this.sortField()!, this.sortDirection()!);
