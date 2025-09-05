@@ -2,7 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { HttpParams } from '@angular/common/http';
 import { provideHttpClient } from '@angular/common/http';
-import { AutocompleteService, AutoCompleteConfig } from 'inputs/ac-search-lov/services/auto-complete.service';
+import { AutocompleteService } from 'inputs/ac-search-lov/services/auto-complete.service';
+import { AutoCompleteConfig } from 'inputs/ac-search-lov/models/ac-models';
+
+const map = { code: { key: 'id', title: 'ID' }, desc: { key: 'desc', title: 'Description' } };
 
 describe('AutocompleteService', () => {
   let service: AutocompleteService;
@@ -36,7 +39,8 @@ describe('AutocompleteService', () => {
     ];
     
     const config: AutoCompleteConfig = {
-      apiUrl: '/api/test',
+      url: '/api/test',
+      map: map,
       type: 'autocomplete'
     };
 
@@ -56,18 +60,20 @@ describe('AutocompleteService', () => {
     ];
     
     const config: AutoCompleteConfig = {
-      apiUrl: '/api/search',
-      searchProperty: 'test',
-      type: 'lov'
+      url: '/api/search',
+      type: 'lov',
+      desc: 'test',
+      searchName: 's',
+      map: map
     };
 
     service.performAutocomplete(config).subscribe(response => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne('/api/search?filtro=test');
+    const req = httpMock.expectOne('/api/search?s=test');
     expect(req.request.method).toBe('GET');
-    expect(req.request.params.get('filtro')).toBe('test');
+    expect(req.request.params.get('s')).toBe('test');
     req.flush(mockResponse);
   });
 
@@ -76,14 +82,11 @@ describe('AutocompleteService', () => {
       { id: 5, desc: 'Filtered Item' }
     ];
     
-    const existingParams = new HttpParams()
-      .set('category', 'electronics')
-      .set('limit', '10');
-    
     const config: AutoCompleteConfig = {
-      apiUrl: '/api/products',
-      searchProperty: 'laptop',
-      params: existingParams,
+      url: '/api/products?category=electronics&limit=10',
+      map: map,
+      desc: 'laptop',
+      searchName: 's',
       type: 'autocomplete'
     };
 
@@ -91,11 +94,11 @@ describe('AutocompleteService', () => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne('/api/products?category=electronics&limit=10&filtro=laptop');
+    const req = httpMock.expectOne('/api/products?category=electronics&limit=10&s=laptop');
     expect(req.request.method).toBe('GET');
     expect(req.request.params.get('category')).toBe('electronics');
     expect(req.request.params.get('limit')).toBe('10');
-    expect(req.request.params.get('filtro')).toBe('laptop');
+    expect(req.request.params.get('s')).toBe('laptop');
     req.flush(mockResponse);
   });
 
@@ -105,8 +108,10 @@ describe('AutocompleteService', () => {
     ];
     
     const config: AutoCompleteConfig = {
-      apiUrl: '/api/products',
-      searchProperty: 123,
+      url: '/api/products',
+      desc: (123).toString(),
+      map: map,
+      searchName: 's',
       type: 'autocomplete'
     };
 
@@ -114,9 +119,9 @@ describe('AutocompleteService', () => {
       expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne('/api/products?filtro=123');
+    const req = httpMock.expectOne('/api/products?s=123');
     expect(req.request.method).toBe('GET');
-    expect(req.request.params.get('filtro')).toBe('123');
+    expect(req.request.params.get('s')).toBe('123');
     req.flush(mockResponse);
   });
 
@@ -124,8 +129,10 @@ describe('AutocompleteService', () => {
     const mockResponse: any[] = [];
     
     const config: AutoCompleteConfig = {
-      apiUrl: '/api/empty',
-      searchProperty: 'notfound',
+      url: '/api/empty',
+      map: map,
+      searchName: 's',
+      desc: 'notfound',
       type: 'lov'
     };
 
@@ -135,14 +142,15 @@ describe('AutocompleteService', () => {
       expect(response.length).toBe(0);
     });
 
-    const req = httpMock.expectOne('/api/empty?filtro=notfound');
+    const req = httpMock.expectOne('/api/empty?s=notfound');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
   });
 
   it('should handle HTTP errors', () => {
     const config: AutoCompleteConfig = {
-      apiUrl: '/api/error',
+      url: '/api/error',
+      map: map,
       type: 'autocomplete'
     };
 
@@ -160,26 +168,23 @@ describe('AutocompleteService', () => {
   });
 
   it('should preserve existing params when adding search property', () => {
-    const existingParams = new HttpParams()
-      .set('page', '1')
-      .set('size', '20')
-      .set('sort', 'name');
     
     const config: AutoCompleteConfig = {
-      apiUrl: '/api/items',
-      searchProperty: 'search term',
-      params: existingParams,
+      url: '/api/items?page=1&size=20&sort=name',
+      desc: 'search term',
+      map: map,
+      searchName: 's',
       type: 'lov'
     };
 
     service.performAutocomplete(config).subscribe();
 
-    const req = httpMock.expectOne('/api/items?page=1&size=20&sort=name&filtro=search%20term');
+    const req = httpMock.expectOne('/api/items?page=1&size=20&sort=name&s=search%20term');
     expect(req.request.method).toBe('GET');
     expect(req.request.params.get('page')).toBe('1');
     expect(req.request.params.get('size')).toBe('20');
     expect(req.request.params.get('sort')).toBe('name');
-    expect(req.request.params.get('filtro')).toBe('search term');
+    expect(req.request.params.get('s')).toBe('search term');
     req.flush([]);
   });
 });

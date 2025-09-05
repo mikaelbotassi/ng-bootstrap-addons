@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AutocompleteCollapseComponent } from 'inputs/ac-search-lov/components/ac-collapse/ac-collapse.component';
-import { acMap } from 'inputs/ac-search-lov/ac-search-lov.component';
+import { AcMap } from 'inputs/ac-search-lov/models/ac-models';
 
 @Component({
   standalone: true,
@@ -23,7 +23,7 @@ class HostComponent {
   icon = 'ti-search';
   title = 'Test Items';
   listOfValues: any[] = [];
-  map: acMap = {
+  map: AcMap = {
     code: { key: 'id', title: 'ID' },
     desc: { key: 'name', title: 'Name' }
   };
@@ -93,7 +93,7 @@ describe('AutocompleteCollapseComponent', () => {
   });
 
   it('should accept map input', () => {
-    const customMap: acMap = {
+    const customMap: AcMap = {
       code: { key: 'code', title: 'Code' },
       desc: { key: 'description', title: 'Description' }
     };
@@ -167,7 +167,7 @@ describe('AutocompleteCollapseComponent', () => {
   });
 
   it('should handle map with addons', () => {
-    const mapWithAddons: acMap = {
+    const mapWithAddons: AcMap = {
       code: { key: 'id', title: 'ID' },
       desc: { key: 'name', title: 'Name' },
       addons: [

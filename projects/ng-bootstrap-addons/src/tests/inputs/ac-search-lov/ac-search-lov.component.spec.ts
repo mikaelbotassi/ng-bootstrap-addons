@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AutoCompleteLovComponent } from 'inputs/ac-search-lov/ac-search-lov.component';
 import { AutocompleteService } from 'inputs/ac-search-lov/services/auto-complete.service';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, provideHttpClient } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 @Component({
   standalone: true,
@@ -43,7 +44,9 @@ describe('AutoCompleteLovComponent', () => {
       imports: [HostComponent],
       providers: [
         { provide: AutocompleteService, useValue: autocompleteService },
-        provideAnimations()
+        provideAnimations(),
+        provideHttpClient(),
+        provideHttpClientTesting()
       ]
     });
 
@@ -89,14 +92,14 @@ describe('AutoCompleteLovComponent', () => {
     spyOn(component.fetchDescCommand, 'execute');
     
     component.executeCommand({
-      apiUrl: host.url,
-      params: host.params,
+      url: host.url,
+      map: host.map,
       type: 'autocomplete'
     });
 
     expect(component.fetchDescCommand.execute).toHaveBeenCalledWith({
-      apiUrl: host.url,
-      params: host.params,
+      url: host.url,
+      map: host.map,
       type: 'autocomplete'
     });
   });
@@ -182,7 +185,7 @@ describe('AutoCompleteLovComponent', () => {
   it('should compute completeDesc correctly', () => {
     (component as any).control = new FormControl('100');
     component.descControl.setValue(' MyDesc ');
-    const result = component.completeDesc;
+    const result = component.getCompleteDesc();
     expect(result).toBe('100 - MyDesc');
   });
 
