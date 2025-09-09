@@ -12,12 +12,13 @@ import { DateRangePickerComponent } from 'project/inputs/src/date-range-picker/d
   standalone: true,
   imports: [DateRangePickerComponent, ReactiveFormsModule],
   template: `
-    <nba-datetime-range-input
+    <nba-date-range-picker
       [label]="label"
       [icon]="icon"
       [required]="required"
+      withTime
       [customConfigs]="customConfigs()">
-    </nba-datetime-range-input>
+    </nba-date-range-picker>
   `
 })
 class HostComponent {
