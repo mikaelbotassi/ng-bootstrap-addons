@@ -5,13 +5,12 @@ import { By } from '@angular/platform-browser';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { NgxMaskService, provideNgxMask } from 'ngx-mask';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DatetimeRangePickerComponent } from 'inputs/datetime-range-picker/datetime-range-picker.component';
 import { DateUtils } from 'utils/date-utils';
+import { DateRangePickerComponent } from 'project/inputs/src/date-range-picker/date-range-picker.component';
 
 @Component({
   standalone: true,
-  imports: [DatetimeRangePickerComponent, ReactiveFormsModule],
+  imports: [DateRangePickerComponent, ReactiveFormsModule],
   template: `
     <nba-datetime-range-input
       [label]="label"
@@ -29,7 +28,7 @@ class HostComponent {
 }
 
 describe('DatetimeRangePickerComponent', () => {
-  let component: DatetimeRangePickerComponent;
+  let component: DateRangePickerComponent;
   let fixture: ComponentFixture<HostComponent>;
   let host: HostComponent;
   let debugElement: DebugElement;
@@ -40,7 +39,6 @@ describe('DatetimeRangePickerComponent', () => {
         HostComponent,
         BsDatepickerModule.forRoot(),
         CollapseModule.forRoot(),
-        NoopAnimationsModule
       ],
       providers: [
         provideNgxMask(),
@@ -52,7 +50,7 @@ describe('DatetimeRangePickerComponent', () => {
     host = fixture.componentInstance;
     fixture.detectChanges();
 
-    debugElement = fixture.debugElement.query(By.directive(DatetimeRangePickerComponent));
+    debugElement = fixture.debugElement.query(By.directive(DateRangePickerComponent));
     component = debugElement.componentInstance;
     
     // Initialize control if not present
@@ -72,7 +70,7 @@ describe('DatetimeRangePickerComponent', () => {
     });
 
     it('should inherit from ControlValueAccessorDirective', () => {
-      expect(component).toBeInstanceOf(DatetimeRangePickerComponent);
+      expect(component).toBeInstanceOf(DateRangePickerComponent);
       expect(component.control).toBeDefined();
       expect(component.inputId).toBeDefined();
     });
@@ -100,8 +98,8 @@ describe('DatetimeRangePickerComponent', () => {
     });
 
     it('should initialize textValue FormControl', () => {
-      expect(component.textValue).toBeDefined();
-      expect(component.textValue.value).toBeNull();
+      expect(component.textValue()).toBeDefined();
+      expect(component.textValue().value).toBeNull();
     });
 
     it('should initialize isCollapsed signal as true', () => {
@@ -249,22 +247,22 @@ describe('DatetimeRangePickerComponent', () => {
       component.writeValue([startDate, endDate]);
       
       const expectedFormat = `${DateUtils.formatDate(startDate, 'DD/MM/YYYY HH:mm:ss')} - ${DateUtils.formatDate(endDate, 'DD/MM/YYYY HH:mm:ss')}`;
-      expect(component.textValue.value).toBe(expectedFormat);
+      expect(component.textValue().value).toBe(expectedFormat);
     });
 
     it('should clear textValue when writeValue receives undefined', () => {
       component.writeValue(undefined);
-      expect(component.textValue.value).toBeNull();
+      expect(component.textValue().value).toBeNull();
     });
 
     it('should clear textValue when writeValue receives incomplete date array', () => {
       component.writeValue([new Date(), undefined]);
-      expect(component.textValue.value).toBeNull();
+      expect(component.textValue().value).toBeNull();
     });
 
     it('should parse text input correctly with writeTextInterval', fakeAsync(() => {
       const validInput = '15/01/2023 10:30:00 - 20/01/2023 15:45:00';
-      component.textValue.setValue(validInput);
+      component.textValue().setValue(validInput);
       
       tick(1000); // Wait for timeout
       
@@ -277,7 +275,7 @@ describe('DatetimeRangePickerComponent', () => {
     }));
 
     it('should handle invalid text input gracefully', fakeAsync(() => {
-      component.textValue.setValue('invalid date format');
+      component.textValue().setValue('invalid date format');
       
       tick(1000); // Wait for timeout
       
@@ -286,7 +284,7 @@ describe('DatetimeRangePickerComponent', () => {
     }));
 
     it('should handle incomplete text input', fakeAsync(() => {
-      component.textValue.setValue('15/01/2023'); // Too short
+      component.textValue().setValue('15/01/2023'); // Too short
       
       tick(1000); // Wait for timeout
       
@@ -303,15 +301,15 @@ describe('DatetimeRangePickerComponent', () => {
       component.onDatePickerChange([startDate, endDate]);
       
       expect(component.control?.value).toEqual([startDate, endDate]);
-      expect(component.textValue.value).toContain('15/01/2023');
-      expect(component.textValue.value).toContain('20/01/2023');
+      expect(component.textValue().value).toContain('15/01/2023');
+      expect(component.textValue().value).toContain('20/01/2023');
     });
 
     it('should handle undefined value from picker', () => {
       component.onDatePickerChange(undefined);
       
       expect(component.control?.value).toBeUndefined();
-      expect(component.textValue.value).toBeNull();
+      expect(component.textValue().value).toBeNull();
     });
 
     it('should handle incomplete date range from picker', () => {
@@ -320,7 +318,7 @@ describe('DatetimeRangePickerComponent', () => {
       component.onDatePickerChange([startDate, undefined]);
       
       expect(component.control?.value).toBeUndefined();
-      expect(component.textValue.value).toBeNull();
+      expect(component.textValue().value).toBeNull();
     });
   });
 
@@ -347,7 +345,7 @@ describe('DatetimeRangePickerComponent', () => {
       // Force all pending observables to complete
       flush();
       
-      expect(component.textValue.disabled).toBe(true);
+      expect(component.textValue().disabled).toBe(true);
     }));
 
     it('should reflect required attribute when required', async () => {
@@ -377,13 +375,13 @@ describe('DatetimeRangePickerComponent', () => {
     });
 
     it('should display form error message for textValue errors', async () => {
-      component.textValue.setValue('invalid format');
-      component.textValue.markAsTouched();
+      component.textValue().setValue('invalid format');
+      component.textValue().markAsTouched();
       fixture.detectChanges();
       await fixture.whenStable();
       
       // Should show error for textValue when control is valid
-      expect(component.textValue.invalid).toBe(true);
+      expect(component.textValue().invalid).toBe(true);
     });
 
     it('should mark control as touched when markAsTouched is called', () => {
@@ -402,8 +400,8 @@ describe('DatetimeRangePickerComponent', () => {
       component.writeValue([startDate, endDate]);
       fixture.detectChanges();
       
-      expect(component.textValue.value).toContain('15/01/2023');
-      expect(component.textValue.value).toContain('20/01/2023');
+      expect(component.textValue().value).toContain('15/01/2023');
+      expect(component.textValue().value).toContain('20/01/2023');
     });
 
     it('should handle writeValue with undefined', () => {
@@ -413,7 +411,7 @@ describe('DatetimeRangePickerComponent', () => {
       component.writeValue(undefined);
       fixture.detectChanges();
       
-      expect(component.textValue.value).toBeNull();
+      expect(component.textValue().value).toBeNull();
     });
 
     it('should handle writeValue with empty array', () => {
@@ -423,7 +421,7 @@ describe('DatetimeRangePickerComponent', () => {
       component.writeValue([]);
       fixture.detectChanges();
       
-      expect(component.textValue.value).toBeNull();
+      expect(component.textValue().value).toBeNull();
     });
   });
 
@@ -552,7 +550,7 @@ describe('DatetimeRangePickerComponent', () => {
       const testValue: (Date|undefined)[]|undefined = [startDate, endDate];
       component.writeValue(testValue);
       
-      expect(component.textValue.value).toContain('15/01/2023');
+      expect(component.textValue().value).toContain('15/01/2023');
     });
 
     it('should maintain type safety with FormControl', () => {
@@ -566,10 +564,10 @@ describe('DatetimeRangePickerComponent', () => {
 
   describe('Edge cases', () => {
     it('should handle rapid value changes', fakeAsync(() => {
-      component.textValue.setValue('15/01/2023 10:30:0020/01/2023 15:45:00');
+      component.textValue().setValue('15/01/2023 10:30:0020/01/2023 15:45:00');
       tick(500); // Before timeout
       
-      component.textValue.setValue('16/01/2023 11:30:0021/01/2023 16:45:00');
+      component.textValue().setValue('16/01/2023 11:30:0021/01/2023 16:45:00');
       tick(1000); // Complete timeout
       
       // Should process the latest value
@@ -577,11 +575,11 @@ describe('DatetimeRangePickerComponent', () => {
     }));
 
     it('should clear timeout when component receives new value', fakeAsync(() => {
-      component.textValue.setValue('15/01/2023 10:30:00 - 20/01/2023 15:45:00');
+      component.textValue().setValue('15/01/2023 10:30:00 - 20/01/2023 15:45:00');
       tick(500);
       
       // Set another value before timeout completes
-      component.textValue.setValue('invalid');
+      component.textValue().setValue('invalid');
       tick(1000);
       
       // Should not have valid value due to invalid input
@@ -589,7 +587,7 @@ describe('DatetimeRangePickerComponent', () => {
     }));
 
     it('should handle empty string input', fakeAsync(() => {
-      component.textValue.setValue('');
+      component.textValue().setValue('');
       tick(1000);
       
       // Should not process empty string - could be null, undefined or previous value
@@ -597,7 +595,7 @@ describe('DatetimeRangePickerComponent', () => {
     }));
 
     it('should handle null input', fakeAsync(() => {
-      component.textValue.setValue(null);
+      component.textValue().setValue(null);
       tick(1000);
       
       // Should not process null - could be null, undefined or previous value
@@ -623,12 +621,12 @@ describe('DatetimeRangePickerComponent', () => {
     });
 
     it('should validate text input format', () => {
-      component.textValue.setValue('invalid format');
-      expect(component.textValue.invalid).toBe(true);
-      expect(component.textValue.errors?.['pattern']).toBeTruthy();
+      component.textValue().setValue('invalid format');
+      expect(component.textValue().invalid).toBe(true);
+      expect(component.textValue().errors?.['pattern']).toBeTruthy();
       
-      component.textValue.setValue('15/01/2023 10:30:00 - 20/01/2023 15:45:00');
-      expect(component.textValue.valid).toBe(true);
+      component.textValue().setValue('15/01/2023 10:30:00 - 20/01/2023 15:45:00');
+      expect(component.textValue().valid).toBe(true);
     });
 
     it('should work with custom validators', async () => {

@@ -60,6 +60,8 @@ export class TableRowControlComponent<T = any> {
   }
 
   onRightClick(event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
     const menu = this.contextMenu();
     const template = this.menuTemplate();
     
