@@ -1,6 +1,6 @@
 // column-filter-form.component.ts
 import { ChangeDetectionStrategy, Component, contentChild, input, output, signal, TemplateRef } from '@angular/core';
-import { DatetimeRangePickerComponent, InputComponent, NumericIntervalInputComponent, SwitchComponent } from 'ng-bootstrap-addons/inputs';
+import { DateRangePickerComponent, InputComponent, NumericIntervalInputComponent, SwitchComponent } from 'ng-bootstrap-addons/inputs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ColumnFilterType, FilterFunction } from '../../models/table-models';
@@ -8,7 +8,7 @@ import { DateUtils } from 'ng-bootstrap-addons/utils';
 
 @Component({
   selector: 'nba-column-filter-form',
-  imports: [CommonModule, InputComponent, DatetimeRangePickerComponent, SwitchComponent, FormsModule, NumericIntervalInputComponent],
+  imports: [CommonModule, InputComponent, DateRangePickerComponent, SwitchComponent, FormsModule, NumericIntervalInputComponent],
   templateUrl: './column-filter-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

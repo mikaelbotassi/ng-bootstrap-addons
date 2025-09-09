@@ -94,7 +94,7 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
     };
   });
 
-  bsConfigs = computed(() => {
+  bsConfigs = computed<Partial<BsDaterangepickerConfig>>(() => {
     return {
       ...this.baseConfigs(),
       ...this.customConfigs(),
