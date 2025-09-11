@@ -74,7 +74,6 @@ export class ColumnFilterFormComponent {
       case 'boolean':
         return (item: any, value: boolean) => {
           if(typeof item !== 'boolean') return false;
-          console.log("🚀 ~ ColumnFilterFormComponent ~ getDefaultFilterFunction ~ item:", item)
           return item === value;
         };
       default:

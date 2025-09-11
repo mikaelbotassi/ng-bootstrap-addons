@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from 'ng-bootstrap-addons/inputs';
+import { PageStateDirective } from 'project/directives/src/page-state.directive';
 import { AutoCompleteLovComponent } from 'project/inputs/src/ac-search-lov';
 import { Customer, Representative } from 'projects/demo/src/app/models/customer';
 import { CustomerService } from 'projects/demo/src/app/services/customer.service';
@@ -11,10 +12,9 @@ import { CustomerService } from 'projects/demo/src/app/services/customer.service
   imports: [AutoCompleteLovComponent, InputComponent, FormsModule],
   templateUrl: './form-customer.component.html',
 })
-export class FormCustomerComponent {
+export default class FormCustomerComponent extends PageStateDirective<Customer> {
 
   private customerService = inject(CustomerService);
-  customer:Customer = {};
 
   representatives: Representative[] = [
     { name: 'Amy Elsner', image: 'amyelsner.png' },
@@ -28,12 +28,9 @@ export class FormCustomerComponent {
     { name: 'Stephen Shaw', image: 'stephenshaw.png' },
     { name: 'Xuxue Feng', image: 'xuxuefeng.png' }
   ];
-  
-  getCustomerById(id: number){
-    console.log("🚀 ~ FormCustomerComponent ~ getCustomerById ~ id:", id)
-    this.customerService.getCustomer(id).subscribe(customer => {
-      this.customer = customer;
-    });
+
+  constructor(){
+    super();
   }
 
 }

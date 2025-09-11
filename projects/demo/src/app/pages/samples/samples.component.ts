@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DragDropSampleComponent } from '../../components/drag-drop-sample/drag-drop-sample.component';
 import { ErrorMessageSampleComponent } from '../../components/error-message-sample/error-message-sample.component';
 import { EmptyDataSampleComponent } from '../../components/empty-data-sample/empty-data-sample.component';
@@ -12,6 +12,9 @@ import { TextareaSampleComponent } from '../../components/textarea-sample/textar
 import { LabelSampleComponent } from '../../components/label-sample/label-sample.component';
 import { TableSampleComponent } from '../../components/table-sample/table-sample.component';
 import { NumericIntervalInputSampleComponent } from '../../components/numeric-interval-input-sample/numeric-interval-input-sample.component';
+import FormCustomerComponent from '../form-page/components/form-customer/form-customer.component';
+import { ComponentNavigationService } from 'project/services/src/component-navigation.service';
+import { CustomerCardListComponent } from '../form-page/components/customer-card-list/customer-card-list.component';
 
 @Component({
   selector: 'app-samples',
@@ -33,5 +36,11 @@ import { NumericIntervalInputSampleComponent } from '../../components/numeric-in
   ],
 })
 export class SamplesComponent {
+
+  private navigationService = inject(ComponentNavigationService);
+
+  openList() {
+    this.navigationService.go(CustomerCardListComponent, {name: 'Customer List'});
+  }
 
 }

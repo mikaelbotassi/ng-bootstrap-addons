@@ -3,11 +3,11 @@
         class="col-sm-12"
         acUrl="https://api.example.com/representatives"
         [map]="{ code: {key:'id', title: 'ID'}, desc: {key: 'desc', title: 'Description'} }"
-        [(ngModel)]="customer.id"
+        [(ngModel)]="state!.id"
         name="ID"
         label="ID"
     />
 
-    <nba-input [(ngModel)]="customer.name" name="name" label="Name" class="col-sm-6"/>
+    <nba-input [(ngModel)]="state!.name" name="name" label="Name" class="col-sm-6"/>
 
 </form>

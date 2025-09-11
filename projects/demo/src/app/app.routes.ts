@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { FormPageComponent } from './pages/form-page/form-page.component';
 import { SamplesComponent } from './pages/samples/samples.component';
 
 export const routes: Routes = [
@@ -9,10 +8,10 @@ export const routes: Routes = [
     },
     {
         path: 'form-sample',
-        component: FormPageComponent
+        loadChildren: () => import('./pages/form-page/form.routes').then(m => m.form_routes)
     },
-    {
-        path: '**',
-        redirectTo: ''
-    }
+    // {
+    //     path: '**',
+    //     redirectTo: ''
+    // }
 ];
