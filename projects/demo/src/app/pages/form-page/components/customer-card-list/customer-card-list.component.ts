@@ -11,7 +11,7 @@ import { PageStateDirective } from 'project/directives/src/page-state.directive'
   imports: [],
   templateUrl: './customer-card-list.component.html',
 })
-export class CustomerCardListComponent extends PageStateDirective<{name:string}> implements OnInit {
+export class CustomerCardListComponent extends PageStateDirective<{name:string}> {
 
   loadCommand: Command0<Customer[]>;
   customer = {} as Customer;
@@ -23,10 +23,6 @@ export class CustomerCardListComponent extends PageStateDirective<{name:string}>
     super();
     this.loadCommand = new Command0<Customer[]>(() => this.customerService.getCustomers());
     this.loadCommand.execute();
-  }
-
-  ngOnInit() {
-    console.log(this.state);
   }
 
   editCustomer(customer: Customer) {
