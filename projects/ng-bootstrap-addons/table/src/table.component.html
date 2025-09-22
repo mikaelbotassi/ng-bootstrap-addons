@@ -4,26 +4,28 @@
             <ng-container *ngTemplateOutlet="caption()!"></ng-container>
         </div>
     }
-    <div class="table-responsive px-3" dragScroll>
-        <table class="table align-middle mb-0">
-            @if(header()){
-                <thead class="table-white">
-                    <ng-container *ngTemplateOutlet="header()!; context: {
-                        $implicit: this,
-                        sortField: sortField(),
-                        sortDirection: sortDirection(),
-                        onSort: onSort.bind(this),
-                    }"></ng-container>
-                </thead>
-            }
-            <tbody>
-                @if(paginatedData().length){
-                    <ng-container *ngTemplateOutlet="body()!; context: { $implicit: paginatedData()! }"></ng-container>
-                }@else{
-                    <tr><td colspan="100%" class="text-center text-muted">Nenhum registro encontrado</td></tr>
+    <div class="d-grid px-3">
+        <div class="table-responsive" dragScroll>
+            <table class="table align-middle mb-0">
+                @if(header()){
+                    <thead class="table-white">
+                        <ng-container *ngTemplateOutlet="header()!; context: {
+                            $implicit: this,
+                            sortField: sortField(),
+                            sortDirection: sortDirection(),
+                            onSort: onSort.bind(this),
+                        }"></ng-container>
+                    </thead>
                 }
-            </tbody>
-        </table>
+                <tbody>
+                    @if(paginatedData().length){
+                        <ng-container *ngTemplateOutlet="body()!; context: { $implicit: paginatedData()! }"></ng-container>
+                    }@else{
+                        <tr><td colspan="100%" class="text-center text-muted">Nenhum registro encontrado</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
     @if(paginated()){
       <div class="d-flex align-items-center gap-2 justify-content-end flex-wrap p-3">

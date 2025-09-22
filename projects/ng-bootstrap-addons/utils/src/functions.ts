@@ -54,8 +54,17 @@ export const convertBlobToFile = (propertie: {
   item: any;
 }): File => {
   const type = getMimeType(propertie.nome);
+  const byteArrays = convertToByteArray(atob(propertie.item));
+  // Flatten the Uint8Array[] into a single Uint8Array
+  const totalLength = byteArrays.reduce((acc, curr) => acc + curr.length, 0);
+  const mergedArray = new Uint8Array(totalLength);
+  let offset = 0;
+  for (const arr of byteArrays) {
+    mergedArray.set(arr, offset);
+    offset += arr.length;
+  }
   return new File(
-    [new Blob(convertToByteArray(atob(propertie.item)), { type: type })],
+    [new Blob([mergedArray], { type: type })],
     propertie.nome,
     { type: type }
   );
