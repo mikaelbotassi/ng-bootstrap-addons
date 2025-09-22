@@ -1,5 +1,5 @@
 // datetime-range-picker.component.ts
-import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, DestroyRef, forwardRef, inject, input, signal } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, DestroyRef, forwardRef, inject, input, signal, ViewEncapsulation } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BsDatepickerModule, BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -16,6 +16,8 @@ import { NgxMaskDirective } from 'ngx-mask';
   selector: 'nba-date-range-picker',
   imports: [CommonModule, BsDatepickerModule, ReactiveFormsModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CollapseModule, ClickOutsideDirective, FormsModule],
   templateUrl: './date-range-picker.component.html',
+  styles: `bs-daterangepicker-inline-container td { font-weight: normal }`,
+  encapsulation: ViewEncapsulation.None,
   host: { 'collision-id': `date-range-picker-${createRandomString(20)} ` },
   providers: [
     {
@@ -209,6 +211,7 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
   }  
 
   onDatePickerChange(newValue: (Date|undefined)[]|undefined) {
+    this.isCollapsed.set(true);
     if(!newValue){
       this.textValue().patchValue(null, {emitEvent: false});
       this.control?.setValue(undefined);
