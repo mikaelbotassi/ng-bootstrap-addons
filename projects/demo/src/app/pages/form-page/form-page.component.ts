@@ -1,9 +1,8 @@
-import { Component, effect, viewChild } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { CustomerService } from '../../services/customer.service';
 import { Customer } from '../../models/customer';
 import { Command0 } from 'project/utils/src/command';
-import { CustomerCardListComponent } from './components/customer-card-list/customer-card-list.component';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import FormCustomerComponent from './components/form-customer/form-customer.component';
 import { ComponentNavigationService } from 'project/services/src/component-navigation.service';
 
@@ -20,8 +19,6 @@ export class FormPageComponent {
 
   constructor(
     private customerService: CustomerService,
-    private router: Router,
-    private route: ActivatedRoute,
     private navigationService: ComponentNavigationService,
   ) { 
     this.loadCommand = new Command0<Customer[]>(() => this.customerService.getCustomers());

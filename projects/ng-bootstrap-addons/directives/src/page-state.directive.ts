@@ -1,5 +1,4 @@
-import { Directive, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Directive } from '@angular/core';
 
 @Directive({
   selector: '[nbaPageState]',
@@ -7,7 +6,6 @@ import { Router } from '@angular/router';
 export class PageStateDirective<T = any> {
 
   state: T = {} as T;
-  private _router = inject(Router);
 
   constructor(){
     this.state = history.state;
