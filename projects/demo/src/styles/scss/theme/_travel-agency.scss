@@ -1,0 +1,205 @@
+.echart-financial-Activities {
+  height: 27.8rem;
+  width: 100%;
+  @include media-breakpoint-up(xxl) {
+    height: 46rem;
+  }
+}
+.flight-desc-card {
+  width: auto;
+  position: absolute;
+  bottom: map-get($spacers, 3);
+  left: 50%;
+  transform: translateX(-50%);
+  left: 50%;
+  width: calc(100% - map-get($spacers, 5));
+  @include media-breakpoint-up(sm) {
+    max-width: 31.25rem !important;
+  }
+  @include media-breakpoint-up(md) {
+    bottom: map-get($spacers, 8);
+  }
+  .progress {
+    position: relative;
+    border-top: 1px dotted var(--#{$prefix}info);
+    background: transparent;
+    overflow: visible;
+    height: 0;
+    border-radius: 0;
+    .progress-bar {
+      position: absolute;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-75%);
+    }
+  }
+}
+
+.marker-1 {
+  background-image: url('../../../assets/images/icons/fly-map-marker.png');
+  background-size: 100%;
+  width: 1.875rem;
+  height: 2.94rem;
+  top: -1.125rem;
+  [data-bs-theme='dark'] & {
+    background-image: url('../../../assets/images/icons/fly-map-marker_dark.png');
+  }
+}
+.marker-2 {
+  background-image: url('../../../assets/images/icons/plane.png');
+  background-size: 100%;
+  width: 2.125rem;
+  height: 2.125rem;
+  [data-bs-theme='dark'] & {
+    background-image: url('../../../assets/images/icons/plane_dark.png');
+  }
+}
+.marker-3 {
+  background-image: url('../../../assets/images/icons/land-map-marker.png');
+  background-size: 100%;
+  width: 1.875rem;
+  height: 2.94rem;
+  top: -1.125rem;
+  [data-bs-theme='dark'] & {
+    // background-image: url('../../../assets/images/icons/land-map-marker_dark.png');
+    background-image: url('../../../assets/images/icons/land-map-marker_dark.png');
+  }
+}
+
+// add property
+.form-price-tier {
+  .pricings {
+    display: none;
+  }
+  &.active {
+    background: var(--#{$prefix}emphasis-bg);
+    .pricings {
+      display: block !important;
+    }
+    .form-switch {
+      label {
+        color: var(--#{$prefix}primary-darker) !important;
+      }
+    }
+  }
+}
+.age-segment-input {
+  @include media-breakpoint-up(sm) {
+    max-width: 5.75rem;
+  }
+}
+.flex-sm-1 {
+  @include media-breakpoint-up(sm) {
+    flex: 1;
+  }
+}
+
+.hotel-card {
+  max-height: 27.5rem;
+  .btn-wish {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  &:hover {
+    .btn-wish {
+      opacity: 1 !important;
+    }
+  }
+}
+
+// Flight
+
+.flight-list-item-logo {
+  height: 64px;
+  @include media-breakpoint-up(sm) {
+    height: 100px;
+  }
+}
+
+.flight-filter-checkbox:checked {
+  + {
+    label {
+      border: 1px solid var(--#{$prefix}primary-light);
+      outline: 0;
+      background: var(--#{$prefix}primary) !important;
+      color: var(--#{$prefix}white) !important;
+    }
+  }
+}
+.trip-filter-checkbox:checked {
+  + {
+    label {
+      background: var(--#{$prefix}emphasis-bg) !important;
+      color: var(--#{$prefix}primary) !important;
+    }
+  }
+}
+
+.coupon-card-sticky-top {
+  @include media-breakpoint-up(lg) {
+    position: sticky;
+    top: calc(var(--phoenix-navbar-top-height) + 3.725rem);
+  }
+}
+
+.flight-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: $zindex-sticky;
+}
+
+.theme-wizard {
+  &.flight-booking-wizard {
+    .nav-item {
+      &:not(&:last-child) {
+        .nav-link {
+          &:before {
+            top: 35% !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tour-direction-line {
+  position: absolute;
+  height: 1rem;
+  bottom: -1rem;
+  left: 19px;
+}
+
+.navbar-nav {
+  &.travel-nav-top {
+    .nav-link {
+      padding: map-get($spacers, 2) map-get($spacers, 3);
+      border-radius: $border-radius;
+    }
+    .dropdown-menu {
+      margin-top: 0;
+      &.navbar-dropdown-caret::after {
+        box-shadow: none;
+        top: -10px;
+        height: 1.2rem;
+        width: 1.2rem;
+      }
+    }
+    @include media-breakpoint-up(lg) {
+      .dropdown {
+        .dropdown-toggle:after {
+          display: none;
+        }
+        .dropdown-menu {
+          margin-top: map-get($spacers, 3);
+        }
+      }
+      .nav-link {
+        &:hover {
+          background-color: var(--#{$prefix}secondary-bg);
+        }
+      }
+    }
+  }
+}

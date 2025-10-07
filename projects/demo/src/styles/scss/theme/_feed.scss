@@ -1,0 +1,48 @@
+.feed-avatar-profile {
+  position: absolute;
+  bottom: 0;
+  transform: translateY(50%);
+}
+.feed-profile {
+  transform: translateY(50%);
+}
+
+.feed-profile-cover {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(245, 246, 252, 0.52),
+      rgba(117, 19, 93, 0.73)
+    ),
+    // url('generic/59.png');
+    url('../../../assets/images/generic/59.png');
+}
+
+/*-----------------------------------------------
+|   Cover and profile image
+-----------------------------------------------*/
+
+.cover-image-file-input {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  padding: map_get($spacers, 1) map_get($spacers, 2);
+  margin-left: map_get($spacers, 3);
+  margin-top: map_get($spacers, 3);
+  border-radius: $border-radius;
+  font-size: map_get($font-sizes, 9);
+  color: $white;
+  box-shadow: $box-shadow-sm;
+}
+
+// .cover-image {
+//   overflow: hidden;
+//   z-index: 0;
+//   &:hover .cover-image-file-input {
+//     opacity: 1;
+//     transition: $transition-base;
+//   }
+// }

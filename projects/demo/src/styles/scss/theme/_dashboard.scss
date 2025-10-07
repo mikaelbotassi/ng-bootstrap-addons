@@ -1,0 +1,17 @@
+.hover-actions-trigger.btn-reveal-trigger {
+  .hover-actions {
+    right: 3rem;
+    [dir='rtl'] & {
+      right: 3rem;
+    }
+  }
+}
+
+// project-management
+.todo-list {
+  .to-do-list-body {
+    @include media-breakpoint-up(xl) {
+      height: 270px;
+    }
+  }
+}

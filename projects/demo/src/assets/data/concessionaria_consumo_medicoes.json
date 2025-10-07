@@ -1,0 +1,137 @@
+{
+	"medicoes": [
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:05:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:10:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:15:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:20:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:25:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:30:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:35:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:40:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:45:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:50:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-01T23:55:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		},
+		{
+			"identificadorMedicaoConsumo": "100006_16",
+			"codigoUnidadeConsumidora": "16",
+			"codigoAgenteConcessionaria": 100006,
+			"diaReferencia": "2025-04-01",
+			"dataReferenciaConsumo": "2025-04-02T00:00:00-03:00",
+			"consumo": 10,
+			"tipoConsumo": "MEDIDO",
+			"dataAtualizacao": "2025-04-15T11:17:45-03:00",
+			"situacaoMedicao": "CONSISTIDA"
+		}
+	],
+	"indexProximaPagina": null
+}

@@ -1,0 +1,224 @@
+.lead-details-container {
+  .nav-underline-scrollspy {
+    z-index: 1014;
+    top: calc(var(--#{$prefix}navbar-top-height) + 1px);
+  }
+}
+
+.deal-details {
+  .nav-link {
+    color: var(--#{$prefix}emphasis-color);
+    font-weight: $font-weight-semibold;
+    .tab-icon-color {
+      color: var(--#{$prefix}tertiary-color);
+    }
+    &.active {
+      color: var(--#{$prefix}primary);
+      .tab-icon-color {
+        color: var(--#{$prefix}primary);
+      }
+    }
+  }
+}
+
+.sticky-leads-sidebar {
+  position: sticky;
+  z-index: 1015;
+  top: calc(var(--#{$prefix}navbar-top-height) + 21px);
+}
+.leads-table {
+  th {
+    position: relative;
+    &::after {
+      position: absolute;
+      top: 35%;
+    }
+  }
+}
+
+.lead-details-offcanvas {
+  max-width: 350px;
+  top: var(--#{$prefix}navbar-top-height) !important;
+  height: calc(100vh - var(--#{$prefix}navbar-top-height));
+  padding: map-get($spacers, 4);
+  padding-top: 1rem;
+  @include media-breakpoint-up(md) {
+    position: static !important;
+    top: 1rem !important;
+    padding: 0 !important;
+    transform: none !important;
+    max-width: unset;
+    height: auto;
+  }
+}
+.icon-wrapper-sm {
+  position: relative;
+  display: inline-block;
+  &::before {
+    position: absolute;
+
+    content: '';
+    height: 1.299rem;
+    width: 1.299rem;
+    border-radius: 0.243rem;
+    top: 0.5rem;
+    left: 0.2rem;
+  }
+}
+
+.shadow-primary-100 {
+  &:before {
+    background-color: rgba(var(--#{$prefix}primary-rgb), 0.3);
+  }
+}
+.shadow-info-100 {
+  &:before {
+    background-color: rgba(var(--#{$prefix}info-rgb), 0.3);
+  }
+}
+
+.list-group-item {
+  &.list-group-crm {
+    padding: 0.3rem 0;
+  }
+}
+
+.echart-contacts-width {
+  min-width: 19rem !important;
+  min-height: 320px;
+  overflow: hidden;
+  @include media-breakpoint-up(sm) {
+    min-width: unset !important;
+  }
+  @include media-breakpoint-up(md) {
+    min-height: 435px !important;
+  }
+  @include media-breakpoint-up(lg) {
+    min-height: 320px !important;
+  }
+  @include media-breakpoint-between(xl, xxl) {
+    min-height: 430px !important;
+  }
+}
+
+.table-stats {
+  tr {
+    th {
+      @include media-breakpoint-up(sm) {
+        &:nth-child(1) {
+          width: 45%;
+        }
+        &:nth-child(1) {
+          width: 5%;
+        }
+        &:nth-child(1) {
+          width: 50%;
+        }
+      }
+    }
+    td {
+      display: table-row;
+      @include media-breakpoint-up(sm) {
+        display: table-cell;
+      }
+    }
+  }
+}
+
+.reports-details-chart-table {
+  tbody {
+    tr {
+      &:last-child {
+        td {
+          border-bottom: 0;
+          padding-bottom: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.deals {
+  width: 146.06rem;
+  white-space: nowrap;
+  height: calc(100vh - $navbar-top-height - 15.625rem - $footer-height);
+  @include media-breakpoint-up(xl) {
+    height: calc(100vh - $navbar-top-height - 12.375rem - $footer-height);
+  }
+  .deals-col {
+    width: 22.875rem;
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    white-space: nowrap;
+    user-select: none;
+    .deals-items-container {
+      .sortable-ghost {
+        position: relative;
+        &::before {
+          content: '';
+          height: 100%;
+          width: 100%;
+          background-color: var(--#{$prefix}kanban-ghost-bg);
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 1000;
+          border-radius: $border-radius;
+          [data-bs-theme='dark'] & {
+            background-color: $gray-1100;
+          }
+        }
+      }
+      .sortable-drag {
+        .card {
+          border: 0 !important;
+          transform: rotate(-5deg) !important;
+          background-color: var(--#{$prefix}kanban-drag-bg);
+          top: 5px;
+        }
+      }
+      .dropdown-indicator-icon {
+        right: 1.5rem;
+        top: 1.25rem;
+        .fa-angle-down {
+          transition: 0.5s ease transform;
+        }
+      }
+      height: calc(100% - 5.18rem);
+      [aria-expanded='true'] {
+        &.dropdown-indicator-icon {
+          .fa-angle-down {
+            transform: rotate(180deg);
+          }
+        }
+        & ~ .deals-company-agent {
+          display: none !important;
+        }
+        & ~ .deals-items-head {
+          .deals-revenue {
+            display: none !important;
+          }
+          .deals-category {
+            display: flex !important;
+          }
+        }
+      }
+    }
+  }
+}
+.kanban-deals-content {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+.crm-deals-breadcrumb {
+  padding-left: map-get($spacers, 4);
+  padding-right: map-get($spacers, 4);
+  @include media-breakpoint-up(lg) {
+    padding-left: map-get($spacers, 6);
+    padding-right: map-get($spacers, 6);
+  }
+}

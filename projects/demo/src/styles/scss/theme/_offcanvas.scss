@@ -1,0 +1,131 @@
+.content-offcanvas {
+  position: fixed;
+  width: 35rem !important;
+  top: calc($navbar-top-height + 1px) !important;
+  height: calc(100vh - ($navbar-top-height + $footer-height)) !important;
+  @include media-breakpoint-up(sm) {
+    background-position: 100% !important;
+  }
+}
+
+.offcanvas-backdrop-transparent {
+  ~ {
+    .offcanvas-backdrop {
+      opacity: 0;
+    }
+  }
+}
+
+.phoenix-offcanvas-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.phoenix-offcanvas {
+  position: absolute;
+  overflow: auto;
+  top: 0;
+  bottom: 0;
+  transition: transform 0.3s ease-in-out;
+  z-index: 10;
+
+  &.phoenix-offcanvas-fixed {
+    position: fixed;
+    left: 0;
+    transform: translateX(-100%);
+  }
+  &.phoenix-offcanvas-start {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  &.phoenix-offcanvas-end {
+    transform: translateX(100%);
+    right: 0;
+  }
+  &.phoenix-offcanvas-top {
+    transform: translateY(-100%);
+  }
+  &.phoenix-offcanvas-bottom {
+    transform: translateY(100%);
+  }
+  &.show {
+    transform: none;
+    ~ {
+      .phoenix-offcanvas-backdrop {
+        position: fixed;
+        top: var(--#{$prefix}navbar-top-height);
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background: rgba($black, $alpha: 0.1);
+        z-index: 8;
+      }
+    }
+  }
+}
+
+// Filter offcanvas
+
+.phoenix-offcanvas-filter {
+  max-width: 300px;
+  top: var(--#{$prefix}navbar-top-height);
+  height: calc(100vh - 5rem);
+  padding: map-get($spacers, 5);
+  @include media-breakpoint-up(lg) {
+    position: sticky !important;
+    top: 1rem !important;
+    padding: 0 0 0 0.5rem !important;
+    transform: none !important;
+    height: calc(100vh - 2rem);
+    padding-left: 4px;
+  }
+}
+
+.phoenix-offcanvas-filter-xl {
+  width: 300px;
+  top: var(--#{$prefix}navbar-top-height);
+  padding: map-get($spacers, 4) map-get($spacers, 4) 0;
+  @include media-breakpoint-up(lg) {
+    z-index: 9999;
+  }
+  @include media-breakpoint-up(xl) {
+    width: 250px;
+    padding: 0 0 0 0.5rem !important;
+    position: sticky !important;
+    top: 1rem !important;
+    transform: none !important;
+    height: 100vh;
+    z-index: 10;
+  }
+}
+
+// faq offcanvas
+.offcanvas {
+  &.faq-sidebar {
+    height: 100%;
+    visibility: visible !important;
+    box-shadow: none;
+    @extend .scrollbar;
+    @include media-breakpoint-up(md) {
+      overflow: unset !important;
+      .firefox & {
+        overflow: unset !important;
+      }
+    }
+    &.offcanvas-start {
+      @include media-breakpoint-up(md) {
+        border-right: 0px;
+        transform: translateX(0%) !important;
+        position: sticky;
+      }
+    }
+  }
+}
+
+[data-todo-content-offcanvas="data-todo-content-offcanvas"]{
+  --#{$prefix}offcanvas-zindex: 1028
+}
+
+[data-todo-content-offcanvas="data-todo-content-offcanvas"] ~ .offcanvas-backdrop{
+  z-index: 1025 !important ;
+}

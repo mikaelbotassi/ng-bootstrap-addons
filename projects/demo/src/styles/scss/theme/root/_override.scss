@@ -1,0 +1,34 @@
+/* -------------------------------------------------------------------------- */
+/*                                  Override                                  */
+/* -------------------------------------------------------------------------- */
+[data-bs-theme="dark"] {
+  @each $color, $value in map-merge-multiple(
+    $theme-colors,
+    $grays-updated,
+  ) {
+    .dark__bg-#{$color} {
+      background-color: $value !important;
+    }
+    .dark__text-#{$color} {
+      color: $value !important;
+    }
+  }
+  .dark__bg-gray-1200 {
+    background-color: $body-bg-dark !important;
+  }
+  ::selection {
+    background-color: var(--#{$prefix}primary-light);
+  }
+
+  @each $key, $value in $bg-opacities {
+    .dark__bg-opacity-#{$key} {
+      --#{$prefix}bg-opacity: #{$value};
+    }
+  }
+  @each $key, $value in $text-opacities {
+    .dark__text-opacity-#{$key} {
+      --#{$prefix}text-opacity: #{$value};
+    }
+  }
+
+}

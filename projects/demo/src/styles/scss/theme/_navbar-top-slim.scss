@@ -1,0 +1,48 @@
+.navbar-top{
+  &.navbar-slim{
+    min-height: $navbar-top-slim-height;
+    .navbar-toggler-humburger-icon{
+      height: 1rem;
+      &:hover, &:focus{
+        background-color: transparent;
+      }
+    }
+
+    .navbar-logo {
+      height: $navbar-top-slim-height;
+      // padding-left: 2rem;
+    }
+    .navbar-brand{
+      margin-bottom: 0;
+      color: var(--#{$prefix}warning);
+      font-size: larger;
+    }
+
+    .navbar-nav-icons{
+      >{
+        .nav-item{
+          >{
+            .nav-link{
+              padding: 0.25rem 0.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  @each $item, $value in $navbar-vertical-breakpoints {
+    @include media-breakpoint-up($item) {
+      &.navbar-expand-#{$item} {
+        &.navbar-slim {
+          .nav-link{
+            &.dropdown-toggle{
+              // padding: 0.4rem 0.5rem;
+              padding-top: 0.5rem;
+              padding-bottom: 0.4rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

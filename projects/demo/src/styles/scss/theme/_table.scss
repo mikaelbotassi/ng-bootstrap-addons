@@ -1,0 +1,30 @@
+.white-space-nowrap {
+  white-space: nowrap;
+}
+
+.table {
+  > thead {
+    > tr {
+      > th {
+        padding-top: 0.625rem;
+        padding-bottom: 0.625rem;
+        line-height: 1;
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  > tbody {
+    > tr {
+      > td {
+        &:first-child {
+          padding-left: 0;
+        }
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}

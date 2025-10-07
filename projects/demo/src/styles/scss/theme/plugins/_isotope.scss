@@ -1,0 +1,61 @@
+/*-----------------------------------------------
+|   Isotope
+-----------------------------------------------*/
+
+.isotope-nav {
+  font-weight: $font-weight-bold;
+  font-size: $font-size-base;
+  color: var(--#{$prefix}secondary-color);
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  padding: map_get($spacers, 2) map_get($spacers, 3);
+  background-color: transparent;
+  &.active {
+    color: var(--#{$prefix}primary);
+    border: 1px solid var(--#{$prefix}primary);
+    border-radius: 1.2rem;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.isotope-item {
+  visibility: hidden;
+}
+
+.sortable {
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: $font-family-base;
+    text-transform: uppercase;
+    color: $black;
+    text-decoration: none;
+    font-weight: $font-weight-normal;
+    font-size: map_get($font-sizes, 9);
+    letter-spacing: 0.13rem;
+    .isotope-nav {
+      cursor: pointer;
+      padding: map_get($spacers, 1) map_get($spacers, 2);
+      margin-bottom: map_get($spacers, 2);
+      border: 1px solid transparent;
+      // border-radius: $border-radius;
+      transition: $transition-base;
+      margin-right: map_get($spacers, 1);
+      &:last-child {
+        margin-right: 0;
+      }
+      &.active {
+        border-color: currentColor;
+        color: $black;
+        border-radius: $btn-border-radius;
+      }
+    }
+  }
+}
+
+// .sortable-container.sortable-container-gutter-fix {
+//   margin-left: -map_get($spacers, 2);
+//   margin-right: -map_get($spacers, 2);
+// }

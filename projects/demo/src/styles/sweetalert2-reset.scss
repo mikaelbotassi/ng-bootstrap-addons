@@ -1,0 +1,7 @@
+body.swal2-shown.swal2-height-auto {
+    height: inherit !important;
+}
+
+div:where(.swal2-container) .swal2-html-container{
+    font-size: 0.875em !important;
+}

@@ -1,0 +1,170 @@
+.files-container {
+  display: grid;
+  gap: map-get($spacers, 3);
+  grid-template-columns: repeat(auto-fill, minmax(126px, 1fr));
+  @include media-breakpoint-up(sm) {
+    gap: map-get($spacers, 4);
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  }
+  .file-box-wrapper {
+    position: relative;
+    aspect-ratio: 1/1;
+    .form-check-input:checked {
+      + .file-box {
+        background-color: var(--#{$prefix}primary-bg-subtle);
+        border: 1px solid var(--#{$prefix}primary) !important;
+        box-shadow: 0px 0px 0px 4px rgba(56, 116, 255, 0.2);
+      }
+    }
+    .file-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background: var(--#{$prefix}body-bg);
+      border: 1px solid var(--#{$prefix}border-color);
+      border-radius: $border-radius;
+      mask-image: radial-gradient($white, $black);
+    }
+    &:hover {
+      .file-box {
+        background-color: var(--#{$prefix}body-highlight-bg);
+      }
+    }
+  }
+}
+
+[data-collapse-filemanager-sidebar] {
+  .file-manager-sidebar {
+    padding: 0;
+    transition-property: width, opacity;
+    transition: 0.3s ease;
+    .phoenix-offcanvas {
+      top: calc(var(--#{$prefix}navbar-top-height));
+      padding: map-get($spacers, 4);
+      width: 300px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    .my-files {
+      max-width: calc(100% - 15.875rem);
+    }
+    .file-manager-sidebar {
+      .phoenix-offcanvas {
+        width: 100%;
+        position: sticky !important;
+        top: calc(var(--#{$prefix}navbar-top-height) + 1.5rem) !important;
+        transform: none !important;
+        height: 100vh;
+        z-index: 7;
+        padding: 0;
+      }
+    }
+  }
+  @include media-breakpoint-up(xl) {
+    .file-manager-sidebar {
+      width: 15.875rem;
+      padding: 0 12px;
+    }
+  }
+  @include media-breakpoint-only(lg) {
+    .file-manager-sidebar {
+      padding: 0;
+      width: 0;
+      opacity: 0;
+    }
+    .my-files {
+      max-width: 100%;
+      transition: 0.3s ease max-width;
+    }
+    &.show-sidebar {
+      .file-manager-sidebar {
+        padding: 0 12px;
+        width: 15.875rem;
+        opacity: 1;
+      }
+      .my-files {
+        max-width: calc(100% - 15.875rem);
+      }
+    }
+  }
+}
+
+.file-details-offcanvas {
+  top: calc(var(--#{$prefix}navbar-top-height) + 1px);
+  padding: 0;
+  z-index: 1040;
+  width: 100%;
+  height: auto;
+  padding: map-get($spacers, 4);
+  position: fixed;
+  transform: translateX(100%);
+  right: 0;
+  @include media-breakpoint-up(sm) {
+    width: 25rem;
+  }
+  @include media-breakpoint-up(xxl) {
+    width: 21.875rem;
+    position: static !important;
+    transform: none !important;
+    z-index: 0;
+    padding: 0;
+  }
+}
+
+.my-files-table {
+  @include media-breakpoint-up(xxl) {
+    width: calc(100% - 25.95rem);
+  }
+  [data-bulk-select-row='data-bulk-select-row']:checked {
+    + .square-icon-box {
+      background-color: var(--#{$prefix}primary-bg-subtle);
+      border: 1px solid var(--#{$prefix}primary) !important;
+      box-shadow: 0px 0px 0px 4px rgba(56, 116, 255, 0.2);
+    }
+  }
+}
+
+.myfiles-action-bar {
+  position: sticky;
+  top: var(--#{$prefix}navbar-top-height);
+  z-index: 4;
+  border-bottom: 1px solid var(--#{$prefix}border-color-translucent);
+  padding: map-get($spacers, 2) map-get($spacers, 4);
+  background-color: var(--#{$prefix}body-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mask-image-none {
+  &.overflow-hidden[class*='rounded'] {
+    mask-image: none;
+  }
+}
+.file-manager {
+  &.glightbox-open {
+    overflow: visible !important;
+  }
+}
+.windows {
+  &.chrome {
+    &.file-manager.glightbox-open {
+      margin-right: 0 !important;
+    }
+  }
+}
+
+.safari,
+.iphone,
+.ipad {
+  .mask-image-recent-file {
+    border-top-left-radius: $border-radius-lg;
+    border-top-right-radius: $border-radius-lg;
+    mask-image: radial-gradient($white, $black);
+    border-top: 1px solid var(--#{$prefix}border-color);
+    margin-top: -1px;
+  }
+}

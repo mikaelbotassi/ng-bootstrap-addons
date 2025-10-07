@@ -1,0 +1,73 @@
+/* -------------------------------------------------------------------------- */
+/*                                 Google Map                                 */
+/* -------------------------------------------------------------------------- */
+
+.googlemap {
+  .gm-style-iw {
+    &.gm-style-iw-c {
+      background: var(--#{$prefix}emphasis-bg);
+      box-shadow: $box-shadow-lg !important;
+      padding: 1rem !important;
+      button[title='Close'] {
+        margin-top: 1rem !important;
+        margin-right: 0.5rem !important;
+      }
+    }
+
+    .gm-style-iw-d {
+      overflow: auto !important;
+    }
+  }
+  .gm-style-iw-tc {
+    box-shadow: $box-shadow-lg !important;
+    filter: none;
+    &:after {
+      background: var(--#{$prefix}emphasis-bg) !important;
+    }
+  }
+}
+html[dir='rtl'] {
+  .googlemap .gm-style-iw.gm-style-iw-c {
+    button[title='Close'] {
+      left: unset !important;
+      right: 0 !important;
+    }
+  }
+}
+
+.googlemap {
+  > {
+    div {
+      background: transparent !important;
+    }
+  }
+}
+
+// .gm-style-cc {
+//   display: none !important;
+// }
+
+// .gm-style a[href^="https://maps.google.com/maps"]
+// {
+//   display: none !important;
+// }
+
+.google-map-control-btn {
+  padding: map-get($spacers, 3);
+  .zoomIn,
+  .zoomOut {
+    @extend .btn;
+    @extend .btn-phoenix-secondary;
+    @extend .btn-square-sm;
+    border-width: 2px;
+  }
+  .zoomIn {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .zoomOut {
+    margin-top: -2px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}

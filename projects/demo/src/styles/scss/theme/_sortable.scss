@@ -1,0 +1,46 @@
+// dragging item
+.sortable-drag {
+  opacity: 1 !important;
+  .sortable-item {
+    transform: rotate(-5deg);
+    // background-color: var(--#{$prefix}kanban-drag-bg);
+    top: 5px;
+  }
+}
+
+// create drop placeholder
+.sortable-ghost {
+  .sortable-item {
+    position: relative;
+
+    &::before {
+      content: '';
+      height: 100%;
+      width: 100%;
+      background-color: var(--#{$prefix}kanban-ghost-bg);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      border-radius: $border-radius;
+    }
+  }
+}
+
+//
+.sortable-dragging * {
+  cursor: grabbing !important;
+}
+
+.sortable-item {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently                                  not supported by any browser */
+  cursor: pointer;
+  &:active {
+    cursor: grabbing;
+  }
+}

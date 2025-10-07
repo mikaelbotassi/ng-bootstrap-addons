@@ -1,0 +1,95 @@
+/* -------------------------------------------------------------------------- */
+/*                                   Leaflet                                  */
+/* -------------------------------------------------------------------------- */
+
+// @import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+// @import 'leaflet/dist/leaflet.css';
+.leaflet-touch {
+  .leaflet-bar {
+    border-color: var(--#{$prefix}border-color-translucent) !important;
+  }
+}
+.leaflet-bar {
+  box-shadow: var(--#{$prefix}box-shadow);
+  a {
+    &,
+    &:hover {
+      background-color: var(--#{$prefix}leaflet-bar-bg) !important;
+      color: var(--#{$prefix}body-color) !important;
+      border-bottom-color: var(--#{$prefix}border-color) !important;
+    }
+    &.leaflet-disabled {
+      background-color: var(--#{$prefix}secondary-bg);
+    }
+  }
+}
+
+.marker-cluster-small {
+  background-color: rgba(var(--#{$prefix}primary-rgb), 0.2) !important;
+  div {
+    margin: 5px;
+    background-color: var(--#{$prefix}primary) !important;
+    color: var(--#{$prefix}emphasis-bg);
+  }
+}
+.marker-cluster-medium {
+  background-color: rgba(var(--#{$prefix}warning-rgb), 0.2) !important;
+  div {
+    margin: 5px;
+    background-color: var(--#{$prefix}warning) !important;
+    color: var(--#{$prefix}emphasis-bg);
+  }
+}
+.marker-cluster-large {
+  background-color: rgba(var(--#{$prefix}success-rgb), 0.2) !important;
+  div {
+    margin: 5px;
+    background-color: var(--#{$prefix}success) !important;
+    color: var(--#{$prefix}emphasis-bg);
+  }
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-color: var(
+    --#{$prefix}leaflet-popup-content-wrapper-bg
+  ) !important;
+  box-shadow: $box-shadow-lg !important;
+  border-radius: $border-radius !important;
+}
+.leaflet-popup-close-button {
+  right: 3px !important;
+  top: 3px !important;
+}
+.leaflet-marker-icon {
+  height: auto !important;
+  width: auto !important;
+}
+
+.leaflet-control-attribution {
+  display: none;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 999;
+}
+
+.leaflet-left {
+  .leaflet-control {
+    margin-left: $card-spacer-x;
+  }
+}
+.leaflet-right {
+  .leaflet-control {
+    margin-right: $card-spacer-x;
+  }
+}
+.leaflet-top {
+  .leaflet-control {
+    margin-top: $card-spacer-x;
+  }
+}
+.leaflet-bottom {
+  .leaflet-control {
+    margin-bottom: $card-spacer-x;
+  }
+}

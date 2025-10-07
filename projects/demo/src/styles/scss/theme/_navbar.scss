@@ -1,0 +1,210 @@
+/* -------------------------------------------------------------------------- */
+/*                                   Navbar                                   */
+/* -------------------------------------------------------------------------- */
+
+.navbar {
+  .container-small {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .navbar-logo {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    // padding-left: 18px;
+  }
+  .nav-link {
+    outline: none;
+  }
+
+  .dropdown-menu {
+    overflow: visible;
+    left: -0.5625rem;
+    &.navbar-dropdown-caret:after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: var(--#{$prefix}emphasis-color);
+      top: -10px;
+      left: map_get($spacers, 4);
+      transform: rotate(45deg);
+      background: var(--#{$prefix}emphasis-bg);
+      background: inherit;
+      border-top-left-radius: 0.25rem;
+      border-width: 1px 0 0 1px;
+      border-style: solid;
+      border-color: var(--#{$prefix}border-color);
+      box-shadow: $box-shadow-sm;
+    }
+    &.dropdown-menu-end.navbar-dropdown-caret {
+      left: auto;
+      right: -0.5625rem !important;
+      &:after {
+        right: 0.9rem;
+        left: auto;
+      }
+    }
+  }
+  &.navbar-slim {
+    .dropdown-menu {
+      &.navbar-dropdown-caret:after {
+        width: 1rem;
+        height: 1rem;
+        top: -9px;
+      }
+    }
+  }
+  // Initial hover color for all navbar dropdown item
+  .dropdown-item {
+    font-weight: $font-weight-medium;
+    @include hover-focus {
+      background-color: var(--#{$prefix}secondary-bg);
+      color: var(--#{$prefix}body-highlight-color);
+    }
+  }
+}
+.navbar-toggler-humburger-icon {
+  height: 2.25rem;
+  width: 2.25rem;
+  padding: 0.3125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 0;
+  margin-right: 0.6125rem;
+  @include hover-focus {
+    background-color: var(--#{$prefix}tertiary-bg);
+  }
+}
+.navbar-toggle-icon {
+  position: relative;
+  height: 0.125rem;
+  width: 1.125rem;
+  transition: $transition-base;
+  display: block;
+  top: -0.3125rem;
+  padding-right: 0;
+  .toggle-line {
+    display: block;
+    height: 100%;
+    border-radius: $border-radius;
+    transition: $transition-base;
+    background-color: var(--#{$prefix}hamburger-menu-color);
+  }
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+    height: 0.125rem;
+    background-color: var(--#{$prefix}hamburger-menu-color);
+    left: 0;
+    transition: $transition-base;
+    border-radius: $border-radius;
+    width: 100%;
+  }
+  &:before {
+    top: 0.3125rem;
+  }
+  &:after {
+    top: 0.625rem;
+  }
+}
+.nav-vertical {
+  .nav {
+    .nav-link {
+      padding-left: map-get($spacers, 4);
+    }
+  }
+  .nav-link {
+    padding: map-get($spacers, 2);
+    border-radius: $border-radius;
+    color: var(--#{$prefix}secondary-color);
+    &:visited,
+    &:active,
+    &:focus,
+    &:hover {
+      background-color: var(--#{$prefix}secondary-bg);
+      color: var(--#{$prefix}nav-vertical-color-global);
+    }
+  }
+  &.doc-nav {
+    .nav-link {
+      &.active {
+        background-color: var(--#{$prefix}secondary-bg);
+      }
+    }
+  }
+  &.nav-vertical {
+    .nav-link {
+      @include media-breakpoint-down(xl) {
+        padding-left: map-get($spacers, 4);
+      }
+    }
+  }
+}
+
+.ecommerce-topbar {
+  .navbar-nav {
+    .dropdown-menu {
+      position: absolute;
+    }
+  }
+}
+.navbar-responsive-navitems {
+  .nav-item {
+    white-space: nowrap;
+    .nav-link {
+      color: var(--#{$prefix}tertiary-color);
+      font-size: map-get($font-sizes, 9);
+      font-weight: $font-weight-semibold;
+      padding: 0 15px;
+      &.active,
+      &:hover {
+        color: var(--#{$prefix}emphasis-color);
+      }
+    }
+  }
+}
+.navbar-toggler {
+  border-width: 0;
+}
+
+.nav-link {
+  &:hover,
+  &:focus {
+    color: var(--#{$prefix}nav-link-color);
+  }
+}
+.navbar-nav {
+  .nav-link {
+    &.show {
+      color: var(--#{$prefix}nav-link-color);
+    }
+  }
+}
+
+.navbar-landing {
+  --#{$prefix}navbar-color: var(--#{$prefix}body-highlight-color);
+  --#{$prefix}navbar-hover-color: var(--#{$prefix}body-highlight-color);
+  --#{$prefix}navbar-active-color: var(--#{$prefix}primary);
+  .nav-link {
+    padding: map-get($spacers, 2) map-get($spacers, 3) !important;
+    border-radius: 6px;
+    &:hover,
+    &.active {
+      background: var(--#{$prefix}secondary-bg);
+    }
+  }
+  &.navbar-home {
+    .nav-link {
+      @include media-breakpoint-up(sm) {
+        padding: map-get($spacers, 3) map-get($spacers, 5) !important;
+      }
+    }
+  }
+}

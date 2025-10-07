@@ -1,0 +1,16 @@
+.modal-title {
+  font-size: map-get($font-sizes, 7);
+  color: var(--#{$prefix}secondary-color);
+}
+
+@include media-breakpoint-up(md) {
+  .modal-md {
+    --#{$prefix}modal-width: 768px;
+  }
+}
+
+@include media-breakpoint-up(md){
+  .modal-600{
+    --#{$prefix}modal-width: 600px;
+  }
+}

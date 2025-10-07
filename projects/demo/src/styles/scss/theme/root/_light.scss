@@ -1,0 +1,175 @@
+:root,
+[data-bs-theme='light'] {
+  @each $color, $value in $grays-rgb {
+    --#{$prefix}#{$color}-rgb: #{$value};
+  }
+
+  @each $color, $value in $theme-color-shades {
+    --#{$prefix}#{$color}: #{$value};
+  }
+  @each $color, $value in $theme-color-shades-rgb {
+    --#{$prefix}#{$color}-rgb: #{$value};
+  }
+
+  --#{$prefix}primary-bg-subtle-rgb: #{to-rgb($primary-bg-subtle)};
+  --#{$prefix}quaternary-color: #{$body-quaternary-color};
+  --#{$prefix}quaternary-color-rgb: #{to-rgb($body-quaternary-color)};
+  --#{$prefix}quaternary-bg: #{$body-quaternary-bg};
+  --#{$prefix}quaternary-bg-rgb: #{to-rgb($body-quaternary-bg)};
+
+  --#{$prefix}emphasis-bg: #{$body-emphasis-bg};
+  --#{$prefix}emphasis-bg-rgb: #{to-rgb($body-emphasis-bg)};
+
+  --#{$prefix}body-highlight-color: #{$body-highlight-color};
+  --#{$prefix}body-highlight-color-rgb: #{to-rgb($body-highlight-color)};
+
+  --#{$prefix}body-highlight-bg: #{$body-highlight-bg};
+  --#{$prefix}body-highlight-bg-rgb: #{to-rgb($body-highlight-bg)};
+
+  --#{$prefix}border-color-rgb: #{to-rgb($border-color)};
+  --#{$prefix}border-color-translucent-rgb: #{to-rgb($border-color-translucent)};
+
+  // globals
+  --#{$prefix}input-group-addon-bg-global: #{$gray-100};
+  --#{$prefix}dropdown-link-color-global: #{$gray-700};
+  --#{$prefix}dropdown-link-hover-color-global: #{shade-color($gray-700, 50%)};
+  --#{$prefix}nav-vertical-color-global: #{$gray-1100};
+
+  // scss-docs-end root-body-variables
+
+  /* -------------------------------------------------------------------------- */
+  /*                                Scrollbar                                   */
+  /* -------------------------------------------------------------------------- */
+
+  --#{$prefix}scrollbar-bg: rgba(var(--#{$prefix}quaternary-bg-rgb), 0.55);
+
+  /* ---------------------------------- docs ---------------------------------- */
+
+  --#{$prefix}docs-language-bg: #{map-get($grays, '1000')};
+
+  /* -------------------------------------------------------------------------- */
+  /*                                Navbar                                      */
+  /* -------------------------------------------------------------------------- */
+
+  /* ------------------------------- navbar-top  ------------------------------- */
+  --#{$prefix}navbar-top-link-color: var(--#{$prefix}body-color);
+  --#{$prefix}navbar-top-menu-bg-color: var(--#{$prefix}emphasis-bg);
+  --#{$prefix}navbar-top-border-color: #{$gray-300};
+  --#{$prefix}navbar-top-link-hover-color: var(
+    --#{$prefix}body-highlight-color
+  );
+  --#{$prefix}navbar-top-link-hover-bg: var(--#{$prefix}body-highlight-bg);
+  --#{$prefix}navbar-top-link-active-color: var(--#{$prefix}primary);
+  --#{$prefix}navbar-top-dropdown-color: var(--#{$prefix}body-color);
+  --#{$prefix}navbar-top-dropdown-hover-bg: var(--#{$prefix}body-highlight-bg);
+
+  /* ------------------------------- dual-nav ------------------------------- */
+
+  --#{$prefix}dual-nav-border-color: #{$dual-nav-border-color};
+  --#{$prefix}dual-nav-first-layer-bg: #{$dual-nav-first-layer-bg};
+
+  /* ------------------------------- navbar-vertical light ------------------------------- */
+  --#{$prefix}navbar-vertical-border-color: #{$gray-300};
+  --#{$prefix}navbar-vertical-bg-color: var(--#{$prefix}emphasis-bg);
+  --#{$prefix}navbar-vertical-label-color: #{$gray-600};
+  --#{$prefix}navbar-vertical-link-color: #{$gray-700};
+  --#{$prefix}navbar-vertical-link-hover-color: #{$body-secondary-color};
+  --#{$prefix}navbar-vertical-link-hover-bg: #{$gray-100};
+  --#{$prefix}navbar-vertical-link-active-color: #{$primary};
+  --#{$prefix}navbar-vertical-link-disable-color: #{$gray-500};
+  --#{$prefix}navbar-vertical-width: #{$navbar-vertical-width};
+  &.navbar-vertical-collapsed {
+    --#{$prefix}navbar-vertical-width: #{$navbar-vertical-collapse-width};
+  }
+
+  --#{$prefix}navbar-vertical-dropdown-indicator-color: #{$gray-500};
+
+  --#{$prefix}navbar-footer-border-color: var(--#{$prefix}border-color);
+
+  // ----------- collapsed colors ----------------
+  --#{$prefix}navbar-vertical-hr-color: #{$gray-200};
+  --#{$prefix}navbar-vertical-collapsed-menu-bg: #{$white};
+
+  --#{$prefix}hamburger-menu-color: #{$gray-600};
+
+  /* ------------------------------- navbar-top ------------------------------- */
+  --#{$prefix}navbar-top-bg-color: var(--#{$prefix}emphasis-bg);
+
+  /* --------------------------------- buttons -------------------------------- */
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-active-border-color: transparent;
+
+  /* --------------------------------- choices -------------------------------- */
+  --#{$prefix}choices-inner-min-height: auto;
+  --#{$prefix}choices-item-has-no-choices-bg: var(--#{$prefix}emphasis-bg);
+
+  /* -------------------------------- Flatpickr ------------------------------- */
+  --#{$prefix}flatpickr-calendar-input-bg: #{$input-bg};
+  --#{$prefix}flatpickr-calendar-bg: #{$gray-200};
+  --#{$prefix}flatpickr-current-month-color: #{$body-color};
+  --#{$prefix}flatpickr-weekday-color: #{$body-color};
+  --#{$prefix}flatpickr-calendar-day-hover-bg: #{rgba(
+      var(--#{$prefix}tertiary-bg-rgb),
+      0.5
+    )};
+  --#{$prefix}flatpickr-weekend-days-color: #{$orange-500};
+  --#{$prefix}flatpickr-today-color: #{$white};
+  --#{$prefix}flatpickr-calendar-day-selected-bg: #{rgba(
+      var(--#{$prefix}primary-rgb),
+      0.2
+    )};
+
+  /* -------------------------------- Fullcalendar ------------------------------- */
+  --#{$prefix}calendar-bg: #{$body-secondary-bg};
+  --#{$prefix}calendar-border-color: var(--#{$prefix}body-bg);
+
+  /* --------------------------------- wizard --------------------------------- */
+  --#{$prefix}theme-wizard-nav-item-circle-bg: var(
+    --#{$prefix}body-highlight-bg
+  );
+  --#{$prefix}theme-wizard-complete-color: #{map-get($theme-colors, 'primary')};
+  --#{$prefix}theme-wizard-active-color: #{map-get($theme-colors, 'primary')};
+
+  /* --------------------------------- tinymce -------------------------------- */
+  --#{$prefix}tinymce-bg: #{$input-bg};
+  --#{$prefix}tinymce-tox-tbtn-enabled-icon-color: var(
+    --#{$prefix}secondary-color
+  );
+
+  /* -------------------------------- choices -------------------------------- */
+  --#{$prefix}choices-item-bg: var(--#{$prefix}primary-bg-subtle);
+  --#{$prefix}choices-item-color: var(--#{$prefix}body-highlight-color);
+
+  /* --------------------------------- Avatar --------------------------------- */
+  --#{$prefix}avatar-name-color: var(--#{$prefix}primary-dark);
+
+  /* ---------------------------------- logo ---------------------------------- */
+  --#{$prefix}logo-text: rgba(var(--#{$prefix}tertiary-color-rgb), 0.8);
+
+  /* -------------------------- theme-control-toggle -------------------------- */
+  --#{$prefix}theme-control-toggle-bg: #{rgba($orange-300, 0.24)};
+  --#{$prefix}theme-control-toggle-hover-bg: var(--#{$prefix}warning);
+  --#{$prefix}theme-control-toggle-color: var(--#{$prefix}warning);
+  --#{$prefix}theme-control-toggle-hover-color: #{map-get(
+      $theme-colors-bg-subtle,
+      'warning'
+    )};
+
+  /* -------------------------------- Kanban ------------------------------- */
+  --#{$prefix}kanban-bg: #{$body-secondary-bg};
+  --#{$prefix}kanban-column-bg: var(--#{$prefix}body-bg);
+  --#{$prefix}kanban-ghost-bg: var(--#{$prefix}body-highlight-bg);
+  --#{$prefix}kanban-drag-bg: var(--#{$prefix}white);
+  --#{$prefix}kanban-column-hover-bg: var(--#{$prefix}white);
+
+  --#{$prefix}leaflet-bar-bg: var(--#{$prefix}body-highlight-bg);
+  --#{$prefix}leaflet-popup-content-wrapper-bg: var(--#{$prefix}emphasis-bg);
+
+  [class*='btn-phoenix-'] {
+    --#{$prefix}btn-disabled-opacity: 0.7;
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}quaternary-color);
+    --#{$prefix}btn-disabled-bg: var(--#{$prefix}secondary-bg);
+  }
+
+  --#{$prefix}form-select-indicator: #{$form-select-indicator};
+}

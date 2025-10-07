@@ -1,0 +1,9 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg width="256px" height="256px" viewBox="-102.4 -102.4 716.80 716.80" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff">
+<g id="SVGRepo_bgCarrier" stroke-width="0">
+<rect x="-102.4" y="-102.4" width="716.80" height="716.80" rx="358.4" fill="#2d4383 " strokewidth="0"/>
+</g>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="SVGRepo_iconCarrier"> <path fill="var(--ci-primary-color, #ffffff)" d="M425.706,142.294A240,240,0,0,0,16,312v88H160V368H48V312c0-114.691,93.309-208,208-208s208,93.309,208,208v56H352v32H496V312A238.432,238.432,0,0,0,425.706,142.294Z" class="ci-primary"/> <rect width="32" height="32" x="80" y="264" fill="var(--ci-primary-color, #ffffff)" class="ci-primary"/> <rect width="32" height="32" x="240" y="128" fill="var(--ci-primary-color, #ffffff)" class="ci-primary"/> <rect width="32" height="32" x="136" y="168" fill="var(--ci-primary-color, #ffffff)" class="ci-primary"/> <rect width="32" height="32" x="400" y="264" fill="var(--ci-primary-color, #ffffff)" class="ci-primary"/> <path fill="var(--ci-primary-color, #ffffff)" d="M297.222,335.1l69.2-144.173-28.85-13.848L268.389,321.214A64.141,64.141,0,1,0,297.222,335.1ZM256,416a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,416Z" class="ci-primary"/> </g>
+</svg>

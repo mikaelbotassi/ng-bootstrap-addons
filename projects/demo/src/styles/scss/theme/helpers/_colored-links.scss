@@ -1,0 +1,14 @@
+@each $key, $value in $body-link-colors {
+  $class: if($key==body,'body','body-'+$key);
+  $color: if($key==highlight,'body-highlight',$key);
+
+  .link-#{$class} {
+    color: rgba( var(--#{$prefix}#{$color}-color-rgb), var(--#{$prefix}link-opacity, 1)) !important;
+    text-decoration-color: rgba( var(--#{$prefix}#{$color}-color-rgb), var(--#{$prefix}link-underline-opacity, 1)) !important;
+    &:hover,
+    &:focus {
+      color: rgba(#{$value}, var(--#{$prefix}link-opacity, 1)) !important;
+      text-decoration-color: rgba( #{$value} , var(--#{$prefix}link-underline-opacity, 1)) !important;
+    }
+  }
+}

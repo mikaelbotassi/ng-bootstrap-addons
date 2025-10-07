@@ -1,0 +1,231 @@
+/* -------------------------------------------------------------------------- */
+/*                                  Dropzone                                  */
+/* -------------------------------------------------------------------------- */
+// @import 'dropzone/dist/dropzone.css';
+
+.dropzone {
+  position: relative;
+  border: 0;
+  border-radius: $border-radius-lg;
+  min-height: auto;
+  &.dropzone-has-default {
+    .dz-message {
+      border-color: transparent;
+      transition: $transition-base;
+      &:hover {
+        background-color: rgba($black, 0.5);
+      }
+    }
+  }
+  .dz-preview {
+    min-height: auto;
+    margin: 0;
+
+    .dz-complete {
+      .dz-progress{
+        opacity: 0 !important;
+      }
+    }
+  }
+  .dz-remove {
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    color: var(--#{$prefix}emphasis-bg);
+    z-index: 1000;
+    cursor: pointer;
+    // opacity: 0;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    * {
+      cursor: pointer;
+    }
+  }
+  .dz-message {
+    position: relative;
+    background-color: var(--#{$prefix}body-bg);
+    padding: 5rem 2rem;
+    margin: 0;
+    border: 2px dashed var(--#{$prefix}border-color-translucent);
+    border-radius: $border-radius-lg;
+  }
+  .dz-upload-btn {
+    display: none;
+  }
+  &.dropzone-single {
+    .dz-preview {
+      &:hover {
+        z-index: unset;
+      }
+    }
+    .dz-message {
+      padding: map-get($spacers, 8) map-get($spacers, 5);
+      border: 1px dashed var(--#{$prefix}border-color);
+    }
+    &.dz-max-files-reached.dz-file-processing {
+      .dz-message {
+        padding: 0;
+        border: 0;
+      }
+      .dz-upload-btn {
+        display: block;
+      }
+      .dz-message-text {
+        display: none;
+      }
+      &.dz-file-complete {
+        .dz-default-image {
+          opacity: 0;
+        }
+      }
+    }
+    .dz-processing {
+      .dz-message-text {
+        opacity: 0 !important;
+      }
+    }
+    .dz-progress {
+      opacity: 1;
+      transition: opacity 0.4s ease-in;
+      animation: none !important;
+      width: 9.375rem !important;
+      height: map_get($spacers, 2) !important;
+      margin: 0 !important;
+      transform: translateX(-50%) !important;
+      top: auto !important;
+      bottom: 1.5rem;
+    }
+    // &.dz-max-files-reached {
+    //   .dz-message {
+    //     background-color: rgba(black, 0.5);
+    //     color: var(--#{$prefix}emphasis-bg);
+    //     opacity: 1;
+    //     transition: $transition-base;
+    //     border-color: transparent;
+    //   }
+    //   .dz-remove {
+    //     opacity: 1;
+    //   }
+    //   @include hover-focus {
+    //     .dz-message {
+    //       opacity: 1;
+    //     }
+    //   }
+    // }
+    .dz-processing {
+      .dz-progress {
+        opacity: 1;
+      }
+    }
+    .dz-complete {
+      .dz-progress {
+        opacity: 0 !important;
+      }
+    }
+  }
+  .dz-preview-single {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    &:hover {
+      z-index: auto;
+    }
+    .dz-preview-cover {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      border: 0 !important;
+      overflow: hidden;
+      .dz-errormessage {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+      }
+    }
+    .dz-preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: $border-radius-lg;
+    }
+  }
+
+  &.dropzone-multiple {
+    border: 0;
+    .dz-message {
+      padding: 3rem 2rem;
+      border: 1px dashed var(--#{$prefix}border-color);
+      border-radius: $border-radius-lg;
+    }
+    .btn * {
+      cursor: pointer;
+    }
+    .media:first-child {
+      margin-top: map-get($spacers, 4);
+    }
+    .dz-image-container {
+      padding: 1rem;
+    }
+    // .dz-image-preview {
+    //   background: var(--#{$prefix}emphasis-bg);
+    //   border-radius: var(--#{prefix}-border-radius-lg);
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   height: 80px;
+    //   width: 80px;
+    //   margin-right: 0.5rem;
+    //   position: relative;
+    // }
+    .dz-image {
+      height: 2rem;
+      width: 2rem;
+      object-fit: cover;
+      border-radius: 0;
+      // margin-right: 0.5rem;
+    }
+    .dz-progress {
+      opacity: 0;
+      position: relative !important;
+      transition: opacity 0.4s ease-in;
+      animation: none !important;
+      width: 6.25rem !important;
+      height: map_get($spacers, 2) !important;
+      margin-top: 0;
+      margin-left: map_get($spacers, 3) !important;
+      transform: none !important;
+      top: auto !important;
+      left: auto !important;
+    }
+    .dz-complete {
+      .dz-progress {
+        transition-delay: 1s;
+        opacity: 1;
+      }
+    }
+  }
+  &.dz-drag-hover {
+    .dz-message {
+      border-color: var(--#{$prefix}primary);
+    }
+  }
+  .dz-progress {
+    background: var(--#{$prefix}secondary-bg) !important;
+    .dz-upload {
+      background: var(--#{$prefix}primary) !important;
+    }
+  }
+}
+.dropzone-area {
+  border: 1px dashed var(--#{$prefix}border-color-translucent);
+  border-radius: $border-radius;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

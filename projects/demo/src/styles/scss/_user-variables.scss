@@ -1,0 +1,22 @@
+$base-color: #2d4383;
+
+$primary: lighten($base-color,10%);
+$warning: #F7B600;
+$light: #F4F4F4;
+$dark: $base-color;
+$body-color: #333;
+$navbar-vertical-link-font-size: .8rem;
+
+$btn-padding-x: .75rem;
+$btn-padding-y: .5rem;
+$btn-padding-x-sm: .5rem;
+$btn-padding-y-sm: .35rem;
+$btn-font-size-sm: .65rem;
+$form-label-color: $primary;
+
+$font-size-base: 0.875rem !default;
+$btn-font-size: $font-size-base !default;
+$font-size-sm: $font-size-base * .75 !default;
+$font-size-lg: $font-size-base * 1.25 !default;
+
+$prefix: "sm-";

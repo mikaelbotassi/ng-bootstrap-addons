@@ -1,0 +1,85 @@
+.dark .picmo__popupContainer.picmo__light {
+  @extend .dark;
+}
+
+.picmo__popupContainer {
+  z-index: 9999;
+}
+.picmo__picker.picmo__picker {
+  width: 300px;
+  --background-color: #{$body-bg};
+  --border-color: var(--#{$prefix}border-color);
+  --category-tab-active-color: var(--#{$prefix}quaternary-bg);
+  --category-tab-highlight-background-color: var(--#{$prefix}secondary-bg);
+  --category-tab-color: rgba(var(--#{$prefix}tertiary-color-rgb), 0.75);
+  --text-color: var(--#{$prefix}body-color);
+  --emoji-size: 1.8rem !important;
+  [data-bs-theme="dark"] & {
+    color-scheme: dark;
+    --background-color: #{$gray-1100};
+  }
+  .picmo__searchField {
+    --search-background-color: var(--#{$prefix}emphasis-bg);
+    [data-bs-theme="dark"] & {
+      --search-focus-background-color: #{$gray-1100};
+    }
+  }
+  .picmo__emojiArea {
+    @extend .scrollbar;
+  }
+
+  section {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .picmo__header {
+    --secondary-background-color: #{$body-bg};
+    [data-bs-theme="dark"] & {
+      --secondary-background-color: #{$body-highlight-color};
+    }
+  }
+  .picmo__preview {
+    --preview-background-color: #{$body-bg};
+    [data-bs-theme="dark"] & {
+      --preview-background-color: #{$body-highlight-color};
+    }
+  }
+  .picmo__emojiCategory {
+    .picmo__categoryName {
+      --category-name-background-color: var(--#{$prefix}body-bg);
+      --category-name-text-color: var(--#{$prefix}tertiary-color);
+      font-size: map-get($font-sizes, 10);
+      font-weight: 600;
+      [data-bs-theme="dark"] & {
+        --category-name-background-color: transparent;
+      }
+    }
+  }
+
+  .picmo__emojiButton:hover {
+    --hover-background-color: var(--#{$prefix}secondary-bg);
+  }
+
+  .picmo__content {
+    min-height: unset !important;
+    padding: unset !important;
+  }
+
+  .picmo__searchContainer .picmo__searchField {
+    border: 1px solid var(--#{$prefix}border-color-translucent);
+    border-radius: 0.375rem;
+    padding: 1rem;
+  }
+
+  .picmo__categoryButtons .picmo__categoryTab button.picmo__categoryButton {
+    font-size: 1rem;
+  }
+  .picmo__categoryButtons
+    .picmo__categoryTab.picmo__categoryTabActive
+    .picmo__categoryButton {
+    border: unset;
+    background: unset;
+    color: var(--#{$prefix}primary);
+    --category-tab-active-background-color: var(--#{$prefix}secondary-bg);
+  }
+}

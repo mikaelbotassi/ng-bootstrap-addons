@@ -1,0 +1,396 @@
+$prefix: 'phoenix-' !default;
+
+//*-----------------------------------------------
+//|   Color System
+//-----------------------------------------------*/
+
+$white: #fff !default;
+$gray-50: #f5f7fa !default; //(245, 247, 250)
+$gray-100: #eff2f6 !default; //(239, 242, 246)
+$gray-200: #e3e6ed !default; //(227, 230, 237)
+$gray-300: #cbd0dd !default; //(203, 208, 221)
+$gray-400: #9fa6bc !default; //(159, 166, 188)
+$gray-500: #8a94ad !default; //(138, 148, 173)
+$gray-600: #6e7891 !default; //(110, 120, 145)
+$gray-700: #525b75 !default; //(82, 91, 117)
+$gray-800: #3e465b !default; //(62, 70, 91)
+$gray-900: #31374a !default; //(49, 55, 74)
+$gray-1000: #222834 !default; //(34, 40, 52)
+$gray-1100: #141824 !default; //(20, 24, 36)
+$black: #000000 !default;
+
+$grays: (
+  '50': $gray-50,
+  '100': $gray-100,
+  '200': $gray-200,
+  '300': $gray-300,
+  '400': $gray-400,
+  '500': $gray-500,
+  '600': $gray-600,
+  '700': $gray-700,
+  '800': $gray-800,
+  '900': $gray-900,
+  '1000': $gray-1000,
+  '1100': $gray-1100
+) !default;
+
+//*-----------------------------------------------
+//|   Solid Colors
+//-----------------------------------------------*/
+
+// Min contrast ratio
+$min-contrast-ratio: 2 !default;
+
+// fusv-disable
+
+$primary-50:  lighten($primary, 45%);
+$primary-100: lighten($primary, 35%);
+$primary-200: lighten($primary, 25%);
+$primary-300: lighten($primary, 15%);
+$primary-400: lighten($primary, 7%);
+$primary-500: $primary;
+$primary-600: darken($primary, 7%);
+$primary-700: darken($primary, 15%);
+$primary-800: darken($primary, 25%);
+$primary-900: darken($primary, 35%);
+$primary-1000: darken($primary, 45%);
+
+$red-50: #ffedeb !default;
+$red-100: #ffe0db !default;
+$red-200: #fabcb3 !default;
+$red-300: #f48270 !default;
+$red-400: #fb624a !default;
+$red-500: #fa3b1d !default; // base-color
+$red-600: #cc1b00 !default;
+$red-700: #b81800 !default;
+$red-800: #901400 !default;
+$red-900: #630d00 !default;
+$red-1000: #380700 !default;
+
+$green-50: #f0fdec !default;
+$green-100: #d9fbd0 !default;
+$green-200: #bee8b4 !default;
+$green-300: #90d67f !default;
+$green-400: #51c035 !default;
+$green-500: #25b003 !default; // base-color
+$green-600: #23890b !default;
+$green-700: #1c6c09 !default;
+$green-800: #115a00 !default;
+$green-900: #0b3d00 !default;
+$green-1000: #061f00 !default;
+
+$warning-50:  lighten($warning, 45%);
+$warning-100: lighten($warning, 35%);
+$warning-200: lighten($warning, 25%);
+$warning-300: lighten($warning, 15%);
+$warning-400: lighten($warning, 7%);
+$warning-500: $warning;
+$warning-600: darken($warning, 7%);
+$warning-700: darken($warning, 15%);
+$warning-800: darken($warning, 25%);
+$warning-900: darken($warning, 35%);
+$warning-1000: darken($warning, 45%);
+
+$cyan-50: #f0faff !default;
+$cyan-100: #c7ebff !default;
+$cyan-200: #96d9ff !default;
+$cyan-300: #60c6ff !default;
+$cyan-400: #33acef !default;
+$cyan-500: #0097eb !default; // base-color
+$cyan-600: #0080c7 !default;
+$cyan-700: #005585 !default;
+$cyan-800: #004870 !default;
+$cyan-900: #003a5b !default;
+$cyan-1000: #002337 !default;
+
+$primarys: (
+  'primary-50': $primary-50,
+  'primary-100': $primary-100,
+  'primary-200': $primary-200,
+  'primary-300': $primary-300,
+  'primary-400': $primary-400,
+  'primary-500': $primary-500,
+  'primary-600': $primary-600,
+  'primary-700': $primary-700,
+  'primary-800': $primary-800,
+  'primary-900': $primary-900,
+  'primary-1000': $primary-1000
+) !default;
+
+$reds: (
+  'red-50': $red-50,
+  'red-100': $red-100,
+  'red-200': $red-200,
+  'red-300': $red-300,
+  'red-400': $red-400,
+  'red-500': $red-500,
+  'red-600': $red-600,
+  'red-700': $red-700,
+  'red-800': $red-800,
+  'red-900': $red-900,
+  'red-1000': $red-1000
+) !default;
+
+$greens: (
+  'green-50': $green-50,
+  'green-100': $green-100,
+  'green-200': $green-200,
+  'green-300': $green-300,
+  'green-400': $green-400,
+  'green-500': $green-500,
+  'green-600': $green-600,
+  'green-700': $green-700,
+  'green-800': $green-800,
+  'green-900': $green-900,
+  'green-1000': $green-1000
+) !default;
+
+$warnings: (
+  'orange-50': $warning-50,
+  'orange-100': $warning-100,
+  'orange-200': $warning-200,
+  'orange-300': $warning-300,
+  'orange-400': $warning-400,
+  'orange-500': $warning-500,
+  'orange-600': $warning-600,
+  'orange-700': $warning-700,
+  'orange-800': $warning-800,
+  'orange-900': $warning-900,
+  'orange-1000': $warning-1000
+) !default;
+
+$cyans: (
+  'cyan-50': $cyan-50,
+  'cyan-100': $cyan-100,
+  'cyan-200': $cyan-200,
+  'cyan-300': $cyan-300,
+  'cyan-400': $cyan-400,
+  'cyan-500': $cyan-500,
+  'cyan-600': $cyan-600,
+  'cyan-700': $cyan-700,
+  'cyan-800': $cyan-800,
+  'cyan-900': $cyan-900,
+  'cyan-1000': $cyan-1000
+) !default;
+
+//fusv-enable
+
+$primary: $primary-500 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #d63384 !default;
+$red: $red-500 !default;
+$warning: $warning-500 !default;
+$yellow: #ffc107 !default;
+$green: $green-500 !default;
+$teal: #20c997 !default;
+$cyan: $cyan-500 !default;
+
+// scss-docs-start colors-map
+$colors: (
+  'blue': $primary,
+  'indigo': $indigo,
+  'purple': $purple,
+  'pink': $pink,
+  'red': $red,
+  'orange': $warning,
+  'yellow': $yellow,
+  'green': $green,
+  'teal': $teal,
+  'cyan': $cyan,
+  'black': $black,
+  'white': $white,
+  'gray': $gray-600,
+  'gray-dark': $gray-1100
+) !default;
+// scss-docs-end colors-map
+
+//*-----------------------------------------------
+//|   Theme Colors
+//-----------------------------------------------*/
+$primary: $primary !default;
+$secondary: $gray-900 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $warning !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $dark !default;
+
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'light': $light,
+  'dark': $dark
+) !default;
+
+//*-----------------------------------------------
+//|   Body
+//-----------------------------------------------*/
+$body-color: $gray-900 !default;
+$body-bg: $gray-50 !default;
+
+$body-secondary-color: $gray-800 !default;
+$body-secondary-bg: $gray-200 !default;
+
+$body-tertiary-color: $gray-700 !default;
+$body-tertiary-bg: $gray-300 !default;
+
+$body-quaternary-color: $gray-500 !default;
+$body-quaternary-bg: $gray-400 !default;
+
+$body-emphasis-color: $gray-1100 !default;
+$body-emphasis-bg: $white !default;
+
+$body-highlight-color: $gray-1000 !default;
+$body-highlight-bg: $gray-100 !default;
+
+// scss-docs-start theme-text-variables
+
+$primary-text-emphasis: $primary-700 !default;
+$secondary-text-emphasis: $gray-700 !default;
+$success-text-emphasis: $green-700 !default;
+$info-text-emphasis: $cyan-700 !default;
+$warning-text-emphasis: $warning-700 !default;
+$danger-text-emphasis: $red-700 !default;
+$light-text-emphasis: $gray-1100 !default;
+$dark-text-emphasis: $white !default;
+// scss-docs-end theme-text-variables
+
+// scss-docs-start theme-bg-subtle-variables
+$primary-bg-subtle: $primary-100 !default;
+$secondary-bg-subtle: $gray-100 !default;
+$success-bg-subtle: $green-100 !default;
+$info-bg-subtle: $cyan-100 !default;
+$warning-bg-subtle: $warning-100 !default;
+$danger-bg-subtle: $red-100 !default;
+// $light-bg-subtle:         mix($gray-100, $white) !default;
+// $dark-bg-subtle:          $gray-400 !default;
+// scss-docs-end theme-bg-subtle-variables
+
+// scss-docs-start theme-border-subtle-variables
+$primary-border-subtle: $primary-300 !default;
+$secondary-border-subtle: $gray-300 !default;
+$success-border-subtle: $green-300 !default;
+$info-border-subtle: $cyan-300 !default;
+$warning-border-subtle: $warning-300 !default;
+$danger-border-subtle: $red-300 !default;
+$light-border-subtle: $gray-100 !default;
+$dark-border-subtle: $gray-500 !default;
+// scss-docs-end theme-border-subtle-variables
+
+//----------------------- phoenix own colors --------------------
+
+//*-----------------------------------------------
+//|   Brand colors
+//-----------------------------------------------*/
+$linkedin: #0077b5 !default;
+$facebook: #3c5a99 !default;
+$twitter: #1da1f2 !default;
+$google-plus: #dd4b39 !default;
+$github: #333333 !default;
+$youtube: #ff0001 !default;
+$bootstrap: #6f45a9 !default;
+$css3: #203ccf !default;
+$html5: #bf4b2c !default;
+$sass: #c55589 !default;
+$gulp: #d54049 !default;
+$w3c: #255997 !default;
+
+$brand-colors: (
+  'facebook': $facebook,
+  'google-plus': $google-plus,
+  'twitter': $twitter,
+  'linkedin': $linkedin,
+  'youtube': $youtube,
+  'github': $github,
+  'bootstrap': $bootstrap,
+  'css3': $css3,
+  'html5': $html5,
+  'sass': $sass,
+  'gulp': $gulp,
+  'w3c': $w3c
+) !default;
+
+$button-colors: map-remove($theme-colors, 'light', 'dark') !default;
+
+$theme-color-shades: (
+  'primary-lighter': $primary-200,
+  'primary-light': $primary-300,
+  'primary-dark': $primary-600,
+  'primary-darker': $primary-700,
+
+  'secondary-lighter': $gray-200,
+  'secondary-light': $gray-300,
+  'secondary-dark': $gray-1000,
+  'secondary-darker': $gray-700,
+
+  'warning-lighter': $warning-200,
+  'warning-light': $warning-300,
+  'warning-dark': $warning-600,
+  'warning-darker': $warning-700,
+
+  'danger-lighter': $red-200,
+  'danger-light': $red-300,
+  'danger-dark': $red-600,
+  'danger-darker': $red-700,
+
+  'success-lighter': $green-200,
+  'success-light': $green-300,
+  'success-dark': $green-600,
+  'success-darker': $green-700,
+
+  'info-lighter': $cyan-200,
+  'info-light': $cyan-300,
+  'info-dark': $cyan-600,
+  'info-darker': $cyan-700
+) !default;
+
+//*-----------------------------------------------
+//|   Border
+//-----------------------------------------------*/
+$border-color: $gray-300 !default;
+$border-color-translucent: rgba($border-color, 0.54) !default;
+
+//*-----------------------------------------------
+//|  phoenix specific
+//-----------------------------------------------*/
+$theme-hover-colors: (
+  'primary': $primary-600,
+  'secondary': $gray-1000,
+  'success': $green-600,
+  'info': $cyan-600,
+  'warning': $warning-600,
+  'danger': $red-600
+) !default;
+
+$hover-text-colors: (
+  'body-quaternary': var(--#{$prefix}quaternary-color),
+  'body-tertiary': var(--#{$prefix}tertiary-color),
+  'body-secondary': var(--#{$prefix}secondary-color),
+  'body': var(--#{$prefix}body-color),
+  'body-highlight': var(--#{$prefix}body-highlight-color),
+  'body-emphasis': var(--#{$prefix}emphasis-color)
+) !default;
+
+$hover-bg-colors: (
+  'body-quaternary': var(--#{$prefix}quaternary-bg),
+  'body-tertiary': var(--#{$prefix}tertiary-bg),
+  'body-secondary': var(--#{$prefix}secondary-bg),
+  'body': var(--#{$prefix}body-bg),
+  'body-highlight': var(--#{$prefix}body-highlight-bg),
+  'body-emphasis': var(--#{$prefix}emphasis-bg)
+) !default;
+
+// $body-link-colors variable's key used as text color and value as hover text color.
+$body-link-colors: (
+  'quaternary': var(--#{$prefix}tertiary-color-rgb),
+  'tertiary': var(--#{$prefix}secondary-color-rgb),
+  'secondary': var(--#{$prefix}body-color-rgb),
+  'body': var(--#{$prefix}body-highlight-color-rgb),
+  'highlight': var(--#{$prefix}emphasis-color-rgb)
+) !default;

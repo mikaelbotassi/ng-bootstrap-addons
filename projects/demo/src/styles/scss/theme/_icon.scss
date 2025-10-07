@@ -1,0 +1,65 @@
+.icon-item {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  &.icon-item-xs {
+    height: 0.75rem;
+    width: 0.75rem;
+  }
+  width: 2.5rem;
+  &.icon-item-sm {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  &.icon-item-md {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  &.icon-item-lg {
+    height: 2.75rem;
+    width: 2.75rem;
+  }
+}
+
+.icon-nav-item {
+  text-align: center;
+  color: var(--#{$prefix}body-color);
+  font-weight: $font-weight-semibold;
+  font-size: map-get($font-sizes, 9);
+  &:not(:first-child) {
+    margin-left: 15px;
+  }
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+  .icon-container {
+    background: var(--#{$prefix}primary-bg-subtle);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 8px;
+  }
+  &:hover {
+    // text-decoration: none;
+    .icon-container {
+      color: var(--#{$prefix}emphasis-bg);
+      background: var(--#{$prefix}primary);
+    }
+    .nav-label {
+      color: var(--#{$prefix}secondary-color);
+    }
+  }
+}
+
+.fa-icon-wait {
+  opacity: 0;
+  .fontawesome-i2svg-active & {
+    opacity: 1;
+  }
+}

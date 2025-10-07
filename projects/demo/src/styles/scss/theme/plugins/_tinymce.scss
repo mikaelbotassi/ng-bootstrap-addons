@@ -1,0 +1,217 @@
+/*-----------------------------------------------
+|   Tinymce
+-----------------------------------------------*/
+
+.tox {
+  &.tox-tinymce {
+    border: 0;
+    border-radius: 0;
+    overflow: unset !important;
+  }
+  .tox-editor-container {
+    overflow: unset !important;
+  }
+  .tox-edit-area {
+    font-family: var(--#{$prefix}font-sans-serif);
+
+    &::before {
+      border: none !important;
+    }
+  }
+  .tox-toolbar--scrolling {
+    background-color: transparent !important;
+    @extend .scrollbar;
+  }
+  &:not([dir='rtl']) {
+    .tox-toolbar__group {
+      &:not(:last-of-type) {
+        border: none !important;
+      }
+    }
+  }
+  .tox-toolbar__group {
+    &:first-child {
+      padding-left: 0 !important;
+    }
+  }
+  border-radius: 0;
+  .tox-editor-header {
+    margin-bottom: 0.25rem;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    .tox-toolbar-overlord {
+      background-color: transparent !important;
+      .tox-toolbar__primary {
+        background-color: transparent !important;
+        [dir='rtl'] & {
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+  .tox-sidebar-wrap {
+    overflow: hidden;
+    border: 1px solid $input-border-color;
+    border-radius: $border-radius;
+  }
+
+  .tox-menu,
+  .tox-dialog {
+    border-radius: $border-radius !important;
+    border-color: var(--#{$prefix}border-color-translucent) !important;
+    background-color: var(--#{$prefix}tinymce-bg) !important;
+  }
+  .tox-dialog__header,
+  .tox-dialog__footer {
+    background: var(--#{$prefix}emphasis-bg) !important;
+    padding: 8px 16px 32px !important;
+  }
+
+  .tox-collection__item--active,
+  .tox-collection__item-accessory {
+    background-color: var(--#{$prefix}secondary-bg) !important;
+    color: var(--#{$prefix}body-color) !important;
+  }
+
+  .tox-dialog__title {
+    color: var(--#{$prefix}body-color) !important;
+  }
+
+  .tox-form__group {
+    margin-bottom: 1rem !important;
+  }
+  .tox-label {
+    color: $form-label-color !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .tox-textfield {
+    background-color: $input-bg !important;
+    color: var(--#{$prefix}body-color) !important;
+    border-color: $input-border-color !important;
+    padding: 0.5rem 1rem !important;
+    &:focus {
+      border-color: var(--#{$prefix}primary) !important;
+      box-shadow: $input-focus-box-shadow !important;
+    }
+  }
+
+  .tox-listbox {
+    background-color: $input-bg !important;
+    color: var(--#{$prefix}body-color) !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    border-color: var(--#{$prefix}border-color-translucent) !important;
+    &.tox-listbox--select {
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .tox-collection--list {
+    .tox-collection__item {
+      background-color: transparent !important;
+      color: var(--#{$prefix}secondary-color) !important;
+    }
+    .tox-collection__item--active {
+      background-color: var(--#{$prefix}secondary-bg) !important;
+    }
+  }
+
+  .tox-button--naked {
+    color: var(--#{$prefix}body-color) !important;
+    &:hover:not(:disabled) {
+      background-color: var(--#{$prefix}secondary-bg) !important;
+      border-color: var(--#{$prefix}border-color-translucent) !important;
+    }
+  }
+  .tox-icon {
+    color: var(--#{$prefix}body-color) !important;
+  }
+
+  .tox-button {
+    @extend .btn;
+    @extend .btn-primary;
+  }
+
+  .tox-button-secondary {
+    @extend .btn;
+    @extend .btn-phoenix-secondary;
+  }
+  .tox-dialog {
+    border-radius: $border-radius !important;
+    border-color: var(--#{$prefix}border-color-translucent) !important;
+    background-color: var(--#{$prefix}tinymce-bg) !important;
+    &__header,
+    &__footer {
+      background-color: var(--#{$prefix}tinymce-bg) !important;
+      border-color: var(--#{$prefix}border-color-translucent) !important;
+    }
+    &__footer {
+      .tox-button--secondary {
+        @extend .btn;
+        @extend .btn-phoenix-secondary;
+      }
+      .tox-button:last-child {
+        @extend .btn;
+        @extend .btn-primary;
+      }
+    }
+  }
+  .tox-toolbar__overflow {
+    padding-left: 1rem !important;
+    background-color: var(--#{$prefix}body-highlight-bg) !important;
+    background-image: none !important;
+  }
+  .tox-dialog-wrap__backdrop {
+    background-color: $black !important;
+    opacity: 0.5;
+  }
+}
+
+.tox .tox-tbtn {
+  height: 24px !important;
+  width: 24px !important;
+  background: 0 0 !important;
+  &.tox-tbtn--select{
+    width: 130px !important;    
+    background: var(--#{$prefix}body-bg) !important;
+    .tox-tbtn__select-label {
+      text-overflow: clip !important;
+      width: 7em !important;
+      color: var(--#{$prefix}body-color)
+    }
+  }
+  span svg {
+    fill: var(--#{$prefix}tertiary-color) !important;
+    @include hover-focus {
+      fill: var(--#{$prefix}tertiary-color) !important;
+    }
+  }
+  @include hover-focus {
+    background: var(--#{$prefix}secondary-bg) !important;
+
+    &::after {
+      content: none !important;
+    }
+  }
+}
+
+.tox .tox-tbtn--enabled {
+  background: var(--#{$prefix}tertiary-bg) !important;
+  span svg {
+    fill: var(--#{$prefix}tinymce-tox-tbtn-enabled-icon-color) !important;
+  }
+  @include hover-focus {
+    background: var(--#{$prefix}secondary-bg) !important;
+  }
+}
+
+.tox .tox-edit-area__iframe {
+  background-color: var(--#{$prefix}tinymce-bg) !important;
+}
+.editor-focused {
+  box-shadow: $input-focus-box-shadow !important;
+  border-color: var(--#{$prefix}primary) !important;
+}

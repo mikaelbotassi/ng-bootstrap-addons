@@ -1,0 +1,290 @@
+/* -------------------------------------------------------------------------- */
+/*                                   Avatar                                   */
+/* -------------------------------------------------------------------------- */
+@use 'sass:math';
+
+.avatar {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  .avatar-placeholder {
+    background: $avatars-placeholder-bg;
+  }
+  .avatar-name {
+    position: absolute;
+    text-align: center;
+    color: var(--#{$prefix}avatar-name-color);
+    background-color: var(--#{$prefix}primary-bg-subtle);
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+    > span {
+      position: absolute;
+      top: 53%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      font-weight: $font-weight-black !important;
+    }
+  }
+  .avatar-emoji {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > span {
+      transform: translateY(2%);
+      display: inline-block;
+    }
+  }
+  img {
+    display: block;
+  }
+  img,
+  .avatar-name {
+    width: 100%;
+    height: 100%;
+  }
+  img {
+    object-fit: cover;
+  }
+
+  &.avatar-bordered {
+    @each $suffix, $size in $avatars-dimension {
+      @if $suffix == 's' or $suffix == 'm' {
+        &.avatar-#{$suffix} {
+          img,
+          .avatar-name {
+            border: 1px solid var(--#{$prefix}border-color-translucent);
+          }
+        }
+      }
+      @if $suffix == 'l' {
+        &.avatar-#{$suffix} {
+          img,
+          .avatar-name {
+            border: 2px solid $avatars-status-border-color;
+          }
+        }
+      }
+      @if $suffix == 'xl' {
+        &.avatar-#{$suffix} {
+          img,
+          .avatar-name {
+            border: 3px solid $avatars-status-border-color;
+          }
+        }
+      }
+    }
+  }
+  &[class*='status-']:before {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    z-index: 1;
+  }
+  &.status-online:before {
+    background-color: var(--#{$prefix}success);
+  }
+  &.status-offline:before {
+    background-color: var(--#{$prefix}secondary);
+  }
+  &.status-away:before {
+    background-color: var(--#{$prefix}warning);
+  }
+  &.status-do-not-disturb:before {
+    background-color: var(--#{$prefix}danger);
+  }
+  .avatar-button {
+    background-color: var(--#{$prefix}avatar-button-bg) !important;
+    transition: $transition-base;
+    border: 1px solid var(--#{$prefix}avatar-button-bg);
+    font-size: 12px;
+    @include hover-focus {
+      background-color: var(--#{$prefix}avatar-button-hover-bg) !important;
+    }
+  }
+}
+.avatar {
+  &:hover .overlay-icon {
+    opacity: 1;
+  }
+}
+
+@each $suffix, $size in $avatars-dimension {
+  .avatar-#{$suffix} {
+    height: $size;
+    width: $size;
+    .avatar-name {
+      font-size: #{math.div($size, 1.9)};
+      line-height: $line-height-sm;
+    }
+    .avatar-emoji {
+      font-size: #{$size};
+    }
+    @if $suffix == 's' {
+      &[class*='status-']:before {
+        border: 1px solid $avatars-status-border-color;
+        height: 6px;
+        width: 6px;
+        right: 1px;
+        bottom: 1px;
+      }
+    }
+    @if $suffix == 'm' {
+      &[class*='status-']:before {
+        border: 1px solid $avatars-status-border-color;
+        height: 8px;
+        width: 8px;
+        right: 1px;
+        bottom: 1px;
+      }
+    }
+    @if $suffix == 'l' {
+      &[class*='status-']:before {
+        border: 1px solid $avatars-status-border-color;
+        height: 9px;
+        width: 9px;
+        right: 2px;
+        bottom: 2px;
+      }
+    }
+    @if $suffix == 'xl' {
+      &[class*='status-']:before {
+        border: 2px solid $avatars-status-border-color;
+        height: 12px;
+        width: 12px;
+        right: 1px;
+        bottom: 1px;
+      }
+    }
+    @if $suffix == '2xl' {
+      &[class*='status-']:before {
+        border: 2px solid $avatars-status-border-color;
+        height: 16px;
+        width: 16px;
+        right: -3px;
+        bottom: -3px;
+      }
+    }
+    @if $suffix == '3xl' {
+      &[class*='status-']:before {
+        border: 3px solid $avatars-status-border-color;
+        height: 18px;
+        width: 18px;
+        right: 0;
+        bottom: 0;
+      }
+    }
+    @if $suffix == '4xl' {
+      &[class*='status-']:before {
+        border: 3px solid $avatars-status-border-color;
+        height: 24px;
+        width: 24px;
+        right: 3px;
+        bottom: 3px;
+      }
+    }
+    @if $suffix == '5xl' {
+      &[class*='status-']:before {
+        border: 4px solid $avatars-status-border-color;
+        height: 32px;
+        width: 32px;
+        right: 8px;
+        bottom: 8px;
+      }
+    }
+    .rounded-soft {
+      border-radius: math.div($size, 6) !important;
+    }
+    .rounded-none {
+      border-radius: 0 !important;
+    }
+  }
+}
+
+.avatar-group {
+  display: flex;
+  flex-wrap: nowrap;
+  // .dropdown-toggle {
+  //   &:not(:first-child) {
+  //     .avatar-s,
+  //     .avatar-m,
+  //     .avatar-l,
+  //     .avatar-xl,
+  //     .avatar-2xl {
+  //       margin-left: -(map-get($spacers, 2));
+  //     }
+  //   }
+  // }
+  .avatar-s,
+  .avatar-m,
+  .avatar-l,
+  .avatar-xl,
+  .avatar-2xl,
+  .dropdown-toggle {
+    &:not(:first-child) {
+      margin-left: -(map-get($spacers, 2));
+    }
+  }
+  .avatar-3x {
+    &:not(:first-child) {
+      margin-left: -(map-get($spacers, 3));
+    }
+  }
+  .avatar-4x {
+    &:not(:first-child) {
+      margin-left: -(map-get($spacers, 4));
+    }
+  }
+  .avatar-5x {
+    &:not(:first-child) {
+      margin-left: -(map-get($spacers, 5));
+    }
+  }
+
+  &-dense {
+    .avatar-s {
+      &:not(:first-child) {
+        margin-left: -#{map-get($spacers, 3) * 0.6};
+      }
+    }
+    .avatar-m {
+      &:not(:first-child) {
+        margin-left: -#{map-get($spacers, 3) * 0.8};
+      }
+    }
+    .avatar-l,
+    .avatar-xl,
+    .avatar-2xl {
+      &:not(:first-child) {
+        margin-left: -(map-get($spacers, 3));
+      }
+    }
+    .avatar-3xl {
+      &:not(:first-child) {
+        margin-left: -(map-get($spacers, 4));
+      }
+    }
+    .avatar-4xl {
+      &:not(:first-child) {
+        margin-left: -#{map-get($spacers, 5) * 1.1};
+      }
+    }
+    .avatar-5xl {
+      &:not(:first-child) {
+        margin-left: -#{map-get($spacers, 7) * 1.2};
+      }
+    }
+  }
+}
+.avatar-dropdown-menu {
+  .nav {
+    .nav-link {
+      &:hover {
+        background: var(--#{$prefix}body-highlight-bg);
+      }
+    }
+  }
+}

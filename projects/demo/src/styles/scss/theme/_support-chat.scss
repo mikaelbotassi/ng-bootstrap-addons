@@ -1,0 +1,128 @@
+.support-chat-container {
+  display: none;
+  &.show {
+    display: block;
+  }
+}
+.support-chat {
+  position: fixed;
+  bottom: map-get($spacers, 7);
+  right: 0;
+  max-width: 27.87rem;
+  width: 100%;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: bottom right;
+  z-index: $zindex-fixed;
+  transition: 0.3s ease-out;
+  padding-bottom: map-get($spacers, 7);
+  .support-chat-start & {
+    right: auto;
+    left: 0;
+    transform-origin: bottom left;
+  }
+  .support-chat-bottom-lg & {
+    bottom: 5.5rem;
+  }
+  @include media-breakpoint-up(sm) {
+    right: map-get($spacers, 3);
+    .support-chat-start & {
+      left: map-get($spacers, 3);
+    }
+  }
+  @include media-breakpoint-up(lg) {
+    right: map-get($spacers, 5);
+    .support-chat-start & {
+      left: map-get($spacers, 5);
+    }
+  }
+  .card {
+    box-shadow: 0px 0px 32px 0px rgba(36, 40, 46, 0.12);
+    [data-bs-theme='dark'] & {
+      box-shadow: 0px 0px 32px 10px rgba(0, 0, 0, 0.41);
+    }
+  }
+  .card-body {
+    height: 27rem;
+  }
+  &.show-chat {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .send-btn {
+    width: 37.06px;
+    height: 37.06px;
+    border-radius: 50%;
+    color: var(--#{$prefix}primary);
+    &:hover {
+      background-color: var(--#{$prefix}body-highlight-bg);
+      color: var(--#{$prefix}primary-light);
+    }
+    &:active {
+      background-color: var(--#{$prefix}secondary-bg);
+      color: var(--#{$prefix}primary-light);
+    }
+  }
+}
+.support-chat + .btn-support-chat {
+  position: fixed;
+  bottom: map-get($spacers, 6);
+  right: map-get($spacers, 3);
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--#{$prefix}emphasis-bg) !important;
+  z-index: $zindex-fixed;
+  border-radius: var(--#{$prefix}border-radius-pill);
+  box-shadow: 0px 0px 32px 0px rgba(36, 40, 46, 0.12);
+  transition: 0.3s ease;
+  [data-bs-theme='dark'] & {
+    box-shadow: 0px 0px 32px 10px rgba(0, 0, 0, 0.41);
+  }
+  .support-chat-start & {
+    right: auto;
+    left: map-get($spacers, 3);
+  }
+  .support-chat-bottom-lg & {
+    bottom: map-get($spacers, 11);
+  }
+  @include media-breakpoint-up(sm) {
+    width: 9rem;
+    right: map-get($spacers, 5);
+    .support-chat-start & {
+      left: map-get($spacers, 5);
+    }
+  }
+  @include media-breakpoint-up(lg) {
+    right: map-get($spacers, 7);
+    .support-chat-start & {
+      left: map-get($spacers, 7);
+    }
+  }
+  &:hover {
+    background-color: var(--#{$prefix}body-highlight-bg) !important;
+  }
+  .fa-chevron-down {
+    display: none;
+  }
+  .btn-text {
+    display: none;
+    @include media-breakpoint-up(sm) {
+      display: block;
+    }
+  }
+  &.btn-chat-close {
+    border-radius: 50%;
+    width: 3rem;
+    .btn-text,
+    .fa-headset,
+    .ping-icon-wrapper {
+      display: none;
+    }
+    .fa-chevron-down {
+      display: block;
+    }
+  }
+}

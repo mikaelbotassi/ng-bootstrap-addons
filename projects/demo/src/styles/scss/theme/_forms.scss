@@ -1,0 +1,169 @@
+.form-label {
+  padding-left: $input-padding-x;
+  line-height: $line-height-sm;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  .form-check & {
+    padding-left: 0 !important;
+  }
+}
+.form-control {
+  &.form-control-underlined {
+    border: none;
+    border-bottom: 1px solid;
+    border-color: $input-border-color;
+    border-radius: 0;
+    padding: $input-padding-y 0 !important;
+    box-shadow: none;
+    &:focus {
+      border-color: var(--#{$prefix}primary) !important;
+    }
+  }
+  &::file-selector-button {
+    background-color: $input-group-addon-bg !important;
+  }
+  &:disabled {
+    &::file-selector-button {
+      background-color: var(
+        --#{$prefix}input-disabled-group-addon-bg
+      ) !important;
+      color: var(--#{$prefix}input-disabled-group-addon-color);
+    }
+  }
+}
+
+// Floating Labels
+.form-floating {
+  > label {
+    color: var(--#{$prefix}tertiary-color);
+    font-weight: $font-weight-bold;
+    font-size: map-get($font-sizes, 10);
+    text-transform: uppercase;
+    &::after {
+      background-color: transparent !important;
+    }
+  }
+  .form-control-underlined {
+    + label {
+      padding: 0;
+    }
+  }
+}
+
+.form-check-label {
+  font-weight: $font-weight-semibold;
+  font-size: map-get($font-sizes, 9);
+}
+
+.form-switch {
+  .form-check-input {
+    border: none;
+    background-color: var(--#{$prefix}quaternary-bg);
+
+    &:checked {
+      background-color: var(--#{$prefix}primary);
+    }
+  }
+}
+
+.form-icon-container {
+  position: relative;
+  .form-icon-input,
+  .form-icon-label {
+    padding-left: 2.25rem;
+  }
+  .form-icon {
+    position: absolute;
+    top: 12px;
+    left: $input-padding-x;
+  }
+  .form-floating {
+    .form-icon-input {
+      padding-left: 35px;
+    }
+    + {
+      .form-icon {
+        top: 1.0625rem;
+      }
+    }
+  }
+}
+
+.form-check-input,
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/*-----------------------------------------------
+|   Remove spinner from Input[type="number"]
+-----------------------------------------------*/
+.input-spin-none::-webkit-outer-spin-button,
+.input-spin-none::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-spin-none[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
+}
+.form-check-line-through {
+  & + label {
+    transition: $transition-base;
+  }
+  &:checked + label {
+    color: var(--#{$prefix}quaternary-color);
+    text-decoration: line-through;
+  }
+}
+
+/*-----------------------------------------------
+|   Remove Arrows from Input[type="number"]
+-----------------------------------------------*/
+
+.number-arrows-none {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/*-----------------------------------------------
+|   Remove calendar icon from Input[type="date"]
+-----------------------------------------------*/
+
+.inventory-attributes {
+  input[type='date']::-webkit-calendar-picker-indicator {
+    background-image: none;
+  }
+}
+
+.input-group {
+  .input-group-text {
+    background-color: $input-group-addon-bg !important;
+  }
+}
+
+.form-check-input-todolist {
+  &:checked {
+    + {
+      div {
+        label {
+          color: var(--#{$prefix}quaternary);
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+}
+[data-bs-theme='dark'] {
+  .navbar-dark {
+    &[data-bs-theme='light'] {
+      .form-control {
+        background-color: #{map-get($grays, '1100')};
+        border-color: var(--#{$prefix}border-color);
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+/* -------------------------------------------------------------------------- */
+/*                                    Badge                                   */
+/* -------------------------------------------------------------------------- */
+.badge-phoenix {
+  text-transform: uppercase;
+  padding: 2px 8px;
+  background-color: var(--#{$prefix}badge-bg);
+  color: var(--#{$prefix}badge-color);
+  border: 1px solid var(--#{$prefix}badge-border-color);
+  .badge-label {
+    display: inline-block;
+    transform: translateY(toRem(1.4));
+  }
+
+  &[href] {
+    @include hover-focus {
+      text-decoration: none;
+    }
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .badge-phoenix-#{$color} {
+    --#{$prefix}badge-bg: var(--#{$prefix}#{$color}-bg-subtle);
+    --#{$prefix}badge-color: var(--#{$prefix}#{$color}-text-emphasis);
+    --#{$prefix}badge-border-color: var(--#{$prefix}#{$color}-border-subtle);
+  }
+}
+
+@each $color, $value in map-remove($theme-colors, 'secondary', 'light', 'dark') {
+  .badge-phoenix-#{$color} {
+    &[href] {
+      @include hover-focus {
+        color: map-get($theme-colors-dark, $color);
+      }
+    }
+  }
+}
+
+.badge-phoenix-warning {
+  img {
+    height: 10px;
+  }
+}
+
+.badge-tag {
+  background-color: var(--#{$prefix}secondary-bg);
+  color: var(--#{$prefix}body-highlight-color);
+  font-weight: $font-weight-bold;
+  font-size: map-get($font-sizes, 10);
+  padding: map-get($spacers, 1) map-get($spacers, 2);
+  text-transform: uppercase;
+  @include hover-focus {
+    background-color: var(--#{$prefix}tertiary-bg);
+  }
+}

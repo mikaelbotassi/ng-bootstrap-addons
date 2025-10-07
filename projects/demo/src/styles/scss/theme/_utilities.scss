@@ -1,0 +1,364 @@
+/* -------------------------------------------------------------------------- */
+/*                                  Utilities                                 */
+/* -------------------------------------------------------------------------- */
+
+$utilities: () !default;
+$utilities: map_merge(
+  (
+    'opacity': (
+      property: opacity,
+      responsive: true,
+      values: (
+        0: 0,
+        25: 0.25,
+        50: 0.5,
+        75: 0.75,
+        85: 0.85,
+        100: 1
+      )
+    ),
+    'position': (
+      property: position,
+      responsive: true,
+      values: static relative absolute fixed sticky
+    ),
+    'translate-middle': (
+      property: transform,
+      responsive: true,
+      class: translate-middle,
+      values: (
+        null: translate(-50%, -50%),
+        x: translateX(-50%),
+        y: translateY(-50%)
+      )
+    ),
+    'border': (
+      property: border,
+      responsive: true,
+      values: (
+        null: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+          var(--#{$prefix}border-color),
+        0: 0
+      )
+    ),
+    'border-top': (
+      property: border-top,
+      responsive: true,
+      values: (
+        null: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+          var(--#{$prefix}border-color),
+        0: 0
+      )
+    ),
+    'border-end': (
+      property: border-right,
+      class: border-end,
+      responsive: true,
+      values: (
+        null: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+          var(--#{$prefix}border-color),
+        0: 0
+      )
+    ),
+    'border-bottom': (
+      property: border-bottom,
+      responsive: true,
+      values: (
+        null: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+          var(--#{$prefix}border-color),
+        0: 0
+      )
+    ),
+    'border-start': (
+      property: border-left,
+      responsive: true,
+      class: border-start,
+      values: (
+        null: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+          var(--#{$prefix}border-color),
+        0: 0
+      )
+    ),
+    'border-color': false,
+    // Preventing bootstrap to generate border colors
+    'subtle-border-color': false,
+    // Preventing bootstrap to generate border subtle colors
+    'border-opacity': false,
+    // Preventing bootstrap to generate border opacity
+    'width':
+      (
+        property: width,
+        responsive: true,
+        class: w,
+        values: $sizes
+      ),
+    'height': (
+      property: height,
+      class: h,
+      responsive: true,
+      values: $sizes
+    ),
+    'viewport-height': (
+      property: height,
+      class: vh,
+      values: $viewport-heights
+    ),
+    'min-viewport-height': (
+      property: min-height,
+      class: min-vh,
+      values: $viewport-heights
+    ),
+    'font-size': (
+      property: font-size,
+      class: fs,
+      responsive: true,
+      values: $font-sizes
+    ),
+    'font-weight': (
+      property: font-weight,
+      class: fw,
+      values: (
+        thin: $font-weight-thin,
+        lighter: $font-weight-lighter,
+        light: $font-weight-light,
+        normal: $font-weight-normal,
+        medium: $font-weight-medium,
+        semibold: $font-weight-semibold,
+        bold: $font-weight-bold,
+        bolder: $font-weight-bolder,
+        'black': $font-weight-black
+      )
+    ),
+    'text-transform': (
+      property: text-transform,
+      class: text,
+      values: (
+        lowercase: lowercase,
+        uppercase: uppercase,
+        capitalize: capitalize,
+        transform-none: none
+      )
+    ),
+    'color': (
+      property: color,
+      class: text,
+      local-vars: (
+        'text-opacity': 1
+      ),
+      values:
+        map-merge(
+          $utilities-text-colors,
+          (
+            'muted': var(--#{$prefix}secondary-color),
+            // deprecated
+            'black-50': rgba($black, 0.5),
+            // deprecated
+            'white-50': rgba($white, 0.5),
+            // deprecated
+            'body-secondary':
+              rgba(
+                var(--#{$prefix}secondary-color-rgb),
+                var(--#{$prefix}text-opacity)
+              ),
+            'body-tertiary':
+              rgba(
+                var(--#{$prefix}tertiary-color-rgb),
+                var(--#{$prefix}text-opacity)
+              ),
+            'body-quaternary':
+              rgba(
+                var(--#{$prefix}quaternary-color-rgb),
+                var(--#{$prefix}text-opacity)
+              ),
+            'body-emphasis': var(--#{$prefix}emphasis-color),
+            'reset': inherit,
+            'body-highlight':
+              rgba(
+                var(--#{$prefix}body-highlight-color-rgb),
+                var(--#{$prefix}text-opacity)
+              )
+          )
+        )
+    ),
+    'text-opacity': (
+      css-var: true,
+      class: text-opacity,
+      values: $text-opacities
+    ),
+    'background-color': (
+      property: background-color,
+      class: bg,
+      local-vars: (
+        'bg-opacity': 1
+      ),
+      values:
+        map-merge(
+          $utilities-bg-colors,
+          (
+            'transparent': transparent,
+            'body-emphasis':
+              rgba(
+                var(--#{$prefix}emphasis-bg-rgb),
+                var(--#{$prefix}bg-opacity)
+              ),
+            'body-secondary':
+              rgba(
+                var(--#{$prefix}secondary-bg-rgb),
+                var(--#{$prefix}bg-opacity)
+              ),
+            'body-tertiary':
+              rgba(
+                var(--#{$prefix}tertiary-bg-rgb),
+                var(--#{$prefix}bg-opacity)
+              ),
+            'body-quaternary':
+              rgba(
+                var(--#{$prefix}quaternary-bg-rgb),
+                var(--#{$prefix}bg-opacity)
+              ),
+            'body-highlight':
+              rgba(
+                var(--#{$prefix}body-highlight-bg-rgb),
+                var(--#{$prefix}bg-opacity)
+              )
+          )
+        )
+    ),
+    'bg-opacity': (
+      css-var: true,
+      class: bg-opacity,
+      values: $bg-opacities
+    ),
+    // ----------- border radius --------------
+    “rounded”:
+      (
+        property: border-radius,
+        responsive: true,
+        class: rounded,
+        values: (
+          null: var(--#{$prefix}border-radius),
+          0: 0,
+          1: var(--#{$prefix}border-radius-sm),
+          2: var(--#{$prefix}border-radius),
+          3: var(--#{$prefix}border-radius-lg),
+          4: var(--#{$prefix}border-radius-xl),
+          5: var(--#{$prefix}border-radius-xxl),
+          circle: 50%,
+          pill: var(--#{$prefix}border-radius-pill)
+        )
+      ),
+    “rounded-top”: (
+      property: border-top-left-radius border-top-right-radius,
+      responsive: true,
+      class: rounded-top,
+      values: (
+        null: var(--#{$prefix}border-radius),
+        0: 0,
+        1: var(--#{$prefix}border-radius-sm),
+        2: var(--#{$prefix}border-radius),
+        3: var(--#{$prefix}border-radius-lg),
+        4: var(--#{$prefix}border-radius-xl),
+        5: var(--#{$prefix}border-radius-xxl),
+        circle: 50%,
+        pill: var(--#{$prefix}border-radius-pill)
+      )
+    ),
+    “rounded-end”: (
+      property: border-top-right-radius border-bottom-right-radius,
+      responsive: true,
+      class: rounded-end,
+      values: (
+        null: var(--#{$prefix}border-radius),
+        0: 0,
+        1: var(--#{$prefix}border-radius-sm),
+        2: var(--#{$prefix}border-radius),
+        3: var(--#{$prefix}border-radius-lg),
+        4: var(--#{$prefix}border-radius-xl),
+        5: var(--#{$prefix}border-radius-xxl),
+        circle: 50%,
+        pill: var(--#{$prefix}border-radius-pill)
+      )
+    ),
+    “rounded-bottom”: (
+      property: border-bottom-right-radius border-bottom-left-radius,
+      responsive: true,
+      class: rounded-bottom,
+      values: (
+        null: var(--#{$prefix}border-radius),
+        0: 0,
+        1: var(--#{$prefix}border-radius-sm),
+        2: var(--#{$prefix}border-radius),
+        3: var(--#{$prefix}border-radius-lg),
+        4: var(--#{$prefix}border-radius-xl),
+        5: var(--#{$prefix}border-radius-xxl),
+        circle: 50%,
+        pill: var(--#{$prefix}border-radius-pill)
+      )
+    ),
+    “rounded-start”: (
+      property: border-bottom-left-radius border-top-left-radius,
+      responsive: true,
+      class: rounded-start,
+      values: (
+        null: var(--#{$prefix}border-radius),
+        0: 0,
+        1: var(--#{$prefix}border-radius-sm),
+        2: var(--#{$prefix}border-radius),
+        3: var(--#{$prefix}border-radius-lg),
+        4: var(--#{$prefix}border-radius-xl),
+        5: var(--#{$prefix}border-radius-xxl),
+        circle: 50%,
+        pill: var(--#{$prefix}border-radius-pill)
+      )
+    ),
+    // ----------- phoenix specific starts --------------
+    'border-x':
+      (
+        property: border-left border-right,
+        class: border-x,
+        values: (
+          null: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+            var(--#{$prefix}border-color),
+          0: 0
+        )
+      ),
+    'border-y': (
+      property: border-top border-bottom,
+      class: border-y,
+      values: (
+        null: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+          var(--#{$prefix}border-color),
+        0: 0
+      )
+    ),
+    'letter-spacing': (
+      property: letter-spacing,
+      class: ls,
+      values: (
+        1: 1,
+        2: 0.165em,
+        3: 0.25em
+      )
+    ),
+    'column-count': (
+      property: column-count,
+      class: column,
+      responsive: true,
+      values: (
+        1: 1,
+        2: 2,
+        3: 3
+      )
+    ),
+    'cursor': (
+      property: cursor,
+      class: cursor,
+      values: (
+        pointer: pointer,
+        default: default
+      )
+    ),
+    // ----------- phoenix specific ends --------------
+  ),
+  $utilities
+);

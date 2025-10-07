@@ -1,0 +1,7 @@
+.list-group-item{
+  &.active{
+    *{
+      color: var(--#{$prefix}-white);
+    }
+  }
+}

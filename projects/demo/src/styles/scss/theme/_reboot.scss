@@ -1,0 +1,140 @@
+/*-----------------------------------------------
+|   Reboot
+-----------------------------------------------*/
+::placeholder {
+  opacity: 1;
+}
+
+::selection {
+  background-color: var(--#{$prefix}primary);
+  color: $white;
+}
+
+[id] {
+  scroll-margin-top: calc(
+    var(--#{$prefix}navbar-top-height) + var(--#{$prefix}scroll-margin-top)
+  ); // 1
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // position: relative;
+  opacity: 1 !important;
+}
+
+pre,
+code {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+section {
+  position: relative;
+  padding-top: map_get($spacers, 6);
+  padding-bottom: map_get($spacers, 6);
+
+  @include media-breakpoint-up(lg) {
+    padding-top: map_get($spacers, 8);
+    padding-bottom: map_get($spacers, 8);
+  }
+}
+
+//setting up font family for bootstrap components
+input,
+button,
+select,
+optgroup,
+textarea,
+label,
+.alert,
+.badge,
+.blockquote-footer,
+.btn,
+.navbar,
+.pagination,
+.valid-feedback,
+.invalid-feedback {
+  font-family: var(--#{$prefix}font-sans-serif);
+}
+
+pre {
+  margin: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+strong {
+  font-weight: $font-weight-bold;
+}
+
+label {
+  font-weight: $font-weight-medium;
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-size: $font-size-sm;
+}
+
+[type='search'] {
+  -webkit-appearance: none; // 2
+}
+
+.min-h-auto {
+  min-height: auto;
+}
+.content-min-h {
+  min-height: calc(100vh - 10rem);
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+.stack-icon-item {
+  margin-top: 1px;
+}
+.top-1 {
+  top: 1px;
+}
+
+[data-bs-theme="dark"] {
+  .d-dark-none {
+    display: none;
+  }
+}
+
+html:not([data-bs-theme="dark"]) {
+  .d-light-none {
+    display: none;
+  }
+}
+
+// .fa-li {
+//   left: calc(var(--fa-li-width, 2em) * -1) !important;
+// }
+
+input {
+  &:-webkit-autofill {
+    -webkit-text-fill-color: var(--#{$prefix}body-color);
+    box-shadow: 0 0 0 30px $input-bg inset;
+  }
+}
+input::-webkit-contacts-auto-fill-button {
+  background-color: $input-color;
+}
+
+.bg-opacity-15{
+  --#{phoenix}-bg-opacity: 0.15;
+}
+
+.border-end-solid-xxl{
+  @include media-breakpoint-up(xxl){
+    border-right-style: solid !important;
+  }
+}

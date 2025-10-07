@@ -1,0 +1,153 @@
+
+$grays-dark: (
+  '50': #0f111a,
+  '100': $gray-1000,
+  '200': $gray-900,
+  '300': #373e53,
+  '400': $gray-800,
+  '500': #606981,
+  '600': $gray-600,
+  '700': $gray-500,
+  '800': #949db5,
+  '900': $gray-400,
+  '1000': $gray-300,
+  '1100': #EFF1F5
+) !default;
+
+$primary-dark: $primary-300 !default;
+$secondary-dark: $gray-900 !default;
+$success-dark: $green-300 !default;
+$info-dark: $cyan-300 !default;
+$warning-dark: $warning-300 !default;
+$danger-dark: $red-300 !default;
+
+
+$theme-colors-dark: (
+  'primary': $primary-dark,
+  'secondary': $secondary-dark,
+  'success': $success-dark,
+  'info': $info-dark,
+  'warning': $warning-dark,
+  'danger': $danger-dark,
+) !default;
+
+//
+// Global colors
+//
+// emphasis colors need to discuss with designers
+$primary-text-emphasis-dark:    $primary-300 !default;
+$secondary-text-emphasis-dark:  $gray-300 !default; 
+$success-text-emphasis-dark:    $green-300 !default;
+$info-text-emphasis-dark:       $cyan-300 !default;
+$warning-text-emphasis-dark:    $warning-300 !default;
+$danger-text-emphasis-dark:     $red-300 !default;
+$light-text-emphasis-dark:      $gray-100 !default;
+$dark-text-emphasis-dark:       $gray-1100 !default;
+
+
+// scss-docs-start theme-bg-subtle-variables
+$primary-bg-subtle-dark:        #1C2231 !default;
+$secondary-bg-subtle-dark:      #252834 !default;
+$success-bg-subtle-dark:        #1D2527 !default;
+$info-bg-subtle-dark:           #1A2431 !default;
+$warning-bg-subtle-dark:        #262527 !default;
+$danger-bg-subtle-dark:         #241F25 !default;
+// scss-docs-end theme-bg-subtle-variables
+
+// scss-docs-start theme-border-subtle-dark-variables
+
+
+$primary-border-subtle-dark:       #303B5A !default;
+$secondary-border-subtle-dark:     #3D414C !default;
+$success-border-subtle-dark:       #354739 !default;
+$info-border-subtle-dark:          #29435A !default;
+$warning-border-subtle-dark:       #51453A !default;
+$danger-border-subtle-dark:        #4C3233 !default;
+$light-border-subtle-dark:          $gray-1100 !default;
+$dark-border-subtle-dark:           $gray-800 !default;
+// scss-docs-end theme-border-subtle-dark-variables
+
+
+
+$body-color-dark:                   $gray-400 !default;
+$body-bg-dark:                      map-get($grays-dark, '50') !default;
+$body-secondary-color-dark:         map-get($grays-dark, '800') !default;
+$body-secondary-bg-dark:            $gray-900 !default;
+$body-tertiary-color-dark:          $gray-500 !default;
+$body-tertiary-bg-dark:             map-get($grays-dark, '300') !default;
+$body-emphasis-color-dark:          $gray-100 !default;
+$body-emphasis-bg-dark:             $gray-1100 !default;
+$headings-color-dark:               var(--#{$prefix}emphasis-color) !default;
+$link-color-dark:                   map-get($theme-colors-dark, 'primary') !default;
+$link-hover-color-dark:             $primary-text-emphasis-dark !default;
+
+$code-color-dark:                   $pink !default;
+$body-quaternary-color-dark:        map-get($grays-dark, '500') !default;
+$body-quaternary-bg-dark:           $gray-800 !default;
+$body-highlight-color-dark:         $gray-300 !default;
+$body-highlight-bg-dark:            $gray-1000 !default;
+
+
+//*-----------------------------------------------
+//|   Border
+//-----------------------------------------------*/
+$border-color-dark: map-get($grays-dark, '300') !default;
+$border-color-translucent-dark: rgba($border-color-dark, .78) !default;
+
+//*-----------------------------------------------
+//|   Color shades
+//-----------------------------------------------*/
+$theme-color-shades-dark: (
+  'primary-lighter': $primary-700,
+  'primary-light': $primary-500,
+  'primary-dark': $primary-300,
+  'primary-darker': $primary-300,
+
+  'warning-lighter': $warning-700,
+  'warning-light': $warning-500,
+  'warning-dark': $warning-300,
+  'warning-darker': $warning-300,
+
+  'danger-lighter': $red-700,
+  'danger-light': $red-500,
+  'danger-dark': $red-300,
+  'danger-darker': $red-300,
+
+  'success-lighter': $green-700,
+  'success-light': $green-500,
+  'success-dark': $green-300,
+  'success-darker': $green-300,
+
+  'info-lighter': $cyan-700,
+  'info-light': $cyan-500,
+  'info-dark': $cyan-300,
+  'info-darker': $cyan-300,
+) !default;
+
+//
+// Forms
+//
+$form-switch-color-dark: $form-switch-color !default;
+$form-select-indicator-dark: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxMiAxMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgMTAuNTI1MkM1Ljc3NSAxMC41MjUyIDUuNTc1IDEwLjQ1MDIgNS40MjUgMTAuMzAwMkwwLjYyNSA1LjUwMDJDMC4zIDUuMjAwMiAwLjMgNC42NzUyIDAuNjI1IDQuMzc1MkMwLjkyNSA0LjA1MDIgMS40NSA0LjA1MDIgMS43NSA0LjM3NTJMNiA4LjYwMDJMMTAuMjI1IDQuMzc1MkMxMC41MjUgNC4wNTAyIDExLjA1IDQuMDUwMiAxMS4zNSA0LjM3NTJDMTEuNjc1IDQuNjc1MiAxMS42NzUgNS4yMDAyIDExLjM1IDUuNTAwMkw2LjU1IDEwLjMwMDJDNi40IDEwLjQ1MDIgNi4yIDEwLjUyNTIgNiAxMC41MjUyWiIgZmlsbD0iIzhBOTRBRCIvPgo8L3N2Zz4K') !default;
+
+// scss-docs-start form-validation-colors-dark
+$form-valid-color-dark:             $green-300 !default;
+$form-valid-border-color-dark:      $success-border-subtle !default;
+$form-invalid-color-dark:           $red-300 !default;
+$form-invalid-border-color-dark:    $danger-border-subtle !default;
+// scss-docs-end form-validation-colors-dark
+
+//
+// Accordion
+//
+$accordion-icon-color-dark: $primary-text-emphasis-dark !default;
+$accordion-icon-active-color-dark:  $primary-text-emphasis-dark !default;
+$accordion-button-icon-dark: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='-200 -200 900 900'%3E%3Cpath fill='#{$accordion-icon-color-dark}' d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z'%3E%3C/path%3E%3C/svg%3E") !default;
+$accordion-button-active-icon-dark: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='-200 -200 900 900'%3E%3Cpath fill='#{$accordion-icon-active-color-dark}' d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z'%3E%3C/path%3E%3C/svg%3E") !default;
+
+// carousel-dark-variables
+$carousel-dark-indicator-active-bg:  $primary !default;
+$carousel-dark-control-icon-filter:  none !default;
+
+$dual-nav-border-color-dark: map-get($grays, '900') !default;
+

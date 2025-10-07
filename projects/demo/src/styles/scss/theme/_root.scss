@@ -1,0 +1,20 @@
+:root{
+  --#{$prefix}scroll-margin-top: 2.5rem;
+  --#{$prefix}navbar-top-height: 4rem;
+  &[data-navbar-horizontal-shape='slim'] {
+    --#{$prefix}navbar-top-height: 1.7rem;
+  }
+  [data-navigation-type="dual"]{
+    --#{$prefix}navbar-top-height: 7.25rem;
+  }
+  --#{$prefix}navbar-top-menu-margin: 1.5rem;
+  .navbar-slim {
+    --#{$prefix}navbar-top-menu-margin: 0.8rem;
+  }
+  [data-navigation-type="dual"] {
+    --#{$prefix}navbar-top-menu-margin: 1.3rem;
+  }
+
+}
+@import 'root/light';
+@import 'root/dark';

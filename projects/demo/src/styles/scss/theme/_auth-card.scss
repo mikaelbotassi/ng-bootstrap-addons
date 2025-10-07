@@ -1,0 +1,68 @@
+.bg-auth-card-overlay {
+  mix-blend-mode: overlay;
+}
+.auth-card {
+  background-color: var(--#{$prefix}emphasis-bg);
+  [data-bs-theme="dark"] & {
+    background-color: $body-bg-dark;
+  }
+  @include media-breakpoint-between(sm, md) {
+    width: 27rem;
+    margin: 0 auto;
+  }
+  .auth-title-box {
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      width: 16.875rem;
+    }
+    @include media-breakpoint-up(lg) {
+      width: 23.4375rem;
+    }
+    .auth-title-box-img {
+      width: 9.5rem;
+      height: 7.56rem;
+      @include media-breakpoint-up(md) {
+        width: 12.5rem;
+        height: 9.875rem;
+      }
+      @include media-breakpoint-up(lg) {
+        width: 17.93rem;
+        height: 14.18rem;
+      }
+    }
+    .card-sign-up {
+      @include media-breakpoint-up(md) {
+        padding-bottom: 10rem !important;
+      }
+      @include media-breakpoint-up(xl) {
+        padding-bottom: map-get($spacers, 7) !important;
+      }
+    }
+  }
+  .auth-form-box {
+    margin: auto;
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      max-width: 16.625rem;
+    }
+    @include media-breakpoint-up(lg) {
+      max-width: 18.75rem;
+    }
+    @include media-breakpoint-up(xxl) {
+      max-width: 25rem;
+    }
+  }
+}
+
+.verification-form {
+  max-width: 17.6875rem;
+  margin: 0 auto;
+  .form-control {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance: textfield;
+  }
+}

@@ -1,0 +1,133 @@
+/*-----------------------------------------------
+|   Documentation link and Prism
+-----------------------------------------------*/
+.code-block {
+  padding: 0;
+  overflow: auto;
+  pre[class*='language-'] {
+    padding: 1.6rem;
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+  // background-color: var(--#{$prefix}emphasis-color);
+  background-color: var(--#{$prefix}docs-language-bg);
+}
+code.language-html:first-child {
+  display: block;
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  font-family: var(--#{$prefix}font-monospace);
+  font-size: map-get($font-sizes, 9);
+  border-radius: 0;
+}
+pre[class*='language-'] {
+  margin: 0;
+  padding: $card-spacer-x;
+}
+.contains-anchor {
+  a {
+    opacity: 0;
+    transition-property: opacity;
+  }
+  @include hover-focus {
+    a {
+      opacity: 1;
+      text-decoration: none;
+    }
+  }
+}
+
+.components-nav {
+  font-family: var(--#{$prefix}font-sans-serif);
+  font-size: 0.85rem;
+}
+
+/*-----------------------------------------------
+|   Component examples
+-----------------------------------------------*/
+/*-----------------------------------------------
+|   Borders
+-----------------------------------------------*/
+.component-example {
+  font-family: var(--#{$prefix}font-sans-serif);
+  [class^='border'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    height: 8rem;
+    margin: 0.75rem;
+    background-color: var(--#{$prefix}body-highlight-bg);
+  }
+}
+
+/*-----------------------------------------------
+|   Utilities
+-----------------------------------------------*/
+.border-component {
+  [class^='border'],
+  [class^='rounded-'] {
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    margin: 0.25rem;
+  }
+
+  [class^='border'] {
+    background-color: var(--#{$prefix}body-highlight-bg);
+  }
+
+  [class^='rounded-'] {
+    background-color: var(--#{$prefix}secondary-bg);
+  }
+}
+
+#loaders {
+  [class^='spinner'] {
+    margin-right: 0.5rem;
+  }
+}
+.doc-tab-nav {
+  a.btn {
+    width: 8.4375rem;
+    text-align: center;
+  }
+  .active {
+    display: none;
+  }
+}
+.code-btn {
+  &:not(.collapsed) {
+    display: none;
+  }
+}
+.code-btn.collapsed + .preview-btn {
+  display: none;
+}
+.opacity-docs {
+  [class^='opacity-'] {
+    height: 100px;
+    width: 100px;
+    background-color: var(--#{$prefix}primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.overflow-docs {
+  [class^='overflow-'] {
+    max-height: 70px;
+    max-width: 22%;
+    background-color: var(--#{$prefix}body-highlight-bg);
+    display: inline-block;
+    padding: map-get($spacers, 3);
+    margin-right: map-get($spacers, 2);
+  }
+}

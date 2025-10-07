@@ -1,0 +1,189 @@
+// .nav-underline,
+.nav-tabs {
+  .nav-link {
+    padding: 0.5rem;
+    margin-bottom: -$nav-tabs-border-width;
+    font-weight: $font-weight-bold;
+    font-size: map-get($font-sizes, 9);
+    @include border-top-radius($nav-tabs-border-radius);
+  }
+}
+.nav-tabs {
+  border-bottom: 0px solid transparent;
+  .nav-link {
+    border: none;
+    padding: 0.5rem 0.5rem;
+    color: var(--#{$prefix}primary);
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: var(--#{$prefix}emphasis-color);
+    background-color: transparent;
+  }
+}
+.echart-tab-example {
+  .nav-link {
+    color: var(--#{$prefix}emphasis-color);
+    &.active {
+      color: var(--#{$prefix}primary);
+    }
+  }
+}
+.nav-pills {
+  .nav-link {
+    font-weight: $font-weight-bold;
+    color: var(--#{$prefix}body-secondary-color);
+    border: 1px solid transparent;
+    &.active {
+      border: 1px solid var(--#{$prefix}primary);
+    }
+  }
+}
+.nav-phoenix-pills {
+  background: var(--#{$prefix}body-highlight-bg);
+  border: 1px solid var(--#{$prefix}border-color);
+  border-radius: 0.5rem;
+  .nav-item {
+    flex: 1;
+    .nav-link {
+      color: var(--#{$prefix}tertiary-color);
+      font-weight: $font-weight-semibold;
+      line-height: $line-height-sm;
+      text-align: center;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      &.active {
+        background: var(--#{$prefix}emphasis-bg);
+        color: var(--#{$prefix}primary);
+        border-left: 1px solid var(--#{$prefix}border-color);
+        border-right: 1px solid var(--#{$prefix}border-color);
+        border-radius: 0.5rem;
+      }
+    }
+    &:last-child {
+      .nav-link {
+        &.active {
+          border-right: none;
+        }
+      }
+    }
+    &:first-child {
+      .nav-link {
+        &.active {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+.nav-underline {
+  .nav-link {
+    // border: var(--#{$prefix}border-color-translucent);
+    color: var(--#{$prefix}body-color);
+    font-weight: $font-weight-bold;
+    font-size: map-get($font-sizes, 9);
+  }
+  &.file-details-tab {
+    .nav-link {
+      border-color: var(--#{$prefix}border-color-translucent);
+      &.active {
+        border-color: var(--#{$prefix}primary);
+      }
+    }
+  }
+}
+
+.nav-links {
+  .nav-link {
+    font-weight: $font-weight-bold;
+    font-size: map-get($font-sizes, 9);
+    &:hover {
+      span:first-child {
+        text-decoration: underline !important;
+      }
+    }
+    &.active {
+      color: var(--#{$prefix}emphasis-color);
+    }
+  }
+}
+
+.project-tab{
+  .nav-link {
+    color: var(--#{$prefix}body-color);
+    &:hover{
+      color: var(--#{$prefix}body-color);
+    }
+    &.active{
+      color: var(--#{$prefix}primary);
+    }
+  }
+}
+
+// FAQ
+.faq-category-tab {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: var(--#{$prefix}navbar-top-height);
+  background-color: var(--#{$prefix}body-bg);
+  z-index: 1020;
+  .nav-item {
+    flex-basis: 50%;
+  }
+  .nav-link {
+    color: var(--#{$prefix}quaternary-bg);
+    width: 100%;
+    &.active {
+      color: var(--#{$prefix}primary);
+      border-bottom: 3px solid var(--#{$prefix}primary);
+    }
+  }
+}
+.faq-subcategory-tab {
+  .nav-link {
+    border: 1px solid var(--#{$prefix}border-color-translucent);
+    &:hover {
+      border: 1px solid var(--#{$prefix}border-color);
+    }
+    &.active {
+      border: 1px solid var(--#{$prefix}primary) !important;
+      .category-icon {
+        color: var(--#{$prefix}primary) !important;
+      }
+    }
+  }
+}
+.faq-subcategory-content {
+  .empty-header {
+    height: 60px;
+    position: sticky;
+    top: var(--#{$prefix}navbar-top-height);
+    background-color: var(--#{$prefix}body-bg);
+  }
+  position: sticky;
+  top: 4rem;
+}
+
+.optionChainTableHeader{
+  &.nav-underline{
+    .nav-link:not(.active){
+      border-color:  var(--#{$prefix}border-color-translucent);
+    }
+  }
+}
+
+.tabDetailsOptionChainTab{
+  .nav-link{
+    font-weight: $font-weight-semibold;
+    &.active{
+      color: var(--#{$prefix}emphasis-color);
+      font-weight: $font-weight-bold;
+    }
+    &:hover{
+      color: var(--#{$prefix}emphasis-color);
+    }
+  }
+}

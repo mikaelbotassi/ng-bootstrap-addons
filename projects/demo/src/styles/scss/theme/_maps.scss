@@ -1,0 +1,95 @@
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, '$value') !default;
+
+$grays-updated: map-gray-loop($grays);
+$grays-rgb: map-loop($grays-updated, to-rgb, '$value') !default;
+$theme-color-shades-rgb: map-loop($theme-color-shades, to-rgb, '$value') !default;
+
+$theme-colors-rgb-dark: map-loop($theme-colors-dark,to-rgb,'$value') !default;
+$grays-rgb-dark: map-loop($grays-dark, to-rgb, '$value') !default;
+$theme-color-shades-rgb-dark: map-loop($theme-color-shades-dark, to-rgb, '$value') !default;
+
+$utilities-colors: map-merge-multiple(
+  $theme-colors-rgb,
+  $grays-rgb,
+) !default;
+
+// scss-docs-start utilities-text-colors
+
+$utilities-text: map-merge-multiple(
+  $utilities-colors,
+  $theme-color-shades-rgb,
+  (
+    "black": to-rgb($black),
+    "white": to-rgb($white),
+    "body": to-rgb($body-color)
+  )
+) !default;
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, "$key", "text") !default;
+
+// scss-docs-start utilities-bg-colors
+
+$utilities-bg: map-merge-multiple(
+  $utilities-colors,
+  $theme-color-shades-rgb,
+  (
+    "black": to-rgb($black),
+    "white": to-rgb($white),
+    "body": to-rgb($body-bg)
+  )
+) !default;
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg") !default;
+
+
+
+
+// scss-docs-start utilities-border-colors
+$border-color-shades: map-remove($theme-color-shades-rgb, 'primary-lighter','warning-lighter','success-lighter','info-lighter','danger-lighter','primary-darker','warning-darker','success-darker','info-darker','danger-darker');
+
+$utilities-border: map-merge-multiple(
+  $utilities-colors,
+  $border-color-shades,
+  (
+    "black": to-rgb($black),
+    "white": to-rgb($white),
+  )
+) !default;
+$utilities-border-colors: map-loop($utilities-border, rgba-css-var, "$key", "border") !default;
+
+$utilities-border-subtle: (
+  "primary-subtle": var(--#{$prefix}primary-border-subtle),
+  "secondary-subtle": var(--#{$prefix}secondary-border-subtle),
+  "success-subtle": var(--#{$prefix}success-border-subtle),
+  "info-subtle": var(--#{$prefix}info-border-subtle),
+  "warning-subtle": var(--#{$prefix}warning-border-subtle),
+  "danger-subtle": var(--#{$prefix}danger-border-subtle),
+  "light-subtle": var(--#{$prefix}light-border-subtle),
+  "dark-subtle": var(--#{$prefix}dark-border-subtle)
+) !default;
+// scss-docs-end utilities-border-colors
+
+$border-color-utilities: (
+ 'border-colors': (
+    property: border-color,
+    class: border,
+    local-vars: (
+      "border-opacity": 1
+    ),
+    values: $utilities-border-colors
+  ),
+ 'border-subtle-colors': (
+    property: border-color,
+    class: border,
+    values: $utilities-border-subtle
+  ),
+  'border-opacities': (
+    class: border-opacity,
+    css-var: true,
+    values: (
+      10: .1,
+      25: .25,
+      50: .5,
+      75: .75,
+      100: 1
+    )
+  )
+) !default;

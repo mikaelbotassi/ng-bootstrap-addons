@@ -1,0 +1,71 @@
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+@if $enable-grid-classes {
+  // Single container class with breakpoint max-widths
+  .container-small,
+  .container-medium,
+  // 100% wide container at all breakpoints
+  .container-small-fluid,
+  .container-medium-fluid {
+    @include make-container();
+  }
+
+  // Responsive containers that are 100% wide until a breakpoint
+  @each $breakpoint, $container-max-width in $container-small-max-widths {
+    .container-small-#{$breakpoint} {
+      @extend .container-fluid;
+    }
+
+    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+      %responsive-container-small-#{$breakpoint} {
+        max-width: $container-max-width;
+      }
+
+      // Extend each breakpoint which is smaller or equal to the current breakpoint
+      $extend-breakpoint: true;
+
+      @each $name, $width in $grid-breakpoints {
+        @if ($extend-breakpoint) {
+          .container-small#{breakpoint-infix($name, $grid-breakpoints)} {
+            @extend %responsive-container-small-#{$breakpoint};
+          }
+
+          // Once the current breakpoint is reached, stop extending
+          @if ($breakpoint == $name) {
+            $extend-breakpoint: false;
+          }
+        }
+      }
+    }
+  }
+
+  @each $breakpoint, $container-max-width in $container-medium-max-widths {
+    .container-medium-#{$breakpoint} {
+      @extend .container-fluid;
+    }
+
+    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+      %responsive-container-medium-#{$breakpoint} {
+        max-width: $container-max-width;
+      }
+
+      // Extend each breakpoint which is smaller or equal to the current breakpoint
+      $extend-breakpoint: true;
+
+      @each $name, $width in $grid-breakpoints {
+        @if ($extend-breakpoint) {
+          .container-medium#{breakpoint-infix($name, $grid-breakpoints)} {
+            @extend %responsive-container-medium-#{$breakpoint};
+          }
+
+          // Once the current breakpoint is reached, stop extending
+          @if ($breakpoint == $name) {
+            $extend-breakpoint: false;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+:root,
+[data-bs-theme='light'] {
+  /* ------------------------------- navbar-top  ------------------------------- */
+  &:not([data-bs-theme='dark']) {
+    [data-navbar-appearance='darker'] {
+      --#{$prefix}navbar-top-dropdown-hover-bg: #{$body-color};
+      --#{$prefix}navbar-top-dropdown-color: #{$gray-400};
+    }
+    [data-navbar-appearance='darker']:not([data-bs-theme='dark']) {
+      .navbar-top-collapse {
+        &.show {
+          --#{$prefix}navbar-top-link-color: #{$gray-400};
+          --#{$prefix}navbar-top-menu-bg-color: #{$gray-1100};
+          --#{$prefix}navbar-top-border-color: var(--#{$prefix}border-color);
+          --#{$prefix}navbar-top-link-hover-color: #{$gray-300};
+          --#{$prefix}navbar-top-link-hover-bg: #{$body-highlight-color};
+          --#{$prefix}navbar-top-link-active-color: #{$gray-300};
+        }
+      }
+    }
+  }
+  /* ------------------------------- navbar-vertical light dark ------------------------------- */
+  [data-navbar-appearance='darker'] {
+    --#{$prefix}navbar-vertical-border-color: #{$gray-900};
+    --#{$prefix}navbar-vertical-bg-color: #{$body-highlight-color};
+    --#{$prefix}navbar-vertical-label-color: #{$gray-600};
+    --#{$prefix}navbar-vertical-link-color: #{$gray-400};
+    --#{$prefix}navbar-vertical-link-hover-color: #{$gray-100};
+    --#{$prefix}navbar-vertical-link-hover-bg: #{$body-color};
+    --#{$prefix}navbar-vertical-link-active-color: #{$white};
+    --#{$prefix}navbar-vertical-link-disable-color: #{$gray-500};
+
+    // ----------- collapsed colors ----------------
+    --#{$prefix}navbar-vertical-hr-color: $gray-800;
+    --#{$prefix}navbar-vertical-collapsed-menu-bg: #{$body-highlight-color};
+    // ----------- collapsed colors ----------------
+    --#{$prefix}logo-text: #{$gray-100};
+    --#{$prefix}navbar-footer-border-color: #{$gray-900};
+
+    //--------------- navbar top ---------------------------------
+    --#{$prefix}navbar-top-bg-color: #{$body-highlight-color};
+    .navbar-nav-icons {
+      --#{$prefix}nav-link-color: #{$gray-500};
+    }
+
+    &.navbar-slim {
+      .navbar-brand span {
+        color: #{$gray-300} !important;
+      }
+    }
+    .badge-phoenix-warning {
+      --#{$prefix}badge-bg: #{$warning-bg-subtle-dark};
+      --#{$prefix}badge-color: #{$warning-dark};
+      --#{$prefix}badge-border-color: #{$warning-border-subtle-dark};
+    }
+  }
+
+  &[data-navigation-type='dual'] {
+    &:not([data-bs-theme='dark']) {
+      [data-navbar-appearance='darker'] {
+        --#{$prefix}dual-nav-border-color: #{$body-color};
+        --#{$prefix}dual-nav-first-layer-bg: #{$body-bg-dark};
+
+        .search-box {
+          &.search-box-icon {
+            color: #{$body-quaternary-color-dark};
+          }
+        }
+      }
+    }
+  }
+}
+
+:root {
+  &:not([data-bs-theme='dark']) {
+    [data-navbar-appearance='darker'] {
+      .search-box {
+        .btn-close {
+          background: transparent escape-svg($btn-close-darken-nav-bg) center /
+            $btn-close-width auto no-repeat; // include transparent for button elements
+        }
+        // .search-input:focus {
+        //   border-color: var(--#{$prefix}quaternary);
+        // }
+        .search-input {
+          background-color: #{$gray-1100};
+          border-color: $border-color-dark;
+        }
+        &.search-box-icon {
+          color: #{$body-quaternary-color-dark};
+        }
+        .form-control {
+          color: #{$gray-600};
+        }
+      }
+    }
+  }
+}
+
+//---------- dark mode ----------
+@if $enable-dark-mode {
+  @include color-mode(dark, true) {
+    [data-navbar-appearance='darker'] {
+      --#{$prefix}navbar-vertical-bg-color: #{$gray-1000};
+      --#{$prefix}navbar-vertical-label-color: #{$gray-600};
+      --#{$prefix}navbar-vertical-link-color: #{gray-400};
+      --#{$prefix}navbar-vertical-link-hover-color: #{$gray-100};
+      --#{$prefix}navbar-vertical-link-hover-bg: #{$gray-900};
+      --#{$prefix}navbar-vertical-link-active-color: #{$white};
+      --#{$prefix}navbar-vertical-link-disable-color: #{$gray-600};
+      // ----------- collapsed colors ----------------
+      --#{$prefix}navbar-vertical-collapsed-menu-bg: #{$gray-1000};
+
+      //--------------- navbar top ---------------------------------
+      --#{$prefix}navbar-top-bg-color: #{$gray-1000};
+      //input
+      .form-control {
+        color: #{$gray-600};
+      }
+      .search-box .search-box-icon {
+        color: #{$body-quaternary-color-dark};
+      }
+    }
+  }
+}

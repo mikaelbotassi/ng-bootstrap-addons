@@ -1,0 +1,192 @@
+// @import 'swiper/css/bundle';
+.swiper-theme-container {
+  position: relative;
+  .swiper-wrapper {
+    &.swiper-continuous-autoplay {
+      transition-timing-function: linear;
+    }
+    .swiper-slide {
+      height: auto;
+    }
+  }
+  .swiper-nav {
+    margin-top: 0;
+    cursor: pointer;
+    [class*='swiper-'] {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid;
+      border-color: var(--#{$prefix}border-color-translucent);
+      transition: opacity 0.4s ease-in-out;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      color: var(--#{$prefix}body-color);
+      background-color: var(--#{$prefix}body-bg);
+      box-shadow: 0px 8px 24px -4px rgba(36, 40, 46, 0.12);
+      z-index: 1;
+      margin: 0;
+      @include hover-focus {
+        background-color: var(--#{$prefix}emphasis-bg);
+        color: var(--#{$prefix}tertiary-color);
+      }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      svg {
+        width: 50%;
+        height: 50%;
+      }
+      &::after,
+      &::before {
+        content: '';
+      }
+      &.swiper-button-disabled {
+        opacity: 0;
+      }
+    }
+    .swiper-button-prev {
+      left: -1rem;
+    }
+    .swiper-button-next {
+      right: -1rem;
+      [dir='rtl'] & {
+        left: calc(100% - 1rem);
+      }
+    }
+    &.swiper-nav-inside {
+      .swiper-button-prev {
+        left: map-get($spacers, 2);
+      }
+      .swiper-button-next {
+        right: map-get($spacers, 2);
+        [dir='rtl'] & {
+          left: calc(100% - map-get($spacers, 6));
+        }
+      }
+    }
+  }
+  &.swiper-slide-nav-top {
+    .swiper-button-next,
+    .swiper-button-prev {
+      left: 50%;
+      top: -60px;
+      transform: translateX(-50%);
+    }
+    .swiper-button-next {
+      margin-left: 1.25rem;
+      [dir='rtl'] & {
+        left: 50%;
+      }
+    }
+    .swiper-button-prev {
+      margin-left: -1.25rem;
+    }
+  }
+  .swiper-pagination-bullet {
+    border: 1px solid transparent;
+    padding: 3px;
+    background: var(--#{$prefix}white) content-box;
+    opacity: 1;
+    width: 1rem;
+    height: 1rem;
+    margin: 0 2px !important;
+    text-align: center;
+    &.swiper-pagination-bullet-active {
+      border: 1px solid var(--#{$prefix}white);
+    }
+  }
+  .thumb {
+    .swiper-slide {
+      img {
+        border: 2px solid transparent;
+      }
+    }
+    .swiper-slide-thumb-active {
+      img {
+        border: 2px solid var(--#{$prefix}primary);
+      }
+    }
+  }
+  &.swiper-slider-gallery {
+    .theme-slider {
+      &::before,
+      &:after {
+        content: '';
+        background: linear-gradient(
+          to left,
+          rgba(var(--#{$prefix}body-bg-rgb), 0) 0%,
+          var(--#{$prefix}body-bg) 100%
+        );
+        height: 34.875rem;
+        width: 10vw;
+        position: absolute;
+        z-index: 2;
+        display: none;
+        @include media-breakpoint-up(xxl) {
+          display: block;
+        }
+      }
+      &::before {
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &:after {
+        right: -1px;
+        top: 50%;
+        transform: translateY(-50%) rotateZ(180deg);
+      }
+      .swiper-wrapper {
+        height: 34.81rem;
+        .swiper-slide {
+          transition: 0.5s ease-in-out;
+          transition-property: opacity, height;
+          height: 28.125rem !important;
+          opacity: 0.5;
+          &.landscape {
+            max-width: 50rem;
+          }
+          &.portrait {
+            max-width: 25rem;
+          }
+          &.square {
+            max-width: 34.81rem;
+          }
+        }
+        .swiper-slide-active {
+          height: 34.81rem !important;
+          opacity: 1;
+        }
+      }
+    }
+    .swiper-thumbs {
+      max-width: 42.5rem;
+      width: 100%;
+      margin-top: 12px;
+      .swiper-wrapper {
+        width: max-content;
+        .swiper-slide {
+          opacity: 0.5;
+          img {
+            width: 100%;
+            height: 4rem;
+            object-fit: cover;
+            margin-bottom: map-get($spacers, 2);
+          }
+          &.swiper-slide-thumb-active {
+            opacity: 1;
+            img {
+              box-shadow: $input-focus-box-shadow;
+            }
+          }
+        }
+      }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: calc(50% - 2.875rem);
+    }
+  }
+}

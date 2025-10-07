@@ -1,0 +1,11 @@
+.toast {
+  padding: map-get($spacers, 2) map-get($spacers, 4);
+  .toast-header {
+    .btn-close {
+      margin-right: 0;
+    }
+  }
+  .toast-body {
+    padding: $toast-padding-y 0;
+  }
+}

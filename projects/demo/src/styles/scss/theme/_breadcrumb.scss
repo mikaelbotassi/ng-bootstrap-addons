@@ -1,0 +1,9 @@
+.breadcrumb {
+  font-weight: $font-weight-bold;
+}
+.breadcrumb-sticky-top{
+  @include media-breakpoint-up(xl){
+    position: sticky;
+    top: calc(var(--phoenix-navbar-top-height) + 2rem);
+  }
+}

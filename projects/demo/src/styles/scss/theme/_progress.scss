@@ -1,0 +1,41 @@
+.progress-stack {
+  .progress-bar {
+    margin-left: 1px;
+    margin-right: 1px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// circle progress bar
+
+.circle-progress-svg {
+  transform: rotate(170deg);
+  [dir='rtl'] & {
+    transform: rotate(-170deg);
+  }
+  .progress-bar-rail {
+    stroke-dasharray: 340px;
+    stroke-dashoffset: 150;
+    stroke: var(--#{$prefix}secondary-bg);
+  }
+
+  .progress-bar-top {
+    stroke-dasharray: 340px;
+    stroke-dashoffset: 340;
+    animation: strokeAnimation 1s ease-in-out forwards;
+  }
+}
+
+@keyframes strokeAnimation {
+  to {
+    stroke-dashoffset: calc(
+      340px - (188px * var(--#{$prefix}circle-progress-bar)) / 100
+    );
+  }
+}

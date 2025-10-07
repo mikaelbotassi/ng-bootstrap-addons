@@ -1,0 +1,211 @@
+.stock-overview-card {
+  width: 18.75rem !important;
+
+  @include media-breakpoint-up(sm){
+    min-width: 20rem;
+  }
+  @include media-breakpoint-up(xxl){
+    min-width: 22.5rem;
+  }
+}
+
+.overview-echart{
+  height: 2.75rem;
+  width: 6.875rem;
+}
+
+.top-stock-tab {
+  .company-card {
+    min-width: 18.75rem;
+    border: 1px solid var(--#{$prefix}border-color-translucent);
+    padding: 1.25rem;
+    position: relative;
+    &.active {
+      position: relative;
+      border: 1px solid var(--#{$prefix}primary);
+      @include media-breakpoint-up(xl) {
+        &::after, &::before{
+          content: '';
+          display: block;
+          position: absolute;
+          background-color: inherit;
+        }
+        &::before {
+          right: 0px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 10px;
+          height: 50px;
+          z-index: 2;
+        }
+        &::after {
+          z-index: 1;
+          right: -13px;
+          top: 50%;
+          transform: translateY(-50%) rotate(230deg);
+          width: 27.5px;
+          height: 23px;
+          border: inherit;
+          border-radius: 0px 6px;
+          clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+        }
+      }
+    }
+    @include media-breakpoint-up(sm){
+      min-width: 19.625rem;
+    }
+    @include media-breakpoint-up(xl){
+      min-width: 20.5rem;
+    }
+  }
+}
+
+html[dir='rtl']{
+  .top-stock-tab {
+    .company-card {
+      &.active {
+        @include media-breakpoint-up(xl) {
+          &::after {
+            transform: translateY(-50%) rotate(-48deg);
+            border-radius: 6px 0px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+.swiper-theme-container{
+  &.optionChainTableHeader, 
+  &.tabDetailsOptionChainTab{
+    .swiper-nav {
+      [class*='swiper-'] {
+        border: 0;
+        color: var(--#{$prefix}info);
+        background-color: transparent;
+        box-shadow: none;
+        @include hover-focus {
+          background-color: transparent;
+          color: var(--#{$prefix}primary);
+        }
+      }
+    }
+    .swiper-button-prev {
+      left: -0.5rem;
+    }
+    .swiper-button-next {
+      right: -0.5rem;
+      [dir='rtl'] & {
+        left: calc(100% - 2rem);
+      }
+    }
+}
+}
+
+.stock-news-tab {
+  &.backdrop-faded{
+    background: linear-gradient(
+      180deg,
+      rgba(var(--#{$prefix}black-rgb), 0) 0%,
+      var(--#{$prefix}black) 100%
+    );
+  }
+}
+
+.custom-calendar-container{
+  .custom-calender{
+    width: 4.5rem;
+    height: 4.5rem;
+    &::after, &::before{
+      content: '';
+      position: absolute;
+      height: 10px;
+      width: 2px;
+      background-color: var(--#{$prefix}border-color);
+      bottom: 93%;
+      border-radius: 4px;
+    }
+  
+    &::before{
+      left: 16px;
+    }
+    &::after{
+      right: 16px;
+    }
+  }
+  @include media-breakpoint-up(sm){
+    max-width: 4.5rem;
+  }
+}
+
+.stock-events-offcanvas{
+  @include media-breakpoint-up(lg){
+    width: 34.375rem !important;
+  }
+}
+
+.top-stock-card-container{
+  @include media-breakpoint-up(xl){
+    max-width: 23.75rem;
+  }
+}
+
+.stock-details-footer{
+  min-height: 4rem;
+}
+
+.portfolio-sidebar-container{
+  @include media-breakpoint-up(xl){
+    max-width: 24rem;
+  }
+}
+.stock-offcanvas-xl{
+  @include media-breakpoint-up(xl){
+    background-color: transparent;
+    position: sticky;
+    top: calc($navbar-top-height + 1rem) !important;
+    transform: none !important;
+    visibility: visible;
+    background-color: transparent;
+    box-shadow: none !important;
+    z-index: 1014;
+  }
+}
+
+.pagination-subtle{
+  .page {
+    font-weight: $font-weight-semibold !important;
+    font-size: map-get($font-sizes, 9) !important;
+  }
+  .active .page{
+    background-color: var(--#{$prefix}body-bg) !important;
+    border: 1px solid var(--#{$prefix}border-color-translucent);
+    color: var(--#{$prefix}primary) !important;
+  }
+}
+
+.watchlist-collapsible[aria-expanded='true']+.summery-statistics{
+  display: none;
+}
+
+.revenue-this-year-chart {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.revenue-next-year-chart {
+  width: 2.25rem;
+  height: 3rem;
+}
+
+.eps-this-year-chart {
+  width: 1.5rem;
+  height: 3rem;
+}
+
+.eps-next-year-chart {
+  width: 3rem;
+  height: 3rem;
+}

@@ -3,9 +3,7 @@
 bs-daterangepicker-inline-container{
 
     position: absolute !important;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
+    z-index: 3;
 
     *{font-size: .75rem !important}
 
@@ -25,6 +23,7 @@ bs-daterangepicker-inline-container{
 
         }
     }
+
     .bs-datepicker{
         width: max-content;
         max-width: 80vw;
@@ -65,14 +64,14 @@ bs-daterangepicker-inline-container{
         }
 
         .bs-datepicker-head{
-            background-color: $primary;
+            background-color: var(--sm-primary);
         }
 
         .bs-datepicker-body{
             table{
                 td{
                     span.selected, &.selected span, span[class*=select-]:after, &[class*=select-] span:after{
-                        background-color: $primary !important;
+                        background-color: var(--sm-primary) !important;
                     }
                     &.is-highlighted:not(.disabled):not(.selected) span, span.is-highlighted:not(.disabled):not(.selected){
                         background-color: lighten($primary, 60%) !important;

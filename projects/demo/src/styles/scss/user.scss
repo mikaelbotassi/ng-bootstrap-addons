@@ -1,0 +1,309 @@
+
+[class~="ratio"]{
+    position: relative;
+    overflow: hidden;
+    display: block }
+    
+[class~="ratio"] img {
+position: absolute;
+top: 50%;
+left: 50%;
+height: 100%;
+width: 100%;
+transform: translate(-50%, -50%);
+object-fit: cover }
+
+@mixin responsive-widths {
+    @each $breakpoint, $width in $grid-breakpoints {
+        @media (min-width: $width) {
+        &-#{$breakpoint}-100 { width: 100% !important; }
+        &-#{$breakpoint}-75  { width: 75% !important; }
+        &-#{$breakpoint}-50  { width: 50% !important; }
+        &-#{$breakpoint}-25  { width: 25% !important; }
+        }
+    }
+}
+
+.w { @include responsive-widths }
+
+.w-fit-content{ width: fit-content }
+.min-w-fit-content{ min-width: fit-content }
+
+@media(max-width:1320px){
+    [class*="container"] { padding: 0 1.5rem !important }
+}
+  
+@media(max-width:767.98px){
+    [class*="container"] { padding: 0 2rem !important }
+}
+
+@each $name, $color in $theme-colors {
+    .bg-gradient-#{$name} {
+      background: $color !important;
+      background: linear-gradient(
+        var(--#{$prefix}gradient-deg),
+        rgba(lighten($color,10), var(--#{$prefix}bg-opacity, 1)) 0%,
+        rgba(to-rgb($color), var(--#{$prefix}bg-opacity, 1)) 50%,
+        rgba(darken($color,10), var(--#{$prefix}bg-opacity, 1)) 100%
+      ) !important;
+    }
+}
+
+.bg-gradient-warning-primary {
+    background: $primary !important;
+    background: linear-gradient(
+      var(--#{$prefix}deg),
+      rgba(darken($primary,10), var(--#{$prefix}bg-opacity, 1)) 0%,
+      rgba(to-rgb($primary), var(--#{$prefix}bg-opacity, 1)) 25%,
+      rgba(darken($warning,10), var(--#{$prefix}bg-opacity, 1)) 50%,
+      rgba(to-rgb($warning), var(--#{$prefix}bg-opacity, 1)) 100%
+    ) !important;
+}
+  
+@for $i from 6 through 20 {
+    .border-#{$i} {
+        border-width: #{$i}px !important;
+    }
+}
+
+.needs-validation{
+  .ng-touched.ng-invalid:not(.no-validate) {
+    @extend .is-invalid;
+  }
+  
+  .ng-touched.ng-valid:not(.no-validate) {
+    @extend .is-valid;
+  }
+}
+
+@for $i from 1 through 12 {
+  .border-start-#{$i} {
+    border-left: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+  .border-end-#{$i} {
+    border-right-width: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+  .border-top-#{$i} {
+    border-top-width: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+  .border-bottom-#{$i} {
+    border-bottom-width: #{$i}px var(--sm-border-style) var(--sm-border-color) !important;
+  }
+}
+
+.modal-fullscreen {
+  @media (min-width: 576px) {
+    .modal-dialog {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      max-width: none;
+      border-radius: 0;
+    }
+    .modal-content {
+      height: 100%;
+      border-radius: 0;
+    }
+  }
+}
+
+.modal-content-bg-transparent {
+  .modal-content {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/// Variante compacta de form-floating com label acima ao focar/preencher
+/// Parâmetros:
+/// - $text-fs  : font-size do texto do input
+/// - $label-fs : font-size da label quando flutuada
+/// - $gap      : espaço entre label e input
+/// - $border-w : largura da borda (se usar Bootstrap, pode passar $border-width)
+/// - $px       : padding-x do input
+/// - $py       : padding-y do input (se null, usa calc(.45em + $border-w))
+@mixin nb-form-floating-size(
+  $text-fs: 1em,
+  $gap: 0em,
+  $border-w: null,
+  $px: 1em,
+  $py: null,
+) {
+  // fallback de borda e padding-y
+  $border-w: if($border-w == null,
+    if(global-variable-exists(border-width), $border-width, 1px),
+    $border-w
+  );
+  $lh: 1.5; // line-height fixo
+  $lf-perc: 0.75; // escala da label ao focar
+  $label-fs: calc(($text-fs * $lf-perc));
+  @if $py == null { $py: calc(.45em + #{$border-w}); }
+  @else { $py: calc(#{$py} + #{$border-w}); }
+
+  // === estilos ===
+  > label{
+    display: inline-flex;
+    align-items: baseline;
+    padding: 0 $px;
+    font-size: $text-fs;
+    line-height: $lh;
+    height: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all .15s ease-in-out; // ✅ transição suave
+  }
+
+  > .form-control,
+  > .form-control-plaintext,
+  > .form-select{
+    font-size: $text-fs;
+    padding: $py $px $py calc($px - 3px); // topo ampliado
+    height: auto;
+    min-height: auto;
+    &:has(~label){
+      padding-top: calc($label-fs + $gap + $py);
+    }
+  }
+
+  // estados de flutuação (foco/valor)
+  > .form-control:focus,
+  > .form-control:not(:placeholder-shown),
+  > .form-control-plaintext,
+  > .form-select {
+    ~ label{
+      padding-bottom: $gap;
+      padding-top: calc($lh * $py) !important;
+      top: 0;
+      transform: translateY(0) scale($lf-perc);
+    }
+  }
+}
+
+/* XS */
+.form-floating.form-floating-xs {
+  @include nb-form-floating-size(
+    $text-fs: .5rem,
+    $gap: .1rem,
+    $py: .25rem,
+    $border-w: $border-width,
+    $px: 1rem,
+  );
+}
+
+/* SM (a sua atual) */
+.form-floating.form-floating-sm {
+  @include nb-form-floating-size(
+    $text-fs: .65rem,
+    $border-w: $border-width,
+    $gap: .15rem,
+    $px: 1rem,
+    $py: .35rem
+  );
+}
+
+.form-floating.form-floating-md {
+  @include nb-form-floating-size(
+    $text-fs: .75rem,
+    $gap: .25rem,
+    $border-w: $border-width,
+    $px: 1rem,
+    $py: .35rem,
+  );
+}
+
+/* LG */
+.form-floating.form-floating-lg {
+  @include nb-form-floating-size(
+    $text-fs: 1rem,
+    $gap: .5rem,
+    $border-w: $border-width,
+    $px: 1rem,
+    $py: .5rem,
+  );
+}
+
+@for $i from 3 through 9 {
+  .fw-#{$i * 100} {
+    font-weight: #{$i * 100} !important;
+  }
+}
+
+i-feather{
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  width: 1em !important;
+  height: 1em !important;
+}
+
+.icon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+}
+
+.icon-circle{
+  
+  $size: calc(1em + .75rem);
+
+  width: $size;
+  height: $size;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+
+  position: relative;
+  &::before{
+    content: "";
+    position: absolute;
+    inset: 100%;
+  }
+
+  > *{
+    opacity: 75%;
+  }
+
+}
+
+.navbar-vertical-collapsed .navbar-vertical.navbar-expand-lg .nav-item-wrapper:hover .parent-wrapper.label-1, .navbar-vertical-collapsed .navbar-vertical.navbar-expand-lg .nav-item-wrapper:hover{
+  .nav-link:has(+ .parent-wrapper.label-1 > .collapse){
+    .nav-link-text-wrapper{
+      display: none !important;
+    }
+  }
+}
+
+.btn.navbar-vertical-toggle{
+  padding-left: 1.5rem; 
+  padding-right: 1.5rem;
+}
+
+@mixin responsive-overflow {
+    @each $breakpoint, $width in $grid-breakpoints {
+        @media (min-width: $width) {
+          &-#{$breakpoint}-visible { overflow: visible !important; }
+          &-x-#{$breakpoint}-visible { overflow-x: visible !important; }
+          &-y-#{$breakpoint}-visible { overflow-y: visible !important; }
+          &-#{$breakpoint}-auto { overflow: auto !important; }
+          &-x-#{$breakpoint}-auto { overflow-x: auto !important; }
+          &-y-#{$breakpoint}-auto { overflow-y: auto !important; }
+          &-#{$breakpoint}-hidden { overflow: hidden !important; }
+          &-x-#{$breakpoint}-hidden { overflow-x: hidden !important; }
+          &-y-#{$breakpoint}-hidden { overflow-y: hidden !important; }
+          &-#{$breakpoint}-scroll { overflow: scroll !important; }
+          &-x-#{$breakpoint}-scroll { overflow-x: scroll !important; }
+          &-y-#{$breakpoint}-scroll { overflow-y: scroll !important; }
+        }
+    }
+}
+
+.overflow { @include responsive-overflow; }
