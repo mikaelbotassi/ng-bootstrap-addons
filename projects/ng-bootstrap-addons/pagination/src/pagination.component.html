@@ -1,0 +1,45 @@
+<div class="d-flex flex-row align-items-stretch gap-2 justify-content-end flex-wrap card p-0 w-fit-content lh-1">
+        <div class="btn-group">
+                <button type="button" class="btn border-0 btn-sm px-2"
+                (click)="firstPage()" [disabled]="!hasPreviousPage()">
+                        <i class="text-primary nba-chevrons-left"></i>
+                </button>
+                <button type="button" class="btn border-0 btn-sm px-2"
+                (click)="previousPage()" [disabled]="!hasPreviousPage()">
+                        <i class="text-primary nba-chevron-left"></i>
+                </button>
+        </div>
+
+        <div class="d-flex align-items-center gap-1">
+                <input type="number"
+                        class="form-control-plaintext small"
+                        [ngStyle]="{'width': width()}"
+                        style="height: 1em;"
+                        min="1"
+                        [max]="totalPages()"
+                        [(ngModel)]="currentPage"
+                />
+                <small class="text-nowrap">/ {{ totalPages() }}</small>
+        </div>
+
+        <div class="btn-group">
+                <button type="button" class="btn border-0 btn-sm px-2"
+                        (click)="nextPage()" [disabled]="!hasNextPage()"><i class="text-primary nba-chevron-right"></i></button>
+                <button type="button" class="btn border-0 btn-sm px-2"
+                        (click)="lastPage()" [disabled]="!hasNextPage()"><i class="text-primary nba-chevrons-right"></i></button>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+                <small> Mostrando <b class="text-primary">{{ pagination().initialIndex }}</b>–<b class="text-primary">{{ pagination().finalIndex }}</b>   de <b class="text-primary">{{ formatNumber(pagination().totalItems) }}</b>
+                </small>
+                <small>por pág:</small>
+                <select class="form-select border-0 shadow-none w-auto no-validate"
+                        [(ngModel)]="itemsPerPage" [ngModel]="itemsPerPage()"
+                        (ngModelChange)="onItemsPerPage($event)"
+                >
+                        @for(option of itemsPerPageOptions(); track $index){
+                                <option [value]="option">{{ option }}</option>
+                        }
+                </select>
+        </div>
+</div>

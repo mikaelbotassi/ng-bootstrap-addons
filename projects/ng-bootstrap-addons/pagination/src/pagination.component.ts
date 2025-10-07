@@ -1,17 +1,21 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'nba-pagination',
-  imports: [FormsModule],
-  templateUrl: './pagination.component.html'
+  imports: [FormsModule, CommonModule],
+  styleUrl: './pagination.component.scss',
+  templateUrl: './pagination.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent<T=any> {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   list = input<T[]>([]);
+  itemsPerPageOptions = input<number[]>([10, 25, 50]);
 
   paginatedList = computed(() => {
     const start = (this.currentPage() - 1) * this.itemsPerPage();
@@ -30,6 +34,13 @@ export class PaginationComponent<T=any> {
     return { totalItems, itemsPerPage: this.itemsPerPage(), currentPage: this.currentPage(), initialIndex, finalIndex };
   });
 
+  width = computed(() => {
+    const currentPage = this.currentPage();
+    if(currentPage < 10) return '1.35rem';
+    if(currentPage < 100) return '1.75rem';
+    return '2rem';
+  });
+
   totalPages = computed(() => Math.ceil(this.list().length / this.itemsPerPage()));
 
   hasPreviousPage = computed(() => this.currentPage() > 1);
@@ -39,6 +50,7 @@ export class PaginationComponent<T=any> {
     effect(() => {
       const page = this.currentPage();
       this.updateQueryString(page);
+      this.itemsPerPage.set(this.itemsPerPageOptions()[0]);
     });
 
     this.route.queryParams.subscribe(params => {

@@ -5,3 +5,4 @@ export * from './date-range-picker/date-range-picker.component';
 export * from './ac-search-lov';
 export * from './ac-search-lov/services/auto-complete.service';
 export * from './numeric-interval-input/numeric-interval-input.component';
+export * from './input-number/input-number.component';

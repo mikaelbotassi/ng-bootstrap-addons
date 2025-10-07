@@ -6,7 +6,9 @@ import { FormsModule } from '@angular/forms';
   selector: 'th[checkbox]',
   imports: [FormsModule],
   templateUrl: './table-header-checkbox.component.html',
-  styles: `:host{ width: 2rem; }`,
+  styles: `
+    :host{ width: 2rem; }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeaderCheckboxComponent {

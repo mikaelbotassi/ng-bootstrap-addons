@@ -1,0 +1,23 @@
+<div class="position-relative">
+    @if(control){
+        <input
+            type="number"
+            [formControl]="control"
+            [class]="inputClass() + ' opacity-0 position-absolute w-0 h-0'"
+            [id]="inputId()"
+            [name]="inputId()"
+            #input
+        >
+    }
+    <div class="form-group d-flex align-items-center justify-content-between gap-1">
+        <label [for]="inputId()" class="flex-fill text-primary fs-9">{{ control?.value ?? '-' }}</label>
+        <div class="d-flex flex-column">
+            <button type="button" class="btn btn-sm border-0 p-0 lh-1" (click)="increase()">
+                <i class="fs-9 nba-chevron-up"></i>
+            </button>
+            <button type="button" class="btn btn-sm border-0 p-0 lh-1" (click)="decrease()">
+                <i class="fs-9 nba-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+</div>

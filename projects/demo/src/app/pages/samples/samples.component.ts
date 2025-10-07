@@ -15,6 +15,8 @@ import { NumericIntervalInputSampleComponent } from '../../components/numeric-in
 import FormCustomerComponent from '../form-page/components/form-customer/form-customer.component';
 import { ComponentNavigationService } from 'project/services/src/component-navigation.service';
 import { CustomerCardListComponent } from '../form-page/components/customer-card-list/customer-card-list.component';
+import { PaginationSampleComponent } from '../../components/pagination-sample/pagination-sample.component';
+import { InputNumberSampleComponent } from '../../components/input-number-sample/input-number-sample-sample.component';
 
 @Component({
   selector: 'app-samples',
@@ -32,7 +34,9 @@ import { CustomerCardListComponent } from '../form-page/components/customer-card
     TextareaSampleComponent,
     LabelSampleComponent,
     TableSampleComponent,
-    NumericIntervalInputSampleComponent
+    NumericIntervalInputSampleComponent,
+    PaginationSampleComponent,
+    InputNumberSampleComponent
   ],
 })
 export class SamplesComponent {

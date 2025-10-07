@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
-import { PaginationComponent } from 'ng-bootstrap-addons/components';
+import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
 
 @Component({
   selector: 'nba-table',
