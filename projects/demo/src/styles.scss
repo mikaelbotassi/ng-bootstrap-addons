@@ -1,6 +1,7 @@
 @use "./styles/index.scss" as *;
 @import './styles/icon.scss';
 @import './styles/ngx-bootstrap/ngx-bootstrap.scss';
+@import '../../../dist/ng-bootstrap-addons/src/styles/index.scss';
 
 :root {
   --sm-gradient-deg: 135deg;

@@ -1,8 +1,6 @@
-<div dropdown #dropdown="bs-dropdown" [autoClose]="false" [class]="class()" clickOutside (onClickOutside)="onClickOutside(dropdown)">
-    <a href="javascript:;" dropdownToggle #dropdownToggle aria-controls="dropdown-filter" [class.active]="isFiltered()" class="pe-3">
-        <i class="nba-filter"></i>
-    </a>
-    <div id="dropdown-filter" *dropdownMenu class="dropdown-menu shadow-sm w-100 p-2 mt-1">
-        <nba-column-filter-form [type]="type()" (onClearFilter)="dropdownToggle.click(); onClearFilter.emit()" (filter)="dropdownToggle.click();filter.emit($event)" [dynamicFilter]="dynamicFilter()" />
-    </div>
+<a href="javascript:;" dropdownToggle #dropdownToggle aria-controls="dropdown-filter" [class.active]="isFiltered()" class="pe-3">
+    <i class="nba-filter"></i>
+</a>
+<div id="dropdown-filter" *dropdownMenu class="dropdown-menu shadow-sm w-100 p-2 mt-1">
+    <nba-column-filter-form [type]="type()" (onClearFilter)="dropdownToggle.click(); onClearFilter.emit()" (filter)="dropdownToggle.click();filter.emit($event)" [dynamicFilter]="dynamicFilter()" />
 </div>

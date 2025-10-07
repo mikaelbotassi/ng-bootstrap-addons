@@ -2,11 +2,12 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject,
 import { ColumnFilterComponent } from '../column-filter/column-filter.component';
 import { TableComponent } from '../../table.component';
 import { ColumnFilterType, FilterFunction, SortDirection } from '../../models/table-models';
+import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 @Component({
   selector: 'th[nbaColumnHeader]',
   templateUrl: './column-header.component.html',
-  imports: [ColumnFilterComponent],
+  imports: [ColumnFilterComponent, BsDropdownDirective],
   styleUrls: ['./column-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
