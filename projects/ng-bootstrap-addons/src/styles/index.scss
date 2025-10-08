@@ -23,6 +23,15 @@
   $label-fs: calc(($text-fs * $lf-perc));
   @if $py == null { $py: calc(.45em + #{$border-w}); }
   @else { $py: calc(#{$py} + #{$border-w}); }
+  $transitions: all .15s ease-in-out;
+
+  > textarea {
+    min-height: 4em !important;
+    + label{
+      top: 1em;
+      transform: translateY(0);
+    }
+  }
 
   // === estilos ===
   > label{
@@ -34,14 +43,14 @@
     height: auto;
     top: 50%;
     transform: translateY(-50%);
-    transition: all .15s ease-in-out; // ✅ transição suave
+    transition: $transitions;
   }
 
   > .form-control,
   > .form-control-plaintext,
   > .form-select{
     font-size: $text-fs;
-    padding: $py $px $py calc($px - 3px); // topo ampliado
+    padding: $py $px $py calc($px - 3px);
     height: auto;
     min-height: auto;
     &:has(~label){
@@ -57,8 +66,9 @@
     ~ label{
       padding-bottom: $gap;
       padding-top: calc($lh * $py) !important;
-      top: 0;
       transform: translateY(0) scale($lf-perc);
+      top: 0;
+      transition: $transitions;
     }
   }
 }
