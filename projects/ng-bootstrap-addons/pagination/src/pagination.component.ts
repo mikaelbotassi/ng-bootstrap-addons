@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InputNumberComponent } from 'ng-bootstrap-addons/inputs';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'nba-pagination',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, InputNumberComponent],
   styleUrl: './pagination.component.scss',
   templateUrl: './pagination.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,7 +25,10 @@ export class PaginationComponent<T=any> {
     return this.list().slice(start, end);
   });
 
+  changeUrl = input(true, { transform: booleanAttribute});
+
   itemsPerPage = signal(10);
+  queryParamName = input('p');
 
   currentPage = signal(this.getInitialPage());
 
@@ -32,13 +37,6 @@ export class PaginationComponent<T=any> {
     const initialIndex = (this.currentPage() - 1) * this.itemsPerPage() + 1;
     const finalIndex = Math.min(this.currentPage() * this.itemsPerPage(), totalItems);
     return { totalItems, itemsPerPage: this.itemsPerPage(), currentPage: this.currentPage(), initialIndex, finalIndex };
-  });
-
-  width = computed(() => {
-    const currentPage = this.currentPage();
-    if(currentPage < 10) return '1.35rem';
-    if(currentPage < 100) return '1.75rem';
-    return '2rem';
   });
 
   totalPages = computed(() => Math.ceil(this.list().length / this.itemsPerPage()));
@@ -53,8 +51,12 @@ export class PaginationComponent<T=any> {
       this.itemsPerPage.set(this.itemsPerPageOptions()[0]);
     });
 
-    this.route.queryParams.subscribe(params => {
-      const page = parseInt(params['p']) || 1;
+    this.route.queryParams
+    .pipe(
+      filter(() => this.changeUrl())
+    )
+    .subscribe(params => {
+      const page = parseInt(params[this.queryParamName()]) || 1;
       if (page !== this.currentPage()) {
         this.currentPage.set(page);
       }
@@ -62,17 +64,18 @@ export class PaginationComponent<T=any> {
   }
 
   private getInitialPage(): number {
-    const page = parseInt(this.route.snapshot.queryParams['p']) || 1;
+    const page = parseInt(this.route.snapshot.queryParams[this.queryParamName()]) || 1;
     return page > 0 ? page : 1;
   }
 
   private updateQueryString(page: number) {
+    if(!this.changeUrl()) return;
     const queryParams = { ...this.route.snapshot.queryParams };
     
     if (page === 1) {
-      delete queryParams['p'];
+      delete queryParams[this.queryParamName()];
     } else {
-      queryParams['p'] = page.toString();
+      queryParams[this.queryParamName()] = page?.toString();
     }
 
     this.router.navigate([], {

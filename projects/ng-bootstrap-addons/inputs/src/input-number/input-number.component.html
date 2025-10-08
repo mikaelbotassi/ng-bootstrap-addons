@@ -3,21 +3,13 @@
         <input
             type="number"
             [formControl]="control"
-            [class]="inputClass() + ' opacity-0 position-absolute w-0 h-0'"
+            [class]="inputClass() + ' form-control-plaintext position-absolute top-0 start-0 end-0 bottom-0 p-0'"
             [id]="inputId()"
+            [min]="min()"
+            [max]="max()"
             [name]="inputId()"
             #input
         >
+        <label [for]="inputId()" class="pe-3 opacity-0 py-1 pointer-events-none">{{ control.value ?? '' }}</label>
     }
-    <div class="form-group d-flex align-items-center justify-content-between gap-1">
-        <label [for]="inputId()" class="flex-fill text-primary fs-9">{{ control?.value ?? '-' }}</label>
-        <div class="d-flex flex-column">
-            <button type="button" class="btn btn-sm border-0 p-0 lh-1" (click)="increase()">
-                <i class="fs-9 nba-chevron-up"></i>
-            </button>
-            <button type="button" class="btn btn-sm border-0 p-0 lh-1" (click)="decrease()">
-                <i class="fs-9 nba-chevron-down"></i>
-            </button>
-        </div>
-    </div>
 </div>

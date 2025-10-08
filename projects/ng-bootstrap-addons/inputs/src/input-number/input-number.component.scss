@@ -30,25 +30,14 @@ i {
   }
 }
 
-input{
-    &:focus, &:focus-visible, &:focus-within{
-        +div>label{
-            &::after{
-                content: '|';
-                animation: blink .8s steps(1) infinite;
-            }
-        }
-    }
-}
-
 @keyframes blink {
     0% {
-        opacity: 1;
+        opacity: .75;
     }
     50% {
         opacity: 0;
     }
     100% {
-        opacity: 1;
+        opacity: .75;
     }
 }

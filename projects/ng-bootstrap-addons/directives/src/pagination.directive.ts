@@ -58,7 +58,7 @@ export class PaginationDirective<T=any> {
     if (page === 1) {
       delete queryParams['p'];
     } else {
-      queryParams['p'] = page.toString();
+      queryParams['p'] = page?.toString();
     }
 
     this.router.navigate([], {
