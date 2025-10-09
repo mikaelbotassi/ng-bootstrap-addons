@@ -10,19 +10,14 @@ import {
   signal,
   TemplateRef,
   ViewEncapsulation,
-  OnInit,
   inject,
-  DestroyRef,
   afterNextRender,
-  effect,
   Injector,
   runInInjectionContext,
   viewChild,
 } from '@angular/core';
 import { FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
 import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
 
@@ -170,6 +165,8 @@ export class TableComponent<T = any> {
   urlParam = input<string>('page');
   syncWithUrl = input(true, { transform: booleanAttribute });
   paginated = input(true, { transform: booleanAttribute });
+  itemsPerPage = model(10);
+  currentPage = model(1);
   private paginationComponent = viewChild<PaginationComponent<T>>('pg');
   private injector = inject(Injector);
 

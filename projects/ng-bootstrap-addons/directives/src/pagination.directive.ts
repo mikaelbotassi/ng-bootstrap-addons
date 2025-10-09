@@ -1,34 +1,48 @@
-import { computed, Directive, signal, inject, effect } from '@angular/core';
+import { computed, Directive, inject, effect, input, model, booleanAttribute } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Directive({
-  selector: '[appPagination]'
+  selector: '[nbaPagination]'
 })
 export class PaginationDirective<T=any> {
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  list = signal<T[]>([]);
+  list = input<T[]>([]);
+  perPageOptions = input<number[]>([10, 25, 50]);
+  itemsPerPage = model(10);
+  formattedOptions = computed(() => {
+    const options = this.perPageOptions();
+    const itemsPerPage = this.itemsPerPage();
+    if (!options.includes(itemsPerPage)) {
+      options.push(itemsPerPage);
+      options.sort((a, b) => a - b);
+    }
+    return options;
+  });
 
   paginatedList = computed(() => {
-    const start = (this.currentPage() - 1) * this.itemPerPage();
-    const end = start + this.itemPerPage();
+    const start = (this.currentPage() - 1) * this.itemsPerPage();
+    const end = start + this.itemsPerPage();
     return this.list().slice(start, end);
   });
 
-  itemPerPage = signal(10);
+  changeUrl = input(true, { transform: booleanAttribute});
 
-  currentPage = signal(this.getInitialPage());
+  queryParamName = input('p');
+
+  currentPage = model(this.getInitialPage());
 
   pagination = computed(() => {
     const totalItems = this.list().length;
-    const initialIndex = (this.currentPage() - 1) * this.itemPerPage() + 1;
-    const finalIndex = Math.min(this.currentPage() * this.itemPerPage(), totalItems);
-    return { totalItems, itemsPerPage: this.itemPerPage(), currentPage: this.currentPage(), initialIndex, finalIndex };
+    const initialIndex = (this.currentPage() - 1) * this.itemsPerPage() + 1;
+    const finalIndex = Math.min(this.currentPage() * this.itemsPerPage(), totalItems);
+    return { totalItems, itemsPerPage: this.itemsPerPage(), currentPage: this.currentPage(), initialIndex, finalIndex };
   });
 
-  totalPages = computed(() => Math.ceil(this.list().length / this.itemPerPage()));
+  totalPages = computed(() => Math.ceil(this.list().length / this.itemsPerPage()));
 
   hasPreviousPage = computed(() => this.currentPage() > 1);
   hasNextPage = computed(() => this.currentPage() < this.totalPages());
@@ -39,8 +53,12 @@ export class PaginationDirective<T=any> {
       this.updateQueryString(page);
     });
 
-    this.route.queryParams.subscribe(params => {
-      const page = parseInt(params['p']) || 1;
+    this.route.queryParams
+    .pipe(
+      filter(() => this.changeUrl())
+    )
+    .subscribe(params => {
+      const page = parseInt(params[this.queryParamName()]) || 1;
       if (page !== this.currentPage()) {
         this.currentPage.set(page);
       }
@@ -48,17 +66,18 @@ export class PaginationDirective<T=any> {
   }
 
   private getInitialPage(): number {
-    const page = parseInt(this.route.snapshot.queryParams['p']) || 1;
+    const page = parseInt(this.route.snapshot.queryParams[this.queryParamName()]) || 1;
     return page > 0 ? page : 1;
   }
 
   private updateQueryString(page: number) {
+    if(!this.changeUrl()) return;
     const queryParams = { ...this.route.snapshot.queryParams };
     
     if (page === 1) {
-      delete queryParams['p'];
+      delete queryParams[this.queryParamName()];
     } else {
-      queryParams['p'] = page?.toString();
+      queryParams[this.queryParamName()] = page?.toString();
     }
 
     this.router.navigate([], {
@@ -90,6 +109,15 @@ export class PaginationDirective<T=any> {
 
   lastPage() {
     this.goToPage(this.totalPages());
+  }
+
+  formatNumber(n: number) {
+    return new Intl.NumberFormat('pt-BR').format(n);
+  }
+
+  onItemsPerPage(value: number) {
+    this.itemsPerPage.set(value);
+    this.currentPage.set(1);
   }
 
 }

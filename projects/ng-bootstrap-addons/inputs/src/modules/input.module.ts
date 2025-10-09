@@ -3,7 +3,7 @@ import {
   AutoCompleteLovComponent,
   DateRangePickerComponent,
   InputComponent,
-  InputNumberComponent,
+  DynamicSizeInputComponent,
   InputPlaceholderComponent,
   NumericIntervalInputComponent,
   SwitchComponent
@@ -14,7 +14,7 @@ const components = [
   AutoCompleteLovComponent,
   DateRangePickerComponent,
   InputComponent,
-  InputNumberComponent,
+  DynamicSizeInputComponent,
   InputPlaceholderComponent,
   NumericIntervalInputComponent,
   SwitchComponent

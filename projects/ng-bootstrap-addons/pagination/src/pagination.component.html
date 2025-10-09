@@ -10,14 +10,14 @@
                 </button>
         </div>
 
-        <div class="d-flex align-items-center">
-                <nba-input-number
-                        class="m-0 p-0 small"
+        <div class="d-flex align-items-stretch">
+                <nba-dynamic-size-input
+                        class="m-0 p-0 small d-inline-flex align-items-center"
                         min="1"
-                        [max]="totalPages()"
+                        max="10"
                         [(ngModel)]="currentPage"
                 />
-                <small class="text-nowrap">/ {{ totalPages() }}</small>
+                <small class="text-nowrap d-inline-flex align-items-center">/ {{ totalPages() }}</small>
         </div>
 
         <div class="btn-group">
@@ -35,7 +35,7 @@
                         [(ngModel)]="itemsPerPage" [ngModel]="itemsPerPage()"
                         (ngModelChange)="onItemsPerPage($event)"
                 >
-                        @for(option of itemsPerPageOptions(); track $index){
+                        @for(option of formattedOptions(); track $index){
                                 <option [value]="option">{{ option }}</option>
                         }
                 </select>

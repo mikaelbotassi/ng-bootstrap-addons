@@ -12,11 +12,10 @@ import { TextareaSampleComponent } from '../../components/textarea-sample/textar
 import { LabelSampleComponent } from '../../components/label-sample/label-sample.component';
 import { TableSampleComponent } from '../../components/table-sample/table-sample.component';
 import { NumericIntervalInputSampleComponent } from '../../components/numeric-interval-input-sample/numeric-interval-input-sample.component';
-import FormCustomerComponent from '../form-page/components/form-customer/form-customer.component';
 import { ComponentNavigationService } from 'project/services/src/component-navigation.service';
 import { CustomerCardListComponent } from '../form-page/components/customer-card-list/customer-card-list.component';
 import { PaginationSampleComponent } from '../../components/pagination-sample/pagination-sample.component';
-import { InputNumberSampleComponent } from '../../components/input-number-sample/input-number-sample-sample.component';
+import { DynamicSizeInputSampleComponent } from '../../components/dynamic-size-input-sample/dynamic-size-input-sample.component';
 
 @Component({
   selector: 'app-samples',
@@ -36,7 +35,7 @@ import { InputNumberSampleComponent } from '../../components/input-number-sample
     TableSampleComponent,
     NumericIntervalInputSampleComponent,
     PaginationSampleComponent,
-    InputNumberSampleComponent
+    DynamicSizeInputSampleComponent
   ],
 })
 export class SamplesComponent {
