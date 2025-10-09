@@ -4,8 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build ng-bootstrap-addons --configuration production",
+    "build:patch": "cd projects/ng-bootstrap-addons && npm version patch && ng build ng-bootstrap-addons --configuration production",
+    "build:minor": "cd projects/ng-bootstrap-addons && npm version minor && ng build ng-bootstrap-addons --configuration production",
+    "build:major": "cd projects/ng-bootstrap-addons && npm version major && ng build ng-bootstrap-addons --configuration production",
     "watch": "ng build --watch --configuration development",
+    "publish": "cd dist/ng-bootstrap-addons && npm publish --access public",
     "test": "ng test"
   },
   "private": true,
