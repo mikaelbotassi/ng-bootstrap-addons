@@ -21,6 +21,9 @@ import { InputType } from '../models/input-models';
 export class DynamicSizeInputComponent extends ControlValueAccessorDirective<number> {
 
   type = input<InputType>('text');
+  min = input(null, {transform: numberAttribute});
+  max = input(null, {transform: numberAttribute});
+  step = input(null, {transform: numberAttribute})
   ///NgxMask
   mask = input<string>();
   validation = input(true);

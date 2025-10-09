@@ -13,8 +13,9 @@
         <div class="d-flex align-items-stretch">
                 <nba-dynamic-size-input
                         class="m-0 p-0 small d-inline-flex align-items-center"
-                        min="1"
-                        max="10"
+                        [min]="1"
+                        type="number"
+                        [max]="totalPages()"
                         [(ngModel)]="currentPage"
                 />
                 <small class="text-nowrap d-inline-flex align-items-center">/ {{ totalPages() }}</small>
@@ -31,7 +32,7 @@
                 <small> Mostrando <b class="text-primary">{{ pagination().initialIndex }}</b>–<b class="text-primary">{{ pagination().finalIndex }}</b>   de <b class="text-primary">{{ formatNumber(pagination().totalItems) }}</b>
                 </small>
                 <small>por pág:</small>
-                <select class="form-select border-0 shadow-none w-auto no-validate"
+                <select class="form-select border-0 shadow-none w-auto no-validate small lh-1"
                         [(ngModel)]="itemsPerPage" [ngModel]="itemsPerPage()"
                         (ngModelChange)="onItemsPerPage($event)"
                 >
