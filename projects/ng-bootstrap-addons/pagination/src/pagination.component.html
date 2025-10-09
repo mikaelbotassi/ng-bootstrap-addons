@@ -37,7 +37,7 @@
                         (ngModelChange)="onItemsPerPage($event)"
                 >
                         @for(option of formattedOptions(); track $index){
-                                <option [value]="option">{{ option }}</option>
+                                <option [ngValue]="option">{{ option }}</option>
                         }
                 </select>
         </div>

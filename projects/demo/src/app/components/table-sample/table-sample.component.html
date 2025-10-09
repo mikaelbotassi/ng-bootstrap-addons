@@ -2,6 +2,7 @@
   <nba-table #dt
     [multiple]="true"
     [value]="list()"
+    [itemsPerPage]="13"
     [globalFilterFields]="['name', 'country.name', 'representative.name']"
     [(selectedRows)]="selectedRows"
   >

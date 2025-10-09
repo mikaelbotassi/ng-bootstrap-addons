@@ -11,11 +11,23 @@ export class PaginationDirective<T=any> {
   private route = inject(ActivatedRoute);
 
   list = input<T[]>([]);
-  perPageOptions = input<number[]>([10, 25, 50]);
-  itemsPerPage = model(10);
-  formattedOptions = computed(() => {
+  perPageOptions = model<number[]>([10, 25, 50]);
+  itemsPerPage = model<number>(10);
+  formatOptions = effect(() => {
     const options = this.perPageOptions();
-    const itemsPerPage = this.itemsPerPage();
+    const itemsPerPage = Number(this.itemsPerPage());
+    
+    if (!options.includes(itemsPerPage)) {
+      options.push(itemsPerPage);
+      options.sort((a, b) => a - b);
+    }
+  });
+  formattedOptions = computed(() => {
+    const originalOptions = this.perPageOptions();
+    const itemsPerPage = Number(this.itemsPerPage());
+    
+    const options = [...originalOptions];
+    
     if (!options.includes(itemsPerPage)) {
       options.push(itemsPerPage);
       options.sort((a, b) => a - b);
