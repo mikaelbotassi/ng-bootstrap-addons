@@ -7,11 +7,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
-import { AutofocusDirective, ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
+import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { Command1, createRandomString } from 'ng-bootstrap-addons/utils';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { AcMap, ActionPerformed, AutoCompleteConfig, Status } from './models/ac-models';
+import { AutofocusDirective } from 'project/directives/src/autofocus.directive';
 
 @Component({
   selector: 'nba-ac-lov',

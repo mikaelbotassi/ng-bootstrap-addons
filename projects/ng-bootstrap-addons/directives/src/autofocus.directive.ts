@@ -1,12 +1,17 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, input } from '@angular/core';
 
 @Directive({
   selector: '[autofocus]'
 })
 export class AutofocusDirective {
+
+  autofocus = input(false);
+
   constructor(private host: ElementRef) {}
 
   ngAfterViewInit() {
-    this.host.nativeElement.focus();
+    if (this.autofocus()) {
+      this.host.nativeElement.focus();
+    }
   }
 }
