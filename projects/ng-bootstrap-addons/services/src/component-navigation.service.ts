@@ -10,7 +10,7 @@ export class ComponentNavigationService {
 
     constructor(private _router: Router, private _location: Location) {}
 
-    async go(component: any, state?: any) {
+    async go<T extends object = any>(component: Type<any>, state?: T) {
 
         if(this._componentRouteMap.has(component)){
             this._router.navigate([`/${this._componentRouteMap.get(component)}`], { state: state });

@@ -43,7 +43,7 @@ export class SamplesComponent {
   private navigationService = inject(ComponentNavigationService);
 
   openList() {
-    this.navigationService.go(CustomerCardListComponent, {name: 'Customer List'});
+    this.navigationService.go<{name:string}>(CustomerCardListComponent, {name: 'Customer List'});
   }
 
 }
