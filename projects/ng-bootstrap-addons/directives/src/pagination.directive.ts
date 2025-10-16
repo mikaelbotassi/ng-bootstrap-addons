@@ -7,10 +7,10 @@ import { filter } from 'rxjs';
 })
 export class PaginationDirective<T=any> {
 
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  protected router = inject(Router);
+  protected route = inject(ActivatedRoute);
 
-  list = input<T[]>([]);
+  list = model<T[]>([]);
   perPageOptions = model<number[]>([10, 25, 50]);
   itemsPerPage = model<number>(10);
   formatOptions = effect(() => {

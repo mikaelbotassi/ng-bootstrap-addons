@@ -28,6 +28,6 @@
         </div>
     </div>
     <div class="py-3 pe-3 ms-auto">
-        <nba-pagination [(itemsPerPage)]="itemsPerPage" [(currentPage)]="currentPage" [changeUrl]="syncWithUrl()"  [class]="paginated() && processedData().length ? '' : 'd-none'" #pg [list]="processedData()"></nba-pagination>
+        <nba-pagination [(itemsPerPage)]="itemsPerPage" [queryParamName]="urlParam()" [(currentPage)]="currentPage" [changeUrl]="syncWithUrl()"  [class]="paginated() && processedData().length ? '' : 'd-none'" #pg [list]="processedData()"></nba-pagination>
     </div>
 </div>
