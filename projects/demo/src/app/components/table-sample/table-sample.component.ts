@@ -11,6 +11,7 @@ import { FilterFunction } from 'project/table/src/models/table-models';
 import { DatePipe } from '@angular/common';
 import { TableRowControlComponent } from 'project/table/src/components/table-row-control/table-row-control.component';
 import { TableHeaderCheckboxComponent } from 'project/table/src/components/table-header-checkbox/table-header-checkbox.component';
+import { CollapseDirective } from "ngx-bootstrap/collapse";
 
 @Component({
   selector: 'app-table-sample',

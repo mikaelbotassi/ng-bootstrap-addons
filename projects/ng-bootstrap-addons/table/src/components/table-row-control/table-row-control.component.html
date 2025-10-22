@@ -1,24 +1,47 @@
 <!-- table-row-control.component.html -->
 @if(multiple()){
-    <td style="width: 2rem;" class="ps-1">
+    <td style="width: 2rem;" class="ps-1 no-clickable">
         <input type="checkbox" 
-               class="form-check-input" 
+               class="form-check-input no-validate" 
                [ngModel]="isSelected()" 
                (ngModelChange)="onCheckboxChange($event)">
     </td>
 }
-<ng-content></ng-content>
+@if(expandable()){
+    <td style="width: 2rem;" class="text-center">
+        <button type="button" 
+                class="btn btn-sm btn-link p-0" 
+                (click)="toggleExpansion($event)">
+            <i class="fs-8" [class]="expanded() ? 'ti ti-chevron-down' : 'ti ti-chevron-right'"></i>
+        </button>
+    </td>
+}
+<ng-content />
 
 <!-- Link para clique normal e context menu -->
-<a href="javascript:void(0);" 
+<!-- <a href="javascript:void(0);" 
    [class.active]="isSelected()" 
    (contextmenu)="onRightClick($event)" 
-   (click)="onClick()" 
-   class="position-absolute top-0 bottom-0 start-0 end-0">
-</a>
+   (click)="onClick()"
+   [style.left]="allRowSelectable() ? '0' : '2rem'"
+   class="position-absolute top-0 bottom-0 end-0" [class.expandable]="expandable()">
+</a> -->
 
-@if(menuTemplate()) {
-  <nba-context-menu 
+<ng-template #collapseTemplate>
+    @if(expanded()){
+        <tr class="collapse-row">
+          <td [attr.colspan]="getColspan()">
+            <div class="collapse-content p-3">
+              <ng-content select="[collapse]"/>
+            </div>
+          </td>
+        </tr>
+    }
+</ng-template>
+
+
+@if(menuTemplate() && showMenu()) {
+  <nba-context-menu
       #contextMenu
       [menuTemplate]="menuTemplate()!"
       [autoClose]="true"

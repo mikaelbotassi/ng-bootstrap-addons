@@ -198,6 +198,11 @@ export class TableComponent<T = any> {
     }
     this.selectedRows.update((current) => [...current, row]);
   }
+  deselectRow(row: T) {
+    this.selectedRows.update((current) => {
+      return current.filter((r) => r !== row);
+    });
+  }
   unselectAllRows = () => this.selectedRows.set([]);
   selectAllRows = () => this.selectedRows.set(this.value() ?? []);
   toggleSelectAllRows = () => {

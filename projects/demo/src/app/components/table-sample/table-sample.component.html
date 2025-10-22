@@ -28,6 +28,7 @@
     <ng-template #header>
       <tr>
         <th checkbox></th>
+        <th width="2em"></th>
         <th class="text-dark" nbaColumnHeader field="id" type="numeric">ID</th>
         <th class="text-dark" nbaColumnHeader field="name" type="text">Nome</th>
         <th class="text-dark" nbaColumnHeader field="country.name" type="text">País</th>
@@ -55,7 +56,7 @@
 
     <ng-template #body let-customers>
       @for(customer of cast(customers); track $index){
-      <tr nbaControl (rowDoubleClick)="onDoubleClick()" [value]="customer">
+      <tr nbaControl expandable (rowDoubleClick)="onDoubleClick()" [value]="customer">
         <td>{{ customer.id }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.country?.name ?? "" }}</td>
@@ -67,6 +68,9 @@
         </td>
         <td>{{customer.date | date: 'dd/MM/yyyy'}}</td>
         <td>{{customer.verified ? 'Sim' : 'Não'}}</td>
+        <ng-container collapse>
+          
+        </ng-container>
         <ng-container menu>
           <li role="menuitem">
             <a href="javascript:;" class="dropdown-item text-center">
