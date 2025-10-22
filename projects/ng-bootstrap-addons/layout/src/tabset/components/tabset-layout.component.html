@@ -1,0 +1,23 @@
+<div class="tab-container">
+  @if(tabs().length > 0) {
+    <ul class="nav nav-tabs">
+      @for (tab of tabs(); track tab.id) {
+        <li class="nav-item">
+          <button
+            class="nav-link d-inline-flex lh-sm align-items-center gap-2"
+            [class.active]="tab.isActive"
+            (click)="onSelect(tab.id)">
+            @if(tab.icon){
+              <i class="{{ tab.icon }} opacity-75"></i>
+            }
+            <span class="text-truncate">{{ tab.title }}</span>
+            @if (tab.canClose) {
+              <i class="ti ti-x opacity-75" (click)="onRemove(tab.id)"></i>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  }
+  <router-outlet></router-outlet>
+</div>
