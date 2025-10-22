@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Tab } from '../models/tab-models';
-import { PageStateService } from 'ng-bootstrap-addons/services';
+import { PageStateService } from 'ng-bootstrap-addons/rxjs';
 
 @Injectable()
 export class TabsetManagerService {
