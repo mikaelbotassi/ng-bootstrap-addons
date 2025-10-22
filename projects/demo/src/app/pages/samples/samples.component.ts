@@ -12,10 +12,10 @@ import { TextareaSampleComponent } from '../../components/textarea-sample/textar
 import { LabelSampleComponent } from '../../components/label-sample/label-sample.component';
 import { TableSampleComponent } from '../../components/table-sample/table-sample.component';
 import { NumericIntervalInputSampleComponent } from '../../components/numeric-interval-input-sample/numeric-interval-input-sample.component';
-import { ComponentNavigationService } from 'project/services/src/component-navigation.service';
 import { CustomerCardListComponent } from '../form-page/components/customer-card-list/customer-card-list.component';
 import { PaginationSampleComponent } from '../../components/pagination-sample/pagination-sample.component';
 import { DynamicSizeInputSampleComponent } from '../../components/dynamic-size-input-sample/dynamic-size-input-sample.component';
+import { usePageState } from 'project/rxjs/src/use-page-state';
 
 @Component({
   selector: 'app-samples',
@@ -40,10 +40,10 @@ import { DynamicSizeInputSampleComponent } from '../../components/dynamic-size-i
 })
 export class SamplesComponent {
 
-  private navigationService = inject(ComponentNavigationService);
+  private readonly pageState = usePageState<{name:string}>();
 
   openList() {
-    this.navigationService.go<{name:string}>(CustomerCardListComponent, {name: 'Customer List'});
+    this.pageState.go<{name:string}>(CustomerCardListComponent, {name: 'Customer List'});
   }
 
 }

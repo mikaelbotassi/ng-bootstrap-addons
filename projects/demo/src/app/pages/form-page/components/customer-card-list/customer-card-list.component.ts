@@ -1,10 +1,10 @@
 import { Component, effect, OnInit } from '@angular/core';
 import { Command0 } from 'ng-bootstrap-addons/utils';
-import { ComponentNavigationService } from 'project/services/src/component-navigation.service';
 import { Customer } from 'projects/demo/src/app/models/customer';
 import { CustomerService } from 'projects/demo/src/app/services/customer.service';
 import FormCustomerComponent from '../form-customer/form-customer.component';
 import { PageStateDirective } from 'project/directives/src/page-state.directive';
+import { usePageState } from 'project/rxjs/src/use-page-state';
 
 @Component({
   selector: 'app-customer-card-list',
@@ -15,10 +15,10 @@ export class CustomerCardListComponent extends PageStateDirective<{name:string}>
 
   loadCommand: Command0<Customer[]>;
   customer = {} as Customer;
+  private readonly pageState = usePageState<{name:string}>();
 
   constructor(
-    private customerService: CustomerService,
-    private navigationService: ComponentNavigationService,
+    private customerService: CustomerService
   ) {
     super();
     this.loadCommand = new Command0<Customer[]>(() => this.customerService.getCustomers());
@@ -27,7 +27,7 @@ export class CustomerCardListComponent extends PageStateDirective<{name:string}>
 
   editCustomer(customer: Customer) {
     if (!customer?.id) return;
-    this.navigationService.go(FormCustomerComponent, customer);
+    this.pageState.go(FormCustomerComponent, customer);
   }
 
 }
