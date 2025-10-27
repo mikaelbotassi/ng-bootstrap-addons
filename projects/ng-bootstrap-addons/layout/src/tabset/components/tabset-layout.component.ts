@@ -3,7 +3,7 @@ import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { TabsetManagerService } from 'ng-bootstrap-addons/layout';
+import { TabsetManagerService } from '../services/tabset-manager.service';
 
 @Component({
   selector: 'app-tabset-layout',
