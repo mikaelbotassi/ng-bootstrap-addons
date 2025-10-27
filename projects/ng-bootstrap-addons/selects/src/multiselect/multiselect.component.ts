@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, DestroyRef, forwardRef, inject, input, signal } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, DestroyRef, forwardRef, inject, input, signal, viewChild } from '@angular/core';
 import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MultiselectOptionComponent } from './multiselect-option/multiselect-option.component';
@@ -37,6 +37,7 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
       option.label.toLowerCase().includes(searchText.toLowerCase())
     )
   });
+  dropdown = viewChild<BsDropdownDirective>(BsDropdownDirective);
   descControl: FormControl<string | null> = new FormControl<string | null>(null);
   private destroyRef = inject(DestroyRef);
   searchText = signal<string>('');
@@ -100,6 +101,7 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
     
     if(!this.multiple()){
       this.control?.setValue([option.value]);
+      this.dropdown()?.hide();
       return;
     }
 
