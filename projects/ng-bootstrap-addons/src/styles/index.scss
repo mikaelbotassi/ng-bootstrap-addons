@@ -1,3 +1,5 @@
+@import "ngx-bootstrap/datepicker/bs-datepicker";
+
 /// Variante compacta de form-floating com label acima ao focar/preencher
 /// Parâmetros:
 /// - $text-fs  : font-size do texto do input
@@ -114,4 +116,87 @@
     $px: 1rem,
     $py: .5rem,
   );
+}
+
+// Date Range Picker
+
+bs-daterangepicker-container, bs-datepicker-container{
+
+    *{font-size: .75rem !important}
+
+    button.next span, button.previous span{
+        font-size: 1.5rem !important;
+    }
+
+    .bs-datepicker-predefined-btns {
+        button {
+
+          @extend .btn;
+          @extend .btn-sm;
+          @extend .btn-primary;
+          display: block;
+
+          &.selected{ background-color: darken($primary, 10) !important }
+
+        }
+    }
+
+    .bs-datepicker{
+        width: max-content;
+        max-width: 80vw;
+        overflow: auto;
+        max-height: 50vh;
+        border-radius: .25rem;
+        justify-content: center;
+
+        .bs-datepicker-custom-range{
+            @extend .flex-fill;
+            padding: 1em;
+        }
+    
+        @media (max-width: 768px){
+            max-height: 30vh;
+    
+            .bs-timepicker-in-datepicker-container{
+                flex-wrap: wrap;
+            }
+    
+        }
+    
+        .bs-datepicker-container{
+        
+            padding: 1em !important;
+        
+            .bs-calendar-container, .bs-media-container{
+                padding: 0 !important;
+            }
+        
+        }
+
+        bs-days-calendar-view:has(+bs-days-calendar-view){
+            .bs-datepicker-head{ border-top-right-radius: 0 }
+            +bs-days-calendar-view{
+                .bs-datepicker-head{ border-top-left-radius: 0 }
+            }
+        }
+
+        .bs-datepicker-head{
+            background-color: $primary;
+        }
+
+        .bs-datepicker-body{
+            table{
+                td{
+                    span.selected, &.selected span, span[class*=select-]:after, &[class*=select-] span:after{
+                        background-color: $primary !important;
+                    }
+                    &.is-highlighted:not(.disabled):not(.selected) span, span.is-highlighted:not(.disabled):not(.selected){
+                        background-color: lighten($primary, 50%) !important;
+                    }
+                }
+            }
+        }
+
+
+    }
 }
