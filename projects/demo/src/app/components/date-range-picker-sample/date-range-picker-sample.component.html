@@ -1,13 +1,9 @@
 <app-sample-container tagName="nba-datetime-range-input">
-    <div class="d-flex justify-content-end">
-        <div class="w-25">
-            <nba-date-range-picker
-                label="Data"
-                withTime
-                [(ngModel)]="dateRange"
-                readonly
-                required
-            ></nba-date-range-picker>
-        </div>
-    </div>
+    <nba-date-range-picker
+        label="Data"
+        withTime
+        [(ngModel)]="dateRange"
+        readonly
+        required
+    ></nba-date-range-picker>
 </app-sample-container>

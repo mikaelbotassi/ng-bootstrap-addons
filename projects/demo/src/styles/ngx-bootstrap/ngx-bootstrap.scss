@@ -61,17 +61,17 @@ bs-daterangepicker-container, bs-datepicker-container{
         }
 
         .bs-datepicker-head{
-            background-color: var(--sm-primary);
+            background-color: $primary;
         }
 
         .bs-datepicker-body{
             table{
                 td{
                     span.selected, &.selected span, span[class*=select-]:after, &[class*=select-] span:after{
-                        background-color: var(--sm-primary) !important;
+                        background-color: $primary !important;
                     }
                     &.is-highlighted:not(.disabled):not(.selected) span, span.is-highlighted:not(.disabled):not(.selected){
-                        background-color: lighten($primary, 60%) !important;
+                        background-color: lighten($primary, 50%) !important;
                     }
                 }
             }

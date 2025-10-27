@@ -16,26 +16,10 @@ import { NgxMaskDirective } from 'ngx-mask';
     bs-daterangepicker-container td { font-weight: normal }
     
     bs-daterangepicker-container {
-      position: relative;
-      .bs-datepicker{
-        position:absolute;
-        top: 0 !important;
-        left: var(--custom-left) !important;
-        transform: none !important;
-      }
+      transform: none !important;
+      top: var(--custom-top) !important;
+      left: var(--custom-left) !important;
     }
-    
-    // /* ✅ CORREÇÃO: Também aplicar aos elementos internos se necessário */
-    // .custom-positioned .bs-datepicker-container {
-    //   left: var(--custom-left) !important;
-    //   top: var(--custom-top) !important;
-    //   transform: none !important;
-    // }
-    
-    // /* ✅ CORREÇÃO: Para o datepicker interno */
-    // .custom-positioned .bs-datepicker {
-    //   position: static !important;
-    // }
   `,
   encapsulation: ViewEncapsulation.None,
   host: { 'collision-id': `date-range-picker-${createRandomString(20)} ` },
@@ -61,6 +45,9 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
     
     return {
       dateInputFormat: dateFormat,
+      container: 'body',
+      adaptivePosition: false,
+      keepDatepickerOpened: true,
       showWeekNumbers: false,
       containerClass: 'custom-position',
       rangeInputFormat: dateFormat,
@@ -147,36 +134,71 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
     this.control?.setValue([start, end]);
   }
 
-  private resizeObserver?: ResizeObserver;
+  private clamp(n: number, min: number, max: number) {
+  return Math.min(Math.max(n, min), max);
+}
+
+private getContainer(): HTMLElement | null {
+  const list = document.querySelectorAll('bs-daterangepicker-container');
+  return list.length ? (list[list.length - 1] as HTMLElement) : null;
+}
+
+private positionCalendarContainer(container: HTMLElement) {
+  const inputEl = this.inputRef()?.nativeElement as unknown as HTMLInputElement;
+  if (!inputEl) return;
+
+  const ir = inputEl.getBoundingClientRect();
+  const vw = document.documentElement.clientWidth;
+  const vh = document.documentElement.clientHeight;
+  const sx = window.scrollX || window.pageXOffset;
+  const sy = window.scrollY || window.pageYOffset;
+
+  const GAP = 4;
+  const PAD = 16;
+
+  container.style.top = `-9999px`;
+  container.style.left = `-9999px`;
+
+  const inner = container.querySelector('bs-datepicker-container') as HTMLElement;
+  const cw = (inner ?? container).offsetWidth;
+  const ch = (inner ?? container).offsetHeight;
+
+  let top = Math.round(ir.bottom + GAP + sy);
+  if (top + ch > sy + vh) {
+    top = Math.round(ir.top - ch - GAP + sy);
+  }
+
+  let left = Math.round(ir.left + sx);
+  left = this.clamp(left, PAD + sx, sx + vw - cw - PAD);
+
+  container.style.position = 'absolute';
+  container.style.setProperty('--custom-left', `${left}px`);
+  container.style.setProperty('--custom-top', `${top}px`);
+  container.style.right = 'auto';
+}
+
+
   onShown = signal(false);
 
-  onCalendarShown = effect(() => {
-    const calendarShow = this.onShown();
-    const input = this.inputRef();
-    if(!calendarShow && !input) return;
-    this.adjustCalendarPosition();
-  });
+  private onWindowChange = () => {
+    const c = this.getContainer();
+    if (c) this.positionCalendarContainer(c);
+  };
 
-  private adjustCalendarPosition() {
-    const container = document.querySelector('bs-daterangepicker-container') as HTMLElement;
-    if (container) {
-      this.positionCalendarContainer(container);
+  onCalendarShown = effect(() => {
+    const isShown = this.onShown();
+    if (!isShown) {
+      window.removeEventListener('resize', this.onWindowChange);
+      window.removeEventListener('scroll', this.onWindowChange, true);
+      return;
     }
-  }
-  
-  private positionCalendarContainer(container: HTMLElement) {
-    const inputElement = this.inputRef()!.nativeElement as unknown as HTMLInputElement;
-    if (!inputElement) return;
-    
-    const inputRect = inputElement.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
-    
-    if (inputRect.right + containerRect.width > viewportWidth) {
-      const leftPosition = Math.max(16, inputRect.right - containerRect.width);
-      const topPosition = inputRect.bottom + 4; // 4px de offset
-      
-      container.style.setProperty('--custom-left', `${containerRect.width}px`);
+
+    const c = this.getContainer();
+    if (c) {
+      setTimeout(() => this.positionCalendarContainer(c), 0);
     }
-  }
+
+    window.addEventListener('resize', this.onWindowChange, { passive: true });
+    window.addEventListener('scroll', this.onWindowChange, { passive: true, capture: true });
+  });
 }
