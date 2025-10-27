@@ -6,12 +6,12 @@ import { Command0 } from 'ng-bootstrap-addons/utils';
 import { Customer, Representative } from '../../models/customer';
 import { FormsModule } from '@angular/forms';
 import { ColumnHeaderComponent } from 'table/components/column-header/column-header.component';
-import { MultiselectComponent, MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { FilterFunction } from 'project/table/src/models/table-models';
 import { DatePipe } from '@angular/common';
 import { TableRowControlComponent } from 'project/table/src/components/table-row-control/table-row-control.component';
 import { TableHeaderCheckboxComponent } from 'project/table/src/components/table-header-checkbox/table-header-checkbox.component';
 import { CollapseDirective } from "ngx-bootstrap/collapse";
+import { MultiselectComponent, MultiselectOption } from 'project/selects/src/public_api';
 
 @Component({
   selector: 'app-table-sample',
