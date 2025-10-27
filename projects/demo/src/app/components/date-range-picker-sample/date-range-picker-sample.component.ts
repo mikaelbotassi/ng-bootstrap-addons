@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
 import { FormsModule } from '@angular/forms';
 import { DateRangePickerComponent } from 'project/inputs/src/date-range-picker/date-range-picker.component';
@@ -13,6 +13,11 @@ export class DateRangePickerSampleComponent {
   dateRange = signal<(Date|undefined)[]|undefined>(undefined);
 
   constructor(){
+
+    effect(() => {
+      console.log('Date Range changed:', this.dateRange());
+    });
+
   }
 
 }

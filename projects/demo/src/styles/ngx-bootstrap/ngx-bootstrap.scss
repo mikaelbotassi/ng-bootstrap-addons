@@ -1,9 +1,6 @@
 @import "../../../../../node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss";
 
-bs-daterangepicker-inline-container{
-
-    position: absolute !important;
-    z-index: 3;
+bs-daterangepicker-container, bs-datepicker-container{
 
     *{font-size: .75rem !important}
 

@@ -123,7 +123,7 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
 
 }
 
-export class MultiselectOption<T> {
+export class MultiselectOption<T=any> {
   value: T;
   label: string;
 
@@ -133,6 +133,9 @@ export class MultiselectOption<T> {
   }
 
   get id() {
+    if(typeof this.value == 'object'){
+      return `option-${JSON.stringify(this.value)}`;
+    }
     return `option-${this.value}`;
   }
 

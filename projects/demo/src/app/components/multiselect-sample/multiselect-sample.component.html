@@ -1,9 +1,11 @@
 <app-sample-container tagName="nba-multiselect">
-    <nba-multiselect
-        label="Default Multiselect"
-        [formControl]="control"
-        [options]="options"
-    ></nba-multiselect>
+    <div class="col-sm-2">
+        <nba-multiselect
+            label="Default Multiselect"
+            [formControl]="control"
+            [options]="options"
+        ></nba-multiselect>
+    </div>
     <hr>
     Value: {{ control.value }}
 </app-sample-container>

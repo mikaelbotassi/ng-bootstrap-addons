@@ -10,21 +10,18 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 })
 export class MultiselectSampleComponent {
   control = new FormControl<string[]>([], { nonNullable: true, validators: [Validators.required] });
-  options:MultiselectOption<string>[] = [
-    {
-      id: 'option1',
-      value: 'option1',
-      label: 'Option 1',
-    },
-    {
-      id: 'option2',
-      value: 'option2',
-      label: 'Option 2',
-    },
-    {
-      id: 'option3',
-      value: 'option3',
-      label: 'Option 3',
-    }
+  options:MultiselectOption[] = [
+    new MultiselectOption({
+      label: 'OptionOptionOptionOptionOptionOptionOptionOptionOptionOptionOption 1',
+      value: {id: 1, name: 'Option 1'},
+    }),
+    new MultiselectOption({
+      label: 'OptionOptionOptionOptionOptionOptionOptionOptionOptionOptionOption 2',
+      value: {id: 2, name: 'Option 2'},
+    }),
+    new MultiselectOption({
+      label: 'OptionOptionOptionOptionOptionOptionOptionOptionOptionOptionOption 3',
+      value: {id: 3, name: 'Option 3'},
+    }),
   ];
 }

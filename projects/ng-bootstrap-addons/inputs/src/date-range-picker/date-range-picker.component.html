@@ -1,13 +1,23 @@
+<!-- date-range-picker.component.html -->
 @defer (on viewport; prefetch on idle){
-
     @if(control){
         <div class="form-group position-relative" [class]="formGroupClass()">
             <div class="form-floating can-click" [class]="'form-floating-' + size()">
                 <input
+                    bsDaterangepicker
+                    #input
+                    [bsConfig]="bsConfigs()"
+                    (onShown)="onShown.set(true);"
+                    (onHidden)="onShown.set(false);"
+                    [bsValue]="control.value"
+                    (bsValueChange)="onDatePickerChange($event)"
+                    [disabled]="control.disabled"
+                    [required]="isRequired"
+                    [readOnly]="readonly()"
                     class="form-control"
                     [mask]="inputMask()"
                     [id]="inputId()"
-                    [name]="inputId()"
+                    [name]="inputId() + '_display'" 
                     [class]="inputClass()"
                     [placeholder]="label()"
                     [ngClass]="{
@@ -15,14 +25,13 @@
                         'ng-dirty': control.dirty,
                         'ng-pristine': control.pristine,
                         'ng-untouched': control.untouched,
-                        'ng-valid': (control.valid && control.touched) && textValue().valid,
-                        'ng-invalid': (control.invalid && control.touched) || textValue().invalid,
+                        'ng-valid': (control.valid && control.touched),
+                        'ng-invalid': (control.invalid && control.touched),
                     }"
                     [attr.aria-expanded]="!isCollapsed()"
-                    (click)="toggleCollapse()"
                     (blur)="markAsTouched()"
-                    [formControl]="textValue()"
                 >
+                    
                 @if(label() || icon()){
                     <label [for]="inputId()" [class.required]="isRequired">
                         @if(icon()){<i [class]="'ti mb-0 ' + icon()"></i>}
@@ -30,21 +39,9 @@
                     </label>
                 }
             </div>
-            <bs-daterangepicker-inline 
-                clickOutside
-                (onClickOutside)="isCollapsed.set(true)"
-                exceptClass="can-click"
-                [collapse]="isCollapsed()" 
-                [bsConfig]="bsConfigs()"
-                [bsValue]="control.value"
-                (bsValueChange)="onDatePickerChange($event)"
-            ></bs-daterangepicker-inline>
+            
             @if(control.invalid){
                 <nba-form-error-message [control]="control"></nba-form-error-message>
-            }@else{
-                @if(textValue().invalid){
-                    <nba-form-error-message [control]="textValue()"></nba-form-error-message>
-                }
             }
         </div>
     }

@@ -44,6 +44,7 @@ export class ControlValueAccessorDirective<T>
   control: FormControl | undefined;
   isRequired = false;
   required = input(false, { transform: booleanAttribute });
+  readonly = input(false, { transform: booleanAttribute });
 
   private _isDisabled = false;
   private _destroy$ = new Subject<void>();

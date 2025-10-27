@@ -1,22 +1,42 @@
-// datetime-range-picker.component.ts
-import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, DestroyRef, forwardRef, inject, input, signal, ViewEncapsulation } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, forwardRef, input, signal, ViewEncapsulation } from '@angular/core';
 import { BsDatepickerModule, BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
-import { ClickOutsideDirective } from 'ng-bootstrap-addons/directives';
 import {createRandomString, DateUtils} from 'ng-bootstrap-addons/utils';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'nba-date-range-picker',
-  imports: [CommonModule, BsDatepickerModule, ReactiveFormsModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, CollapseModule, ClickOutsideDirective, FormsModule],
+  imports: [CommonModule, BsDatepickerModule, ReactiveFormsModule, FormErrorMessageComponent, InputPlaceholderComponent, NgxMaskDirective, FormsModule],
   templateUrl: './date-range-picker.component.html',
-  styles: `bs-daterangepicker-inline-container td { font-weight: normal }`,
+  styles: `
+    bs-daterangepicker-container td { font-weight: normal }
+    
+    bs-daterangepicker-container {
+      position: relative;
+      .bs-datepicker{
+        position:absolute;
+        top: 0 !important;
+        left: var(--custom-left) !important;
+        transform: none !important;
+      }
+    }
+    
+    // /* ✅ CORREÇÃO: Também aplicar aos elementos internos se necessário */
+    // .custom-positioned .bs-datepicker-container {
+    //   left: var(--custom-left) !important;
+    //   top: var(--custom-top) !important;
+    //   transform: none !important;
+    // }
+    
+    // /* ✅ CORREÇÃO: Para o datepicker interno */
+    // .custom-positioned .bs-datepicker {
+    //   position: static !important;
+    // }
+  `,
   encapsulation: ViewEncapsulation.None,
   host: { 'collision-id': `date-range-picker-${createRandomString(20)} ` },
   providers: [
@@ -28,25 +48,11 @@ import { NgxMaskDirective } from 'ngx-mask';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateRangePickerComponent extends ControlValueAccessorDirective<(Date|undefined)[]|undefined> {
+export class DateRangePickerComponent extends ControlValueAccessorDirective<(Date|undefined)[]|undefined>{
   
   withTime = input(false, {transform: booleanAttribute});
-  
-  textValue = computed(() => {
-    const control = new FormControl<string|null|undefined>(null, {
-      validators: [
-        this.withTime() 
-          ? Validators.pattern(/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2} - \d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/)
-          : Validators.pattern(/^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/)
-      ]
-    });
-    return control;
-  });
-
-  private destroyRef = inject(DestroyRef);
   timeOutHandle: ReturnType<typeof setTimeout> | null = null;
   isCollapsed = signal<boolean>(true);
-  cdr = inject(ChangeDetectorRef);
   customConfigs = input<Partial<BsDaterangepickerConfig>>({});
   
   baseConfigs = computed<Partial<BsDaterangepickerConfig>>(() => {
@@ -56,6 +62,7 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
     return {
       dateInputFormat: dateFormat,
       showWeekNumbers: false,
+      containerClass: 'custom-position',
       rangeInputFormat: dateFormat,
       withTimepicker: withTime,
       ranges: withTime ? [
@@ -97,10 +104,11 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
   });
 
   bsConfigs = computed<Partial<BsDaterangepickerConfig>>(() => {
-    return {
+    const configs = {
       ...this.baseConfigs(),
       ...this.customConfigs(),
     };
+    return configs;
   });
 
   inputMask = computed(() => {
@@ -115,132 +123,60 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
       : 'dd/mm/aaaa - dd/mm/aaaa';
   });
 
-  toggleCollapse() {
-    this.isCollapsed.update((prev) => !prev);
-  }
-
-  override ngOnInit(): void {
-    super.ngOnInit();
-    
-    this.textValue().valueChanges
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe((val) => {
-      this.writeTextInterval(val);
-    });
-    
-    this.control?.statusChanges
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe(() => {
-      if(this.control?.disabled) this.textValue().disable({emitEvent: false});
-    });
-  }
-
-  writeTextInterval(value: string|null|undefined): void {
-    if (this.timeOutHandle) clearTimeout(this.timeOutHandle);
-    
-    this.timeOutHandle = setTimeout(() => {
-      if(!value) return;
-
-      const expectedLength = this.withTime() ? 28 : 16;
-      if(value.length !== expectedLength) return;
-
-      if(this.withTime()) return this.writeDateWithTime(value);
-      return this.writeDate(value);
-  
-    }, 1000);
-  }
-
-  writeDate(value: string): void {
-    try {
-        // Divide a string em duas partes
-        const startBrDate = value.slice(0, 8); // Primeiros 8 caracteres
-        const endBrDate = value.slice(8);     // Restantes 8 caracteres
-    
-        if (startBrDate && endBrDate) {
-          // Converte as strings para o formato brasileiro
-          const startDate = DateUtils.fromBrazilianDate(
-            `${startBrDate.slice(0, 2)}/${startBrDate.slice(2, 4)}/${startBrDate.slice(4, 8)}`
-          );
-          const endDate = DateUtils.fromBrazilianDate(
-            `${endBrDate.slice(0, 2)}/${endBrDate.slice(2, 4)}/${endBrDate.slice(4, 8)}`
-          );
-    
-          if (startDate && endDate) {
-            // Atualiza o controle com as datas
-            this.control?.setValue([startDate, endDate]);
-            return;
-          }
-        }
-      } catch (error) {
-        // Se houver erro na conversão de datas, define como undefined
-        this.control?.setValue(undefined);
-        return;
-      }
-  }
-
-  writeDateWithTime(value: string): void {
-    try {
-        // Divide a string em duas partes
-        const startBrDate = value.slice(0, 14); // Primeiros 14 caracteres
-        const endBrDate = value.slice(14);     // Restantes 14 caracteres
-    
-        if (startBrDate && endBrDate) {
-          // Converte as strings para o formato brasileiro
-          const startDate = DateUtils.fromBrazilianDate(
-            `${startBrDate.slice(0, 2)}/${startBrDate.slice(2, 4)}/${startBrDate.slice(4, 8)} ${startBrDate.slice(8, 10)}:${startBrDate.slice(10, 12)}:${startBrDate.slice(12, 14)}`
-          );
-          const endDate = DateUtils.fromBrazilianDate(
-            `${endBrDate.slice(0, 2)}/${endBrDate.slice(2, 4)}/${endBrDate.slice(4, 8)} ${endBrDate.slice(8, 10)}:${endBrDate.slice(10, 12)}:${endBrDate.slice(12, 14)}`
-          );
-    
-          if (startDate && endDate) {
-            // Atualiza o controle com as datas
-            this.control?.setValue([startDate, endDate]);
-            return;
-          }
-        }
-      } catch (error) {
-        // Se houver erro na conversão de datas, define como undefined
-        this.control?.setValue(undefined);
-        return;
-      }
-  }
-
   markAsTouched() {
     this.control?.markAsTouched();
   }  
 
   onDatePickerChange(newValue: (Date|undefined)[]|undefined) {
-    this.isCollapsed.set(true);
+    if(newValue === this.control?.value) return;
     if(!newValue){
-      this.textValue().patchValue(null, {emitEvent: false});
       this.control?.setValue(undefined);
       return;
     }
     
-    const [start, end] = newValue;
+    let [start, end] = newValue;
     if (!start || !end) {
-      this.textValue().patchValue(null, { emitEvent: false });
       this.control?.setValue(undefined);
       return;
     }
     
-    this.control?.setValue(newValue);
-    
-    const withTime = this.withTime();
-    const format = withTime ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY';
-    const formatted = `${DateUtils.formatDate(start, format)} - ${DateUtils.formatDate(end, format)}`;
-    this.textValue().patchValue(formatted, { emitEvent: false });
+    if(end < start){
+      [start, end] = [end, start];
+    }
+
+    this.control?.setValue([start, end]);
   }
 
-  override writeValue(value: (Date | undefined)[] | undefined): void {
-    if (value?.[0] && value?.[1]) {
-      const withTime = this.withTime();
-      const format = withTime ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY';
-      const formatted = `${DateUtils.formatDate(value[0], format)} - ${DateUtils.formatDate(value[1], format)}`;
-      this.textValue().patchValue(formatted, { emitEvent: false });
-    } else {
-      this.textValue().patchValue(null, { emitEvent: false });
+  private resizeObserver?: ResizeObserver;
+  onShown = signal(false);
+
+  onCalendarShown = effect(() => {
+    const calendarShow = this.onShown();
+    const input = this.inputRef();
+    if(!calendarShow && !input) return;
+    this.adjustCalendarPosition();
+  });
+
+  private adjustCalendarPosition() {
+    const container = document.querySelector('bs-daterangepicker-container') as HTMLElement;
+    if (container) {
+      this.positionCalendarContainer(container);
+    }
+  }
+  
+  private positionCalendarContainer(container: HTMLElement) {
+    const inputElement = this.inputRef()!.nativeElement as unknown as HTMLInputElement;
+    if (!inputElement) return;
+    
+    const inputRect = inputElement.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    
+    if (inputRect.right + containerRect.width > viewportWidth) {
+      const leftPosition = Math.max(16, inputRect.right - containerRect.width);
+      const topPosition = inputRect.bottom + 4; // 4px de offset
+      
+      container.style.setProperty('--custom-left', `${containerRect.width}px`);
     }
   }
 }
