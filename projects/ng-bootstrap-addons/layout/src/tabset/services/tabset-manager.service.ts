@@ -10,7 +10,13 @@ export class TabsetManagerService {
   private _tabs = signal<Tab[]>([]);
   private _activeTabId = signal<string | null>(null);
 
-  readonly tabs = computed(() => this._tabs());
+  readonly tabs = computed(() => {
+    return [...this._tabs()].sort((a, b) => {
+      const orderA = a.order ?? 9999;
+      const orderB = b.order ?? 9999;
+      return orderA - orderB;
+    });
+  });
   readonly hasTabs = computed(() => this._tabs().length > 0);
   readonly activeTab = computed(() => {
     const id = this._activeTabId();

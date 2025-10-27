@@ -3,11 +3,10 @@ import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { TabsetManagerService } from '../services/tabset-manager.service';
+import { TabsetManagerService } from 'ng-bootstrap-addons/layout';
 
 @Component({
   selector: 'app-tabset-layout',
-  standalone: true,
   imports: [CommonModule, RouterOutlet, TabsModule],
   templateUrl: './tabset-layout.component.html',
 })

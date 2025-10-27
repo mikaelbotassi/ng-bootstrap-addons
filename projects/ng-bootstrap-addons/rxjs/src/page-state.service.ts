@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { computed, effect, inject, Injectable, signal, Type } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Route, Router } from '@angular/router';
-import { filter, map, startWith } from 'rxjs';
+import { NavigationEnd, Route, Router, RoutesRecognized } from '@angular/router';
+import { filter, firstValueFrom, map, startWith, take } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class PageStateService {
@@ -54,6 +54,17 @@ export class PageStateService {
             this._replaceHistoryState(currentState, true);
             this._replaceState = true;
         });
+    }
+
+    async init(): Promise<void> {
+        if (this._isMapBuilt()) return Promise.resolve();
+
+        return firstValueFrom(
+            this._router.events.pipe(
+            filter((e): e is RoutesRecognized => e instanceof RoutesRecognized),
+            take(1),
+        )).then(() => this._buildMapSync())
+        .catch(() => this._buildMapSync());
     }
 
     go<T extends object = any>(component: Type<any>, state?: T): void {
