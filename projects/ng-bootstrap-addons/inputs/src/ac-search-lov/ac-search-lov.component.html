@@ -13,6 +13,7 @@
               (keydown.tab)="focus.set(false)"
               (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
               clickOutside
+              [autofocus]="true"
               [ngClass]="{
                 'ng-invalid': control.invalid && control.touched,
                 'ng-valid': control.valid && control.touched,
@@ -62,7 +63,7 @@
               [id]="inputId()"
               [name]="inputId()"
               (keydown.f9)="focus.set(true)"
-              (blur)="control.markAllAsTouched(); focus.set(false)"
+              (blur)="onBlur()"
               [placeholder]="label()"
               [autofocus]="autofocus()"
               [ngClass]="{

@@ -2,8 +2,8 @@ import { Component, input, output, inject, forwardRef, model, signal, computed, 
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
-import { asyncScheduler, observeOn, debounceTime } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { asyncScheduler, observeOn, debounceTime, EMPTY, startWith, distinctUntilChanged, tap } from 'rxjs';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
@@ -44,6 +44,28 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   resultPath = input<{autocomplete?: string, lov?: string}>({autocomplete: '', lov: ''});
   readonly debounceTime = input<number>(1000);
   clearIfNotMatch = input(false, { transform: booleanAttribute });
+  focusedAfterCollapse = computed(() => {
+    const searchFocus = this.focus();
+    const inputRef = this.inputRef()?.nativeElement as HTMLInputElement;
+    if (!searchFocus) {
+      inputRef?.focus();
+      return true;
+    }
+    return searchFocus;
+  });
+  clear = effect(() => {
+    if(this.clearIfNotMatch()) return;
+    const blur = this.blurTriggered();
+    const busy = this.fetchBusy();
+    const inputEl = this.inputRef()?.nativeElement as HTMLInputElement;
+    const searchFocus = this.focusedAfterCollapse();
+    const focused = inputEl && document.activeElement === inputEl;
+    if (blur && !this.control?.value && !busy && !focused && !searchFocus) {
+      this.descControl.patchValue(null, { emitEvent: false });
+      this.desc.set(null);
+      this.blurTriggered.set(false);
+    }
+  });
   map = input.required<AcMap>();
 
   //MODELS
@@ -52,12 +74,16 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   //SIGNALS
   private _listOfValues = signal<any[]>([]);
+  private blurTriggered = signal<boolean>(false);
+  private debouncing = signal(false);
 
   // COMPUTED PROPERTIES
   listOfValues = computed(() => this._listOfValues());
+  private readonly fetchBusy = computed(() => this.fetchDescCommand.running() || this.debouncing());
 
   //OUTPUTS
   onPerformed = output<ActionPerformed>();
+  acBlur = output<void>();
 
   // CONTROLS
   descControl: FormControl<string | null> = new FormControl<string | null>(null);
@@ -84,6 +110,13 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     );
   }
 
+  onBlur(){
+    this.control?.markAllAsTouched();
+    this.focus.set(false);
+    this.acBlur.emit();
+    this.blurTriggered.set(true);
+  }
+
   override ngOnInit(): void {
     super.ngOnInit();
 
@@ -97,7 +130,9 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
     this.descControl.valueChanges
     .pipe(
+      tap(() => this.debouncing.set(true)),
       debounceTime(this.debounceTime()),
+      tap(() => this.debouncing.set(false)),
       takeUntilDestroyed(this.destroyRef),
     )
     .subscribe((value) => {
@@ -156,13 +191,16 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   override writeValue(value: any): void {
+    console.log("🚀 ~ AutoCompleteLovComponent ~ writeValue ~ value:", value)
     if (this.control) {
       if (value) {
         this.fetchDesc(value);
         return;
       }
-      if(this.clearIfNotMatch()) this.descControl.patchValue(null, { emitEvent: false });
-      this.desc.set(null);
+      if(this.clearIfNotMatch()){
+        this.descControl.patchValue(null, { emitEvent: false });
+        this.desc.set(null);
+      }
     }
   }
 
@@ -337,4 +375,5 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.values = item;
     this.focus.set(false);
   }
+
 }
