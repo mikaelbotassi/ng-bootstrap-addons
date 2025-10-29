@@ -10,7 +10,7 @@ import { DateRangePickerComponent } from 'project/inputs/src/date-range-picker/d
 })
 export class DateRangePickerSampleComponent {
 
-  dateRange = signal<(Date|undefined)[]|undefined>(undefined);
+  dateRange = signal<(Date|undefined)[]|undefined>([new Date(), new Date()]);
 
   constructor(){
 

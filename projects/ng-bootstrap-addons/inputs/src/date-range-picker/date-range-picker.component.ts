@@ -38,6 +38,14 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
   timeOutHandle: ReturnType<typeof setTimeout> | null = null;
   isCollapsed = signal<boolean>(true);
   customConfigs = input<Partial<BsDaterangepickerConfig>>({});
+
+  displayValue = computed(() => {
+    const v = this.control?.value as (Date|undefined)[] | undefined;
+    if (!v || !v[0] || !v[1]) return '';
+    const fmt = this.withTime() ? 'DD/MM/YYYY HH:mm' : 'DD/MM/YYYY';
+    return `${DateUtils.formatDate(v[0], fmt)} - ${DateUtils.formatDate(v[1], fmt)}`;
+  });
+
   
   baseConfigs = computed<Partial<BsDaterangepickerConfig>>(() => {
     const withTime = this.withTime();

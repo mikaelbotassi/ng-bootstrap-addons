@@ -43,6 +43,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   searchName = input<string>('filtro');
   resultPath = input<{autocomplete?: string, lov?: string}>({autocomplete: '', lov: ''});
   readonly debounceTime = input<number>(1000);
+  clearIfNotMatch = input(false, { transform: booleanAttribute });
   map = input.required<AcMap>();
 
   //MODELS
@@ -156,12 +157,11 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   override writeValue(value: any): void {
     if (this.control) {
-      // this.control.patchValue(value, { emitEvent: false });
       if (value) {
         this.fetchDesc(value);
         return;
       }
-      this.descControl.patchValue(null, { emitEvent: false });
+      if(this.clearIfNotMatch()) this.descControl.patchValue(null, { emitEvent: false });
       this.desc.set(null);
     }
   }
@@ -293,7 +293,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   set values(value: any | null) {
     if (!value) {
-      this.descControl.patchValue(null, { emitEvent: false });
+      if (this.clearIfNotMatch()) this.descControl.patchValue(null, { emitEvent: false });
       this.control?.patchValue(null, { emitEvent: false });
       this.map().addons?.forEach((addon) => {
         if (addon.setValue) addon.setValue(null);
@@ -302,7 +302,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     }
     
     if (!value[this.map().code.key] && !value[this.map().desc.key]) {
-      this.descControl.setValue('', { emitEvent: false });
+      if (this.clearIfNotMatch()) this.descControl.setValue('', { emitEvent: false });
       this.control?.patchValue(null, { emitEvent: false });
       return;
     }

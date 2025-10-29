@@ -5,6 +5,7 @@
         [map]="mapConfig"
         searchName="s"
         [(ngModel)]="selectedMovie"
+        (ngModelChange)="onModelChange($event)"
         [resultPath]="{lov: 'Search'}"
         [required]="true">
     </nba-ac-lov>

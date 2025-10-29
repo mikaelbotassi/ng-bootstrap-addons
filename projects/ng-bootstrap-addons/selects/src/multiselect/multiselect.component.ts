@@ -97,7 +97,6 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
   }
 
   toggleSelection(option: MultiselectOption<T>) {
-    console.log("🚀 ~ MultiselectComponent ~ toggleSelection ~ option:", option)
     const isSelected = this.control?.value?.includes(option.value) ?? false;
     
     if(!this.multiple()){
