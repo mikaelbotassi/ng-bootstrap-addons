@@ -26,12 +26,4 @@ export class AcSearchSampleComponent {
     this.count++;
   }
 
-  onModelChange(value: any) {
-    console.log('Model changed:', value);
-  }
-
-  onPerformed(event:any){
-    console.log('Search performed:', event);
-  }
-
 }
