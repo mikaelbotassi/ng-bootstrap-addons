@@ -60,7 +60,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.inputRef();
     const searchFocus = this.focusedAfterCollapse();
     const inputFocus = this.focus();
-    console.log(!this.control?.value, !busy, !inputFocus, !searchFocus)
     if (!this.control?.value && !busy && !inputFocus && !searchFocus) {
       this.descControl.patchValue(null, { emitEvent: false });
       this.desc.set(null);

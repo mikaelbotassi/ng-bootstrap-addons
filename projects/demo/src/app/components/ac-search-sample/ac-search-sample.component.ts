@@ -16,7 +16,8 @@ export class AcSearchSampleComponent {
 
   mapConfig: AcMap = {
     code: { key: 'imdbID', title: 'IMDB ID' },
-    desc: { key: 'Title', title: 'Title' }
+    desc: { key: 'Title', title: 'Title' },
+    addons: [{ key: 'Year', title: 'Year' }],
   }
   selectedMovie = 'tt2015381';
 
@@ -27,6 +28,10 @@ export class AcSearchSampleComponent {
 
   onModelChange(value: any) {
     console.log('Model changed:', value);
+  }
+
+  onPerformed(event:any){
+    console.log('Search performed:', event);
   }
 
 }

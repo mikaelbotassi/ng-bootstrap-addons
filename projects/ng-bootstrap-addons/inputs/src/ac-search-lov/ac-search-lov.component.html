@@ -18,8 +18,6 @@
               (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
               (keydown.tab)="expanded.set(false)"
               (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
-              [class.is-invalid]="control.invalid && (control.touched || control.dirty)"
-              [class.is-valid]="control.valid && (control.touched || control.dirty)"
               [attr.aria-invalid]="control.invalid ? true : null"
               clickOutside
               [autofocus]="true"           
@@ -58,8 +56,6 @@
               type="text"
               [class.placeholder-wave]="fetchDescCommand.running()"
               [class.placeholder]="fetchDescCommand.running()"
-              [class.is-invalid]="control.invalid && (control.touched || control.dirty)"
-              [class.is-valid]="control.valid && (control.touched || control.dirty)"
               [attr.aria-invalid]="control.invalid ? true : null"
               class="form-control"
               [ngClass]="inputClass()"

@@ -8,35 +8,41 @@
 /// - $border-w : largura da borda (se usar Bootstrap, pode passar $border-width)
 /// - $px       : padding-x do input
 /// - $py       : padding-y do input (se null, usa calc(.45em + $border-w))
-@mixin nb-form-floating-size(
-  $text-fs: 1em,
+@mixin nb-form-floating-size($text-fs: 1em,
   $gap: 0em,
   $border-w: null,
   $px: 1em,
   $py: null,
 ) {
   // fallback de borda e padding-y
-  $border-w: if($border-w == null,
-    if(global-variable-exists(border-width), $border-width, 1px),
-    $border-w
-  );
+  $border-w: if($border-w ==null,
+      if(global-variable-exists(border-width), $border-width, 1px),
+      $border-w );
   $lh: 1.5; // line-height fixo
   $lf-perc: 0.75; // escala da label ao focar
   $label-fs: calc(($text-fs * $lf-perc));
-  @if $py == null { $py: calc(.45em + #{$border-w}); }
-  @else { $py: calc(#{$py} + #{$border-w}); }
+
+  @if $py ==null {
+    $py: calc(.45em + #{$border-w});
+  }
+
+  @else {
+    $py: calc(#{$py} + #{$border-w});
+  }
+
   $transitions: all .15s ease-in-out;
 
-  > textarea {
+  >textarea {
     min-height: 4em !important;
-    + label{
+
+    +label {
       top: 1em;
       transform: translateY(0);
     }
   }
 
   // === estilos ===
-  > label{
+  >label {
     display: inline-flex;
     align-items: baseline;
     padding: 0 $px;
@@ -48,24 +54,25 @@
     transition: $transitions;
   }
 
-  > .form-control,
-  > .form-control-plaintext,
-  > .form-select{
+  >.form-control,
+  >.form-control-plaintext,
+  >.form-select {
     font-size: $text-fs;
     padding: $py $px $py calc($px - 3px);
     height: auto;
     min-height: auto;
-    &:has(~label){
+
+    &:has(~label) {
       padding-top: calc($label-fs + $gap + $py);
     }
   }
 
   // estados de flutuação (foco/valor)
-  > .form-control:focus,
-  > .form-control:not(:placeholder-shown),
-  > .form-control-plaintext,
-  > .form-select {
-    ~ label{
+  >.form-control:focus,
+  >.form-control:not(:placeholder-shown),
+  >.form-control-plaintext,
+  >.form-select {
+    ~label {
       padding-bottom: $gap;
       padding-top: calc($lh * $py) !important;
       transform: translateY(0) scale($lf-perc);
@@ -77,8 +84,7 @@
 
 /* XS */
 .form-floating.form-floating-xs {
-  @include nb-form-floating-size(
-    $text-fs: .5rem,
+  @include nb-form-floating-size($text-fs: .5rem,
     $gap: .1rem,
     $py: .25rem,
     $border-w: $border-width,
@@ -88,18 +94,15 @@
 
 /* SM (a sua atual) */
 .form-floating.form-floating-sm {
-  @include nb-form-floating-size(
-    $text-fs: .65rem,
+  @include nb-form-floating-size($text-fs: .65rem,
     $border-w: $border-width,
     $gap: .15rem,
     $px: 1rem,
-    $py: .35rem
-  );
+    $py: .35rem);
 }
 
 .form-floating.form-floating-md {
-  @include nb-form-floating-size(
-    $text-fs: .75rem,
+  @include nb-form-floating-size($text-fs: .75rem,
     $gap: .25rem,
     $border-w: $border-width,
     $px: 1rem,
@@ -109,8 +112,7 @@
 
 /* LG */
 .form-floating.form-floating-lg {
-  @include nb-form-floating-size(
-    $text-fs: 1rem,
+  @include nb-form-floating-size($text-fs: 1rem,
     $gap: .5rem,
     $border-w: $border-width,
     $px: 1rem,
@@ -120,107 +122,136 @@
 
 // Date Range Picker
 
-bs-daterangepicker-container, bs-datepicker-container{
+bs-daterangepicker-container,
+bs-datepicker-container {
 
-    *{font-size: .75rem !important}
+  * {
+    font-size: .75rem !important
+  }
 
-    button.next span, button.previous span{
-        font-size: 1.5rem !important;
-    }
+  button.next span,
+  button.previous span {
+    font-size: 1.5rem !important;
+  }
 
-    .bs-datepicker-predefined-btns {
-        button {
+  .bs-datepicker-predefined-btns {
+    button {
 
-          @extend .btn;
-          @extend .btn-sm;
-          @extend .btn-primary;
-          display: block;
+      @extend .btn;
+      @extend .btn-sm;
+      @extend .btn-primary;
+      display: block;
 
-          &.selected{ background-color: darken($primary, 10) !important }
-
-        }
-    }
-
-    .bs-datepicker{
-        width: max-content;
-        max-width: 80vw;
-        overflow: auto;
-        max-height: 50vh;
-        border-radius: .25rem;
-        justify-content: center;
-
-        .bs-datepicker-custom-range{
-            @extend .flex-fill;
-            padding: 1em;
-        }
-    
-        @media (max-width: 768px){
-            max-height: 30vh;
-    
-            .bs-timepicker-in-datepicker-container{
-                flex-wrap: wrap;
-            }
-    
-        }
-    
-        .bs-datepicker-container{
-        
-            padding: 1em !important;
-        
-            .bs-calendar-container, .bs-media-container{
-                padding: 0 !important;
-            }
-        
-        }
-
-        bs-days-calendar-view:has(+bs-days-calendar-view){
-            .bs-datepicker-head{ border-top-right-radius: 0 }
-            +bs-days-calendar-view{
-                .bs-datepicker-head{ border-top-left-radius: 0 }
-            }
-        }
-
-        .bs-datepicker-head{
-            background-color: $primary;
-        }
-
-        .bs-datepicker-body{
-            table{
-                td{
-                    span.selected, &.selected span, span[class*=select-]:after, &[class*=select-] span:after{
-                        background-color: $primary !important;
-                    }
-                    &.is-highlighted:not(.disabled):not(.selected) span, span.is-highlighted:not(.disabled):not(.selected){
-                        background-color: lighten($primary, 50%) !important;
-                    }
-                }
-            }
-        }
-
+      &.selected {
+        background-color: darken($primary, 10) !important
+      }
 
     }
+  }
+
+  .bs-datepicker {
+    width: max-content;
+    max-width: 80vw;
+    overflow: auto;
+    max-height: 50vh;
+    border-radius: .25rem;
+    justify-content: center;
+
+    .bs-datepicker-custom-range {
+      @extend .flex-fill;
+      padding: 1em;
+    }
+
+    @media (max-width: 768px) {
+      max-height: 30vh;
+
+      .bs-timepicker-in-datepicker-container {
+        flex-wrap: wrap;
+      }
+
+    }
+
+    .bs-datepicker-container {
+
+      padding: 1em !important;
+
+      .bs-calendar-container,
+      .bs-media-container {
+        padding: 0 !important;
+      }
+
+    }
+
+    bs-days-calendar-view:has(+bs-days-calendar-view) {
+      .bs-datepicker-head {
+        border-top-right-radius: 0
+      }
+
+      +bs-days-calendar-view {
+        .bs-datepicker-head {
+          border-top-left-radius: 0
+        }
+      }
+    }
+
+    .bs-datepicker-head {
+      background-color: $primary;
+    }
+
+    .bs-datepicker-body {
+      table {
+        td {
+
+          span.selected,
+          &.selected span,
+          span[class*=select-]:after,
+          &[class*=select-] span:after {
+            background-color: $primary !important;
+          }
+
+          &.is-highlighted:not(.disabled):not(.selected) span,
+          span.is-highlighted:not(.disabled):not(.selected) {
+            background-color: lighten($primary, 50%) !important;
+          }
+        }
+      }
+    }
+
+
+  }
 }
 
-bs-dropdown-container{
+bs-dropdown-container {
   z-index: 9999 !important;
 }
 
-.form-floating.is-invalid .form-control,
-.form-group.is-invalid .form-control {
-  border-color: var(--#{$prefix}form-invalid-border-color) !important;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23fa3b1d'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23fa3b1d' stroke='none'/%3e%3c/svg%3e") !important;
-}
-.form-floating.is-invalid .form-control:focus,
-.form-group.is-invalid .form-control:focus {
-  box-shadow: 0 0 0 .25rem rgba(var(--#{$prefix}danger-rgb), .25) !important;
-}
+.was-validated, .needs-validation {
 
-.form-floating.is-valid .form-control,
-.form-group.is-valid .form-control {
-  border-color: var(--#{$prefix}form-valid-border-color) !important;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2325b003' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e") !important;
-}
-.form-floating.is-valid .form-control:focus,
-.form-group.is-valid .form-control:focus {
-  box-shadow: 0 0 0 .25rem rgba(var(--#{$prefix}success-rgb), .25) !important;
+  .form-floating,
+  .form-group {
+
+    &.is-valid {
+      .form-control.ng-touched:not(.no-validate) {
+        border-color: var(--#{$prefix}form-valid-border-color) !important;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2325b003' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e") !important;
+
+        &:focus {
+          box-shadow: 0 0 0 .25rem rgba(var(--#{$prefix}success-rgb), .25) !important;
+        }
+      }
+    }
+
+    &.is-invalid {
+      .form-control.ng-touched:not(.no-validate) {
+        border-color: var(--#{$prefix}form-invalid-border-color) !important;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23fa3b1d'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23fa3b1d' stroke='none'/%3e%3c/svg%3e") !important;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 .25rem rgba(var(--#{$prefix}danger-rgb), .25) !important;
+      }
+    }
+
+  }
+
 }

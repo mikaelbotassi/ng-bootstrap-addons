@@ -1,12 +1,13 @@
 <app-sample-container tagName="nba-ac-lov">
     <nba-ac-lov
         label="Search Movie"
-        [acUrl]="`${environment.OMDb_API.apiUrl}?i=:imdbID&apikey=${environment.OMDb_API.key}`"
+        [acUrl]="`${environment.OMDb_API.apiUrl}?s=:imdbID&apikey=${environment.OMDb_API.key}`"
         [map]="mapConfig"
         searchName="s"
         [(ngModel)]="selectedMovie"
         (ngModelChange)="onModelChange($event)"
-        [resultPath]="{lov: 'Search'}"
+        (onPerformed)="onPerformed($event)"
+        [resultPath]="{lov: 'Search', autocomplete: 'Search'}"
         [required]="true">
     </nba-ac-lov>
 </app-sample-container>
