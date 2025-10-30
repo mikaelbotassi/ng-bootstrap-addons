@@ -161,7 +161,7 @@ describe('AutoCompleteLovComponent', () => {
     spyOn(component, 'executeCommand');
 
     component.fetchLov('test');
-    expect(component.focus()).toBeTrue();
+    expect(component.expanded()).toBeTrue();
     expect(component.executeCommand).toHaveBeenCalled();
   });
 
@@ -192,6 +192,6 @@ describe('AutoCompleteLovComponent', () => {
     const valuesSpy = spyOnProperty(component, 'values', 'set');
     component.selectItem(item);
     expect(valuesSpy).toHaveBeenCalledWith(item);
-    expect(component.focus()).toBeFalse();
+    expect(component.expanded()).toBeFalse();
   });
 });

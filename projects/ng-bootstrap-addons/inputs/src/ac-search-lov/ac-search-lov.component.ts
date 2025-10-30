@@ -45,9 +45,10 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   readonly debounceTime = input<number>(1000);
   clearIfNotMatch = input(false, { transform: booleanAttribute });
   focusedAfterCollapse = computed(() => {
-    const searchFocus = this.focus();
+    const searchFocus = this.expanded();
+    const focus = this.focus();
     const inputRef = this.inputRef()?.nativeElement as HTMLInputElement;
-    if (!searchFocus) {
+    if (!searchFocus && focus) {
       inputRef?.focus();
       return true;
     }
@@ -55,26 +56,26 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   });
   clear = effect(() => {
     if(this.clearIfNotMatch()) return;
-    const blur = this.blurTriggered();
     const busy = this.fetchBusy();
-    const inputEl = this.inputRef()?.nativeElement as HTMLInputElement;
+    this.inputRef();
     const searchFocus = this.focusedAfterCollapse();
-    const focused = inputEl && document.activeElement === inputEl;
-    if (blur && !this.control?.value && !busy && !focused && !searchFocus) {
+    const inputFocus = this.focus();
+    console.log(!this.control?.value, !busy, !inputFocus, !searchFocus)
+    if (!this.control?.value && !busy && !inputFocus && !searchFocus) {
       this.descControl.patchValue(null, { emitEvent: false });
       this.desc.set(null);
-      this.blurTriggered.set(false);
+      this.focus.set(false);
     }
   });
   map = input.required<AcMap>();
 
   //MODELS
-  focus = model<boolean>(false);
+  expanded = model<boolean>(false);
   desc = model<string | null>(null);
 
   //SIGNALS
   private _listOfValues = signal<any[]>([]);
-  private blurTriggered = signal<boolean>(false);
+  focus = model<boolean>(false);
   private debouncing = signal(false);
 
   // COMPUTED PROPERTIES
@@ -111,10 +112,10 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   onBlur(){
-    this.control?.markAllAsTouched();
-    this.focus.set(false);
+    this.markTouched();
+    this.expanded.set(false);
     this.acBlur.emit();
-    this.blurTriggered.set(true);
+    this.focus.set(false);
   }
 
   override ngOnInit(): void {
@@ -142,7 +143,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
         return;
       }
 
-      if(this.focus()) return this.fetchLov(this.descControl.value!);
+      if(this.expanded()) return this.fetchLov(this.descControl.value!);
       return this.fetchDesc(this.descControl.value!);
 
     });
@@ -191,7 +192,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   override writeValue(value: any): void {
-    console.log("🚀 ~ AutoCompleteLovComponent ~ writeValue ~ value:", value)
     if (this.control) {
       if (value) {
         this.fetchDesc(value);
@@ -206,8 +206,9 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   set controlValue(value: any) {
     if (this.control?.value !== value) {
-      this.control?.setValue(value, { emitEvent: false });
-      this.control?.markAsTouched();
+      this.propagateValue(value);
+      // this.control?.setValue(value, { emitEvent: false });
+      this.markTouched();
       this.control?.markAsDirty();
       this.control?.updateValueAndValidity();
     }
@@ -229,7 +230,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       desc: desc,
       type: 'lov',
     };
-    this.focus.set(true);
+    this.expanded.set(true);
     this.executeCommand(config);
   }
 
@@ -301,7 +302,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
           
           if (processedRes.length > 1) {
             this.updateListOfValues(processedRes);
-            this.focus.set(true);
+            this.expanded.set(true);
             this.onPerformed.emit({
               type: configs.type,
               data: processedRes,
@@ -331,8 +332,9 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   set values(value: any | null) {
     if (!value) {
-      if (this.clearIfNotMatch()) this.descControl.patchValue(null, { emitEvent: false });
-      this.control?.patchValue(null, { emitEvent: false });
+      // if (this.clearIfNotMatch()) this.descControl.patchValue(null, { emitEvent: false });
+      // this.control?.patchValue(null, { emitEvent: false });
+      this.propagateValue(null);
       this.map().addons?.forEach((addon) => {
         if (addon.setValue) addon.setValue(null);
       });
@@ -367,13 +369,16 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   selectItem(item: any) {
-    this.onPerformed.emit({
-      type: 'lov',
-      data: item,
-      status: Status.SUCCESS
-    });
-    this.values = item;
-    this.focus.set(false);
+    this.onPerformed.emit({ type: 'lov', data: item, status: Status.SUCCESS });
+
+    this.completeDescFromResponse = item;
+
+    const codeKey = this.map().code.key;
+    this.propagateValue(item?.[codeKey] ?? null);
+
+    this.map().addons?.forEach(a => a.setValue?.(item));
+
+    this.expanded.set(false);
   }
 
 }

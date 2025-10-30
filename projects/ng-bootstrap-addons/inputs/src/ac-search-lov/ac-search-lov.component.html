@@ -1,28 +1,29 @@
 @defer (on viewport; prefetch on idle){
   @if(control){
-    <div class="form-group" [class]="formGroupClass()">
-      <div class="form-floating" [class]="'form-floating-' + size()">
-          @if(focus() && !control.disabled){
+    <div class="form-group" [ngClass]="formGroupClass()">
+      <div class="form-floating"
+        [ngClass]="[
+          'form-floating-' + size(),
+          (control.invalid && (control.touched || control.dirty)) ? 'is-invalid' : '',
+          (control.valid   && (control.touched || control.dirty)) ? 'is-valid'   : ''
+        ]"
+      >
+          @if(expanded() && !control.disabled){
             <div class="position-fixed top-0 start-0 bottom-0 end-0 bg-black bg-opacity-25 z-2 fade-in"></div>
             <input
               type="text"
               class="form-control position-absolute rounded-bottom-0 top-0 start-0 z-2"
-              [class]="inputClass()"
+              [ngClass]="inputClass()"
               [formControl]="descControl"
               (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
-              (keydown.tab)="focus.set(false)"
+              (keydown.tab)="expanded.set(false)"
               (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+              [class.is-invalid]="control.invalid && (control.touched || control.dirty)"
+              [class.is-valid]="control.valid && (control.touched || control.dirty)"
+              [attr.aria-invalid]="control.invalid ? true : null"
               clickOutside
-              [autofocus]="true"
-              [ngClass]="{
-                'ng-invalid': control.invalid && control.touched,
-                'ng-valid': control.valid && control.touched,
-                'ng-touched': control.touched,
-                'ng-untouched': control.untouched,
-                'ng-dirty': control.dirty,
-                'ng-pristine': control.pristine
-              }"              
-              (onClickOutside)="focus.set(false)"
+              [autofocus]="true"           
+              (onClickOutside)="expanded.set(false)"
               exceptClass="no-collapse"
               [id]="inputId()"
               [name]="inputId()"
@@ -42,9 +43,9 @@
               class="form-control opacity-0 no-collapse"
             >
             <nba-autocomplete-collapse
-              (onClose)="focus.set(false)"
+              (onClose)="expanded.set(false)"
               (onSelect)="selectItem($event)"
-              [collapse]="!focus()"
+              [collapse]="!expanded()"
               [icon]="icon()"
               [title]="label() ?? 'Selecione uma opção'"
               [listOfValues]="listOfValues()"
@@ -57,29 +58,25 @@
               type="text"
               [class.placeholder-wave]="fetchDescCommand.running()"
               [class.placeholder]="fetchDescCommand.running()"
+              [class.is-invalid]="control.invalid && (control.touched || control.dirty)"
+              [class.is-valid]="control.valid && (control.touched || control.dirty)"
+              [attr.aria-invalid]="control.invalid ? true : null"
               class="form-control"
-              [class]="inputClass()"
+              [ngClass]="inputClass()"
               [formControl]="descControl"
               [id]="inputId()"
               [name]="inputId()"
-              (keydown.f9)="focus.set(true)"
+              (keydown.f9)="expanded.set(true)"
+              (focus)="focus.set(true)"
               (blur)="onBlur()"
               [placeholder]="label()"
-              [autofocus]="autofocus()"
-              [ngClass]="{
-                'ng-invalid': control.invalid && control.touched,
-                'ng-valid': control.valid && control.touched,
-                'ng-touched': control.touched,
-                'ng-untouched': control.untouched,
-                'ng-dirty': control.dirty,
-                'ng-pristine': control.pristine
-              }"              
+              [autofocus]="autofocus()"          
               #input
             >
             <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
               <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center"
                 [class.disabled]="this.control.disabled"
-                (click)="focus.set(true)"
+                (click)="expanded.set(true)"
                 [attr.aria-label]="label()"
                 [attr.aria-labelledby]="inputId()"
                 [attr.aria-describedby]="inputId()"

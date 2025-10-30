@@ -7,6 +7,7 @@ import {
   input,
   model,
   OnInit,
+  signal,
   viewChild,
 } from '@angular/core';
 import {
@@ -32,7 +33,7 @@ import {
 export class ControlValueAccessorDirective<T>
   implements ControlValueAccessor, OnInit
 {
-  inputRef = viewChild<ElementRef<T>>('input');
+  inputRef = viewChild<ElementRef<HTMLElement>>('input');
   inputClass = input<string>('');
   labelClass = input<string>('');
   formGroupClass = input<string>('');
@@ -40,6 +41,7 @@ export class ControlValueAccessorDirective<T>
   label = input<string>();
   icon = input<string>();
   size = input<'xs' | 'sm' | 'md' | 'lg'>('md');
+  controlSignal = signal<FormControl|undefined>(undefined);
 
   control: FormControl | undefined;
   isRequired = false;
@@ -48,7 +50,8 @@ export class ControlValueAccessorDirective<T>
 
   private _isDisabled = false;
   private _destroy$ = new Subject<void>();
-  private _onTouched!: () => T;
+  protected _onChange: (val: T | null) => void = () => {};
+  protected _onTouched: () => void = () => {};
 
   constructor(@Inject(Injector) private injector: Injector) {}
 
@@ -83,6 +86,7 @@ export class ControlValueAccessorDirective<T>
             .form as FormControl;
           break;
       }
+      this.controlSignal.set(this.control);
     } catch (err) {
       this.control = new FormControl();
     }
@@ -96,18 +100,11 @@ export class ControlValueAccessorDirective<T>
       return;
     }
     this.control = new FormControl(value);
+    this.controlSignal.set(this.control);
   }
 
   registerOnChange(fn: (val: T | null) => void): void {
-    this.control?.valueChanges
-      .pipe(
-        takeUntil(this._destroy$),
-        distinctUntilChanged()
-      )
-      .subscribe((val) => {
-        fn(val);
-        this.control?.markAsUntouched();
-      });
+    this._onChange = fn;
   }
 
   registerOnTouched(fn: () => T): void {
@@ -117,4 +114,17 @@ export class ControlValueAccessorDirective<T>
   setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
   }
+
+  protected propagateValue(value: T | null): void {
+    this._onChange(value);
+    if (this.control && this.control.value !== value) {
+      this.control.setValue(value as any, { emitEvent: false });
+    }
+  }
+
+  protected markTouched(): void {
+    this._onTouched();
+    this.control?.markAsTouched();
+  }
+
 }

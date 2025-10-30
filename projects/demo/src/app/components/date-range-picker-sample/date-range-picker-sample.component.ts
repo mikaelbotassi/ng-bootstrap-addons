@@ -12,12 +12,4 @@ export class DateRangePickerSampleComponent {
 
   dateRange = signal<(Date|undefined)[]|undefined>([new Date(), new Date()]);
 
-  constructor(){
-
-    effect(() => {
-      console.log('Date Range changed:', this.dateRange());
-    });
-
-  }
-
 }
