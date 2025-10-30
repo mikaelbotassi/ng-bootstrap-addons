@@ -1,4 +1,4 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, forwardRef, input, signal, ViewEncapsulation } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, forwardRef, inject, Injector, input, signal, ViewEncapsulation } from '@angular/core';
 import { BsDatepickerModule, BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
@@ -40,13 +40,27 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
   customConfigs = input<Partial<BsDaterangepickerConfig>>({});
 
   displayValue = computed(() => {
-    const v = this.control?.value as (Date|undefined)[] | undefined;
-    if (!v || !v[0] || !v[1]) return '';
-    const fmt = this.withTime() ? 'DD/MM/YYYY HH:mm' : 'DD/MM/YYYY';
+    const v = this.value();
+    if(!v || !v[0] || !v[1]){
+      return '';
+    }
+    const fmt = this.FMT();
     return `${DateUtils.formatDate(v[0], fmt)} - ${DateUtils.formatDate(v[1], fmt)}`;
   });
 
-  
+  setValue = effect(() => {
+    const inputRef = this.inputRef();
+    const v = this.displayValue();
+    if(!inputRef) return;
+    const el = inputRef.nativeElement as unknown as HTMLInputElement;
+    queueMicrotask(() => {
+      if (el && el.value !== v) el.value = v;
+    });
+  });
+
+  value = signal<(Date|undefined)[]|undefined>(undefined);
+  FMT = computed(() => this.withTime() ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY');
+
   baseConfigs = computed<Partial<BsDaterangepickerConfig>>(() => {
     const withTime = this.withTime();
     const dateFormat = withTime ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY';
@@ -125,13 +139,13 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
   onDatePickerChange(newValue: (Date|undefined)[]|undefined) {
     if(newValue === this.control?.value) return;
     if(!newValue){
-      this.control?.setValue(undefined);
+      this.propagateValue(undefined);
       return;
     }
     
     let [start, end] = newValue;
     if (!start || !end) {
-      this.control?.setValue(undefined);
+      this.propagateValue(undefined);
       return;
     }
     
@@ -139,11 +153,16 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
       [start, end] = [end, start];
     }
 
-    this.control?.setValue([start, end]);
+    this.propagateValue([start, end])
   }
 
   private clamp(n: number, min: number, max: number) {
   return Math.min(Math.max(n, min), max);
+}
+
+override ngOnInit(){
+  super.ngOnInit();
+  this.control?.valueChanges.subscribe(v => { this.value.set(v); });
 }
 
 private getContainer(): HTMLElement | null {

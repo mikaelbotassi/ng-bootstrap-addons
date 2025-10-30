@@ -12,4 +12,8 @@ export class DateRangePickerSampleComponent {
 
   dateRange = signal<(Date|undefined)[]|undefined>([new Date(), new Date()]);
 
+  onValueChange(newValue:any){
+    console.log('Date range changed:', newValue);
+  }
+
 }
