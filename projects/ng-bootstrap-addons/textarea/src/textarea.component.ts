@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TextareaPlaceholderComponent } from './placeholder/textarea-placeholder.component';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
+import { distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'nba-textarea',
@@ -20,4 +21,17 @@ import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-messag
 export class TextAreaComponent<T> extends ControlValueAccessorDirective<T> {
   rows = input<number>(5);
   height = computed(() => this.rows() ? `${this.rows()! * 1.2}em` : 'auto');
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.control?.valueChanges
+    .pipe(
+      takeUntil(this._destroy$),
+      distinctUntilChanged()
+    )
+    .subscribe((value) => {
+      this.propagateValue(value);
+    });
+  }
+
 }

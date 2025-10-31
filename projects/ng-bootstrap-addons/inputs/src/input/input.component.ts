@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, booleanAttribute, forwardRef, input } from '@angular/core';
+import { Component, Injector, booleanAttribute, forwardRef, inject, input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -9,6 +9,7 @@ import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { createRandomString } from 'ng-bootstrap-addons/utils';
 import { InputType } from '../models/input-models';
+import { distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'nba-input',
@@ -39,5 +40,18 @@ export class InputComponent<T> extends ControlValueAccessorDirective<T> {
 
   //Browser default
   autocomplete = input<string | boolean>(false);
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.control?.valueChanges
+    .pipe(
+      takeUntil(this._destroy$),
+      distinctUntilChanged()
+    )
+    .subscribe((value) => {
+      this.propagateValue(value);
+    });
+  }
+
 
 }

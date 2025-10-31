@@ -53,6 +53,7 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
     const v = this.displayValue();
     if(!inputRef) return;
     const el = inputRef.nativeElement as unknown as HTMLInputElement;
+    if (el && el.value !== v) el.value = v;
     queueMicrotask(() => {
       if (el && el.value !== v) el.value = v;
     });

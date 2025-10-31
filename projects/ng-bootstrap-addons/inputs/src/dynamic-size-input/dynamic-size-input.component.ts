@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { createRandomString, isset } from 'ng-bootstrap-addons/utils';
 import { InputType } from '../models/input-models';
+import { distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'nba-dynamic-size-input',
@@ -36,5 +37,18 @@ export class DynamicSizeInputComponent extends ControlValueAccessorDirective<num
 
   //Browser default
   autocomplete = input<string | boolean>(false);
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.control?.valueChanges
+    .pipe(
+      takeUntil(this._destroy$),
+      distinctUntilChanged()
+    )
+    .subscribe((value) => {
+      this.propagateValue(value);
+    });
+  }
+
 
 }

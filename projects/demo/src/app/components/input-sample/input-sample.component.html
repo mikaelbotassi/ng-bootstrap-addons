@@ -3,6 +3,7 @@
         icon="ti ti-file"
         label="Default Input"
         [(ngModel)]="defaultInput"
+        (ngModelChange)="onModelChange($event)"
     />
     <hr>
     <nba-input

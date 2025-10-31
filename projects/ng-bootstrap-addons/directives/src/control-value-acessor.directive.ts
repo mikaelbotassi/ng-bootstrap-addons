@@ -23,8 +23,6 @@ import {
 import { createRandomString } from 'ng-bootstrap-addons/utils';
 import {
   Subject,
-  takeUntil,
-  distinctUntilChanged,
 } from 'rxjs';
 
 @Directive({
@@ -49,7 +47,7 @@ export class ControlValueAccessorDirective<T>
   readonly = input(false, { transform: booleanAttribute });
 
   private _isDisabled = false;
-  private _destroy$ = new Subject<void>();
+  protected _destroy$ = new Subject<void>();
   protected _onChange: (val: T | null) => void = () => {};
   protected _onTouched: () => void = () => {};
 

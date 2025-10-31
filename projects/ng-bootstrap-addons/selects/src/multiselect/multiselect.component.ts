@@ -100,22 +100,22 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
     const isSelected = this.control?.value?.includes(option.value) ?? false;
     
     if(!this.multiple()){
-      this.control?.setValue([option.value]);
+      this.propagateValue([option.value]);
       this.dropdown()?.hide();
       return;
     }
 
-    this.control?.setValue(isSelected
+    this.propagateValue(isSelected
       ? this.control?.value?.filter((value:T) => value !== option.value) ?? null
       : [...this.control?.value ?? [], option.value]);
   }
 
   toggleAll() {
     if (this.areAllSelected()) {
-      this.control?.setValue([]);
+      this.propagateValue([]);
     }
     else {
-      this.control?.setValue(this.options().map((option) => option.value));
+      this.propagateValue(this.options().map((option) => option.value));
     }
   }
 

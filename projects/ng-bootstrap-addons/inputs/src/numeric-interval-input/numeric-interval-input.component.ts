@@ -88,10 +88,10 @@ export class NumericIntervalInputComponent
       .subscribe(() => {
         if (this.control) {
           if(!this.initialValue && !this.endValue){
-            this.control.setValue(null);
+            this.propagateValue(null);
             this.control.updateValueAndValidity();
           }
-          this.control.setValue([this.initialValue.value, this.endValue.value], { emitEvent: false });
+          this.propagateValue([this.initialValue.value, this.endValue.value]);
           this.onValidatorChange();
         }
       });
@@ -101,10 +101,10 @@ export class NumericIntervalInputComponent
       .subscribe(() => {
         if (this.control) {
           if(!this.initialValue && !this.endValue){
-            this.control.setValue(null);
+            this.propagateValue(null);
             this.control.updateValueAndValidity();
           }
-          this.control.setValue([this.initialValue.value, this.endValue.value], { emitEvent: false });
+          this.propagateValue([this.initialValue.value, this.endValue.value]);
           this.onValidatorChange();
         }
     });

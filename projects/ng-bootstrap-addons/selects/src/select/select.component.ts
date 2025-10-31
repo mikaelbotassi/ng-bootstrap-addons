@@ -4,6 +4,7 @@ import { InputPlaceholderComponent } from 'ng-bootstrap-addons/inputs';
 import { ControlValueAccessorDirective } from 'ng-bootstrap-addons/directives';
 import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-message';
 import { createRandomString } from 'ng-bootstrap-addons/utils';
+import { distinctUntilChanged, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'nba-select',
@@ -24,5 +25,17 @@ export class SelectComponent<T> extends ControlValueAccessorDirective<T> {
   compareWith = input<(o1: any, o2: any) => boolean>((o1: any, o2: any) => {
     return o1 === o2;
   });
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.control?.valueChanges
+    .pipe(
+      takeUntil(this._destroy$),
+      distinctUntilChanged()
+    )
+    .subscribe((value) => {
+      this.propagateValue(value);
+    });
+  }
 
 }
