@@ -3,7 +3,7 @@
     @if (template()) {
       <ng-container 
         [ngTemplateOutlet]="template()!" 
-        [ngTemplateOutletContext]="{ $implicit: this.value() }">
+        [ngTemplateOutletContext]="{ $implicit: state.value() }">
       </ng-container>
     } 
     @else if (dynamicFilter()) {
@@ -15,7 +15,7 @@
           <nba-input
             class="no-validate"
             inputClass="no-validate"
-            [(ngModel)]="value"
+            [(ngModel)]="state.value"
             size="sm"
             name="filterText"
           />
@@ -26,7 +26,7 @@
             label="Intervalo de Data"
             inputClass="no-validate"
             size="sm"
-            [(ngModel)]="value"
+            [(ngModel)]="state.value"
             name="filterDate"
           />
         }
@@ -35,7 +35,7 @@
           <nba-numeric-interval-input
             inputClass="no-validate"
             size="sm"
-            [(ngModel)]="value"
+            [(ngModel)]="state.value"
             name="filterNumeric"
           />
         }
@@ -44,7 +44,7 @@
           <nba-switch
             class="fw-normal"
             inputClass="no-validate"
-            [(ngModel)]="value"
+            [(ngModel)]="state.value"
             name="filterBoolean"
           />
         }
@@ -52,7 +52,7 @@
         @default {
           <nba-input
             inputClass="no-validate"
-            [(ngModel)]="value"
+            [(ngModel)]="state.value"
             name="filterDefault"
           />
         }

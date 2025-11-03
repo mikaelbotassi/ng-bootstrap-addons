@@ -1,10 +1,10 @@
-// column-filter-form.component.ts
-import { ChangeDetectionStrategy, Component, contentChild, input, output, signal, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, contentChild, inject, input, output, signal, TemplateRef } from '@angular/core';
 import { DateRangePickerComponent, InputComponent, NumericIntervalInputComponent, SwitchComponent } from 'ng-bootstrap-addons/inputs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ColumnFilterType, FilterFunction } from '../../models/table-models';
 import { DateUtils } from 'ng-bootstrap-addons/utils';
+import { FormStateService } from '../../services/form-state.service';
 
 @Component({
   selector: 'nba-column-filter-form',
@@ -13,10 +13,9 @@ import { DateUtils } from 'ng-bootstrap-addons/utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnFilterFormComponent {
+  state = inject(FormStateService);
   template = contentChild<TemplateRef<any>>('filter');
   type = input<ColumnFilterType|null>(null);
-  
-  value = signal<any>(null);
   
   filter = output<FilterFunction|void>();
   onClearFilter = output<void>();
@@ -24,19 +23,19 @@ export class ColumnFilterFormComponent {
 
   applyFilter() {
     if(this.dynamicFilter()) return this.filter.emit()
-    if(this.value() == null || this.value() == undefined){
+    if(this.state.value() == null || this.state.value() == undefined){
       this.clearFilter();
       return;
     }
     const filterFunction = this.getDefaultFilterFunction();
 
-    const v = this.value();
+    const v = this.state.value();
     
     this.filter.emit((item: any) => filterFunction(item, v));
   }
 
   clearFilter() {
-    this.value.set(null);
+    this.state.value.set(null);
     this.onClearFilter.emit();
   }
 

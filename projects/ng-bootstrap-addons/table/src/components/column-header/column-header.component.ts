@@ -3,13 +3,15 @@ import { ColumnFilterComponent } from '../column-filter/column-filter.component'
 import { TableComponent } from '../../table.component';
 import { ColumnFilterType, FilterFunction, SortDirection } from '../../models/table-models';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
+import { FormStateService } from '../../services/form-state.service';
 
 @Component({
   selector: 'th[nbaColumnHeader]',
   templateUrl: './column-header.component.html',
   imports: [ColumnFilterComponent, BsDropdownDirective],
   styleUrls: ['./column-header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [FormStateService]
 })
 export class ColumnHeaderComponent {
   field = input.required<string>();
