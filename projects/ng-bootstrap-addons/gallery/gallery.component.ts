@@ -1,4 +1,4 @@
-import { booleanAttribute, Component, effect, inject, input, model, output, viewChild } from '@angular/core';
+import { booleanAttribute, Component, effect, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { GalleryModalComponent } from './gallery-modal/gallery-modal.component';
 import { GalleryToggleDirective } from './gallery-toggle.directive';
@@ -30,9 +30,10 @@ export class GalleryComponent {
   showGallery(): void {
     this.shown.set(true);
     this.modalRef = this._modalService.show(GalleryModalComponent, {
+      class: 'modal-fullscreen modal-dialog-centered',
       initialState: {
         imagesPaths: this.images(),
-        index: this.startIndex()
+        index: signal(this.startIndex())
       }
     });
     this.modalRef.content!.hidden.subscribe(() => {

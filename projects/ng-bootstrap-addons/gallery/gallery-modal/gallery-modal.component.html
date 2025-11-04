@@ -1,7 +1,17 @@
-<carousel>
-    @for(path of imagesPaths; track $index){
-        <slide>
-            <img [src]="path" alt="Image {{ $index + 1 }}" />
-        </slide>
-    }
-</carousel>
+<div class="bg-black">
+    <div class="d-flex align-items-center justify-content-between p-3 text-white">
+        <h6 class="fw-bolder text-white fs-7">Galeria - Imagem {{ index() + 1 }} de {{ imagesPaths.length }}</h6>
+        <button type="button" class="btn btn-close z-3" (click)="hide()">
+            <i class="ti ti-x text-white"></i>
+        </button>
+    </div>
+    <carousel [(activeSlide)]="index">
+        @for(path of imagesPaths; track $index){
+            <slide>
+                <div class="ratio ratio-1x1">
+                    <img [src]="path" class="object-fit-cover" alt="Image {{ $index + 1 }}" />
+                </div>
+            </slide>
+        }
+    </carousel>
+</div>

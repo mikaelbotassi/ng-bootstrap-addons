@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 
@@ -10,7 +10,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 export class GalleryModalComponent {
 
   imagesPaths: string[] = [];
-  index: number = 0;
+  index = signal(0);
   hidden = output<void>();
 
   hide(){
