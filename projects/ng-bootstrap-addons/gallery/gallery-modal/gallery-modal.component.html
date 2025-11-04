@@ -1,0 +1,7 @@
+<carousel>
+    @for(path of imagesPaths; track $index){
+        <slide>
+            <img [src]="path" alt="Image {{ $index + 1 }}" />
+        </slide>
+    }
+</carousel>

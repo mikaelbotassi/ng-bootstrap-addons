@@ -16,6 +16,7 @@ import { CustomerCardListComponent } from '../form-page/components/customer-card
 import { PaginationSampleComponent } from '../../components/pagination-sample/pagination-sample.component';
 import { DynamicSizeInputSampleComponent } from '../../components/dynamic-size-input-sample/dynamic-size-input-sample.component';
 import { usePageState } from 'project/rxjs/src/use-page-state';
+import { GallerySampleComponent } from '../../components/gallery-sample/gallery-sample.component';
 
 @Component({
   selector: 'app-samples',
@@ -35,7 +36,8 @@ import { usePageState } from 'project/rxjs/src/use-page-state';
     TableSampleComponent,
     NumericIntervalInputSampleComponent,
     PaginationSampleComponent,
-    DynamicSizeInputSampleComponent
+    DynamicSizeInputSampleComponent,
+    GallerySampleComponent
   ],
 })
 export class SamplesComponent {
