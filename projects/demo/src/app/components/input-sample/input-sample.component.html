@@ -20,6 +20,12 @@
     />
     <hr>
     <nba-input
+        label="Masked Input"
+        mask="000.000.000-00"
+        [(ngModel)]="defaultInput"
+    />
+    <hr>
+    <nba-input
         label="Disabled Input"
         disabled
         [(ngModel)]="defaultInput"
