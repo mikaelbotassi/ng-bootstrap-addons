@@ -1,9 +1,7 @@
 .password-eye-icon{
     position: absolute;
-    background-color: #fff;
     right: 10px;
     top: 50%;
-    color: #6c757d;
     font-size: 1.25rem;
     transform: translateY(-50%) !important;
     cursor: pointer;
@@ -36,4 +34,8 @@
         mask-position: center;
     }
 
+}
+
+.form-control[input-password]{
+    background-image: none !important;
 }
