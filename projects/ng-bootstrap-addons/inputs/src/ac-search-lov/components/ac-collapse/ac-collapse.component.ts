@@ -12,6 +12,9 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
   imports: [AutocompleteCardComponent, EmptyDataComponent, AutocompleteCollapsePlaceholderComponent, ScrollingModule, CdkVirtualScrollViewport],
   templateUrl: './ac-collapse.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: `
+    .collapse-bg{background-color:inherit;}
+  `,
   host: { 'collision-id': `ac-search-lov--collapse${createRandomString(20)} ` },
 })
 export class AutocompleteCollapseComponent {

@@ -8,8 +8,7 @@ export type AcMap = {
 
 export type AcControl = {
   key: string;
-  setValue?: (value: any | null) => void;
-  getValue?: () => any | null;
+  formatter?: <T=any>(value: T) => string;
   title: string;
 }
 

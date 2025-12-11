@@ -1,94 +1,97 @@
 @defer (on viewport; prefetch on idle){
   @if(control){
     <div class="form-group" [ngClass]="formGroupClass()">
-      <div class="form-floating"
-        [ngClass]="[
-          'form-floating-' + size(),
-          (control.invalid && (control.touched || control.dirty)) ? 'is-invalid' : '',
-          (control.valid   && (control.touched || control.dirty)) ? 'is-valid'   : ''
-        ]"
-      >
-          @if(expanded() && !control.disabled){
-            <div class="position-fixed top-0 start-0 bottom-0 end-0 bg-black bg-opacity-25 z-2 fade-in"></div>
-            <input
-              type="text"
-              class="form-control position-absolute rounded-bottom-0 top-0 start-0 z-2"
-              [ngClass]="inputClass()"
-              [formControl]="descControl"
-              (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
-              (keydown.tab)="expanded.set(false)"
-              (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
-              [attr.aria-invalid]="control.invalid ? true : null"
-              clickOutside
-              [autofocus]="true"           
-              (onClickOutside)="expanded.set(false)"
-              exceptClass="no-collapse"
-              [id]="inputId()"
-              [name]="inputId()"
-              [placeholder]="label()"
-            >
-            <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
-              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center z-3 no-collapse"
-                (click)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
-                [attr.aria-label]="label()"
-                tabindex="-1"
-                [attr.aria-labelledby]="inputId()"
-                [attr.aria-describedby]="inputId()"
-              ><i class="nba-search no-collapse"></i></a>
-            </div>
-            <input
-              type="text"
-              class="form-control opacity-0 no-collapse"
-            >
-            <nba-autocomplete-collapse
-              (onClose)="expanded.set(false)"
-              (onSelect)="selectItem($event)"
-              [collapse]="!expanded()"
-              [icon]="icon()"
-              [title]="label() ?? 'Selecione uma opção'"
-              [listOfValues]="listOfValues()"
-              [isLoading]="fetchDescCommand.running()"
-              [map]="map()"
-            ></nba-autocomplete-collapse>
-
-          }@else{
-            <input
-              type="text"
-              [class.placeholder-wave]="fetchDescCommand.running()"
-              [class.placeholder]="fetchDescCommand.running()"
-              [attr.aria-invalid]="control.invalid ? true : null"
-              class="form-control"
-              [ngClass]="inputClass()"
-              [formControl]="descControl"
-              [id]="inputId()"
-              [name]="inputId()"
-              (keydown.f9)="expanded.set(true)"
-              (focus)="focus.set(true)"
-              (blur)="onBlur()"
-              [placeholder]="label()"
-              [autofocus]="autofocus()"          
-              #input
-            >
-            <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
-              <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center"
-                [class.disabled]="this.control.disabled"
-                (click)="expanded.set(true)"
-                [attr.aria-label]="label()"
-                [attr.aria-labelledby]="inputId()"
-                [attr.aria-describedby]="inputId()"
-                [ariaDisabled]="this.control.disabled"
-                tabindex="-1"
-              ><i class="nba-search mb-0"></i></a>
-            </div>
-          }
-          @if(label() || icon()){
-            <label [for]="inputId()" [class.required]="isRequired">
-                @if(icon()){
-                  <i [class]="'ti mb-0 ' + icon()"></i>
-                }
-                {{label()}}
-            </label>
-          }
+      <div class="input-group">
+        <ng-content select="[prefix], [group-prefix]"></ng-content>
+        <div class="form-floating"
+          [ngClass]="[
+            'form-floating-' + size(),
+            (control.invalid && (control.touched || control.dirty)) ? 'is-invalid' : '',
+            (control.valid   && (control.touched || control.dirty)) ? 'is-valid'   : ''
+          ]"
+        >
+            @if(expanded() && !control.disabled){
+              <div class="position-fixed top-0 start-0 bottom-0 end-0 bg-black bg-opacity-25 z-2 fade-in"></div>
+              <input
+                type="text"
+                class="form-control position-absolute rounded-bottom-0 top-0 start-0 z-2"
+                [ngClass]="inputClass()"
+                [formControl]="descControl"
+                (keydown.f9)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+                (keydown.tab)="expanded.set(false)"
+                (keydown.enter)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+                [attr.aria-invalid]="control.invalid ? true : null"
+                clickOutside
+                [autofocus]="true"
+                (onClickOutside)="expanded.set(false)"
+                exceptClass="no-collapse"
+                [id]="inputId()"
+                [name]="inputId()"
+                [placeholder]="label()"
+              >
+              <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
+                <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center z-3 no-collapse"
+                  (click)="fetchLov(descControl.value); $event.stopImmediatePropagation()"
+                  [attr.aria-label]="label()"
+                  tabindex="-1"
+                  [attr.aria-labelledby]="inputId()"
+                  [attr.aria-describedby]="inputId()"
+                ><i class="nba-search no-collapse"></i></a>
+              </div>
+              <input
+                type="text"
+                class="form-control opacity-0 no-collapse"
+              >
+              <nba-autocomplete-collapse
+                (onClose)="expanded.set(false)"
+                (onSelect)="selectItem($event)"
+                [collapse]="!expanded()"
+                [icon]="icon()"
+                [title]="label() ?? 'Selecione uma opção'"
+                [listOfValues]="listOfValues()"
+                [isLoading]="fetchDescCommand.running()"
+                [map]="map()"
+              ></nba-autocomplete-collapse>
+            }@else{
+              <input
+                type="text"
+                [class.placeholder-wave]="fetchDescCommand.running()"
+                [class.placeholder]="fetchDescCommand.running()"
+                [attr.aria-invalid]="control.invalid ? true : null"
+                class="form-control"
+                [ngClass]="inputClass()"
+                [formControl]="descControl"
+                [id]="inputId()"
+                [name]="inputId()"
+                (keydown.f9)="expanded.set(true)"
+                (focus)="focus.set(true)"
+                (blur)="onBlur()"
+                [placeholder]="label()"
+                [autofocus]="autofocus()"
+                #input
+              >
+              <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
+                <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center"
+                  [class.disabled]="this.control.disabled"
+                  (click)="expanded.set(true)"
+                  [attr.aria-label]="label()"
+                  [attr.aria-labelledby]="inputId()"
+                  [attr.aria-describedby]="inputId()"
+                  [ariaDisabled]="this.control.disabled"
+                  tabindex="-1"
+                ><i class="nba-search mb-0"></i></a>
+              </div>
+            }
+            @if(label() || icon()){
+              <label [for]="inputId()" [class.required]="isRequired">
+                  @if(icon()){
+                    <i [class]="'ti mb-0 ' + icon()"></i>
+                  }
+                  {{label()}}
+              </label>
+            }
+        </div>
+        <ng-content select="[group-suffix], [suffix]"></ng-content>
       </div>
       <nba-form-error-message [control]="control"></nba-form-error-message>
   </div>

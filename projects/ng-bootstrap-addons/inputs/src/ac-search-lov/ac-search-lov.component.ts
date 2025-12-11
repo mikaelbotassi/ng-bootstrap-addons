@@ -40,6 +40,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   //INPUTS
   autofocus = input(false, {transform: booleanAttribute});
+  pattern = input<string|null|undefined>(null);
   searchName = input<string>('filtro');
   resultPath = input<{autocomplete?: string, lov?: string}>({autocomplete: '', lov: ''});
   readonly debounceTime = input<number>(1000);
@@ -122,7 +123,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
     if (this.control?.value && this.control.value !== '') {
       if (this.descControl.value && this.descControl.value !== '') {
-        this.setCompleteDesc();
+        this.descControl.setValue(`${this.control?.value} - ${this.descControl.value?.trimStart().trimEnd()}`, { emitEvent: false });
         return;
       }
       this.fetchDesc(this.control.value);
@@ -206,7 +207,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   set controlValue(value: any) {
     if (this.control?.value !== value) {
       this.propagateValue(value);
-      // this.control?.setValue(value, { emitEvent: false });
       this.markTouched();
       this.control?.markAsDirty();
       this.control?.updateValueAndValidity();
@@ -331,12 +331,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   set values(value: any | null) {
     if (!value) {
-      // if (this.clearIfNotMatch()) this.descControl.patchValue(null, { emitEvent: false });
-      // this.control?.patchValue(null, { emitEvent: false });
       this.propagateValue(null);
-      this.map().addons?.forEach((addon) => {
-        if (addon.setValue) addon.setValue(null);
-      });
       return;
     }
     
@@ -348,23 +343,24 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     
     this.completeDescFromResponse = value;
     this.control?.patchValue(value[this.map().code.key], { emitEvent: false });
-    
-    this.map().addons?.forEach((addon) => {
-      const newValue = value[addon.key];
-      if (newValue && addon.setValue) addon.setValue(value);
-    });
   }
 
   set completeDescFromResponse(value: any) {
-    this.descControl.setValue(`${value[this.map().code.key]} - ${value[this.map().desc.key]}`, { emitEvent: false });
-  }
-
-  setCompleteDesc() {
-    this.descControl.setValue(this.getCompleteDesc(), { emitEvent: false });
-  }
-
-  getCompleteDesc(): string {
-    return `${this.control?.value} - ${this.descControl.value?.trimStart().trimEnd()}`;
+    let completeDesc = `${value[this.map().code.key]} - ${value[this.map().desc.key]}`;
+    if(this.pattern() && this.pattern()!.length > 0){
+      let desc = this.pattern()!;
+      const codePattern = new RegExp(`:${this.map().code.key}`, 'g');
+      const descPattern = new RegExp(`:${this.map().desc.key}`, 'g');
+      desc = desc.replace(codePattern, value[this.map().code.key] ?? '');
+      desc = desc.replace(descPattern, value[this.map().desc.key] ?? '');
+      this.map().addons?.forEach(a => {
+        const aPattern = new RegExp(`:${a.key}`, 'g');
+        const formattedValue = value[a.key] ? (a.formatter ? a.formatter(value[a.key]) : value[a.key]) : '';
+        desc = desc.replace(aPattern, formattedValue);
+      });
+      completeDesc = desc;
+    }
+    this.descControl.setValue(completeDesc, { emitEvent: false });
   }
 
   selectItem(item: any) {
@@ -374,8 +370,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
     const codeKey = this.map().code.key;
     this.propagateValue(item?.[codeKey] ?? null);
-
-    this.map().addons?.forEach(a => a.setValue?.(item));
 
     this.expanded.set(false);
   }

@@ -2,7 +2,7 @@
   @if(control){
     <div class="form-group" [ngClass]="formGroupClass()">
       <div class="input-group">
-        <ng-content select="[group-prefix]"></ng-content>
+        <ng-content select="[group-prefix], [prefix]"></ng-content>
         <div class="form-floating" [ngClass]="'form-floating-' + size()">
             @if(password()){
               <input
@@ -59,7 +59,7 @@
               </label>
             }
         </div>
-        <ng-content select="[group-sufix]"></ng-content>
+        <ng-content select="[group-sufix], [group-suffix], [suffix]"></ng-content>
       </div>
       <nba-form-error-message [control]="control"></nba-form-error-message>
     </div>
