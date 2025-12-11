@@ -1,4 +1,4 @@
-import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, inject, forwardRef, model, signal, computed, DestroyRef, Injector, effect, booleanAttribute, ChangeDetectionStrategy, untracked } from '@angular/core';
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
@@ -40,33 +40,12 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   //INPUTS
   autofocus = input(false, {transform: booleanAttribute});
-  pattern = input<string|null|undefined>(null);
+  format = input<string|null|undefined>(null);
   searchName = input<string>('filtro');
+  findOnShow = input(true, { transform: booleanAttribute });
   resultPath = input<{autocomplete?: string, lov?: string}>({autocomplete: '', lov: ''});
   readonly debounceTime = input<number>(1000);
   clearIfNotMatch = input(false, { transform: booleanAttribute });
-  focusedAfterCollapse = computed(() => {
-    const searchFocus = this.expanded();
-    const focus = this.focus();
-    const inputRef = this.inputRef()?.nativeElement as HTMLInputElement;
-    if (!searchFocus && focus) {
-      inputRef?.focus();
-      return true;
-    }
-    return searchFocus;
-  });
-  clear = effect(() => {
-    if(this.clearIfNotMatch()) return;
-    const busy = this.fetchBusy();
-    this.inputRef();
-    const searchFocus = this.focusedAfterCollapse();
-    const inputFocus = this.focus();
-    if (!this.control?.value && !busy && !inputFocus && !searchFocus) {
-      this.descControl.patchValue(null, { emitEvent: false });
-      this.desc.set(null);
-      this.focus.set(false);
-    }
-  });
   map = input.required<AcMap>();
 
   //MODELS
@@ -81,6 +60,16 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   // COMPUTED PROPERTIES
   listOfValues = computed(() => this._listOfValues());
   private readonly fetchBusy = computed(() => this.fetchDescCommand.running() || this.debouncing());
+  focusedAfterCollapse = computed(() => {
+    const searchFocus = this.expanded();
+    const focus = this.focus();
+    const inputRef = this.inputRef()?.nativeElement as HTMLInputElement;
+    if (!searchFocus && focus) {
+      inputRef?.focus();
+      return true;
+    }
+    return searchFocus;
+  });
 
   //OUTPUTS
   onPerformed = output<ActionPerformed>();
@@ -96,6 +85,20 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   // COMMANDS
   fetchDescCommand!: Command1<any[], AutoCompleteConfig>;
 
+  //EFFECTS
+  clear = effect(() => {
+    if(this.clearIfNotMatch()) return;
+    const busy = this.fetchBusy();
+    this.inputRef();
+    const searchFocus = this.focusedAfterCollapse();
+    const inputFocus = this.focus();
+    if (!this.control?.value && !busy && !inputFocus && !searchFocus) {
+      this.descControl.patchValue(null, { emitEvent: false });
+      this.desc.set(null);
+      this.focus.set(false);
+    }
+  });
+
   constructor() {
     super(inject(Injector));
 
@@ -109,6 +112,13 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.fetchDescCommand = new Command1<any[], AutoCompleteConfig>((configs) =>
       this.acService.performAutocomplete(configs).pipe(observeOn(asyncScheduler))
     );
+  }
+
+  searchClick(){
+    if(this.findOnShow()){
+      this.fetchLov(this.descControl.value);
+    }
+    this.expanded.set(true);
   }
 
   onBlur(){
@@ -284,6 +294,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
                 data: null,
                 status: Status.EMPTY
               });
+              this.updateListOfValues([]);
             }
             return;
           }
@@ -331,12 +342,13 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   set values(value: any | null) {
     if (!value) {
+      this.completeDescFromResponse = null;
       this.propagateValue(null);
       return;
     }
     
     if (!value[this.map().code.key] && !value[this.map().desc.key]) {
-      if (this.clearIfNotMatch()) this.descControl.setValue('', { emitEvent: false });
+      if (this.clearIfNotMatch()) this.completeDescFromResponse = null;
       this.control?.patchValue(null, { emitEvent: false });
       return;
     }
@@ -346,19 +358,22 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
   }
 
   set completeDescFromResponse(value: any) {
-    let completeDesc = `${value[this.map().code.key]} - ${value[this.map().desc.key]}`;
-    if(this.pattern() && this.pattern()!.length > 0){
-      let desc = this.pattern()!;
-      const codePattern = new RegExp(`:${this.map().code.key}`, 'g');
-      const descPattern = new RegExp(`:${this.map().desc.key}`, 'g');
-      desc = desc.replace(codePattern, value[this.map().code.key] ?? '');
-      desc = desc.replace(descPattern, value[this.map().desc.key] ?? '');
-      this.map().addons?.forEach(a => {
-        const aPattern = new RegExp(`:${a.key}`, 'g');
-        const formattedValue = value[a.key] ? (a.formatter ? a.formatter(value[a.key]) : value[a.key]) : '';
-        desc = desc.replace(aPattern, formattedValue);
-      });
-      completeDesc = desc;
+    let completeDesc = '';
+    if(value){
+      completeDesc = `${value[this.map().code.key]} - ${value[this.map().desc.key]}`;
+      if(this.format() && this.format()!.length > 0){
+        let desc = this.format()!;
+        const codePattern = new RegExp(`:${this.map().code.key}`, 'g');
+        const descPattern = new RegExp(`:${this.map().desc.key}`, 'g');
+        desc = desc.replace(codePattern, value[this.map().code.key] ?? '');
+        desc = desc.replace(descPattern, value[this.map().desc.key] ?? '');
+        this.map().addons?.forEach(a => {
+          const aPattern = new RegExp(`:${a.key}`, 'g');
+          const formattedValue = value[a.key] ? (a.formatter ? a.formatter(value[a.key]) : value[a.key]) : '';
+          desc = desc.replace(aPattern, formattedValue);
+        });
+        completeDesc = desc;
+      }
     }
     this.descControl.setValue(completeDesc, { emitEvent: false });
   }

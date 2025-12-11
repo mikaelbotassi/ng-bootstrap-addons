@@ -11,9 +11,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputSampleComponent {
   defaultInput = signal<string>('');
-  onModelChange(value: any) {
-    console.log('Input changed:', value);
-  }
   currencyInput = signal<string>('');
   passwordInput = signal<string>('');
 }

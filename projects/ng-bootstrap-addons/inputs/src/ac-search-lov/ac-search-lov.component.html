@@ -73,7 +73,7 @@
               <div class="position-absolute top-0 end-0 p-1 h-100 d-inline-flex justify-content-center">
                 <a href="javascript:;" class="btn btn-link rounded-2 text-decoration-none d-inline-flex justify-content-center align-items-center"
                   [class.disabled]="this.control.disabled"
-                  (click)="expanded.set(true)"
+                  (click)="searchClick()"
                   [attr.aria-label]="label()"
                   [attr.aria-labelledby]="inputId()"
                   [attr.aria-describedby]="inputId()"

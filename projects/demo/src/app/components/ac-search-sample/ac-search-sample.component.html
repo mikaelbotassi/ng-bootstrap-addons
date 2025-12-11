@@ -4,8 +4,9 @@
         [acUrl]="`${environment.OMDb_API.apiUrl}?s=:imdbID&apikey=${environment.OMDb_API.key}`"
         [map]="mapConfig"
         searchName="s"
-        pattern="[:imdbID] :Title (:Year)"
+        format="[:imdbID] :Title (:Year)"
         [(ngModel)]="selectedMovie"
+        (ngModelChange)="onChange($event)"
         [resultPath]="{lov: 'Search', autocomplete: 'Search'}"
         [required]="true">
     </nba-ac-lov>

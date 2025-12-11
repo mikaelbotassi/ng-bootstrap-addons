@@ -26,4 +26,8 @@ export class AcSearchSampleComponent {
     this.count++;
   }
 
+  onChange(value:any){
+    console.log('Selected movie changed:', value);
+  }
+
 }
