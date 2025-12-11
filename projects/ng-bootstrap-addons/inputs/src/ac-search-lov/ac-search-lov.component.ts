@@ -288,7 +288,6 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
                 status: Status.SUCCESS
               });
             } else {
-              this.values = null;
               this.onPerformed.emit({
                 type: configs.type,
                 data: null,
