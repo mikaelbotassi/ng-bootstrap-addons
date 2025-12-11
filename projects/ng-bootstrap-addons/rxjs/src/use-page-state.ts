@@ -7,7 +7,7 @@ function toType(t: Type<any> | object): Type<any> {
 
 export type PageState<T extends object = any> = {
   state: Signal<T | null>;
-  setState: (state?: T) => void;
+  setState: (state?: T, component?: Type<any>) => void;
   go: <U extends object = any>(component: Type<any>, state?: U | undefined) => void;
   navigate: (component: Type<any>) => void;
   goBack: () => void;

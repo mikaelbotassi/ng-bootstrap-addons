@@ -35,7 +35,7 @@ export class PageStateService {
 
     currentComponent = computed(() => {
         const url = this.currentUrl();
-        const map = this.componentRouteMap();
+        this.componentRouteMap();
         return this.getComponentByUrl(url);
     });
 
@@ -89,9 +89,9 @@ export class PageStateService {
         this._location.back();
     }
 
-    setState<T extends object = any>(state?: T): void {
-        const currentComponent = this.currentComponent();
-        if (!currentComponent) throw new Error('Nenhum componente ativo para definir o estado');
+    setState<T extends object = any>(state?: T, component?: Type<any>): void {
+        const currentComponent = component ?? this.currentComponent();
+        if (!currentComponent || !this.componentRouteMap().has(currentComponent)) throw new Error('Nenhum componente ativo para definir o estado');
         this._putStateBus<T>(currentComponent, state);
     }
 
