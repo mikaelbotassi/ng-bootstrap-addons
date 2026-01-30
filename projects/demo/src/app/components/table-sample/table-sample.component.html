@@ -15,7 +15,7 @@
     [(selectedRows)]="selectedRows"
   >
     <ng-template #caption>
-      <div class="d-flex align-items-center justify-content-between gap-2 w-100">
+      <!-- <div class="d-flex align-items-center justify-content-between gap-2 w-100">
           <a href="javascript:;" class="btn btn-sm btn-outline-dark no-validate" (click)="dt.clearFilters()">
               <i class="ti ti-filter-off"></i>
               Limpar
@@ -26,7 +26,7 @@
           [ngModel]="globalFilter"
           (ngModelChange)="dt.onGlobalFilterChange($event)"
         />
-      </div>
+      </div> -->
       @if(selectedRows().length > 0){
         <div class="d-flex align-items-center justify-content-end mt-3">
           <button type="button" class="btn btn-danger btn-sm" (click)="removeCustomer(selectedRows())">Excluir({{ selectedRows().length }})</button>

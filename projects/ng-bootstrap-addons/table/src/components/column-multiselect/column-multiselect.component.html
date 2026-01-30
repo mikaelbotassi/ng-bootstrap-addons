@@ -1,0 +1,23 @@
+<div class="dropdown" dropdown [insideClick]="true" #dropdown="bs-dropdown">
+    <button type="button" class="btn btn-sm btn-default" dropdownToggle>
+        <i class="nba-menu fs-7 text-primary"></i>
+    </button>
+    <ul *dropdownMenu class="dropdown-menu translate-middle-x px-3 gap-1" role="menu">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <h6 class="text-primary fw-bold mb-0">Colunas</h6>
+            <a href="javascript:;" (click)="reset()">Resetar</a>
+        </div>
+        <input type="text" [(ngModel)]="filter" class="form-control py-1 no-validate mb-2" placeholder="Pesquisar...">
+        <div class="d-flex align-items-center gap-1">
+            <input type="checkbox" [checked]="isAllChecked()" (click)="toggleAll()" class="form-check-input m-0" [id]="selectAllId">
+            <label class="mb-0" role="button" [for]="selectAllId">Selecionar Todos</label>
+        </div>
+        @for(option of filteredOptions(); track $index){
+            @let id = 'form-check-'+option.field;
+            <div class="d-flex align-items-center gap-1 w-100">
+                <input type="checkbox" [checked]="isChecked(option)" (click)="toggle(option)" class="form-check-input m-0" [id]="id">
+                <label class="mb-0 w-100" role="button" [for]="id">{{option.header}}</label>
+            </div>
+        }
+    </ul>
+</div>

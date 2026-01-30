@@ -53,7 +53,7 @@
             @if(label() || icon()){
               <label [for]="inputId()" [class.required]="isRequired">
                   @if(icon()){
-                          <i [ngClass]="'ti mb-0 ' + icon()"></i>
+                    <i [ngClass]="'ti mb-0 me-1' + icon()"></i>
                   }
                   {{label()}}
               </label>
