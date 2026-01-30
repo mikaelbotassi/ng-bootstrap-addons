@@ -15,21 +15,26 @@ import {
   Injector,
   runInInjectionContext,
   viewChild,
+  effect,
+  untracked,
 } from '@angular/core';
 import { FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
 import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
 import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
+import { createNestedObject } from 'ng-bootstrap-addons/utils';
+import { MultiselectComponent, MultiselectOption } from 'ng-bootstrap-addons/selects';
+import { ColumnFilterType } from 'ng-bootstrap-addons/table';
 
 @Component({
   selector: 'nba-table',
-  imports: [CommonModule, FormsModule, DragScrollDirective, PaginationComponent],
+  imports: [CommonModule, FormsModule, DragScrollDirective, PaginationComponent, MultiselectComponent],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./table.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TableComponent<T = any> {
+export class TableComponent<T extends Object = any> {
   value = input.required<T[] | undefined | null>();
 
   // =========================
@@ -237,4 +242,42 @@ export class TableComponent<T = any> {
   header  = contentChild<TemplateRef<any>>('header');
   body    = contentChild<TemplateRef<any>>('body');
   // #endregion
+
+  // =========================
+  // #region FILTROS GLOBAIS
+  // =========================
+  columns = input<Column[]|null|undefined>(null);
+  columnsOptions = computed(() => this.columns()?.map((item) => new MultiselectOption({
+    value: item.field,
+    label: item.header
+  })) ?? []);
+  selectedColumnsFields = model<string[]>([]);
+  visibleColumns = computed(() => {
+    const columns = this.columns();
+    const selected = this.selectedColumnsFields();
+    return columns?.filter((col) => selected.findIndex((field) => field === col.field) >= 0) ?? [];
+  });
+  syncColumnsToSelected = effect(() => {
+    const columns = this.columns();
+    const selections = (columns?.filter((item) => item.visible ?? true) ?? []).map((item) => item.field);
+    untracked(() => this.selectedColumnsFields.set(selections));
+  }); 
+  rows = computed(() => {
+    const list = this.paginationComponent()?.paginatedList().map((item) => createNestedObject<T>(item)) ?? [];
+    for(const item of list){
+      for(const column of this.visibleColumns()){
+        console.log((item as any)[column.field])
+      }
+    }
+    return list;
+  })
+  //#endregion
+
+}
+
+interface Column{
+  field:string;
+  header:string;
+  visible?: boolean;
+  type?:ColumnFilterType
 }

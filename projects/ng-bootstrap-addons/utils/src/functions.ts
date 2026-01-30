@@ -254,3 +254,16 @@ export async function getRoutePathForComponent<T>(
 
   return null;
 }
+
+export function createNestedObject<T extends object>(obj:T):T{
+  return new Proxy<T>(obj, {
+    get(obj, prop) {
+      if (typeof prop === 'string' && prop.includes('.')) {
+        return prop
+          .split('.')
+          .reduce((acc: any, key) => acc?.[key], obj);
+      }
+      return (obj as any)[prop];
+    },
+  });
+};

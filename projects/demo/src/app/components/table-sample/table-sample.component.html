@@ -1,6 +1,14 @@
 <app-sample-container tagName="nba-table">
   <nba-table #dt
     [multiple]="true"
+    [columns]="[
+      {field: 'id', header:'ID', visible: false, type: 'numeric'},
+      {field: 'name', header:'Nome', type:'text'},
+      {field: 'country.name', header:'País', type: 'text'},
+      {field: 'representative.name', header:'Representante', type:'text'},
+      {field: 'date', header:'Data', type:'date'},
+      {field: 'verified', header:'Verificado', type:'boolean'},
+    ]"
     [value]="list()"
     [itemsPerPage]="13"
     [globalFilterFields]="['name', 'country.name', 'representative.name']"
@@ -25,50 +33,61 @@
         </div>
       }
     </ng-template>
-    <ng-template #header>
+    <ng-template #header let-columns="columns">
       <tr>
         <th checkbox></th>
         <th width="2em"></th>
-        <th class="text-dark" nbaColumnHeader field="id" type="numeric">ID</th>
-        <th class="text-dark" nbaColumnHeader field="name" type="text">Nome</th>
-        <th class="text-dark" nbaColumnHeader field="country.name" type="text">País</th>
-        <th
-          class="text-dark"
-          nbaColumnHeader
-          field="representative.name"
-          (onApplyFilter)="dt.setFilter($event, filterByRepresentative)"
-          (onClearFilter)="selectedRepresentative = []"
-        >
-          Representante
-          <ng-template #filter>
-              <nba-multiselect
-                inputClass="no-validate"
-                label="Representante"
-                [options]="representativeOptions"
-                [(ngModel)]="selectedRepresentative"
-                [multiple]="false"
-              ></nba-multiselect>
-          </ng-template>
-        </th>
-        <th class="text-dark" nbaColumnHeader field="date" type="date">Data</th>
-        <th class="text-dark" nbaColumnHeader field="verified" type="boolean">Verificado</th>
+        @for(column of columns;track $index){
+          @if(column.field == 'representative.name'){
+            <th
+              class="text-dark"
+              nbaColumnHeader
+              [field]="column.field"
+              (onApplyFilter)="dt.setFilter($event, filterByRepresentative)"
+              (onClearFilter)="selectedRepresentative = []"
+            >
+              {{ column.header }}
+              <ng-template #filter>
+                  <nba-multiselect
+                    inputClass="no-validate"
+                    label="Representante"
+                    [options]="representativeOptions"
+                    [(ngModel)]="selectedRepresentative"
+                    [multiple]="false"
+                  ></nba-multiselect>
+              </ng-template>
+            </th>       
+          }@else{
+            <th class="text-dark" nbaColumnHeader [field]="column.field" [type]="column.type">{{column.header}}</th>
+          }
+        }
       </tr>
     </ng-template>
 
-    <ng-template #body let-customers>
-      @for(customer of cast(customers); track $index){
-      <tr nbaControl expandable (rowDoubleClick)="onDoubleClick()" [value]="customer">
-        <td>{{ customer.id }}</td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.country?.name ?? "" }}</td>
-        <td>
-            <div class="d-flex align-items-center gap-2">
-                <img [alt]="customer.representative?.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative?.image }}" width="32" style="vertical-align: middle" />
-                <span class="ml-1 align-middle">{{ customer.representative?.name }}</span>
-            </div>
-        </td>
-        <td>{{customer.date | date: 'dd/MM/yyyy'}}</td>
-        <td>{{customer.verified ? 'Sim' : 'Não'}}</td>
+    <ng-template #body let-rows="rows" let-columns="columns">
+      @for(row of rows; track $index){
+      <tr nbaControl expandable (rowDoubleClick)="onDoubleClick()" [value]="row">
+        @for(column of columns;track $index){
+          @switch(column.field){
+            @case('date'){
+              <td>{{row[column.field] | date:'dd/MM/yyyy' }}</td>
+            }
+            @case('verified'){
+              <td>{{row[column.field] ? 'Sim' : 'Não'}}</td>
+            }
+            @case('representative.name'){
+              <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <img [alt]="row.representative?.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ row.representative?.image }}" width="32" style="vertical-align: middle" />
+                    <span class="ml-1 align-middle">{{ row.representative?.name }}</span>
+                  </div>
+              </td>
+            }
+            @default{
+              <td>{{row[column.field]}}</td>
+            }
+          }
+        }
         <ng-container collapse>
           Teste
         </ng-container>
@@ -79,7 +98,7 @@
           </a>
           </li>
           <li role="menuitem">
-            <a href="javascript:;" class="dropdown-item text-center" (click)="removeCustomer(customer)">
+            <a href="javascript:;" class="dropdown-item text-center" (click)="removeCustomer(row)">
               <i class="ti ti-trash"></i> Remover
             </a>
           </li>

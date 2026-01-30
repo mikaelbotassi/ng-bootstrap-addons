@@ -2,6 +2,15 @@
     @if(caption()){
         <div class="p-3">
             <ng-container *ngTemplateOutlet="caption()!"></ng-container>
+            @if(columns()?.length){
+                <nba-multiselect
+                    [options]="columnsOptions()"
+                    formGroupClass="col-12 col-sm-6 col-xl-2 mt-3"
+                    size="sm"
+                    label="Colunas"
+                    [(ngModel)]="selectedColumnsFields"
+                />
+            }
         </div>
     }
     <div class="d-grid px-3">
@@ -11,6 +20,7 @@
                     <thead class="table-white">
                         <ng-container *ngTemplateOutlet="header()!; context: {
                             $implicit: this,
+                            columns: visibleColumns(),
                             sortField: sortField(),
                             sortDirection: sortDirection(),
                             onSort: onSort.bind(this),
@@ -19,7 +29,7 @@
                 }
                 <tbody>
                     @if(pg.paginatedList().length){
-                        <ng-container *ngTemplateOutlet="body()!; context: { $implicit: pg.paginatedList()}"></ng-container>
+                        <ng-container *ngTemplateOutlet="body()!; context: { $implicit: pg.paginatedList(), rows:rows(), columns: visibleColumns() }"></ng-container>
                     }@else{
                         <tr><td colspan="100%" class="text-center text-muted">Nenhum registro encontrado</td></tr>
                     }

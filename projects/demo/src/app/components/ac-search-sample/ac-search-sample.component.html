@@ -6,6 +6,7 @@
         searchName="s"
         format="[:imdbID] :Title (:Year)"
         [(ngModel)]="cdMovie"
+        [clearIfNotMatch]="true"
         [resultPath]="{lov: 'Search'}"
         required>
     </nba-ac-lov>

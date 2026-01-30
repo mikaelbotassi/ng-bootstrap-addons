@@ -12,7 +12,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   templateUrl: './table-row-control.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableRowControlComponent<T = any> implements AfterViewInit {
+export class TableRowControlComponent<T extends Object = any> implements AfterViewInit {
 
   private table = inject(TableComponent<T>);
 
