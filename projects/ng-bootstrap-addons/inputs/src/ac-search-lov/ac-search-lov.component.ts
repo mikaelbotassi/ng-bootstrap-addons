@@ -207,10 +207,9 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
         this.fetchDesc(value);
         return;
       }
-      if(this.clearIfNotMatch()){
-        this.descControl.patchValue(null, { emitEvent: false });
-        this.desc.set(null);
-      }
+      if(this.focus() && !this.clearIfNotMatch()) return;
+      this.descControl.patchValue(null, { emitEvent: false });
+      this.desc.set(null);
     }
   }
 

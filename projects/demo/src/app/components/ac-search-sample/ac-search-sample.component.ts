@@ -19,15 +19,14 @@ export class AcSearchSampleComponent {
     desc: { key: 'Title', title: 'Title' },
     addons: [{ key: 'Year', title: 'Year' }],
   }
-  selectedMovie = 'tt2015381';
-
-  count = 0;
-  incrementCount() {
-    this.count++;
+  cdMovie:string|null = 'tt2015381';
+  
+  clearMovie(){
+    this.cdMovie = null;
   }
 
-  onChange(value:any){
-    console.log('Selected movie changed:', value);
-  }
+}
 
+type Movie = {
+  cdMovie:string|null;
 }
