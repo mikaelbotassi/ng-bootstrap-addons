@@ -249,10 +249,10 @@ export class TableComponent<T extends Object = any> {
     value: item.field,
     label: item.header
   })) ?? []);
-  selectedColumnsFields = model<string[]>([]);
+  selectedColumns = model<string[]>([]);
   visibleColumns = computed(() => {
     const columns = this.columns();
-    const selected = this.selectedColumnsFields();
+    const selected = this.selectedColumns();
     return columns?.filter((col) => selected.findIndex((field) => field === col.field) >= 0) ?? [];
   });
   rows = computed(() => {

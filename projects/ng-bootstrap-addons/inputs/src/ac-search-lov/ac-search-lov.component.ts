@@ -73,6 +73,8 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   //OUTPUTS
   onPerformed = output<ActionPerformed>();
+  onError = output<any>();
+  onSuccess = output<any>();
   acBlur = output<void>();
 
   // CONTROLS
@@ -286,12 +288,14 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
                 data: processedRes,
                 status: Status.SUCCESS
               });
+              this.onSuccess.emit(processedRes);
             } else {
               this.onPerformed.emit({
                 type: configs.type,
                 data: null,
                 status: Status.EMPTY
               });
+              this.onSuccess.emit(null);
               this.updateListOfValues([]);
             }
             return;
@@ -305,6 +309,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
               data: null,
               status: Status.EMPTY
             });
+            this.onSuccess.emit(null);
             return;
           }
           
@@ -316,6 +321,7 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
               data: processedRes,
               status: Status.SUCCESS
             });
+            this.onSuccess.emit(processedRes);
             return;
           }
           
@@ -326,14 +332,16 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
             data: processedRes[0],
             status: Status.SUCCESS
           });
+          this.onSuccess.emit(processedRes[0]);
         },
-        error: () => {
+        error: error => {
           this.values = null;
           this.onPerformed.emit({
             type: configs.type,
-            data: null,
+            data: error,
             status: Status.FAIL
           });
+          this.onError.emit(error);
         }
       });
   }

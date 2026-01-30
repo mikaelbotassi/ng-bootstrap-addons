@@ -13,7 +13,7 @@
                     [ngModel]="globalFilter()"
                     (ngModelChange)="onGlobalFilterChange($event)"
                 />
-                <nba-col-multiselect [options]="columns() ?? []" [(values)]="selectedColumnsFields" />
+                <nba-col-multiselect [options]="columns() ?? []" [(values)]="selectedColumns" />
             </div>
         </div>
     }
