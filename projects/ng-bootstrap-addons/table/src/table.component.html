@@ -7,12 +7,14 @@
                     <i class="nba-filter-off"></i>
                     Limpar
                 </a>
-                <input
-                    class="form-control form-control-sm w-auto no-validate"
-                    placeholder="Buscar..."
-                    [ngModel]="globalFilter()"
-                    (ngModelChange)="onGlobalFilterChange($event)"
-                />
+                @if(globalFilterFields().length){
+                    <input
+                        class="form-control form-control-sm w-auto no-validate"
+                        placeholder="Buscar..."
+                        [ngModel]="globalFilter()"
+                        (ngModelChange)="onGlobalFilterChange($event)"
+                    />
+                }
                 @if(columns()){
                     <nba-col-multiselect [options]="columns() ?? []" [(values)]="selectedColumns" />
                 }
