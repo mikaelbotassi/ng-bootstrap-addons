@@ -28,7 +28,7 @@ export class TableRowControlComponent<T extends Object = any> implements AfterVi
   multiple = computed(() => this.table.multiple());
   isSelected = computed(() => {
     if (!this.value()) return false;
-    return this.table.selectedRows().includes(this.value()!);
+    return this.table.selectedRows().includes((this.value() as any)!.value ?? this.value()!);
   });
 
   menuTemplate = viewChild<TemplateRef<any>>('contextMenuTemplate');

@@ -13,7 +13,9 @@
                     [ngModel]="globalFilter()"
                     (ngModelChange)="onGlobalFilterChange($event)"
                 />
-                <nba-col-multiselect [options]="columns() ?? []" [(values)]="selectedColumns" />
+                @if(columns()){
+                    <nba-col-multiselect [options]="columns() ?? []" [(values)]="selectedColumns" />
+                }
             </div>
         </div>
     }
@@ -23,7 +25,6 @@
                 @if(header()){
                     <thead class="table-white">
                         <ng-container *ngTemplateOutlet="header()!; context: {
-                            $implicit: this,
                             columns: visibleColumns(),
                             sortField: sortField(),
                             sortDirection: sortDirection(),

@@ -61,7 +61,6 @@ export class ColumnHeaderComponent {
     this.onApplyFilter.emit(this.field());
   }
 
-  // ✅ Método para remover filtro
   removeFilter() {
     const field = this.field();
     this.table.clearFilter(field);

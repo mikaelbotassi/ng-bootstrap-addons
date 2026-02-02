@@ -23,7 +23,6 @@ export class ColumnMultiselectComponent {
 
  onOptionsChange = effect(() => {
     const columns = this.options();
-    console.log('estive aqui')
     const selections = (columns?.filter((item) => item.visible ?? true) ?? []).map((item) => item.field);
     this.values.set(selections);
   });
@@ -57,5 +56,5 @@ export interface Column{
   field:string;
   header:string;
   visible?: boolean;
-  type?:ColumnFilterType
+  type?:ColumnFilterType;
 }
