@@ -1,16 +1,8 @@
 <app-sample-container tagName="nba-table">
-  <nba-table #dt
+  <nba-table #dt db-table id="table-sample"
     [multiple]="true"
-    [columns]="[
-      {field: 'id', header:'ID', visible: false, type: 'numeric'},
-      {field: 'name', header:'Nome', type:'text'},
-      {field: 'country.name', header:'País', type: 'text'},
-      {field: 'representative.name', header:'Representante', type:'text'},
-      {field: 'date', header:'Data', type:'date'},
-      {field: 'verified', header:'Verificado', type:'boolean'},
-    ]"
     [value]="list()"
-    [itemsPerPage]="13"
+    [itemsPerPage]="2"
     [globalFilterFields]="['name', 'country.name', 'representative.name']"
     [(selectedRows)]="selectedRows"
   >

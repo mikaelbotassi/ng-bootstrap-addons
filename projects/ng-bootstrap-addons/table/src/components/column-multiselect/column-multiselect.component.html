@@ -12,12 +12,14 @@
             <input type="checkbox" [checked]="isAllChecked()" (click)="toggleAll()" class="form-check-input m-0" [id]="selectAllId">
             <label class="mb-0" role="button" [for]="selectAllId">Selecionar Todos</label>
         </div>
-        @for(option of filteredOptions(); track $index){
-            @let id = 'form-check-'+option.field;
-            <div class="d-flex align-items-center gap-1 w-100">
-                <input type="checkbox" [checked]="isChecked(option)" (click)="toggle(option)" class="form-check-input m-0" [id]="id">
-                <label class="mb-0 w-100" role="button" [for]="id">{{option.header}}</label>
-            </div>
-        }
+        <div class="overflow-y-auto" style="max-height: 30vh;">
+            @for(option of filteredOptions(); track $index){
+                @let id = 'form-check-'+option.field;
+                <div class="d-flex align-items-center gap-1 w-100">
+                    <input type="checkbox" [checked]="isChecked(option)" (click)="toggle(option)" class="form-check-input m-0" [id]="id">
+                    <label class="mb-0 w-100" role="button" [for]="id">{{option.header}}</label>
+                </div>
+            }
+        </div>
     </ul>
 </div>

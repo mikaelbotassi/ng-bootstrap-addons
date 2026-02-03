@@ -15,6 +15,7 @@ import {
   Injector,
   runInInjectionContext,
   viewChild,
+  untracked,
 } from '@angular/core';
 import { FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
@@ -244,15 +245,19 @@ export class TableComponent<T extends Object = any> {
   // =========================
   // #region TOGGLE COLUMNS
   // =========================
-  columns = input<Column[]|null|undefined>(null);
+  columns = model<Column[]|null|undefined>(null);
   columnsOptions = computed(() => this.columns()?.map((item) => new MultiselectOption({
     value: item.field,
     label: item.header
   })) ?? []);
-  selectedColumns = model<string[]>([]);
+  selectedColumnFields = model<string[]>([]);
+  selectedColumns = computed(() => {
+    const selected = this.selectedColumnFields();
+    return untracked(() => this.columns()?.filter((col) => selected.findIndex((field) => field === col.field) >= 0) ?? []);
+  });
   visibleColumns = computed(() => {
     const columns = this.columns();
-    const selected = this.selectedColumns();
+    const selected = this.selectedColumnFields();
     return columns?.filter((col) => selected.findIndex((field) => field === col.field) >= 0) ?? [];
   });
   rows = computed(() => {

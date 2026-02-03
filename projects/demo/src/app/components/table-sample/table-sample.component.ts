@@ -1,21 +1,18 @@
 import { Component, effect, signal } from '@angular/core';
-import { TableComponent } from 'project/table/src/table.component';
 import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
 import { CustomerService } from '../../services/customer.service';
 import { Command0 } from 'ng-bootstrap-addons/utils';
 import { Customer, Representative } from '../../models/customer';
 import { FormsModule } from '@angular/forms';
-import { ColumnHeaderComponent } from 'table/components/column-header/column-header.component';
 import { FilterFunction } from 'project/table/src/models/table-models';
 import { DatePipe } from '@angular/common';
-import { TableRowControlComponent } from 'project/table/src/components/table-row-control/table-row-control.component';
-import { TableHeaderCheckboxComponent } from 'project/table/src/components/table-header-checkbox/table-header-checkbox.component';
-import { CollapseDirective } from "ngx-bootstrap/collapse";
 import { MultiselectComponent, MultiselectOption } from 'project/selects/src/public_api';
+import { TableModule } from 'project/table/src/public_api';
+import TableDirective from './directives/table.directive';
 
 @Component({
   selector: 'app-table-sample',
-  imports: [TableComponent, ColumnHeaderComponent, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe, TableRowControlComponent, TableHeaderCheckboxComponent],
+  imports: [TableModule, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe, TableDirective],
   providers: [CustomerService],
   templateUrl: './table-sample.component.html',
 })
