@@ -44,3 +44,7 @@ Thumbs.db
 #environments
 /environments
 /environments/*
+
+#data
+/demo/src/assets/data/*
+/demo/src/assets/certificates/*
