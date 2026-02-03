@@ -46,5 +46,5 @@ Thumbs.db
 /environments/*
 
 #data
-/demo/src/assets/data/*
-/demo/src/assets/certificates/*
+/projects/demo/src/assets/data/*
+/projects/demo/src/assets/certificates/*
