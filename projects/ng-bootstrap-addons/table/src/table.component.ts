@@ -17,13 +17,13 @@ import {
   viewChild,
   untracked,
 } from '@angular/core';
-import { FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
+import { Column, FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
 import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
 import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
 import { createNestedObject } from 'ng-bootstrap-addons/utils';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
-import { Column, ColumnMultiselectComponent } from './components/column-multiselect/column-multiselect.component';
+import { ColumnMultiselectComponent } from './components/column-multiselect/column-multiselect.component';
 
 @Component({
   selector: 'nba-table',

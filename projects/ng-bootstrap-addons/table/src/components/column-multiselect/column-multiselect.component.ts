@@ -1,5 +1,5 @@
-import { Component, computed, effect, input, model, signal, untracked } from '@angular/core';
-import { ColumnFilterType } from '../../public_api';
+import { Component, computed, effect, input, model, signal } from '@angular/core';
+import { Column } from '../../models/table-models';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormsModule } from '@angular/forms';
 import { createRandomString } from 'ng-bootstrap-addons/utils';
@@ -50,11 +50,4 @@ export class ColumnMultiselectComponent {
     this.values.set((this.options()?.filter((item) => item.visible ?? true) ?? []).map((item) => item.field))
   }
 
-}
-
-export interface Column{
-  field:string;
-  header:string;
-  visible?: boolean;
-  type?:ColumnFilterType;
 }

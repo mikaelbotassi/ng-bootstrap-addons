@@ -1,5 +1,12 @@
 export type ColumnFilterType = 'text' | 'date' | 'numeric' | 'boolean';
 
+export interface Column{
+  field:string;
+  header:string;
+  visible?: boolean;
+  type?:ColumnFilterType;
+}
+
 export type SortDirection = 'asc' | 'desc' | null;
 
 export type SortEvent = {
