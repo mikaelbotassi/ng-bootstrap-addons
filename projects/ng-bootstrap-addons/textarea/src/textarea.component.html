@@ -1,19 +1,19 @@
 @defer (on viewport; prefetch on idle){
     @if(control){
-        <div class="form-group">
-            <div class="form-floating" [class]="'form-floating-' + size()">
+        <div class="form-group" [ngClass]="formGroupClass()">
+            <div class="form-floating"  [ngClass]="'form-floating-' + size()">
                 <textarea 
                     class="form-control"
+                    [ngClass]="inputClass()"
                     [formControl]="control"
                     [id]="inputId()"
                     [name]="inputId()"
                     [placeholder]="label()"
-                    [rows]="rows()"
                     [ngStyle]="{'height' : height() }"
                     #input
                 ></textarea>
                 @if(label() || icon()){
-                    <label [for]="inputId()" [class.required]="isRequired">
+                    <label [for]="inputId()" [ngClass]="labelClass()" [class.required]="isRequired">
                         @if(icon()){<i [class]="'ti mb-0 ' + icon()"></i>}
                         {{label()}}
                     </label>
