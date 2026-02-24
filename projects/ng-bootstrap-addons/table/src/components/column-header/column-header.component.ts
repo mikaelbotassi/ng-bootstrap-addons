@@ -1,9 +1,10 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, HostListener, contentChild, TemplateRef, output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, HostListener, contentChild, TemplateRef, output, viewChild, effect, AfterViewInit, untracked } from '@angular/core';
 import { ColumnFilterComponent } from '../column-filter/column-filter.component';
 import { TableComponent } from '../../table.component';
 import { ColumnFilterType, FilterFunction, SortDirection } from '../../models/table-models';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
-import { FormStateService } from '../../services/form-state.service';
+import { FilterStateService } from '../../services/filter-state.service';
+import TableService from '../../services/table.service';
 
 @Component({
   selector: 'th[nbaColumnHeader]',
@@ -11,14 +12,15 @@ import { FormStateService } from '../../services/form-state.service';
   imports: [ColumnFilterComponent, BsDropdownDirective],
   styleUrls: ['./column-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FormStateService]
+  providers: [FilterStateService]
 })
-export class ColumnHeaderComponent {
+export class ColumnHeaderComponent implements AfterViewInit {
   field = input.required<string>();
   type = input<ColumnFilterType|null>(null);
   sortable = input(true, {transform: booleanAttribute});
   onApplyFilter = output<string>();
   onClearFilter = output<void>();
+  hydrated = false;
 
   filter = contentChild<TemplateRef<any>>('filter');
     
@@ -32,6 +34,10 @@ export class ColumnHeaderComponent {
   sortDirection = computed(() => 
     this.table.sortField() === this.field() ? this.table.sortDirection() : null
   );
+
+  ngAfterViewInit(): void {
+    this.hydrated = true;
+  }
 
   sort() {
     if (!this.sortable()) return;
@@ -65,6 +71,28 @@ export class ColumnHeaderComponent {
     const field = this.field();
     this.table.clearFilter(field);
     this.onClearFilter.emit();
+    this.tableService.removeFilterValue(field);
   }
+
+  filterMenu = viewChild(ColumnFilterComponent);
+
+  tableService = inject(TableService);
+  filterState = inject(FilterStateService);
+
+  onFilterValueChange = effect(() => {
+    const filters = this.tableService.columnFilterValues();
+    const field = this.field();
+    const filterStateValue = this.filterState.value();
+    const filterMenu = this.filterMenu();
+
+    if(!filterMenu || !this.hydrated) return;
+    if(!filters[field]){
+      return;
+    }
+    if (filters[field] !== filterStateValue){
+      this.filterState.value.set(filters[field]);
+      this.addFilter(this.filterState.applyFilter(untracked(()=>this.type())))
+    }
+  });
 
 }

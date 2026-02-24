@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ColumnFilterType, FilterFunction } from '../../models/table-models';
 import { DateUtils } from 'ng-bootstrap-addons/utils';
-import { FormStateService } from '../../services/form-state.service';
+import { FilterStateService } from '../../services/filter-state.service';
 
 @Component({
   selector: 'nba-column-filter-form',
@@ -13,7 +13,7 @@ import { FormStateService } from '../../services/form-state.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnFilterFormComponent {
-  state = inject(FormStateService);
+  state = inject(FilterStateService);
   template = contentChild<TemplateRef<any>>('filter');
   type = input<ColumnFilterType|null>(null);
   
@@ -27,56 +27,13 @@ export class ColumnFilterFormComponent {
       this.clearFilter();
       return;
     }
-    const filterFunction = this.getDefaultFilterFunction();
-
-    const v = this.state.value();
     
-    this.filter.emit((item: any) => filterFunction(item, v));
+    this.filter.emit(this.state.applyFilter(this.type()));
   }
 
   clearFilter() {
-    this.state.value.set(null);
+    this.state.clearFilter();
     this.onClearFilter.emit();
   }
-
-  private getDefaultFilterFunction() : ((item: any, value: any) => boolean) {
-    switch(this.type()) {
-      case 'text':
-        return (item: any, value: string) => {
-          if (typeof item !== 'string') return false;
-          if (!item) return false;
-          if (!value) return true;
-          return item?.toString().toLowerCase()?.includes(value?.toLowerCase());
-        };
-      case 'date':
-        return (item: any, value: (Date | undefined)[] | undefined) => {
-          if (!item) return false;
-          if (!value) return true;
-          if (!Array.isArray(value) || value.length !== 2) return true;
-          const [start, end] = value;
-          if (!start || !end) return true;
-          if (!DateUtils.isDate(item)) return false;
-          const dateItem = DateUtils.toDate(item);
-          return dateItem >= start && dateItem <= end;
-        };
-      case 'numeric':
-        return (item: any, value: (number|null)[] | null) => {
-          if (typeof item !== 'number' || isNaN(item)) return false;
-          if (!value || !Array.isArray(value)) return true;
-          const initialValue = value[0];
-          const finalValue = value[1];
-          if (!initialValue && !finalValue) return true;
-          if(item >= initialValue! && !finalValue) return true;
-          if(!initialValue && item <= finalValue!) return true;
-          return item >= initialValue! && item <= finalValue!;
-        };
-      case 'boolean':
-        return (item: any, value: boolean) => {
-          if(typeof item !== 'boolean') return false;
-          return item === value;
-        };
-      default:
-        return () => true;
-    }
-  }
+  
 }

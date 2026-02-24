@@ -22,4 +22,20 @@ export class ColumnFilterComponent {
   filter = output<FilterFunction|void>();
   onClearFilter = output<void>();
 
+  form = viewChild(ColumnFilterFormComponent);
+
+  applyFilterFromForm(){
+    const form = this.form();
+    if (form) {
+      form.applyFilter();
+    }
+  }
+
+  removeFilter() {
+    const form = this.form();
+    if (form) {
+      form.clearFilter();
+    }
+  }
+
 }

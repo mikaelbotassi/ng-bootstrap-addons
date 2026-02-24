@@ -16,6 +16,9 @@ import {
   runInInjectionContext,
   viewChild,
   untracked,
+  viewChildren,
+  effect,
+  contentChildren,
 } from '@angular/core';
 import { Column, FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
@@ -24,10 +27,13 @@ import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
 import { createNestedObject } from 'ng-bootstrap-addons/utils';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnMultiselectComponent } from './components/column-multiselect/column-multiselect.component';
+import { ColumnHeaderComponent } from './public_api';
+import TableService from './services/table.service';
 
 @Component({
   selector: 'nba-table',
   imports: [CommonModule, FormsModule, DragScrollDirective, PaginationComponent, ColumnMultiselectComponent],
+  providers: [TableService],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./table.component.scss'],
@@ -265,5 +271,13 @@ export class TableComponent<T extends Object = any> {
     return list;
   })
   //#endregion
+
+  // =========================
+  // #region FILTER IMPORT AND EXPORT
+  // =========================
+
+  tableService = inject(TableService);
+
+  // #endregion
 
 }
