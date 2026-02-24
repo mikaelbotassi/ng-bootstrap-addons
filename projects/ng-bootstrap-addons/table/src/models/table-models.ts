@@ -14,5 +14,6 @@ export type SortEvent = {
   direction: SortDirection;
 }
 
-export type FilterFunction<T = any> = (item: T) => boolean;
-export type GlobalFilterFunction<T = any, V = any> = (item: T, term: V) => boolean;
+export type FilterFunction<T = any> = (value: T) => boolean;
+export type ColumnFilterPredicate<T = any, V = T> = (item: T, value: V) => boolean
+export type GlobalFilterFunction<T = any, V = any> = (value: T, term: V) => boolean;

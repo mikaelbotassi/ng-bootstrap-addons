@@ -6,11 +6,9 @@ import {
   ElementRef,
   inject,
   OnInit,
-  signal,
   untracked,
 } from "@angular/core";
-import { Command2 } from "ng-bootstrap-addons/utils";
-import { Column, FilterFunction } from "project/table/src/public_api";
+import { Command1 } from "ng-bootstrap-addons/utils";
 import { TableComponent } from "project/table/src/table.component";
 import { DbTable, DbUser } from "projects/demo/src/app/models/db-table";
 import { Observable, defer, finalize, of } from "rxjs";
@@ -30,25 +28,24 @@ export default class TableDirective implements OnInit {
   hydrated = false;
 
   currentValue = computed(() => {
+    this.table.filters();
     const columns = this.table.selectedColumns();
-    const filters = this.table.filters();
+    const filters = untracked(()=>this.table.tableService.columnFilterValues());
     return { id: this.id, columns: (columns ?? []).filter(c => c.visible).map(c => c.field) || [], filters };
   });
 
-  saveTableCommand = new Command2<void,Column[] | null | undefined,Record<string, FilterFunction>>((columns, filters) => this._saveTable(columns, filters));
+  saveTableCommand = new Command1<void,DbTable>((dbTable) => this._saveTable(dbTable));
 
   constructor() {
     effect(() => {
-      const columns = this.table.selectedColumns();
-      const filters = this.table.filters();
+      const current = this.currentValue();
       if(!this.hydrated) return;
-      const current = untracked(() => this.currentValue());
       if(!this.lastValue || DbTable.isEqual(this.lastValue, current)){
         this.lastValue = current;
         return;
       }
       this.lastValue = current;
-      untracked(() => this.saveTableCommand.execute(columns, filters));
+      untracked(() => this.saveTableCommand.execute(current));
     });
   }
   
@@ -79,8 +76,8 @@ export default class TableDirective implements OnInit {
     return this.client.get<DbUser[]>("data/db-table.json");
   }
 
-  private _saveTable(columns: Column[] | null | undefined,filters: Record<string, FilterFunction>): Observable<void> {
-    console.log('Saving table with columns: ', columns, 'and filters: ', filters);
+  private _saveTable(dbTable: DbTable): Observable<void> {
+    console.log('Saving table with columns: ', dbTable.columns, 'and filters: ', dbTable.filters);
     return defer(() => {
 
       // TODO: chamada real:

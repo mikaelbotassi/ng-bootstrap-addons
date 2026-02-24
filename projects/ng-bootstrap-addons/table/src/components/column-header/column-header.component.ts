@@ -1,7 +1,7 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, HostListener, contentChild, TemplateRef, output, viewChild, effect, AfterViewInit, untracked } from '@angular/core';
 import { ColumnFilterComponent } from '../column-filter/column-filter.component';
 import { TableComponent } from '../../table.component';
-import { ColumnFilterType, FilterFunction, SortDirection } from '../../models/table-models';
+import { ColumnFilterPredicate, ColumnFilterType, FilterFunction, SortDirection } from '../../models/table-models';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import { FilterStateService } from '../../services/filter-state.service';
 import TableService from '../../services/table.service';
@@ -58,12 +58,21 @@ export class ColumnHeaderComponent implements AfterViewInit {
     this.table.onSort({ field, direction: newDirection });
   }
 
+  filterPredicate = input<ColumnFilterPredicate>();
+  filterFunctionPredicate = computed(() => {
+    const predicate = this.filterPredicate();
+    const filterValue = this.filterState.value();
+    if(!predicate) return null;
+    return (item: any) => predicate(item, filterValue);
+  })
+
   addFilter(event: FilterFunction|void) {
     if (!this.filter) return;
-
     const field = this.field();
-
-    if(event) return this.table.setFilter(field, event);
+    const fn = event ?? this.filterFunctionPredicate();
+    
+    this.tableService.setFilterValue(field, this.filterState.value());
+    if(fn) return this.table.setFilter(field, fn);
     this.onApplyFilter.emit(this.field());
   }
 
@@ -81,17 +90,19 @@ export class ColumnHeaderComponent implements AfterViewInit {
 
   onFilterValueChange = effect(() => {
     const filters = this.tableService.columnFilterValues();
-    const field = this.field();
-    const filterStateValue = this.filterState.value();
-    const filterMenu = this.filterMenu();
+    const field = untracked(() => this.field());
+    const filterStateValue = untracked(() => this.filterState.value());
+    const filterMenu = untracked(() => this.filterMenu());
 
     if(!filterMenu || !this.hydrated) return;
     if(!filters[field]){
       return;
     }
     if (filters[field] !== filterStateValue){
-      this.filterState.value.set(filters[field]);
-      this.addFilter(this.filterState.applyFilter(untracked(()=>this.type())))
+      if(filterStateValue == null) this.filterState.value.set(filters[field]);
+      untracked(() => {
+        this.addFilter(this.filterState.applyFilter(this.type()))
+      });
     }
   });
 

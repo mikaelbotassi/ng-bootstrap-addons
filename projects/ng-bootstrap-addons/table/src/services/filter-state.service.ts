@@ -1,13 +1,13 @@
 import { Injectable, signal } from '@angular/core';
 import { DateUtils } from 'ng-bootstrap-addons/utils';
-import { ColumnFilterType } from '../public_api';
+import { ColumnFilterPredicate, ColumnFilterType, FilterFunction } from '../public_api';
 
 @Injectable()
 export class FilterStateService {
 
     value = signal<any>(null);
 
-    getDefaultFilterFunction(type: ColumnFilterType | null): ((item: any, value: any) => boolean) {
+    getDefaultFilterFunction(type: ColumnFilterType | null): ColumnFilterPredicate {
         switch (type) {
             case 'text':
                 return (item: any, value: string) => {
@@ -48,8 +48,7 @@ export class FilterStateService {
         }
     }
 
-    applyFilter(type: ColumnFilterType | null) : (item: any) => boolean {
-        console.log('Applying filter with value:', this.value());
+    applyFilter(type: ColumnFilterType | null) : FilterFunction {
         const filterFunction = this.getDefaultFilterFunction(type);
 
         const v = this.value();
