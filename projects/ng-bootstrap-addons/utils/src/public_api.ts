@@ -4,3 +4,5 @@ export * from './date-utils';
 export * from './functions';
 export * from './number-utils';
 export * from './types';
+export * from './array-utils';
+export * from './signals/behavior-signal';

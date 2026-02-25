@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import {
+  AfterViewInit,
   computed,
   Directive,
   effect,
@@ -9,74 +10,63 @@ import {
   untracked,
 } from "@angular/core";
 import { Command1 } from "ng-bootstrap-addons/utils";
-import { TableComponent } from "project/table/src/table.component";
-import { DbTable, DbUser } from "projects/demo/src/app/models/db-table";
+import TablePreferencesService, { TablePreferences } from "project/table/src/services/table-preferences.service";
 import { Observable, defer, finalize, of } from "rxjs";
 
 @Directive({
   selector: "nba-table[db-table]",
   standalone: true,
 })
-export default class TableDirective implements OnInit {
-  private table = inject(TableComponent, { self: true });
-  private hostEl = inject(ElementRef<HTMLElement>);
+export default class TableDirective {
+
+  private tablePreferences = inject(TablePreferencesService);
   private client = inject(HttpClient);
 
-  private lastValue?:DbTable;
+  skipNext = true;
+  lastValue:TablePreferences | null = null;
 
-  id!: string;
-  hydrated = false;
+  saveTableCommand = new Command1<void,TablePreferences>((dbTable) => this._saveTable(dbTable));
 
-  currentValue = computed(() => {
-    this.table.filters();
-    const columns = this.table.selectedColumns();
-    const filters = untracked(()=>this.table.tableService.columnFilterValues());
-    return { id: this.id, columns: (columns ?? []).filter(c => c.visible).map(c => c.field) || [], filters };
+  loadTableEffect = effect(() => {
+    const pref = this.tablePreferences.preferences();
+    if(!pref) return;
+    untracked(() => this._loadTable());
+    this.loadTableEffect.destroy();
   });
-
-  saveTableCommand = new Command1<void,DbTable>((dbTable) => this._saveTable(dbTable));
 
   constructor() {
     effect(() => {
-      const current = this.currentValue();
-      if(!this.hydrated) return;
-      if(!this.lastValue || DbTable.isEqual(this.lastValue, current)){
-        this.lastValue = current;
+      const preferences = this.tablePreferences.preferences();
+      if(!preferences) return;
+      if(this.skipNext) {
+        this.skipNext = false;
         return;
       }
-      this.lastValue = current;
-      untracked(() => this.saveTableCommand.execute(current));
+      if(!this.lastValue){
+        this.lastValue = preferences;
+        return;
+      }
+      if(!this.tablePreferences.isValid(this.lastValue)) return;
+      this.lastValue = preferences;
+      untracked(() => this.saveTableCommand.execute(preferences!));
     });
   }
-  
 
-  ngOnInit(): void {
-    this.id = this.hostEl.nativeElement.id;
-    this.getTables()
-    .pipe(finalize(() => this.hydrated = true))
-    .subscribe((resp) => {
+  private _loadTable() {
+    return this.client.get<DbUser[]>("data/db-table.json").subscribe((resp) => {
       for (const user of resp) {
         for (const table of user.tables) {
-          if (table.id === this.id) {
-              this.table.columns.update(curr => {
-                if(!curr || curr.length === 0) return curr;
-                return curr.map(col => {
-                  const colPref = table.columns?.find(c => c === col.field);
-                  return {...col, visible: !!colPref};
-                });
-              });
-              this.table.tableService.columnFilterValues.set(table.filters ?? {});
+          if (table.id === this.tablePreferences.preferences()!.id) {
+            this.tablePreferences.setPreferences(table);
+            this.skipNext = true;
+            return;
           }
         }
       }
     });
   }
 
-  getTables() : Observable<DbUser[]> {
-    return this.client.get<DbUser[]>("data/db-table.json");
-  }
-
-  private _saveTable(dbTable: DbTable): Observable<void> {
+  private _saveTable(dbTable: TablePreferences): Observable<void> {
     console.log('Saving table with columns: ', dbTable.columns, 'and filters: ', dbTable.filters);
     return defer(() => {
 
@@ -86,4 +76,9 @@ export default class TableDirective implements OnInit {
       return of(void 0);
     });
   }
+}
+
+export interface DbUser{
+    cdUsuario:string
+    tables: TablePreferences[]
 }

@@ -1,10 +1,10 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, HostListener, contentChild, TemplateRef, output, viewChild, effect, AfterViewInit, untracked } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input, contentChild, TemplateRef, output, viewChild, effect, AfterViewInit, untracked } from '@angular/core';
 import { ColumnFilterComponent } from '../column-filter/column-filter.component';
 import { TableComponent } from '../../table.component';
 import { ColumnFilterPredicate, ColumnFilterType, FilterFunction, SortDirection } from '../../models/table-models';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import { FilterStateService } from '../../services/filter-state.service';
-import TableService from '../../services/table.service';
+import TablePreferencesService from '../../services/table-preferences.service';
 
 @Component({
   selector: 'th[nbaColumnHeader]',
@@ -55,7 +55,7 @@ export class ColumnHeaderComponent implements AfterViewInit {
       newDirection = null;
     }
 
-    this.table.onSort({ field, direction: newDirection });
+    this.table.setSort(newDirection == null ? null : { field, direction: newDirection });
   }
 
   filterPredicate = input<ColumnFilterPredicate>();
@@ -71,7 +71,7 @@ export class ColumnHeaderComponent implements AfterViewInit {
     const field = this.field();
     const fn = this.filterFunctionPredicate() ?? event;
     
-    this.tableService.setFilterValue(field, this.filterState.value());
+    this.prefService.setFilterValue(field, this.filterState.value());
     if(fn) return this.table.setFilter(field, fn);
     this.onApplyFilter.emit(this.field());
   }
@@ -80,30 +80,31 @@ export class ColumnHeaderComponent implements AfterViewInit {
     const field = this.field();
     this.table.clearFilter(field);
     this.onClearFilter.emit();
-    this.tableService.removeFilterValue(field);
+    this.prefService.removeFilterValue(field);
   }
 
   filterMenu = viewChild(ColumnFilterComponent);
 
-  tableService = inject(TableService);
+  prefService = inject(TablePreferencesService);
   filterState = inject(FilterStateService);
 
-  onFilterValueChange = effect(() => {
-    const filters = this.tableService.columnFilterValues();
+  onPreferencesChange = effect(() => {
+    const preferences = this.prefService.preferences();
+    if(!preferences) return;
     const field = untracked(() => this.field());
     const filterStateValue = untracked(() => this.filterState.value());
-    const filterMenu = untracked(() => this.filterMenu());
 
-    if(!filterMenu || !this.hydrated) return;
-    if(!filters[field]){
+    if(!this.hydrated) return;
+    if(!preferences?.filters[field]){
       return;
     }
-    if (filters[field] !== filterStateValue){
-      if(filterStateValue == null) this.filterState.value.set(filters[field]);
+    if (preferences.filters[field] !== filterStateValue){
+      if(filterStateValue == null) this.filterState.value.set(preferences.filters[field]);
       untracked(() => {
         this.addFilter(this.filterState.applyFilter(this.type()))
       });
     }
+
   });
 
 }

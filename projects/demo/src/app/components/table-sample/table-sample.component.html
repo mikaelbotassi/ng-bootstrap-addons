@@ -25,7 +25,7 @@
       <tr>
         <th checkbox></th>
         <th width="2em"></th>
-        @for(column of columns;track $index){
+        @for(column of columns;track column.field){
           @if(column.field == 'representative.name'){
             <th
               class="text-dark"

@@ -16,9 +16,8 @@ import {
   runInInjectionContext,
   viewChild,
   untracked,
-  viewChildren,
+  OnInit,
   effect,
-  contentChildren,
 } from '@angular/core';
 import { Column, FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
@@ -27,19 +26,25 @@ import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
 import { createNestedObject } from 'ng-bootstrap-addons/utils';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnMultiselectComponent } from './components/column-multiselect/column-multiselect.component';
-import { ColumnHeaderComponent } from './public_api';
-import TableService from './services/table.service';
+import TablePreferencesService from './services/table-preferences.service';
 
 @Component({
   selector: 'nba-table',
   imports: [CommonModule, FormsModule, DragScrollDirective, PaginationComponent, ColumnMultiselectComponent],
-  providers: [TableService],
+  providers: [TablePreferencesService],
   templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./table.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TableComponent<T extends Object = any> {
+export class TableComponent<T extends Object = any> implements OnInit {
+
+  id = input<string>();
+
+  ngOnInit(): void {
+    if(this.id()) this.prefService.init(this.id()!);
+  }
+  
   value = input.required<T[] | undefined | null>();
 
   // =========================
@@ -48,7 +53,14 @@ export class TableComponent<T extends Object = any> {
   sortField = signal<string | null>(null);
   sortDirection = signal<SortDirection>(null);
 
-  onSort(event: SortEvent) {
+  setSort(event: SortEvent|null, setPreferences = true) {
+    if(setPreferences) this.prefService.setSort(event);
+    if(!event) {
+      this.sortField.set(null);
+      this.sortDirection.set(null);
+      this._resetToFirstPageNextRender()
+      return;
+    }
     this.sortField.set(event.field);
     this.sortDirection.set(event.direction);
     this._resetToFirstPageNextRender()
@@ -257,14 +269,14 @@ export class TableComponent<T extends Object = any> {
     label: item.header
   })) ?? []);
   selectedColumnFields = model<string[]>([]);
-  selectedColumns = computed(() => {
-    const selected = this.selectedColumnFields();
-    return untracked(() => this.columns()?.filter((col) => selected.findIndex((field) => field === col.field) >= 0) ?? []);
-  });
   visibleColumns = computed(() => {
     const columns = this.columns();
     const selected = this.selectedColumnFields();
     return columns?.filter((col) => selected.findIndex((field) => field === col.field) >= 0) ?? [];
+  });
+  onSelectedCollumnsChange = effect(() => {
+    const selected = this.selectedColumnFields();
+    this.prefService.setColumns(selected);
   });
   rows = computed(() => {
     const list = this.paginationComponent()?.paginatedList().map((item) => createNestedObject<T>(item)) ?? [];
@@ -276,7 +288,16 @@ export class TableComponent<T extends Object = any> {
   // #region FILTER IMPORT AND EXPORT
   // =========================
 
-  tableService = inject(TableService);
+  prefService = inject(TablePreferencesService);
+
+  onPreferencesChange = effect(() => {
+    const prefs = this.prefService.preferences();
+    if(!prefs) return;
+    untracked(() => {
+      this.selectedColumnFields.set(prefs.columns);
+      this.setSort(prefs.sort, false);
+    });
+  });
 
   // #endregion
 

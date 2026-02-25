@@ -7,3 +7,4 @@ export * from './components/table-header-checkbox/table-header-checkbox.componen
 export * from './components/table-row-control/table-row-control.component';
 export * from './models/table-models';
 export * from './modules/table.module';
+export * from './services/table-preferences.service';

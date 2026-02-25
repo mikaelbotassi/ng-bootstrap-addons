@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, contentChild, inject, input, output, signal, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, TemplateRef } from '@angular/core';
 import { DateRangePickerComponent, InputComponent, NumericIntervalInputComponent, SwitchComponent } from 'ng-bootstrap-addons/inputs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ColumnFilterType, FilterFunction } from '../../models/table-models';
-import { DateUtils } from 'ng-bootstrap-addons/utils';
 import { FilterStateService } from '../../services/filter-state.service';
 
 @Component({
@@ -21,7 +20,6 @@ export class ColumnFilterFormComponent {
   dynamicFilter = input<TemplateRef<any>>();
 
   setValue = (value: any) => {
-    console.log("🚀 ~ ColumnFilterFormComponent ~ value:", value)
     this.state.value.set(value);
   }
 

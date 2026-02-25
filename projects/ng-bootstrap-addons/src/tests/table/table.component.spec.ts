@@ -219,7 +219,7 @@ describe('TableComponent', () => {
   describe('Ordenação', () => {
     it('should sort data by field ascending', () => {
       const sortEvent: SortEvent = { field: 'name', direction: 'asc' };
-      component.onSort(sortEvent);
+      component.setSort(sortEvent);
       
       expect(component.sortField()).toBe('name');
       expect(component.sortDirection()).toBe('asc');
@@ -231,7 +231,7 @@ describe('TableComponent', () => {
 
     it('should sort data by field descending', () => {
       const sortEvent: SortEvent = { field: 'age', direction: 'desc' };
-      component.onSort(sortEvent);
+      component.setSort(sortEvent);
       
       const sortedData = component.processedData();
       expect(sortedData[0].age).toBe(42);
@@ -250,7 +250,7 @@ describe('TableComponent', () => {
       tick();
 
       const sortEvent: SortEvent = { field: 'name', direction: 'asc' };
-      component.onSort(sortEvent);
+      component.setSort(sortEvent);
       
       const sortedData = component.processedData();
       expect(sortedData[0].name).toBe('Alice');
@@ -259,7 +259,7 @@ describe('TableComponent', () => {
     it('should reset to first page when sorting', () => {
       component.goToPage(2);
       const sortEvent: SortEvent = { field: 'name', direction: 'asc' };
-      component.onSort(sortEvent);
+      component.setSort(sortEvent);
       
       expect(component.page()).toBe(1);
     });
@@ -292,7 +292,7 @@ describe('TableComponent', () => {
     it('should clear all filters', fakeAsync(() => {
       const filterFn: FilterFunction = (value) => value === 'active';
       component.setFilter('status', filterFn);
-      component.onSort({ field: 'name', direction: 'asc' });
+      component.setSort({ field: 'name', direction: 'asc' });
       component.globalFilter.set('João');
       
       component.clearFilters();
@@ -490,7 +490,7 @@ describe('TableComponent', () => {
   describe('Processamento de Dados', () => {
     it('should process data with sort, filter and pagination', fakeAsync(() => {
       // Apply sorting
-      component.onSort({ field: 'age', direction: 'desc' });
+      component.setSort({ field: 'age', direction: 'desc' });
       
       // Apply filter
       const filterFn: FilterFunction = (value) => value === 'active';
@@ -585,7 +585,7 @@ describe('TableComponent', () => {
       host.users.set(dataWithNulls as any);
       fixture.detectChanges();
       
-      component.onSort({ field: 'name', direction: 'asc' });
+      component.setSort({ field: 'name', direction: 'asc' });
       
       // Should not throw error
       expect(component.processedData().length).toBe(3);

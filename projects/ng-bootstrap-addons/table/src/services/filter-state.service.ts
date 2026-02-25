@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { DateUtils } from 'ng-bootstrap-addons/utils';
-import { ColumnFilterPredicate, ColumnFilterType, FilterFunction } from '../public_api';
+import { ColumnFilterType, FilterFunction, ColumnFilterPredicate } from '../models/table-models';
 
 @Injectable()
 export class FilterStateService {

@@ -30,7 +30,7 @@
                             columns: visibleColumns(),
                             sortField: sortField(),
                             sortDirection: sortDirection(),
-                            onSort: onSort.bind(this),
+                            onSort: setSort.bind(this),
                         }"></ng-container>
                     </thead>
                 }
