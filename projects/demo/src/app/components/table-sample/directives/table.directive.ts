@@ -1,23 +1,16 @@
 import { HttpClient } from "@angular/common/http";
 import {
-  AfterViewInit,
-  computed,
   Directive,
   effect,
-  ElementRef,
   inject,
-  OnInit,
   untracked,
 } from "@angular/core";
 import { Command1 } from "ng-bootstrap-addons/utils";
-import TablePreferencesService, { TablePreferences } from "project/table/src/services/table-preferences.service";
-import { Observable, defer, finalize, of } from "rxjs";
+import { TablePreferences, TablePreferencesService } from "project/table/src/public_api";
+import { Observable, defer, of } from "rxjs";
 
-@Directive({
-  selector: "nba-table[db-table]",
-  standalone: true,
-})
-export default class TableDirective {
+@Directive({selector: "nba-table[db-table]",})
+export class TableDirective {
 
   private tablePreferences = inject(TablePreferencesService);
   private client = inject(HttpClient);

@@ -3,7 +3,7 @@ import { ArrayUtils, behaviorSignal } from "ng-bootstrap-addons/utils";
 import { SortEvent } from "../public_api";
 
 @Injectable()
-export default class TablePreferencesService {
+export class TablePreferencesService {
 
     private _preferences = behaviorSignal<TablePreferences|null>(null);
     preferences = this._preferences.asReadonly();

@@ -4,7 +4,7 @@ import { TableComponent } from '../../table.component';
 import { ColumnFilterPredicate, ColumnFilterType, FilterFunction, SortDirection } from '../../models/table-models';
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import { FilterStateService } from '../../services/filter-state.service';
-import TablePreferencesService from '../../services/table-preferences.service';
+import { TablePreferencesService } from '../../public_api';
 
 @Component({
   selector: 'th[nbaColumnHeader]',

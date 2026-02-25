@@ -8,7 +8,7 @@ import { ColumnFilterPredicate, FilterFunction } from 'project/table/src/models/
 import { DatePipe } from '@angular/common';
 import { MultiselectComponent, MultiselectOption } from 'project/selects/src/public_api';
 import { TableModule } from 'project/table/src/public_api';
-import TableDirective from './directives/table.directive';
+import { TableDirective } from './directives/table.directive';
 
 @Component({
   selector: 'app-table-sample',

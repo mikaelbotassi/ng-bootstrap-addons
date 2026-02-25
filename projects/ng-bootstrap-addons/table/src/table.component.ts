@@ -26,7 +26,7 @@ import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
 import { createNestedObject } from 'ng-bootstrap-addons/utils';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnMultiselectComponent } from './components/column-multiselect/column-multiselect.component';
-import TablePreferencesService from './services/table-preferences.service';
+import { TablePreferencesService } from './services/table-preferences.service';
 
 @Component({
   selector: 'nba-table',
