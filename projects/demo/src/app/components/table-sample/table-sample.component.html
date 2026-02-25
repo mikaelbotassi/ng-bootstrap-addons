@@ -32,7 +32,6 @@
               nbaColumnHeader
               [field]="column.field"
               [filterPredicate]="filterByRepresentative"
-              (onClearFilter)="selectedRepresentative = []"
             >
               {{ column.header }}
               <ng-template let-value let-setValue="setValue" #filter>

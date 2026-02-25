@@ -56,7 +56,6 @@ export class TableSampleComponent {
   }
 
   filterByRepresentative:ColumnFilterPredicate<string[]> = (item, value) => {
-    console.log('Filtering item', item, 'with value', value);
     if (value.length === 0) {
       return true;
     }
