@@ -60,7 +60,7 @@ export class TableDirective {
   }
 
   private _saveTable(dbTable: TablePreferences): Observable<void> {
-    console.log('Saving table with columns: ', dbTable.columns, 'and filters: ', dbTable.filters);
+    console.log("🚀 ~ TableDirective ~ _saveTable ~ dbTable:", dbTable)
     return defer(() => {
 
       // TODO: chamada real:
