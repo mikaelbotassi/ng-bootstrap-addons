@@ -1,13 +1,7 @@
 <form novalidate (ngSubmit)="applyFilter()">
   <div>
-    @if (template()) {
-      <ng-container 
-        [ngTemplateOutlet]="template()!" 
-        [ngTemplateOutletContext]="{ $implicit: state.value() }">
-      </ng-container>
-    } 
-    @else if (dynamicFilter()) {
-      <ng-container *ngTemplateOutlet="dynamicFilter()!; context: { $implicit: state.value() }"></ng-container>
+    @if (dynamicFilter()) {
+      <ng-container *ngTemplateOutlet="dynamicFilter()!; context: { $implicit: state.value(), setValue: setValue.bind(this) }"></ng-container>
     } 
     @else {
       @switch (type()) {

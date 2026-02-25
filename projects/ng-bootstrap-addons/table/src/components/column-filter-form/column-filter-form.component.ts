@@ -14,12 +14,16 @@ import { FilterStateService } from '../../services/filter-state.service';
 })
 export class ColumnFilterFormComponent {
   state = inject(FilterStateService);
-  template = contentChild<TemplateRef<any>>('filter');
   type = input<ColumnFilterType|null>(null);
   
   filter = output<FilterFunction|void>();
   onClearFilter = output<void>();
   dynamicFilter = input<TemplateRef<any>>();
+
+  setValue = (value: any) => {
+    console.log("🚀 ~ ColumnFilterFormComponent ~ value:", value)
+    this.state.value.set(value);
+  }
 
   applyFilter() {
     if(this.dynamicFilter()) return this.filter.emit()

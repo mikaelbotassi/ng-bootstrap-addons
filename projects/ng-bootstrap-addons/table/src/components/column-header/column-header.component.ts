@@ -69,7 +69,7 @@ export class ColumnHeaderComponent implements AfterViewInit {
   addFilter(event: FilterFunction|void) {
     if (!this.filter) return;
     const field = this.field();
-    const fn = event ?? this.filterFunctionPredicate();
+    const fn = this.filterFunctionPredicate() ?? event;
     
     this.tableService.setFilterValue(field, this.filterState.value());
     if(fn) return this.table.setFilter(field, fn);

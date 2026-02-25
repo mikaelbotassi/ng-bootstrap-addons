@@ -4,7 +4,7 @@ import { CustomerService } from '../../services/customer.service';
 import { Command0 } from 'ng-bootstrap-addons/utils';
 import { Customer, Representative } from '../../models/customer';
 import { FormsModule } from '@angular/forms';
-import { FilterFunction } from 'project/table/src/models/table-models';
+import { ColumnFilterPredicate, FilterFunction } from 'project/table/src/models/table-models';
 import { DatePipe } from '@angular/common';
 import { MultiselectComponent, MultiselectOption } from 'project/selects/src/public_api';
 import { TableModule } from 'project/table/src/public_api';
@@ -55,11 +55,12 @@ export class TableSampleComponent {
       });
   }
 
-  filterByRepresentative:FilterFunction<string> = (item) => {
-    if (this.selectedRepresentative.length === 0) {
-      return true; // No filter applied
+  filterByRepresentative:ColumnFilterPredicate<string[]> = (item, value) => {
+    console.log('Filtering item', item, 'with value', value);
+    if (value.length === 0) {
+      return true;
     }
-    return this.selectedRepresentative.includes(item);
+    return value.some(v => item.includes(v));
   };
 
   cast = (value: unknown): Customer[] => value as Customer[];

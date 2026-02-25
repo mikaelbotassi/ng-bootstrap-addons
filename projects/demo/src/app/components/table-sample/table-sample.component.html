@@ -31,16 +31,17 @@
               class="text-dark"
               nbaColumnHeader
               [field]="column.field"
-              (onApplyFilter)="dt.setFilter($event, filterByRepresentative)"
+              [filterPredicate]="filterByRepresentative"
               (onClearFilter)="selectedRepresentative = []"
             >
               {{ column.header }}
-              <ng-template #filter>
+              <ng-template let-value let-setValue="setValue" #filter>
                   <nba-multiselect
                     inputClass="no-validate"
                     label="Representante"
                     [options]="representativeOptions"
-                    [(ngModel)]="selectedRepresentative"
+                    [ngModel]="value"
+                    (ngModelChange)="setValue($event)"
                     [multiple]="false"
                   ></nba-multiselect>
               </ng-template>
