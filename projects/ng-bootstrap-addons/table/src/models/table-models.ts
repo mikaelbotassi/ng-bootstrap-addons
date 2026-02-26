@@ -1,4 +1,4 @@
-export type ColumnFilterType = 'text' | 'date' | 'numeric' | 'boolean';
+export type ColumnFilterType = 'text' | 'date' | 'numeric' | 'boolean' | 'list' | 'text-suggestion';
 
 export interface Column{
   field:string;

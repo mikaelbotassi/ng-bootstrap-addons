@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output, TemplateRef, viewChild } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, input, output, TemplateRef, viewChild } from '@angular/core';
 import { ColumnFilterFormComponent } from '../column-filter-form/column-filter-form.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ColumnFilterType, FilterFunction } from '../../models/table-models';
+import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 
 @Component({
   selector: 'nba-column-filter',
@@ -18,6 +19,8 @@ export class ColumnFilterComponent {
   class = input<string | null>(null);
   isFiltered = input<boolean>(false);
   dynamicFilter = input<TemplateRef<any>>();
+  options = input<MultiselectOption[]>([]);
+  multiple = input(true, {transform:booleanAttribute});
 
   filter = output<FilterFunction|void>();
   onClearFilter = output<void>();

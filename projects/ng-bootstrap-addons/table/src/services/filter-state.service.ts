@@ -1,52 +1,12 @@
 import { Injectable, signal } from '@angular/core';
-import { DateUtils } from 'ng-bootstrap-addons/utils';
+import { DateUtils, listPredicate, NumberUtils } from 'ng-bootstrap-addons/utils';
 import { ColumnFilterType, FilterFunction, ColumnFilterPredicate } from '../models/table-models';
 
 @Injectable()
 export class FilterStateService {
 
     value = signal<any>(null);
-
-    getDefaultFilterFunction(type: ColumnFilterType | null): ColumnFilterPredicate {
-        switch (type) {
-            case 'text':
-                return (item: any, value: string) => {
-                    if (typeof item !== 'string') return false;
-                    if (!item) return false;
-                    if (!value) return true;
-                    return item?.toString().toLowerCase()?.includes(value?.toLowerCase());
-                };
-            case 'date':
-                return (item: any, value: (Date | undefined)[] | undefined) => {
-                    if (!item) return false;
-                    if (!value) return true;
-                    if (!Array.isArray(value) || value.length !== 2) return true;
-                    const [start, end] = value;
-                    if (!start || !end) return true;
-                    if (!DateUtils.isDate(item)) return false;
-                    const dateItem = DateUtils.toDate(item);
-                    return dateItem >= start && dateItem <= end;
-                };
-            case 'numeric':
-                return (item: any, value: (number | null)[] | null) => {
-                    if (typeof item !== 'number' || isNaN(item)) return false;
-                    if (!value || !Array.isArray(value)) return true;
-                    const initialValue = value[0];
-                    const finalValue = value[1];
-                    if (!initialValue && !finalValue) return true;
-                    if (item >= initialValue! && !finalValue) return true;
-                    if (!initialValue && item <= finalValue!) return true;
-                    return item >= initialValue! && item <= finalValue!;
-                };
-            case 'boolean':
-                return (item: any, value: boolean) => {
-                    if (typeof item !== 'boolean') return false;
-                    return item === value;
-                };
-            default:
-                return () => true;
-        }
-    }
+    filterConfig = signal<ListFilterConfig|null>(null);
 
     applyFilter(type: ColumnFilterType | null) : FilterFunction {
         const filterFunction = this.getDefaultFilterFunction(type);
@@ -56,8 +16,102 @@ export class FilterStateService {
         return (item: any) => filterFunction(item, v);
     }
 
-    clearFilter() {
-        this.value.set(null);
+    clearFilter = () => this.value.set(null);
+
+
+    private isNil = (v: any): v is null | undefined => v === null || v === undefined;
+
+    private isEmptyFilterValue(v: any): boolean {
+        if (this.isNil(v)) return true;
+        if (typeof v === 'string') return v.trim().length === 0;
+        if (Array.isArray(v)) return v.length === 0 || v.every(this.isNil);
+        return false;
     }
 
+    private toLowerStr = (v: any): string | null => this.isNil(v) ? null : String(v).toLowerCase();
+
+    private toDateSafe(v: any): Date | null {
+        if (this.isNil(v)) return null;
+        if (DateUtils.isDate(v)) return DateUtils.toDate(v);
+        const d = new Date(v);
+        return Number.isFinite(d.getTime()) ? d : null;
+    }
+
+    private inRange<T>(item: T,range: Range<T>,cmp: (a: T, b: T) => number): boolean {
+        const [start, end] = range;
+        if (start != null && cmp(item, start as T) < 0) return false;
+        if (end != null && cmp(item, end as T) > 0) return false;
+        return true;
+    }
+    
+
+    getDefaultFilterFunction(type: ColumnFilterType | null): ColumnFilterPredicate {
+        const predicates: Record<string, ColumnFilterPredicate> = {
+            list: (item: any, value: any[]) => {
+                const pred = listPredicate<any, any>(value, this.filterConfig() ?? {});
+                return pred(item);
+            },
+
+            date: (item: any, value: Range<Date>) => {
+                if (this.isEmptyFilterValue(value)) return true;
+
+                const dateItem = this.toDateSafe(item);
+                if (!dateItem) return false;
+
+                const start = value?.[0] ?? null;
+                const end = value?.[1] ?? null;
+                if (!start && !end) return true;
+
+                return this.inRange(dateItem, [start, end], (a, b) => a.getTime() - b.getTime());
+            },
+
+            numeric: (item: any, value: Range<number>) => {
+                if (this.isEmptyFilterValue(value)) return true;
+
+                const n = NumberUtils.toNumber(item);
+                if (n === null) return false;
+
+                const start = value?.[0] ?? null;
+                const end = value?.[1] ?? null;
+                if (start == null && end == null) return true;
+
+                return this.inRange(n, [start, end], (a, b) => a - b);
+            },
+
+            boolean: (item: any, value: boolean) => {
+                if (this.isEmptyFilterValue(value)) return true;
+                return item === value;
+            },
+
+            text: (item: any, value: string) => {
+                if (this.isEmptyFilterValue(value)) return true;
+
+                const hay = this.toLowerStr(item);
+                if (!hay) return false;
+
+                const needle = value.trim().toLowerCase();
+                return hay.includes(needle);
+            },
+        };
+
+        return predicates[type ?? 'text'] ?? predicates['text'];
+    }
+
+}
+
+type Range<T> = readonly [T | null | undefined, T | null | undefined];
+type Key = string | number | boolean | Date | null | undefined;
+
+export interface ListFilterConfig<TItem = any, TValue = any> {
+  /** como extrair a chave do item da linha */
+  itemKey?: (item: TItem) => Key;
+  /** como extrair a chave do valor selecionado do Filtro */
+  valueKey?: (v: TValue) => Key;
+
+  /** alternativa: path tipo 'representative.name' */
+  itemKeyPath?: string;
+  valueKeyPath?: string;
+
+  /** normalização: por padrão, string vira lower+trim */
+  normalize?: (k: Key) => string | number | boolean | null;
 }

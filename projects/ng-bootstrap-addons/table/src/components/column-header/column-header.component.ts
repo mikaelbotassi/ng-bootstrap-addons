@@ -5,6 +5,7 @@ import { ColumnFilterPredicate, ColumnFilterType, FilterFunction, SortDirection 
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import { FilterStateService } from '../../services/filter-state.service';
 import { TablePreferencesService } from '../../public_api';
+import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 
 @Component({
   selector: 'th[nbaColumnHeader]',
@@ -15,12 +16,15 @@ import { TablePreferencesService } from '../../public_api';
   providers: [FilterStateService]
 })
 export class ColumnHeaderComponent implements AfterViewInit {
+
   field = input.required<string>();
   type = input<ColumnFilterType|null>(null);
   sortable = input(true, {transform: booleanAttribute});
   onApplyFilter = output<string>();
   onClearFilter = output<void>();
   hydrated = false;
+  options = input<MultiselectOption[]>([]);
+  multiple = input(true, {transform:booleanAttribute});
 
   filter = contentChild<TemplateRef<any>>('filter');
     

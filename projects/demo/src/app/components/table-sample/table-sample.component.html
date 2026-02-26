@@ -30,17 +30,10 @@
             <th
               class="text-dark"
               nbaColumnHeader
+              [options]="cto.toOptions('representative.name')"
+              type="list"
               [field]="column.field"
-              [filterPredicate]="filterByRepresentative"
-            >
-              {{ column.header }}
-              <ng-template let-value let-setValue="setValue" #filter>
-                <nba-input [datalist]="cto.toOptions('representative.name')"
-                  [ngModel]="value"
-                  (ngModelChange)="setValue($event)"
-                ></nba-input>
-              </ng-template>
-            </th>       
+            >{{ column.header }}</th>       
           }@else{
             <th class="text-dark" nbaColumnHeader [field]="column.field" [type]="column.type">{{column.header}}</th>
           }

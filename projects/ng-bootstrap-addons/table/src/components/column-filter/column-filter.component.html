@@ -2,5 +2,5 @@
     <i class="nba-filter"></i>
 </a>
 <div id="dropdown-filter" *dropdownMenu class="dropdown-menu shadow-sm w-100 p-2 mt-1">
-    <nba-column-filter-form [type]="type()" (onClearFilter)="dropdownToggle.click(); onClearFilter.emit()" (filter)="dropdownToggle.click();filter.emit($event)" [dynamicFilter]="dynamicFilter()" />
+    <nba-column-filter-form [type]="type()" [options]="options()" [multiple]="multiple()" (onClearFilter)="dropdownToggle.click(); onClearFilter.emit()" (filter)="dropdownToggle.click();filter.emit($event)" [dynamicFilter]="dynamicFilter()" />
 </div>

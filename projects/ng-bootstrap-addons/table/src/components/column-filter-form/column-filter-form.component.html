@@ -5,16 +5,6 @@
     } 
     @else {
       @switch (type()) {
-        @case('text') {
-          <nba-input
-            class="no-validate"
-            inputClass="no-validate"
-            [(ngModel)]="state.value"
-            size="sm"
-            name="filterText"
-          />
-        }
-        
         @case('date') {
           <nba-date-range-picker 
             label="Intervalo de Data"
@@ -42,12 +32,35 @@
             name="filterBoolean"
           />
         }
+
+        @case('list'){
+          <nba-multiselect
+            inputClass="no-validate"
+            size="sm"
+            [options]="options()"
+            [multiple]="multiple"
+            [(ngModel)]="state.value"
+            name="filterList"
+          ></nba-multiselect>
+        }
+        @case('text-suggestion') {
+          <nba-input
+            class="no-validate"
+            inputClass="no-validate"
+            [(ngModel)]="state.value"
+            [datalist]="options()"
+            size="sm"
+            name="filterText"
+          />
+        }
         
         @default {
           <nba-input
+            class="no-validate"
             inputClass="no-validate"
             [(ngModel)]="state.value"
-            name="filterDefault"
+            size="sm"
+            name="filterText"
           />
         }
       }

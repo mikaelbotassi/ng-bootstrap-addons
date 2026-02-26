@@ -6,3 +6,4 @@ export * from './number-utils';
 export * from './types';
 export * from './array-utils';
 export * from './signals/behavior-signal';
+export * from './table-utils';

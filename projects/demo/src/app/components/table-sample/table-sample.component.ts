@@ -6,13 +6,12 @@ import { Customer, Representative } from '../../models/customer';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TableDirective } from './directives/table.directive';
-import { InputComponent } from 'project/inputs/src/public_api';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnFilterPredicate, ColumnToOptionDirective, TableModule } from 'project/table/src/public_api';
 
 @Component({
   selector: 'app-table-sample',
-  imports: [TableModule, SampleContainerComponent, FormsModule, DatePipe, TableDirective, ColumnToOptionDirective, InputComponent],
+  imports: [TableModule, SampleContainerComponent, FormsModule, DatePipe, TableDirective, ColumnToOptionDirective],
   providers: [CustomerService],
   templateUrl: './table-sample.component.html',
 })

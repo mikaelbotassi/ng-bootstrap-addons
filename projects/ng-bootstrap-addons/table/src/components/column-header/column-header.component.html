@@ -20,7 +20,7 @@
     </span>
     <a (click)="sort()" class="top-0 bottom-0 end-0 start-0 position-absolute" href="javascript:void(0);"></a>
     @if(type() || filter()){
-      <nba-column-filter [type]="type()" (onClearFilter)="removeFilter()" [isFiltered]="isFiltered()" [field]="field()" (filter)="addFilter($event)" [dynamicFilter]="filter()" class="ms-auto z-3 d-block" />
+      <nba-column-filter [type]="type()" [options]="options()" [multiple]="multiple()" (onClearFilter)="removeFilter()" [isFiltered]="isFiltered()" [field]="field()" (filter)="addFilter($event)" [dynamicFilter]="filter()" class="ms-auto z-3 d-block" />
     }
   }
 
