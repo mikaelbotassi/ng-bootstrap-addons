@@ -1,5 +1,5 @@
 <app-sample-container tagName="nba-table">
-  <nba-table #dt db-table id="table-sample"
+  <nba-table #dt db-table col-to-opt #cto="colToOpt" id="table-sample"
     [multiple]="true"
     [value]="list()"
     [itemsPerPage]="2"
@@ -38,7 +38,7 @@
                   <nba-multiselect
                     inputClass="no-validate"
                     label="Representante"
-                    [options]="representativeOptions"
+                    [options]="cto.toOptions('representative.name')"
                     [ngModel]="value"
                     (ngModelChange)="setValue($event)"
                     [multiple]="false"

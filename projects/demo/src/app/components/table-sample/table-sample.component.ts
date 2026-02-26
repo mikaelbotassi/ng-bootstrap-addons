@@ -4,15 +4,15 @@ import { CustomerService } from '../../services/customer.service';
 import { Command0 } from 'ng-bootstrap-addons/utils';
 import { Customer, Representative } from '../../models/customer';
 import { FormsModule } from '@angular/forms';
-import { ColumnFilterPredicate, FilterFunction } from 'project/table/src/models/table-models';
+import { ColumnFilterPredicate } from 'project/table/src/models/table-models';
 import { DatePipe } from '@angular/common';
 import { MultiselectComponent, MultiselectOption } from 'project/selects/src/public_api';
-import { TableModule } from 'project/table/src/public_api';
+import { ColumnToOptionDirective, TableModule } from 'project/table/src/public_api';
 import { TableDirective } from './directives/table.directive';
 
 @Component({
   selector: 'app-table-sample',
-  imports: [TableModule, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe, TableDirective],
+  imports: [TableModule, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe, TableDirective, ColumnToOptionDirective],
   providers: [CustomerService],
   templateUrl: './table-sample.component.html',
 })

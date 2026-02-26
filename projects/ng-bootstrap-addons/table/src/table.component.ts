@@ -18,6 +18,8 @@ import {
   untracked,
   OnInit,
   effect,
+  viewChildren,
+  contentChildren,
 } from '@angular/core';
 import { Column, FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +29,7 @@ import { createNestedObject } from 'ng-bootstrap-addons/utils';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnMultiselectComponent } from './components/column-multiselect/column-multiselect.component';
 import { TablePreferencesService } from './services/table-preferences.service';
+import { ColumnHeaderComponent } from './components/column-header/column-header.component';
 
 @Component({
   selector: 'nba-table',
@@ -243,7 +246,7 @@ export class TableComponent<T extends Object = any> implements OnInit {
   // =========================
   // #region UTIL
   // =========================
-  private getFieldValue(obj: any, field: string): any {
+  getFieldValue(obj: any, field: string): any {
     return field.split('.').reduce((o, f) => o?.[f], obj);
   }
 
@@ -263,6 +266,8 @@ export class TableComponent<T extends Object = any> implements OnInit {
   // =========================
   // #region TOGGLE COLUMNS
   // =========================
+  columnHeaders = contentChildren(ColumnHeaderComponent, {descendants:true});
+
   columns = model<Column[]|null|undefined>(null);
   columnsOptions = computed(() => this.columns()?.map((item) => new MultiselectOption({
     value: item.field,
