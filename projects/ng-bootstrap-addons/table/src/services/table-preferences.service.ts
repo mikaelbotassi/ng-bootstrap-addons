@@ -20,10 +20,7 @@ export class TablePreferencesService {
     }
 
     setPreferences(newPref: TablePreferences|null, emitEvent = true) {
-        if(newPref == null) return;
-        const pref = this._preferences();
-        if(!pref) return;
-        if(TablePreferences.isEqual(pref, newPref)) return;
+        if(!this.isValid(newPref)) return;
         this._preferences.set(newPref, {emitEvent});
     }
 
@@ -54,6 +51,10 @@ export class TablePreferencesService {
         if (!pref.filters[field]) return;
         const { [field]: _, ...filters } = pref.filters;
         this.setPreferences({ ...pref, filters });
+    }
+
+    clearFilters(){
+        this.setPreferences({...this._preferences()!, filters: {}, sort: null});
     }
 
 }

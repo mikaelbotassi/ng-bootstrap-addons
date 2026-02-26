@@ -154,6 +154,7 @@ export class TableComponent<T extends Object = any> implements OnInit {
     this.sortField.set(null);
     this.sortDirection.set(null);
     this.globalFilter.set(null);
+    this.prefService.clearFilters();
     this._resetToFirstPageNextRender();
   }
 
