@@ -10,7 +10,6 @@ import { FormErrorMessageComponent } from 'ng-bootstrap-addons/form-error-messag
 import { createRandomString } from 'ng-bootstrap-addons/utils';
 import { InputType } from '../models/input-models';
 import { distinctUntilChanged, takeUntil } from 'rxjs';
-import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 
 @Component({
   selector: 'nba-input',
@@ -29,7 +28,7 @@ import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 export class InputComponent<T> extends ControlValueAccessorDirective<T> {
 
   private readonly _datalistId = createRandomString(10);
-  datalist=input<MultiselectOption[]>([]);
+  datalist=input<SelectOption[]>([]);
   datalistId = computed(() => this.datalist()?.length ? this._datalistId : null);
   password = input(false, {transform: booleanAttribute});
   type = input<InputType>('text');
@@ -59,5 +58,23 @@ export class InputComponent<T> extends ControlValueAccessorDirective<T> {
     });
   }
 
+
+}
+
+export class SelectOption<T=any> {
+  value: T;
+  label: string;
+
+  constructor(data: { value: T; label: string }) {
+    this.value = data.value;
+    this.label = data.label;
+  }
+
+  get id() {
+    if(typeof this.value == 'object'){
+      return `option-${JSON.stringify(this.value)}`;
+    }
+    return `option-${this.value}`;
+  }
 
 }
