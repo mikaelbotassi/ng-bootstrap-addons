@@ -21,6 +21,7 @@
               @if(currency()){
                 <input
                   type="text"
+                  [attr.list]="datalistId()"
                   class="form-control"
                   [formControl]="control"
                   [ngClass]="inputClass()"
@@ -36,6 +37,7 @@
               }@else{
                 <input
                   [type]="type()"
+                  [attr.list]="datalistId()"
                   class="form-control"
                   [ngClass]="inputClass()"
                   [formControl]="control"
@@ -63,6 +65,13 @@
       </div>
       <nba-form-error-message [control]="control"></nba-form-error-message>
     </div>
+    @if(datalistId()){
+      <datalist [attr.id]="datalistId()">
+        @for(item of datalist(); track item.value){
+          <option [value]="item.value" [label]="item.label"></option>
+        }
+      </datalist>
+    }
   }
 } @placeholder{
   <nba-input-placeholder></nba-input-placeholder>

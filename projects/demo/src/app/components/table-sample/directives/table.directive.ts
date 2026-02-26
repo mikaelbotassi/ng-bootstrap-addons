@@ -5,8 +5,8 @@ import {
   inject,
   untracked,
 } from "@angular/core";
+import { TablePreferences, TablePreferencesService } from "ng-bootstrap-addons/table";
 import { Command1 } from "ng-bootstrap-addons/utils";
-import { TablePreferences, TablePreferencesService } from "project/table/src/public_api";
 import { Observable, defer, of } from "rxjs";
 
 @Directive({selector: "nba-table[db-table]",})

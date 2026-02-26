@@ -4,15 +4,15 @@ import { CustomerService } from '../../services/customer.service';
 import { Command0 } from 'ng-bootstrap-addons/utils';
 import { Customer, Representative } from '../../models/customer';
 import { FormsModule } from '@angular/forms';
-import { ColumnFilterPredicate } from 'project/table/src/models/table-models';
 import { DatePipe } from '@angular/common';
-import { MultiselectComponent, MultiselectOption } from 'project/selects/src/public_api';
-import { ColumnToOptionDirective, TableModule } from 'project/table/src/public_api';
 import { TableDirective } from './directives/table.directive';
+import { InputComponent } from 'project/inputs/src/public_api';
+import { ColumnFilterPredicate, ColumnToOptionDirective, TableModule } from 'ng-bootstrap-addons/table';
+import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 
 @Component({
   selector: 'app-table-sample',
-  imports: [TableModule, SampleContainerComponent, FormsModule, MultiselectComponent, DatePipe, TableDirective, ColumnToOptionDirective],
+  imports: [TableModule, SampleContainerComponent, FormsModule, DatePipe, TableDirective, ColumnToOptionDirective, InputComponent],
   providers: [CustomerService],
   templateUrl: './table-sample.component.html',
 })
@@ -55,11 +55,11 @@ export class TableSampleComponent {
       });
   }
 
-  filterByRepresentative:ColumnFilterPredicate<string[]> = (item, value) => {
+  filterByRepresentative:ColumnFilterPredicate<string> = (item, value) => {
     if (value.length === 0) {
       return true;
     }
-    return value.some(v => item.includes(v));
+    return item.includes(value);
   };
 
   cast = (value: unknown): Customer[] => value as Customer[];

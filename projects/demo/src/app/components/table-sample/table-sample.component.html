@@ -35,14 +35,10 @@
             >
               {{ column.header }}
               <ng-template let-value let-setValue="setValue" #filter>
-                  <nba-multiselect
-                    inputClass="no-validate"
-                    label="Representante"
-                    [options]="cto.toOptions('representative.name')"
-                    [ngModel]="value"
-                    (ngModelChange)="setValue($event)"
-                    [multiple]="false"
-                  ></nba-multiselect>
+                <nba-input [datalist]="cto.toOptions('representative.name')"
+                  [ngModel]="value"
+                  (ngModelChange)="setValue($event)"
+                ></nba-input>
               </ng-template>
             </th>       
           }@else{
