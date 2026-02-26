@@ -9,7 +9,7 @@
       {field: 'id', header:'ID', visible: false, type:'numeric'},
       {field: 'name', header:'Nome', type:'text'},
       {field: 'country.name', header:'País', type:'text'},
-      {field: 'representative.name', header:'Representante', type:'text'},
+      {field: 'representative.name', header:'Representante', type:'list'},
       {field: 'date', header:'Data', type:'date'},
       {field: 'verified', header:'Verificado', type:'boolean'}
     ]"
@@ -30,10 +30,11 @@
             <th
               class="text-dark"
               nbaColumnHeader
+              [multiple]="false"
               [options]="cto.toOptions('representative.name')"
-              type="list"
+              [type]="column.type"
               [field]="column.field"
-            >{{ column.header }}</th>       
+            >{{ column.header }}</th>
           }@else{
             <th class="text-dark" nbaColumnHeader [field]="column.field" [type]="column.type">{{column.header}}</th>
           }
