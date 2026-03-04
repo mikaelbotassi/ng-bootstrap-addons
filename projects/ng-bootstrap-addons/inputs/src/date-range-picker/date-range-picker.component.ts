@@ -32,7 +32,7 @@ import { NgxMaskDirective } from 'ngx-mask';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateRangePickerComponent extends ControlValueAccessorDirective<(Date|undefined)[]|undefined>{
+export class DateRangePickerComponent extends ControlValueAccessorDirective<DateRange>{
   
   withTime = input(false, {transform: booleanAttribute});
   timeOutHandle: ReturnType<typeof setTimeout> | null = null;
@@ -59,7 +59,7 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
     });
   });
 
-  value = signal<(Date|undefined)[]|undefined>(undefined);
+  value = signal<DateRange>(undefined);
   FMT = computed(() => this.withTime() ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY');
 
   baseConfigs = computed<Partial<BsDaterangepickerConfig>>(() => {
@@ -137,7 +137,7 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<(Dat
     this.control?.markAsTouched();
   }  
 
-  onDatePickerChange(newValue: (Date|undefined)[]|undefined) {
+  onDatePickerChange(newValue: DateRange) {
     if(newValue === this.control?.value) return;
     if(!newValue){
       this.propagateValue(undefined);
@@ -230,3 +230,5 @@ private positionCalendarContainer(container: HTMLElement) {
     window.addEventListener('scroll', this.onWindowChange, { passive: true, capture: true });
   });
 }
+
+export type DateRange = (Date | undefined)[] | undefined;

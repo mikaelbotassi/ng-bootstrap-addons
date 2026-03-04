@@ -3,10 +3,12 @@
         <div class="p-3 nba-caption">
             <ng-container *ngTemplateOutlet="caption()!"></ng-container>
             <div class="d-flex align-items-center flex-wrap justify-content-between gap-2 w-100">
-                <a href="javascript:;" class="btn btn-sm btn-outline-dark no-validate" (click)="clearFilters()">
-                    <i class="nba-filter-off"></i>
-                    Limpar
-                </a>
+                @if(showClearFiltersButton()){
+                    <a href="javascript:;" class="btn btn-sm btn-outline-dark no-validate" (click)="clearFilters()">
+                        <i class="nba-filter-off"></i>
+                        Limpar
+                    </a>
+                }
                 @if(globalFilterFields().length){
                     <input
                         class="form-control form-control-sm w-auto no-validate"

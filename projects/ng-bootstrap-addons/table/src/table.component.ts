@@ -149,6 +149,8 @@ export class TableComponent<T extends Object = any> implements OnInit {
     this._resetToFirstPageNextRender();
   }
 
+  showClearFiltersButton = input(true, {transform:booleanAttribute});
+
   clearFilters() {
     this.filters.set({});
     this.sortField.set(null);
