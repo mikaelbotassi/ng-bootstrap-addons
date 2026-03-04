@@ -47,7 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
 })
 export class NumericIntervalInputComponent
-  extends ControlValueAccessorDirective<(number | null)[] | number[] | null>
+  extends ControlValueAccessorDirective<NumericInterval>
   implements OnInit, Validator
 {
   initialValue = new FormControl<number | null>(null);
@@ -166,3 +166,5 @@ export class NumericIntervalInputComponent
     if (from.enabled && to.disabled) to.enable({ emitEvent: false });
   }
 }
+
+export type NumericInterval = (number | null)[] | null;
