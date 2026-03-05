@@ -11,7 +11,8 @@
       {field: 'country.name', header:'País', type:'text'},
       {field: 'representative.name', header:'Representante', type:'list'},
       {field: 'date', header:'Data', type:'date'},
-      {field: 'verified', header:'Verificado', type:'boolean'}
+      {field: 'verified', header:'Verificado', type:'boolean'},
+      {field: 'balance', header:'Balanço', type:'numeric'}
     ]"
   >
     <ng-template #caption>
@@ -62,7 +63,11 @@
               </td>
             }
             @default{
-              <td>{{row[column.field]}}</td>
+              @if(column.field == "balance"){
+                <td>{{row[column.field] | numeric: true }}</td>
+              }@else{
+                <td>{{row[column.field]}}</td>
+              }
             }
           }
         }

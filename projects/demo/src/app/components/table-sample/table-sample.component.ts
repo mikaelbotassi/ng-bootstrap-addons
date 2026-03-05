@@ -8,10 +8,11 @@ import { DatePipe } from '@angular/common';
 import { TableDirective } from './directives/table.directive';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnFilterPredicate, ColumnToOptionDirective, TableModule } from 'project/table/src/public_api';
+import { NumericPipe } from 'ng-bootstrap-addons/pipes';
 
 @Component({
   selector: 'app-table-sample',
-  imports: [TableModule, SampleContainerComponent, FormsModule, DatePipe, TableDirective, ColumnToOptionDirective],
+  imports: [TableModule, SampleContainerComponent, FormsModule, DatePipe, TableDirective, ColumnToOptionDirective, NumericPipe],
   providers: [CustomerService],
   templateUrl: './table-sample.component.html',
 })

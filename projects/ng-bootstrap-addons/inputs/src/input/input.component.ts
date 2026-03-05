@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, booleanAttribute, computed, forwardRef, input } from '@angular/core';
+import { Component, booleanAttribute, computed, forwardRef, input, output } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { InputPlaceholderComponent } from '../input-placeholder/input-placeholder.component';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -42,6 +42,8 @@ export class InputComponent<T> extends ControlValueAccessorDirective<T> {
   hasCurrency = input(false, {transform: booleanAttribute});
   decimalPlaces = input(2);
   customErrorMessages = input<Record<string, string>>({});
+
+  onBlur = output<void>();
 
   //Browser default
   autocomplete = input<string | boolean>(false);

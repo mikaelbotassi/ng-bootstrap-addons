@@ -67,8 +67,8 @@ export class FilterStateService {
 
             numeric: (item: any, value: Range<number>) => {
                 if (this.isEmptyFilterValue(value)) return true;
-
-                const n = NumberUtils.toNumber(item);
+                if(isNaN(item) && typeof item !== 'string') return false;
+                const n = isNaN(item) ? NumberUtils.toNumber(item) : item;
                 if (n === null) return false;
 
                 const start = value?.[0] ?? null;

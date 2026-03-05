@@ -10,6 +10,7 @@
                 input-password
                 [ngClass]="inputClass()"
                 class="form-control"
+                (blur)="onBlur.emit()"
                 [formControl]="control"
                 [id]="inputId()"
                 [name]="inputId()"
@@ -26,6 +27,7 @@
                   [formControl]="control"
                   [ngClass]="inputClass()"
                   [id]="inputId()"
+                  (blur)="onBlur.emit()"
                   [name]="inputId()"
                   [placeholder]="label()"
                   currency
@@ -39,6 +41,7 @@
                   [type]="type()"
                   [attr.list]="datalistId()"
                   class="form-control"
+                  (blur)="onBlur.emit()"
                   [ngClass]="inputClass()"
                   [formControl]="control"
                   [id]="inputId()"
