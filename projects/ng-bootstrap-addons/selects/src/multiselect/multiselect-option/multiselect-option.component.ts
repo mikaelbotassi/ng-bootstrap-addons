@@ -8,9 +8,10 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
   templateUrl: './multiselect-option.component.html',
   styleUrl: './multiselect-option.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { 'collision-id': `multiselect-option-${createRandomString(10)} ` },
+  host: { '[attr.collision-id]': 'collisionId' },
 })
 export class MultiselectOptionComponent {
+  readonly collisionId = `multiselect-option-${createRandomString(10)}`;
   isSelected = input(false, {transform: booleanAttribute})
   toggle = output<boolean>();
   id = input.required<string>();
