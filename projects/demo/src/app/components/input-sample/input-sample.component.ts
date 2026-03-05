@@ -13,4 +13,9 @@ export class InputSampleComponent {
   defaultInput = signal<string>('');
   currencyInput = signal<string>('');
   passwordInput = signal<string>('');
+
+  print(value:any){
+    console.log(value);
+  }
+
 }
