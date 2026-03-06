@@ -1,11 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { AutoCompleteConfig } from '../models/ac-models';
 
 @Injectable()
-export class AutocompleteService {
+export class AutocompleteService<T = any> {
   constructor(private http: HttpClient) {}
+
+  private lastReq: LastRequest<T> | null = null;
 
   private buildApiCall(data: AutoCompleteConfig): {
     apiUrl: string;
@@ -39,9 +42,42 @@ export class AutocompleteService {
     return { apiUrl: baseUrl, params };
   }
 
-  performAutocomplete<T = any>(config: AutoCompleteConfig): Observable<T> {
+  performAutocomplete(config: AutoCompleteConfig): Observable<T> {
     let { apiUrl, params } = this.buildApiCall(config);
-    if (config.desc && config.searchName) params = params.append(config.searchName, config.desc);
-    return this.http.get<T>(`${apiUrl}`, { params: params });
+
+    // 5. Adicionar o termo de busca (IMPORTANTE: reatribuir a variável params)
+    if (config.desc && config.searchName) {
+      params = params.append(config.searchName, config.desc);
+    }
+
+    // Gerar a URL completa para a chave do cache
+    const fullUrl = params.keys().length > 0 ? `${apiUrl}?${params.toString()}` : apiUrl;
+
+    // 6. Verificação de repetição
+    if (this.lastReq && this.lastReq.url === fullUrl) {
+      const diff = new Date().getTime() - this.lastReq.date.getTime();
+      if (diff < 1000) {
+        return this.lastReq.data;
+      }
+    }
+
+    // 7. Nova requisição com shareReplay(1)
+    const request$ = this.http.get<T>(apiUrl, { params }).pipe(
+      shareReplay(1)
+    );
+
+    this.lastReq = {
+      date: new Date(),
+      url: fullUrl,
+      data: request$
+    };
+
+    return request$;
   }
+}
+
+interface LastRequest<T> {
+  date: Date;
+  url: string;
+  data: Observable<T>;
 }

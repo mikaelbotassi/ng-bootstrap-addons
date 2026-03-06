@@ -63,6 +63,7 @@
                 [formControl]="descControl"
                 [id]="inputId()"
                 [name]="inputId()"
+                (keydown.enter)="onKeyDownEnter($event)"
                 (keydown.f9)="expanded.set(true)"
                 (focus)="focus.set(true)"
                 (blur)="onBlur()"

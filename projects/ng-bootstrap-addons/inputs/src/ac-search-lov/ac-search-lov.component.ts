@@ -2,7 +2,7 @@ import { Component, input, output, inject, forwardRef, model, signal, computed, 
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
-import { asyncScheduler, observeOn, debounceTime, EMPTY, startWith, distinctUntilChanged, tap } from 'rxjs';
+import { asyncScheduler, observeOn, debounceTime, EMPTY, startWith, distinctUntilChanged, tap, Subject, merge, mapTo } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
@@ -31,14 +31,15 @@ import { AcMap, ActionPerformed, AutoCompleteConfig, Status } from './models/ac-
 })
 export class AutoCompleteLovComponent extends ControlValueAccessorDirective<string|number|null> {
 
+  private readonly enter$ = new Subject<void>();
+
+  //INPUTS
   /**
    * The URL to use for the autocomplete requests.
    * You can put the ac input data customized like:
    * https://your-api-endpoint.com/autocomplete?id=:id
    */
   acUrl = input.required<string>();
-
-  //INPUTS
   autofocus = input(false, {transform: booleanAttribute});
   format = input<string|null|undefined>(null);
   searchName = input<string>('filtro');
@@ -82,10 +83,13 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
 
   // INJECTORS
   private destroyRef = inject(DestroyRef);
-  private acService = inject(AutocompleteService);
+  private acService = inject(AutocompleteService<string|number|null>);
 
   // COMMANDS
   fetchDescCommand!: Command1<any[], AutoCompleteConfig>;
+
+  //FLAGS
+  skipNext = false;
 
   //EFFECTS
   clear = effect(() => {
@@ -130,6 +134,13 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
     this.focus.set(false);
   }
 
+  onKeyDownEnter(ev: Event) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.skipNext = true;
+    this.enter$.next();
+  }
+
   override ngOnInit(): void {
     super.ngOnInit();
 
@@ -141,24 +152,45 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       this.fetchDesc(this.control.value);
     }
 
-    this.descControl.valueChanges
-    .pipe(
+  merge(
+    this.descControl.valueChanges.pipe(
       tap(() => this.debouncing.set(true)),
       debounceTime(this.debounceTime()),
       tap(() => this.debouncing.set(false)),
-      takeUntilDestroyed(this.destroyRef),
-    )
-    .subscribe((value) => {
-      this.desc.set(value);
-      if (!value || value.trim() === '') {
-        this.controlValue = null;
+      mapTo('debounce')
+    ),
+    this.enter$.pipe(mapTo('enter'))
+  )
+  .pipe(
+    takeUntilDestroyed(this.destroyRef),
+  )
+  .subscribe((source) => {
+    const value = this.descControl.value;
+    this.desc.set(value);
+
+    if (!value || value.trim() === '') {
+      this.controlValue = null;
+      return;
+    }
+
+    if (source === 'enter') {
+      if (this.expanded()) {
+        this.fetchLov(value);
         return;
       }
 
-      if(this.expanded()) return this.fetchLov(this.descControl.value!);
-      return this.fetchDesc(this.descControl.value!);
+      this.fetchDesc(value);
+      return;
+    }
 
-    });
+    if(this.skipNext){
+      this.skipNext = false;
+      return;
+    }
+
+    if (this.expanded()) return this.fetchLov(value);
+    return this.fetchDesc(value);
+  });
 
     this.control?.valueChanges
     .pipe(takeUntilDestroyed(this.destroyRef))

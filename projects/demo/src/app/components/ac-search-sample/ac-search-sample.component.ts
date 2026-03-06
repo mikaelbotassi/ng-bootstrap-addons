@@ -25,6 +25,10 @@ export class AcSearchSampleComponent {
     this.cdMovie = null;
   }
 
+  onChange(event:any){
+    console.log(event);
+  }
+
 }
 
 type Movie = {

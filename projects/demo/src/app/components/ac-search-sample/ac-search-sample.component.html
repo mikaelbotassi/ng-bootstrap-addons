@@ -6,6 +6,7 @@
         searchName="s"
         format="[:imdbID] :Title (:Year)"
         [(ngModel)]="cdMovie"
+        (ngModelChange)="onChange($event)"
         [clearIfNotMatch]="true"
         [resultPath]="{lov: 'Search'}"
         required>
