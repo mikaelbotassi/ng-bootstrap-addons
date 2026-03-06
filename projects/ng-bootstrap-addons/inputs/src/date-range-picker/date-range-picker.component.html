@@ -13,11 +13,10 @@
                     (bsValueChange)="onDatePickerChange($event)"
                     [disabled]="control.disabled"
                     [required]="isRequired"
-                    class="form-control"
+                    [class]="`form-control ${inputClass()}`"
                     [mask]="inputMask()"
                     [id]="inputId()"
                     [name]="inputId() + '_display'" 
-                    [ngClass]="inputClass()"
                     [placeholder]="label()"
                     [ngClass]="{
                         'ng-touched': control.touched,

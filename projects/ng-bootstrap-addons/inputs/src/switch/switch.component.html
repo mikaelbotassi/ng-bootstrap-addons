@@ -1,10 +1,9 @@
 @if(control){
     <div class="form-check form-switch" [class]="formGroupClass()">
         <input 
-            class="form-check-input"
+            [class]="`form-check-input ${inputClass()}`"
             type="checkbox"
             role="switch"
-            [class]="inputClass()"
             [id]="inputId()"
             [name]="inputId()"
             [formControl]="control"

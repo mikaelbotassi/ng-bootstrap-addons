@@ -5,11 +5,10 @@
             <div class="input-group">
                 <div class="form-floating" [class]="'form-floating-' + size()">
                     <input
-                        class="form-control"
+                        [class]="`form-control ${inputClass()}`"
                         type="number"
                         [id]="inputId() + '-start'"
                         [name]="inputId() + '-start'"
-                        [class]="inputClass()"
                         placeholder="Min"
                         [ngClass]="{
                             'ng-touched': control.touched,
@@ -32,11 +31,10 @@
                 <div class="form-floating can-click" [class]="'form-floating-' + size()">
                     <input
                         type="number"
-                        class="form-control"
+                        [class]="`form-control ${inputClass()}`"
                         [id]="inputId() + '-end'"
                         [name]="inputId() + '-end'"
                         placeholder="Max"
-                        [class]="inputClass()"
                         [ngClass]="{
                             'ng-touched': control.touched,
                             'ng-dirty': control.dirty,

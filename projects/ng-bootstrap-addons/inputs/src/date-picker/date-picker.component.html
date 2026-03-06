@@ -1,7 +1,7 @@
 @defer (on viewport; prefetch on idle){
     @if(control){
-        <div class="form-group position-relative" [class]="formGroupClass()">
-            <div class="form-floating can-click" [class]="'form-floating-' + size()">
+        <div class="form-group position-relative" [ngClass]="formGroupClass()">
+            <div class="form-floating can-click" [ngClass]="'form-floating-' + size()">
                 <input
                     type="text"
                     bsDatepicker
@@ -13,11 +13,10 @@
                     (bsValueChange)="onDatePickerChange($event)"
                     [disabled]="control.disabled"
                     [required]="isRequired"
-                    class="form-control"
+                    [class]="`form-control ${inputClass()}`"
                     [mask]="inputMask()"
                     [id]="inputId()"
                     [name]="inputId() + '_display'" 
-                    [ngClass]="inputClass()"
                     [placeholder]="label()"
                     [ngClass]="{
                         'ng-touched': control.touched,

@@ -5,10 +5,9 @@
                 <select 
                     [name]="inputId()" 
                     [id]="inputId()"
-                    [class]="inputClass()"
                     [formControl]="control"
                     [compareWith]="compareWith()"
-                    class="form-select"
+                    [class]="`form-select ${inputClass()}`"
                     #input
                 >
                     <ng-content></ng-content>

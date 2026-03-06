@@ -19,7 +19,7 @@ import { AcMap, ActionPerformed, AutoCompleteConfig, Status } from './models/ac-
   styleUrls: ['./ac-search-lov.component.scss'],
   imports: [FormErrorMessageComponent, InputPlaceholderComponent, ReactiveFormsModule, ClickOutsideDirective, CollapseDirective, AutocompleteCollapseComponent, CommonModule, FormsModule, AutofocusDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[attr.collision-id]': 'collisionId' },
+  host: { 'collision-id': 'nba-ac-lov-component' },
   providers: [
     AutocompleteService,
     {
@@ -32,7 +32,6 @@ import { AcMap, ActionPerformed, AutoCompleteConfig, Status } from './models/ac-
 export class AutoCompleteLovComponent extends ControlValueAccessorDirective<string|number|null> {
 
   private readonly enter$ = new Subject<void>();
-  readonly collisionId = `ac-search-lov-${createRandomString(20)}`;
   //INPUTS
   /**
    * The URL to use for the autocomplete requests.

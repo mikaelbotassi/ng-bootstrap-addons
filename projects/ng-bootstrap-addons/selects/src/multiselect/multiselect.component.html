@@ -7,10 +7,9 @@
             <select
                 [name]="inputId()"
                 [id]="inputId()"
-                [class]="inputClass()"
                 [formControl]="control"
                 [multiple]="multiple()"
-                class="form-select d-none"
+                [class]="`form-select d-none ${inputClass()}`"
                 [attr.aria-label]="label()"
                 [attr.aria-describedby]="inputId()"
                 [attr.aria-required]="isRequired"
@@ -24,9 +23,8 @@
             </select>
             <input
                 type="text"
-                class="form-select"
+                [class]="`form-select ${inputClass()}`"
                 [formControl]="descControl"
-                [class]="inputClass()"
                 [placeholder]="label()"
                 readonly
             >
