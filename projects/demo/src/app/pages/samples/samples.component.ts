@@ -17,6 +17,7 @@ import { PaginationSampleComponent } from '../../components/pagination-sample/pa
 import { DynamicSizeInputSampleComponent } from '../../components/dynamic-size-input-sample/dynamic-size-input-sample.component';
 import { usePageState } from 'project/rxjs/src/use-page-state';
 import { GallerySampleComponent } from '../../components/gallery-sample/gallery-sample.component';
+import { DatePickerSampleComponent } from '../../components/date-picker-sample/date-picker-sample.component';
 
 @Component({
   selector: 'app-samples',
@@ -27,6 +28,7 @@ import { GallerySampleComponent } from '../../components/gallery-sample/gallery-
     EmptyDataSampleComponent,
     AcSearchSampleComponent,
     DateRangePickerSampleComponent,
+    DatePickerSampleComponent,
     InputSampleComponent,
     SwitchSampleComponent,
     SelectSampleComponent,

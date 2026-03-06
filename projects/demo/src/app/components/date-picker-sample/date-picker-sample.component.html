@@ -1,0 +1,9 @@
+<app-sample-container tagName="nba-datetime-range-input">
+    <nba-date-picker
+        label="Data"
+        withTime
+        [(ngModel)]="date"
+        (ngModelChange)="onValueChange($event)"
+        required
+    ></nba-date-picker>
+</app-sample-container>
