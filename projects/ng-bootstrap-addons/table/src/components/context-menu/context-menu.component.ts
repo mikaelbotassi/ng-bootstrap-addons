@@ -1,5 +1,17 @@
-// context-menu.component.ts
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, input, output, Renderer2, signal, TemplateRef } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  Renderer2,
+  TemplateRef,
+  ViewChild,
+  inject,
+  input,
+  output,
+  signal
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,78 +22,102 @@ import { CommonModule } from '@angular/common';
   styleUrl: './context-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContextMenuComponent {
+export class ContextMenuComponent implements AfterViewInit {
+  private renderer = inject(Renderer2);
+  private host = inject(ElementRef<HTMLElement>);
 
-  //Inputs
+  @ViewChild('menuContainer') menuContainer?: ElementRef<HTMLElement>;
+
   menuTemplate = input.required<TemplateRef<any>>();
   autoClose = input<boolean>(true);
   closeOnInsideClick = input<boolean>(true);
-  
-  //Outputs
+
   menuClosed = output<void>();
   itemClicked = output<any>();
 
-  //Signals para estado
   isVisible = signal<boolean>(false);
-  position = signal<{x: number, y: number}>({x: 0, y: 0});
+  position = signal<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  //Mostrar menu na posição do mouse
+  ngAfterViewInit() {
+    const hostEl = this.host.nativeElement;
+    this.renderer.appendChild(document.body, hostEl);
+  }
+
   show(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
 
-    const position = this.calculatePosition(event);
-    this.position.set(position);
     this.isVisible.set(true);
+
+    const initial = {
+      x: event.clientX,
+      y: event.clientY
+    };
+
+    this.position.set(initial);
+
+    queueMicrotask(() => {
+      this.reposition(initial.x, initial.y);
+    });
   }
 
-  //Esconder menu
   hide() {
+    if (!this.isVisible()) return;
     this.isVisible.set(false);
     this.menuClosed.emit();
   }
 
-  //Calcular posição considerando bordas da tela
-  private calculatePosition(event: MouseEvent): {x: number, y: number} {
-    let x = event.clientX;
-    let y = event.clientY;
+  private reposition(x: number, y: number) {
+    const menuEl = this.menuContainer?.nativeElement;
+    if (!menuEl) return;
+
+    const rect = menuEl.getBoundingClientRect();
+    const margin = 8;
 
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
-    const menuWidth = 200; // Largura estimada
-    const menuHeight = 200; // Altura estimada
 
-    // Ajustar X se sair da tela pela direita
-    if (x + menuWidth > screenWidth) {
-      x = Math.max(10, x - menuWidth);
+    let finalX = x;
+    let finalY = y;
+
+    if (finalX + rect.width > screenWidth - margin) {
+      finalX = screenWidth - rect.width - margin;
     }
 
-    // Ajustar Y se sair da tela por baixo
-    if (y + menuHeight > screenHeight) {
-      y = Math.max(10, y - menuHeight);
+    if (finalY + rect.height > screenHeight - margin) {
+      finalY = screenHeight - rect.height - margin;
     }
 
-    // Garantir que não saia da tela
-    x = Math.max(10, Math.min(x, screenWidth - menuWidth));
-    y = Math.max(10, Math.min(y, screenHeight - menuHeight));
+    finalX = Math.max(margin, finalX);
+    finalY = Math.max(margin, finalY);
 
-    return {x, y};
+    this.position.set({ x: finalX, y: finalY });
   }
 
-  // Tratar clique no menu
   onMenuClick(event: Event) {
-    if (this.closeOnInsideClick()) {
-      const target = event.target as HTMLElement;
-      
-      // Fechar se clicar em um item (não no divider)
-      if (target.classList.contains('dropdown-item') && !target.classList.contains('disabled')) {
-        this.itemClicked.emit(target);
-        this.hide();
-      }
+    if (!this.closeOnInsideClick()) return;
+
+    const target = event.target as HTMLElement;
+    const item = target.closest('.dropdown-item') as HTMLElement | null;
+
+    if (item && !item.classList.contains('disabled')) {
+      this.itemClicked.emit(item);
+      this.hide();
     }
   }
 
-  //Fechar com ESC
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.autoClose() || !this.isVisible()) return;
+
+    const menuEl = this.menuContainer?.nativeElement;
+    const target = event.target as Node;
+
+    if (menuEl && !menuEl.contains(target)) {
+      this.hide();
+    }
+  }
+
   @HostListener('document:keydown.escape')
   onEscapePress() {
     if (this.isVisible()) {

@@ -17,7 +17,7 @@
   >
     <ng-template #caption>
       @if(selectedRows().length > 0){
-        <div class="d-flex align-items-center justify-content-end mt-3">
+        <div class="d-flex align-items-center justify-content-end mb-3">
           <button type="button" class="btn btn-danger btn-sm" (click)="removeCustomer(selectedRows())">Excluir({{ selectedRows().length }})</button>
         </div>
       }
@@ -45,7 +45,7 @@
 
     <ng-template #body let-rows="rows" let-columns="columns">
       @for(row of rows; track $index){
-      <tr nbaControl expandable (rowDoubleClick)="onDoubleClick()" [value]="row">
+      <tr nbaControl [showMenu]="true" expandable (rowDoubleClick)="onDoubleClick()" [value]="row">
         @for(column of columns;track $index){
           @switch(column.field){
             @case('date'){

@@ -106,7 +106,7 @@ export class TableRowControlComponent<T extends Object = any> implements AfterVi
 
   @HostListener('contextmenu', ['$event'])
   onRightClick(event: MouseEvent) {
-    if(!this.showMenu() || this.expandable()) return;
+    if(!this.showMenu()) return;
     event.preventDefault();
     event.stopPropagation();
     const menu = this.contextMenu();

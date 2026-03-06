@@ -262,6 +262,9 @@ export class TableComponent<T extends Object = any> implements OnInit {
   // #region TEMPLATES PROJETADOS
   // =========================
   caption = contentChild<TemplateRef<any>>('caption');
+  hasCaption = computed(()=>{
+    return !!this.caption() || this.showClearFiltersButton() || this.globalFilterFields().length || this.columns();
+  });
   header  = contentChild<TemplateRef<any>>('header');
   body    = contentChild<TemplateRef<any>>('body');
   // #endregion
