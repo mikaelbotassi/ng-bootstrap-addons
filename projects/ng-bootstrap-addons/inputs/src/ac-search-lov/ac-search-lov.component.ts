@@ -2,7 +2,7 @@ import { Component, input, output, inject, forwardRef, model, signal, computed, 
 import { FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CommonModule } from '@angular/common';
-import { asyncScheduler, observeOn, debounceTime, EMPTY, startWith, distinctUntilChanged, tap, Subject, merge, mapTo } from 'rxjs';
+import { asyncScheduler, observeOn, debounceTime, EMPTY, startWith, distinctUntilChanged, tap, Subject, merge, mapTo, map } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { AutocompleteService } from './services/auto-complete.service';
 import { AutocompleteCollapseComponent } from './components/ac-collapse/ac-collapse.component';
@@ -157,13 +157,10 @@ export class AutoCompleteLovComponent extends ControlValueAccessorDirective<stri
       tap(() => this.debouncing.set(true)),
       debounceTime(this.debounceTime()),
       tap(() => this.debouncing.set(false)),
-      mapTo('debounce')
+      map(() => 'debounce' as const)
     ),
-    this.enter$.pipe(mapTo('enter'))
-  )
-  .pipe(
-    takeUntilDestroyed(this.destroyRef),
-  )
+    this.enter$.pipe(map(() => 'enter' as const))
+  ).pipe(takeUntilDestroyed(this.destroyRef))
   .subscribe((source) => {
     const value = this.descControl.value;
     this.desc.set(value);
