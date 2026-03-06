@@ -2,6 +2,7 @@ export * from './input/input.component';
 export * from './input-placeholder/input-placeholder.component';
 export * from './switch/switch.component';
 export * from './date-range-picker/date-range-picker.component';
+export * from './date-picker/date-picker.component';
 export * from './ac-search-lov';
 export * from './ac-search-lov/services/auto-complete.service';
 export * from './numeric-interval-input/numeric-interval-input.component';
