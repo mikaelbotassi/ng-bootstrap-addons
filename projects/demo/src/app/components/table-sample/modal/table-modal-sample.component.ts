@@ -1,24 +1,23 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { SampleContainerComponent } from '../../containers/sample-container/sample-container.component';
-import { CustomerService } from '../../services/customer.service';
 import { Command0 } from 'ng-bootstrap-addons/utils';
-import { Customer, Representative } from '../../models/customer';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { TableDirective } from './directives/table.directive';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnFilterPredicate, ColumnToOptionDirective, TableModule } from 'project/table/src/public_api';
 import { NumericPipe } from 'ng-bootstrap-addons/pipes';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { TableModalSampleComponent } from './modal/table-modal-sample.component';
+import { Customer, Representative } from '../../../models/customer';
+import { CustomerService } from '../../../services/customer.service';
+import { SampleContainerComponent } from '../../../containers/sample-container/sample-container.component';
+import { TableDirective } from '../directives/table.directive';
 
 @Component({
   selector: 'app-table-sample',
   imports: [TableModule, SampleContainerComponent, FormsModule, DatePipe, TableDirective, ColumnToOptionDirective, NumericPipe],
   providers: [CustomerService],
-  templateUrl: './table-sample.component.html',
+  templateUrl: './table-modal-sample.component.html',
 })
-export class TableSampleComponent {
+export class TableModalSampleComponent {
 
   selectedRepresentative: string[] = [];
   selectedRows = signal<Customer[]>([]);
@@ -86,13 +85,6 @@ export class TableSampleComponent {
 
   onDoubleClick(){
     console.log('Estive aqui')
-  }
-
-  modalService = inject(BsModalService);
-  showModal(){
-    this.modalService.show(TableModalSampleComponent, {
-      class: 'modal-xl'
-    });
   }
 
 }

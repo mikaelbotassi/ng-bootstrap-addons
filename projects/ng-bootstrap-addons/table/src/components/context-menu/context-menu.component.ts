@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   Renderer2,
   TemplateRef,
   ViewChild,
@@ -22,11 +23,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './context-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContextMenuComponent implements AfterViewInit {
+export class ContextMenuComponent implements AfterViewInit, OnDestroy {
   private renderer = inject(Renderer2);
   private host = inject(ElementRef<HTMLElement>);
 
-  @ViewChild('menuContainer') menuContainer?: ElementRef<HTMLElement>;
+  @ViewChild('overlayRef') overlayRef?: ElementRef<HTMLDivElement>;
+  @ViewChild('menuRef') menuRef?: ElementRef<HTMLUListElement>;
 
   menuTemplate = input.required<TemplateRef<any>>();
   autoClose = input<boolean>(true);
@@ -39,15 +41,19 @@ export class ContextMenuComponent implements AfterViewInit {
   position = signal<{ x: number; y: number }>({ x: 0, y: 0 });
 
   ngAfterViewInit() {
+    this.renderer.appendChild(document.body, this.host.nativeElement);
+  }
+
+  ngOnDestroy() {
     const hostEl = this.host.nativeElement;
-    this.renderer.appendChild(document.body, hostEl);
+    if (hostEl.parentNode) {
+      hostEl.parentNode.removeChild(hostEl);
+    }
   }
 
   show(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
-
-    this.isVisible.set(true);
 
     const initial = {
       x: event.clientX,
@@ -55,8 +61,9 @@ export class ContextMenuComponent implements AfterViewInit {
     };
 
     this.position.set(initial);
+    this.isVisible.set(true);
 
-    queueMicrotask(() => {
+    requestAnimationFrame(() => {
       this.reposition(initial.x, initial.y);
     });
   }
@@ -68,7 +75,7 @@ export class ContextMenuComponent implements AfterViewInit {
   }
 
   private reposition(x: number, y: number) {
-    const menuEl = this.menuContainer?.nativeElement;
+    const menuEl = this.menuRef?.nativeElement;
     if (!menuEl) return;
 
     const rect = menuEl.getBoundingClientRect();
@@ -95,6 +102,8 @@ export class ContextMenuComponent implements AfterViewInit {
   }
 
   onMenuClick(event: Event) {
+    event.stopPropagation();
+
     if (!this.closeOnInsideClick()) return;
 
     const target = event.target as HTMLElement;
@@ -110,7 +119,7 @@ export class ContextMenuComponent implements AfterViewInit {
   onDocumentClick(event: MouseEvent) {
     if (!this.autoClose() || !this.isVisible()) return;
 
-    const menuEl = this.menuContainer?.nativeElement;
+    const menuEl = this.menuRef?.nativeElement;
     const target = event.target as Node;
 
     if (menuEl && !menuEl.contains(target)) {

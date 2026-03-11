@@ -1,18 +1,17 @@
-:host{
+:host {
   display: contents;
 }
 
 .context-menu-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1040;
+  inset: 0;
+  z-index: 1080; // acima de modal/backdrop
   background: transparent;
 }
 
-.dropdown-menu {
+.context-menu-panel {
+  position: fixed; // importante para usar clientX/clientY com viewport
+  margin: 0;
   animation: fadeInScale 0.15s ease-out;
 }
 
