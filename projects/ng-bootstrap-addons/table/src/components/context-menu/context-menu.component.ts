@@ -27,7 +27,6 @@ export class ContextMenuComponent implements AfterViewInit, OnDestroy {
   private renderer = inject(Renderer2);
   private host = inject(ElementRef<HTMLElement>);
 
-  @ViewChild('overlayRef') overlayRef?: ElementRef<HTMLDivElement>;
   @ViewChild('menuRef') menuRef?: ElementRef<HTMLUListElement>;
 
   menuTemplate = input.required<TemplateRef<any>>();
@@ -37,7 +36,8 @@ export class ContextMenuComponent implements AfterViewInit, OnDestroy {
   menuClosed = output<void>();
   itemClicked = output<any>();
 
-  isVisible = signal<boolean>(false);
+  isVisible = signal(false);
+  zIndex = signal(2000);
   position = signal<{ x: number; y: number }>({ x: 0, y: 0 });
 
   ngAfterViewInit() {
@@ -54,6 +54,8 @@ export class ContextMenuComponent implements AfterViewInit, OnDestroy {
   show(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
+
+    this.zIndex.set(this.getHighestZIndex() + 1);
 
     const initial = {
       x: event.clientX,
@@ -99,6 +101,26 @@ export class ContextMenuComponent implements AfterViewInit, OnDestroy {
     finalY = Math.max(margin, finalY);
 
     this.position.set({ x: finalX, y: finalY });
+  }
+
+  private getHighestZIndex(): number {
+    let max = 0;
+
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('body *'));
+
+    for (const el of elements) {
+      const style = window.getComputedStyle(el);
+      const zIndex = style.zIndex;
+
+      if (zIndex === 'auto') continue;
+
+      const parsed = Number(zIndex);
+      if (!Number.isNaN(parsed)) {
+        max = Math.max(max, parsed);
+      }
+    }
+
+    return max;
   }
 
   onMenuClick(event: Event) {

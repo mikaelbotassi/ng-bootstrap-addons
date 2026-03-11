@@ -1,7 +1,7 @@
 @if (isVisible()) {
   <div
     class="context-menu-overlay"
-    #overlayRef
+    [style.z-index]="zIndex()"
     (click)="hide()"
     (contextmenu)="$event.preventDefault(); $event.stopPropagation(); hide()"
   >
