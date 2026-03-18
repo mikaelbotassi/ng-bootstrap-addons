@@ -15,14 +15,11 @@ import { createRandomString } from 'ng-bootstrap-addons/utils';
     templateUrl: './multiselect.component.html',
     imports: [CommonModule, BsDropdownModule, FormsModule, MultiselectOptionComponent, FormErrorMessageComponent, InputPlaceholderComponent, ReactiveFormsModule],
     styleUrls: ['./multiselect.component.scss'],
-    providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => MultiselectComponent),
-        multi: true,
-      },
-      BsDropdownDirective
-    ],
+    providers: [{
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MultiselectComponent),
+      multi: true,
+    }],
     host: { 'collision-id': `multiselect-${createRandomString(20)} ` },
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -78,7 +75,7 @@ export class MultiselectComponent<T extends Object> extends ControlValueAccessor
         }
 
         if (this.control?.touched && this.descControl.untouched) {
-          this.descControl?.markAsUntouched();
+          this.descControl?.markAsTouched();
         }
 
         if (this.control?.invalid && this.descControl.valid) {
