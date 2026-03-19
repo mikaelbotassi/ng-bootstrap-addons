@@ -16,7 +16,7 @@
     ]"
   >
     <ng-template #caption>
-      <button type="button" (click)="showModal()">Show Modal</button>
+      <button type="button" class="btn btn-primary" (click)="showModal()"> <i class="ti ti-search"></i> Show Modal</button>
       @if(selectedRows().length > 0){
         <div class="d-flex align-items-center justify-content-end mb-3">
           <button type="button" class="btn btn-danger btn-sm" (click)="removeCustomer(selectedRows())">Excluir({{ selectedRows().length }})</button>
