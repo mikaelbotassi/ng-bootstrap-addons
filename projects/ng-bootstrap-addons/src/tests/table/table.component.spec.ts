@@ -224,7 +224,7 @@ describe('TableComponent', () => {
       expect(component.sortField()).toBe('name');
       expect(component.sortDirection()).toBe('asc');
       
-      const sortedData = component.processedData();
+      const sortedData = component.filteredData();
       expect(sortedData[0].name).toBe('Ana Lima');
       expect(sortedData[4].name).toBe('Pedro Costa');
     });
@@ -233,7 +233,7 @@ describe('TableComponent', () => {
       const sortEvent: SortEvent = { field: 'age', direction: 'desc' };
       component.setSort(sortEvent);
       
-      const sortedData = component.processedData();
+      const sortedData = component.filteredData();
       expect(sortedData[0].age).toBe(42);
       expect(sortedData[4].age).toBe(25);
     });
@@ -252,7 +252,7 @@ describe('TableComponent', () => {
       const sortEvent: SortEvent = { field: 'name', direction: 'asc' };
       component.setSort(sortEvent);
       
-      const sortedData = component.processedData();
+      const sortedData = component.filteredData();
       expect(sortedData[0].name).toBe('Alice');
     }));
 
@@ -271,7 +271,7 @@ describe('TableComponent', () => {
       component.setFilter('status', filterFn);
       tick();
       
-      const filteredData = component.processedData();
+      const filteredData = component.filteredData();
       expect(filteredData.length).toBe(3);
       expect(filteredData.every(user => user.status === 'active')).toBe(true);
     }));
@@ -281,12 +281,12 @@ describe('TableComponent', () => {
       component.setFilter('status', filterFn);
       tick();
       
-      expect(component.processedData().length).toBe(3);
+      expect(component.filteredData().length).toBe(3);
       
       component.clearFilter('status');
       tick();
       
-      expect(component.processedData().length).toBe(5);
+      expect(component.filteredData().length).toBe(5);
     }));
 
     it('should clear all filters', fakeAsync(() => {
@@ -312,7 +312,7 @@ describe('TableComponent', () => {
       component.setFilter('age', ageFilter);
       tick();
       
-      const filteredData = component.processedData();
+      const filteredData = component.filteredData();
       expect(filteredData.length).toBe(2); // João (30) e Pedro (35)
       expect(filteredData.every(user => user.status === 'active' && user.age >= 30)).toBe(true);
     }));
@@ -500,7 +500,7 @@ describe('TableComponent', () => {
       // Apply global filter
       component.globalFilter.set('silva');
       
-      const processedData = component.processedData();
+      const processedData = component.filteredData();
       expect(processedData.length).toBe(1);
       expect(processedData[0].name).toBe('João Silva');
     }));
@@ -509,7 +509,7 @@ describe('TableComponent', () => {
       host.users.set([]);
       fixture.detectChanges();
       
-      expect(component.processedData()).toEqual([]);
+      expect(component.filteredData()).toEqual([]);
       expect(component.paginatedData()).toEqual([]);
       expect(component.totalPages()).toBe(1);
     });
@@ -518,7 +518,7 @@ describe('TableComponent', () => {
       host.users.set(null as any);
       fixture.detectChanges();
       
-      expect(component.processedData()).toEqual([]);
+      expect(component.filteredData()).toEqual([]);
       expect(component.paginatedData()).toEqual([]);
     });
   });
@@ -588,7 +588,7 @@ describe('TableComponent', () => {
       component.setSort({ field: 'name', direction: 'asc' });
       
       // Should not throw error
-      expect(component.processedData().length).toBe(3);
+      expect(component.filteredData().length).toBe(3);
     });
   });
 });

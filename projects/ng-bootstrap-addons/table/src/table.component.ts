@@ -167,13 +167,17 @@ export class TableComponent<T extends Object = any> implements OnInit {
   // =========================
   // #region DADOS (processamento)
   // =========================
-  processedData = computed(() => {
+  sortedData = computed(() => {
     let data = this.value() ?? [];
     
     // ordenação
-    if (this.sortField() && this.sortDirection()) {
-      data = this.sortData(data, this.sortField()!, this.sortDirection()!);
-    }
+    if (this.sortField() && this.sortDirection()) return this.sortData(data, this.sortField()!, this.sortDirection()!);
+    return data;
+
+  });
+
+  filteredData = computed(() => {
+    let data = this.sortedData();
 
     // filtros
     const filters = this.filters();
@@ -210,40 +214,94 @@ export class TableComponent<T extends Object = any> implements OnInit {
   // =========================
   // #region SELECT ROWS
   // =========================
+
+  private normalizeSelectionValue(rowOrValue: any): any {
+    const raw = rowOrValue?.value ?? rowOrValue;
+
+    if (!this.selectionField()) {
+      return raw;
+    }
+    
+    if (raw == null || typeof raw !== 'object') {
+      return raw;
+    }
+
+    return this.getFieldValue(raw, this.selectionField()!);
+  }
+
   multiple = input(false, { transform: booleanAttribute });
-  selectedRows = model<T[]>([]);
-  selectRow(row: T) {
-    const index = this.selectedRows().indexOf(row);
-    if(index > -1){
-      this.selectedRows.update((current) => {
-        return current.filter((r) => r !== row);
-      });
-      return;
-    }
-    if (!this.multiple()) {
-      this.selectedRows.set([row]);
-      return;
-    }
-    this.selectedRows.update((current) => [...current, row]);
+selectionField = input<string | null>();
+selectRowsScope = input<SelectRowsScope>('page');
+
+selectableRows = computed(() => {
+  switch (this.selectRowsScope()) {
+    case 'page':
+      return this.rows();
+    case 'filtered':
+      return this.filteredData();
+    default:
+      return this.value() ?? [];
   }
-  deselectRow(row: T) {
-    this.selectedRows.update((current) => {
-      return current.filter((r) => r !== row);
-    });
+});
+
+selectedRows = model<any[]>([]);
+
+selectRow(row: any) {
+  const rowValue = this.normalizeSelectionValue(row);
+  const exists = this.selectedRows().includes(rowValue);
+
+  if (exists) {
+    this.selectedRows.update(current =>
+      current.filter(item => item !== rowValue)
+    );
+    return;
   }
-  unselectAllRows = () => this.selectedRows.set([]);
-  selectAllRows = () => this.selectedRows.set(this.value() ?? []);
-  toggleSelectAllRows = () => {
-    if (this.areAllRowsSelected()) {
-      this.unselectAllRows();
-    } else {
-      this.selectAllRows();
-    }
-  };
-  areAllRowsSelected = computed(() => {
-    if (!this.value()) return false;
-    return this.selectedRows().length === this.value()?.length;
+
+  if (!this.multiple()) {
+    this.selectedRows.set([rowValue]);
+    return;
+  }
+
+  this.selectedRows.update(current => [...current, rowValue]);
+}
+
+deselectRow(row: any) {
+  const rowValue = this.normalizeSelectionValue(row);
+
+  this.selectedRows.update(current =>
+    current.filter(item => item !== rowValue)
+  );
+}
+
+unselectAllRows = () => this.selectedRows.set([]);
+
+selectAllRows = () => {
+  const values = this.selectableRows().map(row =>
+    this.normalizeSelectionValue(row)
+  );
+
+  this.selectedRows.set(values);
+};
+
+toggleSelectAllRows = () => {
+  if (this.areAllRowsSelected()) {
+    this.unselectAllRows();
+  } else {
+    this.selectAllRows();
+  }
+};
+
+areAllRowsSelected = computed(() => {
+  const rows = this.selectableRows();
+  const selected = this.selectedRows();
+
+  if (!rows.length) return false;
+
+  return rows.every(row => {
+    const value = this.normalizeSelectionValue(row);
+    return selected.includes(value);
   });
+});
   // #endregion
 
   // =========================
@@ -313,3 +371,5 @@ export class TableComponent<T extends Object = any> implements OnInit {
   // #endregion
 
 }
+
+export type SelectRowsScope = 'filtered' | 'page' | 'all';

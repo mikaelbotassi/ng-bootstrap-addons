@@ -95,4 +95,9 @@ export class TableSampleComponent {
     });
   }
 
+  print(value:any){
+    console.log(this.selectedRows());
+    console.log(value);
+  }
+
 }

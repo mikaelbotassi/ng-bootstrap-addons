@@ -5,6 +5,9 @@
     [itemsPerPage]="2"
     [globalFilterFields]="['name', 'country.name', 'representative.name']"
     [(selectedRows)]="selectedRows"
+    selectRowsScope="filtered"
+    selectionField="id"
+    (selectedRowsChange)="print($event)"
     [columns]="[
       {field: 'id', header:'ID', visible: false, type:'numeric'},
       {field: 'name', header:'Nome', type:'text'},
@@ -46,7 +49,7 @@
 
     <ng-template #body let-rows="rows" let-columns="columns">
       @for(row of rows; track $index){
-      <tr nbaControl [showMenu]="true" expandable (rowDoubleClick)="onDoubleClick()" [value]="row">
+      <tr nbaControl [showMenu]="true" expandable (rowDoubleClick)="onDoubleClick()" [value]="row.id">
         @for(column of columns;track $index){
           @switch(column.field){
             @case('date'){
