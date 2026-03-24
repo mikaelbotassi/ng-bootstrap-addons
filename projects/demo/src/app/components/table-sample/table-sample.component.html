@@ -15,6 +15,20 @@
       {field: 'representative.name', header:'Representante', type:'list'},
       {field: 'date', header:'Data', type:'date'},
       {field: 'verified', header:'Verificado', type:'boolean'},
+      {field: 'balance', header:'Balanço', type:'numeric'},
+      {field: 'id', header:'ID', visible: false, type:'numeric'},
+      {field: 'name', header:'Nome', type:'text'},
+      {field: 'country.name', header:'País', type:'text'},
+      {field: 'representative.name', header:'Representante', type:'list'},
+      {field: 'date', header:'Data', type:'date'},
+      {field: 'verified', header:'Verificado', type:'boolean'},
+      {field: 'balance', header:'Balanço', type:'numeric'},
+      {field: 'id', header:'ID', visible: false, type:'numeric'},
+      {field: 'name', header:'Nome', type:'text'},
+      {field: 'country.name', header:'País', type:'text'},
+      {field: 'representative.name', header:'Representante', type:'list'},
+      {field: 'date', header:'Data', type:'date'},
+      {field: 'verified', header:'Verificado', type:'boolean'},
       {field: 'balance', header:'Balanço', type:'numeric'}
     ]"
   >
@@ -30,7 +44,7 @@
       <tr>
         <th checkbox></th>
         <th width="2em"></th>
-        @for(column of columns;track column.field){
+        @for(column of columns;track $index){
           @if(column.field == 'representative.name'){
             <th
               class="text-dark"

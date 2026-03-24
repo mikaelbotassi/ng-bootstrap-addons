@@ -1,60 +1,103 @@
-import { Directive, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  Renderer2,
+} from '@angular/core';
 
 @Directive({
-  selector: '[dragScroll]'
+  selector: '[dragScroll]',
 })
-export class DragScrollDirective {
-  private isDragging = false;
-  private startX = 0;
-  private startY = 0;
-  private scrollLeft = 0;
-  private scrollTop = 0;
-  private requestId: number | null = null;
+export class DragScrollDirective implements OnDestroy {
+  private isLocked = false;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private renderer: Renderer2
+  ) {}
 
   @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent) {
-    if (event.button === 1) {
-      this.isDragging = true;
-      this.startX = event.pageX - this.el.nativeElement.offsetLeft;
-      this.startY = event.pageY - this.el.nativeElement.offsetTop;
-      this.scrollLeft = this.el.nativeElement.scrollLeft;
-      this.scrollTop = this.el.nativeElement.scrollTop;
+  async onMouseDown(event: MouseEvent): Promise<void> {
+    // botão do meio
+    if (event.button !== 1) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const element = this.el.nativeElement;
+
+    // Fallback: se o browser não suportar Pointer Lock,
+    // você pode manter seu comportamento antigo aqui.
+    if (!element.requestPointerLock) {
+      return;
+    }
+
+    try {
+      const result = element.requestPointerLock();
+
+      // Alguns browsers retornam Promise, outros não
+      if (result instanceof Promise) {
+        await result;
+      }
+    } catch {
+      // opcional: tratar erro / fallback
+    }
+  }
+
+  @HostListener('document:pointerlockchange')
+  onPointerLockChange(): void {
+    const lockedElement = document.pointerLockElement;
+    this.isLocked = lockedElement === this.el.nativeElement;
+
+    if (this.isLocked) {
       this.renderer.setStyle(this.el.nativeElement, 'cursor', 'grabbing');
-      event.preventDefault();
+      this.renderer.setStyle(this.el.nativeElement, 'user-select', 'none');
+    } else {
+      this.renderer.removeStyle(this.el.nativeElement, 'cursor');
+      this.renderer.removeStyle(this.el.nativeElement, 'user-select');
     }
   }
 
-  @HostListener('mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
-    if (this.isDragging) {
-      if (this.requestId) {
-        cancelAnimationFrame(this.requestId);
-      }
-      this.requestId = requestAnimationFrame(() => this.scroll(event));
+  @HostListener('document:pointerlockerror')
+  onPointerLockError(): void {
+    this.isLocked = false;
+    this.renderer.removeStyle(this.el.nativeElement, 'cursor');
+    this.renderer.removeStyle(this.el.nativeElement, 'user-select');
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent): void {
+    if (!this.isLocked) {
+      return;
+    }
+
+    const host = this.el.nativeElement;
+
+    // "efeito mão arrastando" igual ao seu comportamento atual
+    host.scrollLeft -= event.movementX;
+    host.scrollTop -= event.movementY;
+  }
+
+  @HostListener('document:mouseup', ['$event'])
+  onMouseUp(event: MouseEvent): void {
+    // sai do lock ao soltar o botão do meio
+    if (this.isLocked && event.button === 1) {
+      document.exitPointerLock?.();
     }
   }
 
-  scroll(event: MouseEvent) {
-    const x = event.pageX - this.el.nativeElement.offsetLeft;
-    const y = event.pageY - this.el.nativeElement.offsetTop;
-    const walkX = x - this.startX;
-    const walkY = y - this.startY;
-    this.el.nativeElement.scrollLeft = this.scrollLeft - walkX;
-    this.el.nativeElement.scrollTop = this.scrollTop - walkY;
-  }
-
-  @HostListener('mouseup', ['$event'])
-  onMouseUp(event: MouseEvent) {
-    if (this.isDragging && event.button === 1) {
-      this.isDragging = false;
-      this.renderer.setStyle(this.el.nativeElement, 'cursor', 'default');
-      if (this.requestId) {
-        cancelAnimationFrame(this.requestId);
-        this.requestId = null;
-      }
+  @HostListener('window:blur')
+  onWindowBlur(): void {
+    if (this.isLocked) {
+      document.exitPointerLock?.();
     }
   }
 
+  ngOnDestroy(): void {
+    if (document.pointerLockElement === this.el.nativeElement) {
+      document.exitPointerLock?.();
+    }
+  }
 }

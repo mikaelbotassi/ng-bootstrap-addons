@@ -23,21 +23,21 @@ import {
 } from '@angular/core';
 import { Column, FilterFunction, GlobalFilterFunction, SortDirection, SortEvent } from './models/table-models';
 import { FormsModule } from '@angular/forms';
-import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
 import { PaginationComponent } from 'ng-bootstrap-addons/pagination';
 import { createNestedObject } from 'ng-bootstrap-addons/utils';
 import { MultiselectOption } from 'ng-bootstrap-addons/selects';
 import { ColumnMultiselectComponent } from './components/column-multiselect/column-multiselect.component';
 import { TablePreferencesService } from './services/table-preferences.service';
 import { ColumnHeaderComponent } from './components/column-header/column-header.component';
+import { DragScrollDirective } from 'ng-bootstrap-addons/directives';
 
 @Component({
   selector: 'nba-table',
   imports: [CommonModule, FormsModule, DragScrollDirective, PaginationComponent, ColumnMultiselectComponent],
   providers: [TablePreferencesService],
   templateUrl: './table.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class TableComponent<T extends Object = any> implements OnInit {
