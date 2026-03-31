@@ -340,8 +340,16 @@ areAllRowsSelected = computed(() => {
   selectedColumnFields = model<string[]>([]);
   visibleColumns = computed(() => {
     const columns = this.columns();
+    if(!columns) return [];
     const selected = this.selectedColumnFields();
-    return columns?.filter((col) => selected.findIndex((field) => field === col.field) >= 0) ?? [];
+    const newArray = [];
+    for(var i = 0; i < selected.length; i++){
+      const selectedField = selected[i];
+      const column = columns.find(item => item.field === selectedField);
+      if(!column) continue;
+      newArray.push(column);
+    }
+    return newArray;
   });
   onSelectedCollumnsChange = effect(() => {
     const selected = this.selectedColumnFields();

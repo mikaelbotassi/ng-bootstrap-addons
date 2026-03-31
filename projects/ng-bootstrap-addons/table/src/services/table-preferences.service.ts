@@ -34,7 +34,7 @@ export class TablePreferencesService {
     setColumns(columns: string[]) {
         const pref = this._preferences();
         if(pref == null) return;
-        if(ArrayUtils.containTheSameElements(pref.columns, columns)) return;
+        if(ArrayUtils.isIdentical(pref.columns, columns)) return;
         this.setPreferences({...pref, columns});
     }
 
@@ -74,7 +74,7 @@ export class TablePreferences{
     }
 
     static keyOf(table: TablePreferences): string {
-        return `${table.id}_${table.columns.sort().join(',')}${JSON.stringify(table.sort)}_${JSON.stringify(table.filters)}`;
+        return `${table.id}_${table.columns.join(',')}${JSON.stringify(table.sort)}_${JSON.stringify(table.filters)}`;
     }
 
     static isEqual(a:TablePreferences, b:TablePreferences): boolean {
