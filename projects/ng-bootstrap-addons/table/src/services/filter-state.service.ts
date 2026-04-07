@@ -9,11 +9,16 @@ export class FilterStateService {
     filterConfig = signal<ListFilterConfig|null>(null);
 
     applyFilter(type: ColumnFilterType | null) : FilterFunction {
-        const filterFunction = this.getDefaultFilterFunction(type);
+        try{
+            const filterFunction = this.getDefaultFilterFunction(type);
 
-        const v = this.value();
+            const v = this.value();
 
-        return (item: any) => filterFunction(item, v);
+            return (item: any) => filterFunction(item, v);
+        }catch(e){
+            console.error(e);
+            return () => true;
+        }
     }
 
     clearFilter = () => this.value.set(null);
@@ -46,55 +51,60 @@ export class FilterStateService {
     
 
     getDefaultFilterFunction(type: ColumnFilterType | null): ColumnFilterPredicate {
-        const predicates: Record<string, ColumnFilterPredicate> = {
-            list: (item: any, value: any[]) => {
-                const pred = listPredicate<any, any>(value, this.filterConfig() ?? {});
-                return pred(item);
-            },
+        try{
+            const predicates: Record<string, ColumnFilterPredicate> = {
+                list: (item: any, value: any[]) => {
+                    const pred = listPredicate<any, any>(value, this.filterConfig() ?? {});
+                    return pred(item);
+                },
 
-            date: (item: any, value: Range<Date>) => {
-                if (this.isEmptyFilterValue(value)) return true;
+                date: (item: any, value: Range<Date>) => {
+                    if (this.isEmptyFilterValue(value)) return true;
 
-                const dateItem = this.toDateSafe(item);
-                if (!dateItem) return false;
+                    const dateItem = this.toDateSafe(item);
+                    if (!dateItem) return false;
 
-                const start = value?.[0] ?? null;
-                const end = value?.[1] ?? null;
-                if (!start && !end) return true;
+                    const start = value?.[0] ?? null;
+                    const end = value?.[1] ?? null;
+                    if (!start && !end) return true;
 
-                return this.inRange(dateItem, [start, end], (a, b) => a.getTime() - b.getTime());
-            },
+                    return this.inRange(dateItem, [start, end], (a, b) => a.getTime() - b.getTime());
+                },
 
-            numeric: (item: any, value: Range<number>) => {
-                if (this.isEmptyFilterValue(value)) return true;
-                if(isNaN(item) && typeof item !== 'string') return false;
-                const n = isNaN(item) ? NumberUtils.toNumber(item) : item;
-                if (n === null) return false;
+                numeric: (item: any, value: Range<number>) => {
+                    if (this.isEmptyFilterValue(value)) return true;
+                    if(isNaN(item) && typeof item !== 'string') return false;
+                    const n = isNaN(item) ? NumberUtils.toNumber(item) : item;
+                    if (n === null) return false;
 
-                const start = value?.[0] ?? null;
-                const end = value?.[1] ?? null;
-                if (start == null && end == null) return true;
+                    const start = value?.[0] ?? null;
+                    const end = value?.[1] ?? null;
+                    if (start == null && end == null) return true;
 
-                return this.inRange(n, [start, end], (a, b) => a - b);
-            },
+                    return this.inRange(n, [start, end], (a, b) => a - b);
+                },
 
-            boolean: (item: any, value: boolean) => {
-                if (this.isEmptyFilterValue(value)) return true;
-                return item === value;
-            },
+                boolean: (item: any, value: boolean) => {
+                    if (this.isEmptyFilterValue(value)) return true;
+                    return item === value;
+                },
 
-            text: (item: any, value: string) => {
-                if (this.isEmptyFilterValue(value)) return true;
+                text: (item: any, value: string) => {
+                    if (this.isEmptyFilterValue(value)) return true;
 
-                const hay = this.toLowerStr(item);
-                if (!hay) return false;
+                    const hay = this.toLowerStr(item);
+                    if (!hay) return false;
 
-                const needle = value.trim().toLowerCase();
-                return hay.includes(needle);
-            },
-        };
+                    const needle = value.trim().toLowerCase();
+                    return hay.includes(needle);
+                },
+            };
 
-        return predicates[type ?? 'text'] ?? predicates['text'];
+            return predicates[type ?? 'text'] ?? predicates['text'];
+        } catch(e){
+            console.error(e);
+            return (item: any, value: any) => true;
+        }
     }
 
 }
