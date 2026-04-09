@@ -1,4 +1,7 @@
+import { toPtBr, toPtBrAutoPrecision } from "./number-format";
+
 export class NumberUtils {
+  
   static toNumber = (value: string): number => {
     if (typeof value !== 'string') {
       throw new Error('Invalid input: value must be a string.');
@@ -104,4 +107,19 @@ export class NumberUtils {
     }
     return n;
   };
+
+  static trunc(num:number, max: number) {
+      let arrayNumber = num.toString().split('.');
+      if (arrayNumber[1]) arrayNumber[1] = arrayNumber[1].slice(0, max);
+      return arrayNumber.join('.');
+  };
+
+  static toPtBr(num:number, decimalPlaces = 2): string {
+    return toPtBr(num.valueOf(), decimalPlaces);
+  };
+
+  static toPtBrAutoPrecision(num:number): string {
+    return toPtBrAutoPrecision(num.valueOf());
+  };
+
 }
