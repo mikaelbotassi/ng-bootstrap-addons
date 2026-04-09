@@ -5,6 +5,7 @@ export * from './functions';
 export * from './number-utils';
 export * from './types';
 export * from './array-utils';
+export * from './string-utils';
 export * from './signals/behavior-signal';
 export * from './table-utils';
 export * from './number-format';
