@@ -7,3 +7,4 @@ export * from './drag-scroll.directive';
 export * from './page-state.directive';
 export * from './pagination.directive';
 export * from './resizable.directive';
+export * from './mouse-click.directive';
