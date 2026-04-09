@@ -46,7 +46,7 @@ export class DatePickerComponent extends ControlValueAccessorDirective<Date|unde
       return '';
     }
     const fmt = this.FMT();
-    return `${DateUtils.formatDate(v, fmt)}`;
+    return `${DateUtils.format(v, fmt)}`;
   });
 
   setValue = effect(() => {

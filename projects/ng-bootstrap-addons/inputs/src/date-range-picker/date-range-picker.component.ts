@@ -45,7 +45,7 @@ export class DateRangePickerComponent extends ControlValueAccessorDirective<Date
       return '';
     }
     const fmt = this.FMT();
-    return `${DateUtils.formatDate(v[0], fmt)} - ${DateUtils.formatDate(v[1], fmt)}`;
+    return `${DateUtils.format(v[0], fmt)} - ${DateUtils.format(v[1], fmt)}`;
   });
 
   setValue = effect(() => {

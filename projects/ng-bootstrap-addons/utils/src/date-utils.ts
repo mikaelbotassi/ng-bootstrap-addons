@@ -19,7 +19,7 @@ export abstract class DateUtils {
     return (DateUtils.toDate(date) as any).format(format);
   };
 
-  static getFormatedCurrentDate (format: string = 'YYYY-MM-DD'): string {
+  static getFormattedCurrentDate (format: string = 'YYYY-MM-DD'): string {
     return (new Date() as any).format(format);
   };
 
