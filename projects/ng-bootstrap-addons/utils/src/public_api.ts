@@ -11,3 +11,4 @@ export * from './table-utils';
 export * from './number-format';
 export * from './decorators';
 export * from './types';
+export * from './locale';
