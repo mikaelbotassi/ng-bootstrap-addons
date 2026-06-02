@@ -1,0 +1,46 @@
+@font-face {
+    font-family: "NgBootstrapAddons";
+    src: url("../assets/fonts/NgBootstrapAddons.woff2") format("woff2"),
+        url("../assets/fonts/NgBootstrapAddons.ttf") format("truetype"),
+        url("../assets/fonts/NgBootstrapAddons.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.nba{
+
+    display: inline-flex;
+    align-items: center;
+    font-family: "NgBootstrapAddons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &.search::before{content: '\F000'}
+    &.menu-2::before{content: '\F001'}
+    &.filter::before{content: '\F004'}
+    &.filter-off::before{content: '\F002'}
+    &.filter-filled::before{content: '\F003'}
+    &.eye-off::before{content: '\F005'}
+    &.eye::before{content: '\F006'}
+    &.columns-3::before{content: '\F007'}
+    &.circle-check::before{content: '\F008'}
+    &.circle::before{content: '\F009'}
+    &.chevron-up::before{content: '\F00A'}
+    &.chevron-right::before{content: '\F00B'}
+    &.chevrons-right::before{content: '\F012'}
+    &.chevron-left::before{content: '\F00C'}
+    &.chevrons-left::before{content: '\F013'}
+    &.chevron-down::before{content: '\F00D'}
+    &.caret-up-down::before{content: '\F00E'}
+    &.caret-up::before{content: '\F00F'}
+    &.caret-down::before{content: '\F010'}
+    &.x::before{content: '\F011'}
+
+}

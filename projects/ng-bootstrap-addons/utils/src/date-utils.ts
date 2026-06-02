@@ -20,7 +20,7 @@ export abstract class DateUtils {
   };
 
   static getFormattedCurrentDate (format: string = 'YYYY-MM-DD'): string {
-    return (new Date() as any).format(format);
+    return DateUtils.format(new Date(), format);
   };
 
   static getMonthNameFromNumber (month: number, lang: 'pt' | 'en' = 'pt'): string {
